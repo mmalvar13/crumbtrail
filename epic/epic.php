@@ -13,7 +13,18 @@
 			<ul>
 				<li><strong>Crumbtrail allows food trucks to share their location and allows users to find food trucks that are serving now</strong></li>
 			</ul>
-			<p>User Side: </p>
+			<p><strong>What do we want it to do? -</strong>User Side: </p>
+			<ul>
+				<li>Want it to be streamlined for the user. Not a lot of navigating. When the user opens the app, they will immediately see their location on a map as well as tickers for any trucks in the city</li><br>
+				<li>***First thing the app pulls up is a map, your location, and location of food trucks</li>
+			</ul>
+			<ol>
+				<li>User's location is pinpointed, and user see's a map of their area with all trucks currently serving</li>
+				<li>User could want to search for what food trucks are avialable in a specific area of town</li>
+				<li>User could want to see if a specific food truck or type of food is available</li>
+				<li>User could want to see a complete listing of all available trucks via a "show list" button</li>
+			</ol>
+
 			<p>Truck Side:</p>
 
 		</main>
