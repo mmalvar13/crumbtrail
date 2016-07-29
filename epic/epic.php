@@ -56,7 +56,13 @@
 				<li>automatica broadcast to social media</li>
 			</ul>
 
-			<h
+			<h2>Dreamthings:</h2>
+			<ul>
+				<li>automatic broadcast to social media</li>
+				<li>social media login via facebook</li>
+				<li> comment and rating system</li>
+				<li>future locations of food trucks represented by pings on map</li>
+			</ul>
 
 		</main>
 	</body>
