@@ -23,9 +23,40 @@
 				<li>User could want to search for what food trucks are avialable in a specific area of town</li>
 				<li>User could want to see if a specific food truck or type of food is available</li>
 				<li>User could want to see a complete listing of all available trucks via a "show list" button</li>
+				<li><strong>LISTS:</strong> active list of what trucks are out now. Static list of profiles in area.</li>
 			</ol>
 
-			<p>Truck Side:</p>
+			<p><strong>What do we want it to do?</strong>Truck Side:</p>
+			<ul>
+				<li><strong>Food trucks want to be able to quickly and easily advertise their location when they are currently serving</strong></li><br>
+				<li>***when they open the app, they can see a map of the city and the food trucks that are out now. They can easily push a button that says "serving now". Will provide a pop up that will detect their location and autofill for them by default. They also have the option of writing in a different location (in the case that an administrator/boss is in charge of the profile and sharing where one of their employees is with the truck)</li>
+			</ul>
+			<ol>
+				<li>Have a profile with:</li>
+			</ol>
+			<ul>
+				<li>Business Name</li>
+				<li>Ability to login via facebook, and share posts across multiple platforms at once (facebook, instagram, twitter)</li>
+				<li>photo</li>
+				<li>Blurb about who they are</li>
+				<li>Menu</li>
+				<li>links to social media</li>
+				<li>Projected locations for the week/month</li>
+				<li>review and star ratings (imported from somewhere?)</li>
+			</ul>
+			<ol>
+				<li>on the server side, the profile may have:</li>
+			</ol>
+			<ul>
+				<li>Email login/login with facebook option</li>
+				<li>password</li>
+				<li>Name of business</li>
+				<li>Image</li>
+				<li>SOcial media links</li>
+				<li>automatica broadcast to social media</li>
+			</ul>
+
+			<h
 
 		</main>
 	</body>
