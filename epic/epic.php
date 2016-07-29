@@ -60,7 +60,7 @@
 				<li>password</li>
 				<li>Name of business</li>
 				<li>Image</li>
-				<li>SOcial media links</li>
+				<li>Social media links</li>
 				<li>automatica broadcast to social media</li>
 			</ul>
 
