@@ -15,7 +15,8 @@
 			</ul>
 			<p><strong>What do we want it to do? -</strong>User Side: </p>
 			<ul>
-				<li>Want it to be streamlined for the user. Not a lot of navigating. When the user opens the app, they will immediately see their location on a map as well as tickers for any trucks in the city</li><br>
+				<li>Want it to be streamlined for the user. Not a lot of navigating. When the user opens the app, they will immediately see their location on a map as well as tickers for any trucks in the city</li>
+				<br>
 				<li>***First thing the app pulls up is a map, your location, and location of food trucks</li>
 			</ul>
 			<ol>
@@ -27,6 +28,13 @@
 			</ol>
 
 			<p><strong>What do we want it to do?</strong>Truck Side:</p>
+			<ol>
+				<li>We want food truck owners to create a profile to inform users about their truck.</li>
+				<li>We want them to inform the community of their current location</li>
+				<li>We want an avenue for food trucks to gain more business from the surrounding community</li>
+				<li>We want food truck owners to be able to post future locations</li>
+				</li>
+			</ol>
 			<ul>
 				<li><strong>Food trucks want to be able to quickly and easily advertise their location when they are currently serving</strong></li><br>
 				<li>***when they open the app, they can see a map of the city and the food trucks that are out now. They can easily push a button that says "serving now". Will provide a pop up that will detect their location and autofill for them by default. They also have the option of writing in a different location (in the case that an administrator/boss is in charge of the profile and sharing where one of their employees is with the truck)</li>
