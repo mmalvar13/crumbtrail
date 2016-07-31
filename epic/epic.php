@@ -45,6 +45,7 @@
 					navigation necessary. When a truck is ready to serve, the trucker hits
 					one button in the app, and hungry users will immediately know the active
 					truck's location.</li>
+				<br>
 
 				<li>
 					<ol>
@@ -54,6 +55,7 @@
 						<li>We want food truck owners to be able to post future locations</li>
 					</ol>
 				</li>
+				<br>
 
 				<li>Food truck's "I'm serving here now" view:</li>
 					<ol>
@@ -61,6 +63,7 @@
 							truck's position on the users' maps.</li>
 						<li>A second button allows the trucker to see and edit the truck's profile.</li>
 					</ol>
+					<br>
 
 				<li>Food truck's profile view, visible to users:</li>
 				<ol>
