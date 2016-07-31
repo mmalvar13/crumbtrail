@@ -9,66 +9,103 @@
 			<header>
 				<h1>Crumbtrail: Documentation</h1>
 			</header>
-			<h2>Crumbtrail Goals</h2>
-			<ul>
-				<li><strong>Crumbtrail allows food trucks to share their location and allows users to find food trucks that are serving now</strong></li>
-			</ul>
-			<p><strong>What do we want it to do? -</strong>User Side: </p>
-			<ul>
-				<li>Want it to be streamlined for the user. Not a lot of navigating. When the user opens the app, they will immediately see their location on a map as well as tickers for any trucks in the city</li>
-				<br>
-				<li>***First thing the app pulls up is a map, your location, and location of food trucks</li>
-			</ul>
-			<ol>
-				<li>User's location is pinpointed, and user see's a map of their area with all trucks currently serving</li>
-				<li>User could want to search for what food trucks are avialable in a specific area of town</li>
-				<li>User could want to see if a specific food truck or type of food is available</li>
-				<li>User could want to see a complete listing of all available trucks via a "show list" button</li>
-				<li><strong>LISTS:</strong> active list of what trucks are out now. Static list of profiles in area.</li>
-			</ol>
 
-			<p><strong>What do we want it to do?</strong>Truck Side:</p>
-			<ol>
-				<li>We want food truck owners to create a profile to inform users about their truck.</li>
-				<li>We want them to inform the community of their current location</li>
-				<li>We want an avenue for food trucks to gain more business from the surrounding community</li>
-				<li>We want food truck owners to be able to post future locations</li>
+			<h2>Crumbtrail Goals</h2>
+				<p><strong>Crumbtrail allows food trucks to share their location and allows users to find
+						food trucks that are serving now</strong></p>
+			<br>
+			<p><strong>What do we want it to do?  User Side: </strong></p>
+			<ul>
+				<li>The core user experience will be streamlined, with very little navigation necessary.
+					When the user opens the app, they will immediately see their location on a map as well
+					as tickers for any trucks in the city</li>
+				<br>
+
+				<li>User's map view:</li>
+					<ol>
+						<li>Shows the user's location, at the center of the map.</li>
+						<li>Shows the locations of nearby active food trucks.</li>
+					</ol>
+				<br>
+
+				<li>User's list views:</li>
+					<ol>
+						<li>A list of all the food trucks now serving anywhere in ABQ.</li>
+						<li>A list of food trucks now serving in a specific area of town.</li>
+						<li>The user can search for trucks now serving a specific type of food.</li>
+						<li>The user can search for a specific food truck.</li>
+						<li>By touching the name of a truck on a list, the user can see the truck's profile page.</li>
+					</ol>
+			</ul>
+			<br>
+
+			<p><strong>What do we want it to do?  Truck Side: </strong></p>
+			<ul>
+				<li>The core food truck experience will be also streamlined, with very little
+					navigation necessary. When a truck is ready to serve, the trucker hits
+					one button in the app, and hungry users will immediately know the active
+					truck's location.</li>
+
+				<li>
+					<ol>
+						<li>We want food truck owners to create a profile to inform users about their truck.</li>
+						<li>We want them to inform the community of their current location</li>
+						<li>We want an avenue for food trucks to gain more business from the surrounding community</li>
+						<li>We want food truck owners to be able to post future locations</li>
+					</ol>
 				</li>
-			</ol>
-			<ul>
-				<li><strong>Food trucks want to be able to quickly and easily advertise their location when they are currently serving</strong></li><br>
-				<li>***when they open the app, they can see a map of the city and the food trucks that are out now. They can easily push a button that says "serving now". Will provide a pop up that will detect their location and autofill for them by default. They also have the option of writing in a different location (in the case that an administrator/boss is in charge of the profile and sharing where one of their employees is with the truck)</li>
+
+				<li>Food truck's "I'm serving here now" view:</li>
+					<ol>
+						<li>The trucker presses one button, which logs the truck in and activates the
+							truck's position on the users' maps.</li>
+						<li>A second button allows the trucker to see and edit the truck's profile.</li>
+					</ol>
+
+				<li>Food truck's profile view, visible to users:</li>
+				<ol>
+					<li>Business Name</li>
+					<li>Ability to login via facebook, and share posts across multiple platforms at once
+						(facebook, instagram, twitter)</li>
+					<li>Photo of the truck</li>
+					<li>Blurb about who they are</li>
+					<li>General type of food served and/or menu</li>
+					<li>Links to social media</li>
+					<li>Projected locations for the week/month</li>
+					<li>Review and star ratings (imported from somewhere?)</li>
+				</ol>
 			</ul>
-			<ol>
-				<li>Have a profile with:</li>
-			</ol>
+
+
 			<ul>
-				<li>Business Name</li>
-				<li>Ability to login via facebook, and share posts across multiple platforms at once (facebook, instagram, twitter)</li>
-				<li>photo</li>
-				<li>Blurb about who they are</li>
-				<li>Menu</li>
-				<li>links to social media</li>
-				<li>Projected locations for the week/month</li>
-				<li>review and star ratings (imported from somewhere?)</li>
+				<li><strong>Food trucks want to be able to quickly and easily advertise their location
+						when they are currently serving</strong></li>
+				<br>
+				<li>***when they open the app, they can see a map of the city and the food trucks that are out now.</li>
+				<li>They can easily push a button that says "serving now". Will provide a pop up that will
+					detect their location and autofill for them by default. They also have the option of writing
+					in a different location (in the case that an administrator/boss is in charge of the profile
+					and sharing where one of their employees is with the truck)</li>
 			</ul>
+
+			<p>Each truck/business has a profile that is visible to users:</p>
 			<ol>
 				<li>on the server side, the profile may have:</li>
 			</ol>
 			<ul>
 				<li>Email login/login with facebook option</li>
-				<li>password</li>
+				<li>Password</li>
 				<li>Name of business</li>
 				<li>Image</li>
 				<li>Social media links</li>
-				<li>automatica broadcast to social media</li>
+				<li>Automatic broadcast to social media?</li>
 			</ul>
 
 			<h2>Dreamthings:</h2>
 			<ul>
 				<li>automatic broadcast to social media</li>
 				<li>social media login via facebook</li>
-				<li> comment and rating system</li>
+				<li>comment and rating system</li>
 				<li>future locations of food trucks represented by pings on map</li>
 			</ul>
 
