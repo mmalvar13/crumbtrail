@@ -2,7 +2,7 @@
 <html lang=" 'en">
 	<head>
 		<meta charset="utf 8"/>
-		<title>Crumbtrail</title>
+		<title>Crumbtrail </title>
 	</head>
 	<body>
 		<main>
