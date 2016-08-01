@@ -21,14 +21,14 @@
 					as tickers for any trucks in the city</li>
 				<br>
 
-				<li>User's map view:</li>
+				<li>User's map view (Google Maps API):</li>
 					<ol>
 						<li>Shows the user's location, at the center of the map.</li>
 						<li>Shows the locations of nearby active food trucks.</li>
 					</ol>
 				<br>
 
-				<li>User's list views:</li>
+				<li>User's list view (slides up from bottom of map view):</li>
 					<ol>
 						<li>A list of all the food trucks now serving anywhere in ABQ.</li>
 						<li>A list of food trucks now serving in a specific area of town.</li>
@@ -38,6 +38,14 @@
 					</ol>
 			</ul>
 			<br>
+
+			<li>Food truck profile (one page for each truck):</li>
+			<ol>
+				<li>(See below)</li>
+			</ol>
+			</ul>
+			<br>
+
 
 			<p><strong>What do we want it to do?  Truck Side: </strong></p>
 			<ul>
