@@ -36,7 +36,6 @@
 						<li>The user can search for a specific food truck.</li>
 						<li>By touching the name of a truck on a list, the user can see the truck's profile page.</li>
 					</ol>
-			</ul>
 			<br>
 
 			<li>Food truck profile (one page for each truck):</li>
