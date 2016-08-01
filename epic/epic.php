@@ -95,7 +95,7 @@
 				<li>They can easily push a button that says "serving now". Will provide a pop up that will
 					detect their location and autofill for them by default. They also have the option of writing
 					in a different location (in the case that an administrator/boss is in charge of the profile
-					and sharing where one of their employees is with the truck)</li>
+					and sharing where one of their employees is with the truck) </li>
 			</ul>
 
 			<p>Each truck/business has a profile that is visible to users:</p>
