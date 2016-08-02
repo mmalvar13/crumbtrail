@@ -133,7 +133,7 @@
 			<p>The purpose of this site is to allow users to find food trucks both on the go and as part of future planning. The user will be able to find the food truck that suits them at that moment. There is also the other side of the site that allows food truck owners to advertise their business and location in order to receive more traffic and to inform new "eaters" of their business. </p>
 				</div>
 
-
+			<hr>
 			<h2>Persona for company collaborator</h2>
 			<p>NAME: Freddy foodtuck</p>
 			<p>AGE:22</p>
@@ -142,10 +142,9 @@
 			<p>ATTITUDES & BEHAVIORS: Freddy is going to school and working part time as a food truck minion. Time is always of the essence, so he can't be wasting any trying to sign into an application and broadcast his location.</p>
 			<p>FRUSTRATIONS & NEEDS: Freddy needs to waste as little time as possible logging into the application, and broadcasting his signal. Additionally, he has no interest in spending anything more than a couple minutes registering his account with the application. He needs to login, broadcast location, and start cooking food and helping customers</p>
 			<p>GOALS: Freddy's goal is to have the process of using an application to broadcast his location take less than 20 seconds, so his boss knows he's working and where he is, and most importantly the customers know where he is.</p>
-			<hr>
 			<h2>Use Case</h2>
 			<p> Freddy is going to school full time and working part time for a food truck company. He has very little time to set up the truck, prepare food, drive to the location and start serving customers. He needs a quick and efficient method of creating a profile in the application used by his boss which will allow him to login and broadcast his location.</p>
-			<h1>User Story</h1>
+			<h2>User Story</h2>
 			<ul>
 				<li><strong>Who:</strong> Freddy Foodtruck</li>
 				<li><strong>What:</strong> Works for a food truck company</li>
@@ -153,6 +152,7 @@
 				<li><strong>Why:</strong> Because he needs to make money</li>
 				<li><strong>Where:</strong> In a truck on his andriod smartphone</li>
 			</ul>
+			<hr>
 
 
 		</main>
