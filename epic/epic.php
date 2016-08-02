@@ -109,7 +109,7 @@
 
 				<li>Truck's settings page:</li>
 				<ol>
-					<li>A way to invite other admins or employees to login to their company./li>
+					<li>A way to invite other admins or employees to login to their company.</li>
 					<li>more?</li>
 					<li>more?</li>
 				</ol>
