@@ -9,16 +9,17 @@
 		<main>
 			<div class
 			<header>
-				<h1>Crumbtrail: Documentation</h1>
+				<h1>crumbtrail: Connecting food trucks and hungry people.</h1>
 			</header>
 
 			<div class= mainheaders>
-				<h2>Crumbtrail Goals</h2>
+				<h2>Goals</h2>
 			</div>
 			<div class="textfields"
 				<p><strong>Crumbtrail allows food trucks to share their location and allows users to find
 						food trucks that are serving now</strong></p>
 			<br>
+
 			<p><strong>What do we want it to do?  User Side: </strong></p>
 			<ul>
 				<li>The core user experience will be streamlined, with very little navigation necessary.
@@ -30,23 +31,31 @@
 					<ol>
 						<li>Shows the user's location, at the center of the map.</li>
 						<li>Shows the locations of nearby active food trucks.</li>
+						<li>"Truck login" button, at top right corner.</li>
+						<li>"Complete list" of trucks button, at top left corner.</li>
+						<li>Search field, top center.</li>
+						<li>List of nearby active food trucks, slides up from bottom.  Shows nearest trucks first.</li>
 					</ol>
 				<br>
 
-				<li>User's list view (slides up from bottom of map view):</li>
+				<li>Complete list view:</li>
 					<ol>
-						<li>A list of all the food trucks now serving anywhere in ABQ.</li>
-						<li>A list of food trucks now serving in a specific area of town.</li>
-						<li>The user can search for trucks now serving a specific type of food.</li>
-						<li>The user can search for a specific food truck.</li>
+						<li>A list of all food trucks that are registered on crumbtrail.</li>
+						<li>Shows the name of the truck, and a short description of the food they serve.</li>
 						<li>By touching the name of a truck on a list, the user can see the truck's profile page.</li>
 					</ol>
 			<br>
 
-			<li>Food truck profile (one page for each truck):</li>
-			<ol>
-				<li>(See below)</li>
-			</ol>
+				<li>Food truck profile view:</li>
+					<ol>
+						<li>Business Name</li>
+						<li>Photo of the truck</li>
+						<li>Blurb about who they are</li>
+						<li>General type of food served and/or menu</li>
+						<li>Links to social media (?).</li>
+						<li>Projected locations for the week/month</li>
+						<li>Login button for food truck owner (admin).</li>
+					</ol>
 			</ul>
 			<br>
 
@@ -68,30 +77,13 @@
 				</li>
 				<br>
 
-				<div>
 				<li>Food truck's "I'm serving here now" view:</li>
 					<ol>
 						<li>The trucker presses one button, which logs the truck in and activates the
 							truck's position on the users' maps.</li>
 						<li>A second button allows the trucker to see and edit the truck's profile.</li>
 					</ol>
-				</div>
-					<br>
-
-				<li>Food truck's profile view, visible to users:</li>
-				<ol>
-					<li>Business Name</li>
-					<li>Ability to login via facebook, and share posts across multiple platforms at once
-						(facebook, instagram, twitter)</li>
-					<li>Photo of the truck</li>
-					<li>Blurb about who they are</li>
-					<li>General type of food served and/or menu</li>
-					<li>Links to social media</li>
-					<li>Projected locations for the week/month</li>
-					<li>Review and star ratings (imported from somewhere?)</li>
-				</ol>
-			</ul>
-
+				<br>
 
 			<ul>
 				<li><strong>Food trucks want to be able to quickly and easily advertise their location
@@ -181,7 +173,7 @@
 
 
 			<h2>ERD, diagram of database structure:</h2>
-				<img src="images/erd 2nd example CrumbTrail.svg" alt="ERD" width="900px"/>
+				<img src="images/crumbtrail ERD.svg" alt="ERD" width="900px"/>
 			<br>
 		</main>
 	</body>
