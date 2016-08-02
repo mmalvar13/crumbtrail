@@ -20,7 +20,7 @@
 						food trucks that are serving now</strong></p>
 			<br>
 
-			<p><strong>What do we want it to do?  User Side: </strong></p>
+			<p><strong>For the hungry user: </strong></p>
 			<ul>
 				<li>The core user experience will be streamlined, with very little navigation necessary.
 					When the user opens the app, they will immediately see their location on a map as well
@@ -59,7 +59,7 @@
 			</ul>
 			<br>
 
-			<p><strong>What do we want it to do?  Truck Side: </strong></p>
+			<p><strong>For the food truck owner or employee:</strong></p>
 			<ul>
 				<li>The core food truck experience will be also streamlined, with very little
 					navigation necessary. When a truck is ready to serve, the trucker hits
