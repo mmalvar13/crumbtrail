@@ -3,14 +3,19 @@
 	<head>
 		<meta charset="utf 8"/>
 		<title>Crumbtrail </title>
+		<link rel="stylesheet" href="css/stylesheet.css" type="text/css"/>
 	</head>
 	<body>
 		<main>
+			<div class
 			<header>
 				<h1>Crumbtrail: Documentation</h1>
 			</header>
 
-			<h2>Crumbtrail Goals</h2>
+			<div class= mainheaders>
+				<h2>Crumbtrail Goals</h2>
+			</div>
+			<div class="textfields"
 				<p><strong>Crumbtrail allows food trucks to share their location and allows users to find
 						food trucks that are serving now</strong></p>
 			<br>
@@ -118,6 +123,13 @@
 				<li>comment and rating system</li>
 				<li>future locations of food trucks represented by pings on map</li>
 			</ul>
+
+			<h2>Executive Summary</h2>
+			<br>
+			</div>
+			<div class= overview>
+			<p>The purpose of this site is to allow users to find food trucks both on the go and as part of future planning. The user will be able to find the food truck that suits them at that moment. There is also the other side of the site that allows food truck owners to advertise their business and location in order to receive more traffic and to inform new "eaters" of their business. </p>
+				</div>
 
 		</main>
 	</body>

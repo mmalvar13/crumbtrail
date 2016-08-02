@@ -1,0 +1,26 @@
+/*h1 {
+	font-size: xx-large;
+	margin: auto;
+	background-color: seagreen;
+	padding: 1em .5em;
+	font-family: "Bebas Neue", "sans-serif";
+	box-sizing: content-box;
+	text-align: center;
+
+}
+
+.mainheaders {
+	font-family: "Bebas Neue", "sans-serif";
+	font-size: xx-large;
+}
+.overview {
+	font-size: xx-large;
+	box-sizing: content-box;
+	font-family: "Bebas Neue", "sans-serif";
+	padding-right: auto;
+}
+
+.textfields {
+	font-family: "Bebas Neue", "sans-serif" ;
+	font-size: xx-large;
+}
