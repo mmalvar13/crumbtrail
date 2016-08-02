@@ -64,7 +64,7 @@
 				<li>The core food truck experience will be also streamlined, with very little
 					navigation necessary. When a truck is ready to serve, the trucker hits
 					one button in the app, and hungry users will immediately know the active
-					truck's location.</li>
+					truck's location. </li>
 				<br>
 
 				<li>How the food truck uses the map view:</li>
