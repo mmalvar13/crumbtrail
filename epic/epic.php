@@ -77,79 +77,49 @@
 
 				<li>Trucker's login/register page:</li>
 					<ol>
-						<li>Two buttons: "Truck login" and "New truck registration".</li>
-						<li>"Truck login" button has truck name and password fields.</li>
-						<li>"New truck registration" button links to New Truck Registration page.</li>
+						<li>Truck name field, password field, login button.</li>
+						<li>"New truck registration" button, links to New Truck Registration page.</li>
 					</ol>
-
-				<li>
-					<ol>
-						<li></li>
-						<li></li>
-						<li></li>
-					</ol>
-
-
-				<li>
-					<ol>
-						<li></li>
-						<li></li>
-						<li></li>
-					</ol>
-
-
-
-
-				<li>
-					<ol>
-						<li>We want food truck owners to create a profile to inform users about their truck.</li>
-						<li>We want them to inform the community of their current location</li>
-						<li>We want an avenue for food trucks to gain more business from the surrounding community</li>
-						<li>We want food truck owners to be able to post future locations</li>
-					</ol>
-				</li>
 				<br>
 
-
-			</ul>
-
-			<ul>
-				<li><strong>Food trucks want to be able to quickly and easily advertise their location
-						when they are currently serving</strong></li>
+				<li>Trucker's new registration page, with form boxes to fill in:</li>
+					<ol>
+						<li>one?</li>
+						<li>two?</li>
+						<li>three?</li>
+						<li>four?</li>
+						<li>five?</li>
+					</ol>
 				<br>
-				<li>***when they open the app, they can see a map of the city and the food trucks that are out now.</li>
-				<li>They can easily push a button that says "serving now". Will provide a pop up that will
-					detect their location and autofill for them by default. They also have the option of writing
-					in a different location (in the case that an administrator/boss is in charge of the profile
-					and sharing where one of their employees is with the truck) </li>
-			</ul>
 
-			<p>Each truck/business has a profile that is visible to users:</p>
-			<ol>
-				<li>on the server side, the profile may have:</li>
-			</ol>
-			<ul>
-				<li>Email login/login with facebook option</li>
-				<li>Password</li>
-				<li>Name of business</li>
-				<li>Image</li>
-				<li>Social media links</li>
-				<li>Automatic broadcast to social media?</li>
-			</ul>
+				<li>Truck's profile editing page</li>
+					<ol>
+						<li>Truck name</li>
+						<li>Owner's name</li>
+						<li>Short description of food served</li>
+						<li>Longer blurb</li>
+						<li>Photo of truck?</li>
+						<li>more stuff?</li>
+						<li>At the bottom, a button to link to the Truck settings page</li>
+					</ol>
+					<br>
 
-			<h2>Executive Summary</h2>
+				<li>Truck's settings page</li>
+				<ol>
+					<li>A way to invite other admins or employees./li>
+					<li>other stuff?</li>
+					<li>more?</li>
+					<li>more?</li>
+				</ol>
+			</ul>
 			<br>
-			</div>
-			<div class= overview>
-			<p>The purpose of this site is to allow users to find food trucks both on the go and as part of future planning. The user will be able to find the food truck that suits them at that moment. There is also the other side of the site that allows food truck owners to advertise their business and location in order to receive more traffic and to inform new "eaters" of their business. </p>
-				</div>
 
 			<hr>
-			<h2>Persona for company employee</h2>
-			<p>NAME: Freddy foodtuck</p>
-			<p>AGE:22</p>
+			<h2>Persona for company worker</h2>
+			<p>NAME: Freddy Foodtruck</p>
+			<p>AGE: 22</p>
 			<p>PROFESSION: Student and working part time as a food truck driver & cashier</p>
-			<p>TECHNOLOGY: Using a Andriod smartphone</p>
+			<p>TECHNOLOGY: Using a Android smartphone</p>
 			<p>ATTITUDES & BEHAVIORS: Freddy is going to school and working part time as a food truck minion. Time is always of the essence, so he can't be wasting any trying to sign into an application and broadcast his location.</p>
 			<p>FRUSTRATIONS & NEEDS: Freddy needs to waste as little time as possible logging into the application, and broadcasting his signal. Additionally, he has no interest in spending anything more than a couple minutes registering his account with the application. He needs to login, broadcast location, and start cooking food and helping customers</p>
 			<p>GOALS: Freddy's goal is to have the process of using an application to broadcast his location take less than 20 seconds, so his boss knows he's working and where he is, and most importantly the customers know where he is.</p>
@@ -158,42 +128,26 @@
 			<h2>User Story</h2>
 			<ul>
 				<li><strong>Who:</strong> Freddy Foodtruck</li>
-				<li><strong>What:</strong> Employee for a food truck company</li>
+				<li><strong>What:</strong> Works for a food truck company</li>
 				<li><strong>When:</strong> All times of day, and various days of the week</li>
 				<li><strong>Why:</strong> Because he needs to make money</li>
-				<li><strong>Where:</strong> In a truck on his andriod smartphone</li>
+				<li><strong>Where:</strong> In a truck on his Android smartphone</li>
 			</ul>
 			<h2>Interaction Flow</h2>
 			<h4>Signing up for application</h4>
-			<ol>
-				<li>Admin/owner of company account will enter the email of the person they wish to grant a employee account.</li>
-				<li>This will generate an email which is sent to the employee.</li>
-				<li>Once they click on the email, the employee is redirected to a unique signup page where their email is already pre-loaded.</li>
-				<li>They then fill in their name, and password x2, and a phone number to create a employee account.</li>
-				<li>Once they submit all this information, they will receive an email asking them to verify their account creation.</li>
-				<li>After clicking on the link, their account has been created</li>
-			</ol>
-
+			<p>Admin/owner of company account will enter the email of the person they wish to grant a worker account. This will generate an email which is sent to the worker. Once they click on the email, the worker is redirected to a unique signup page where their email is already pre-loaded. They then fill in their name, password x2, and a phone number to create a worker account. Once they submit all this information, they will receive an email asking them to verify their account creation.</p>
 			<h4>Using the application</h4>
-			<ol>
-				<li>Owner of a food truck company opens the Crumbtrail application</li>
-				<li>They then click on the login/signup button on the homepage</li>
-				<li>On the signup page there are two sections</li>
-				<li>The top section is for filling in user information </li>
-				<li>The user section requires name(first/last), email, phone number, and password</li>
-				<li>The bottom section is for filling in company information</li>
-				<li>The company section requires company-name, company-email, company-</li>
-			</ol>
+			<p>worker will click on the</p>
 			<hr>
 
 			<h2>Persona, for someone who plans to eat at a food truck in the future.</h2>
-			<p>Name:  Will B. Hungry</p>
-			<p>Age:  29</p>
-			<p>Profession:  Will is a history instructor at CNM.</p>
-			<p>Technology:  Will always carries his Android smart phone in his pocket.  At home, he uses a Dell laptop running Linux.  His network connection at home is just fast enough for streaming movies, but is not extremely speedy.</p>
-			<p>Attitudes and behaviors:  Will does not like to cook.  He loves eating at resturants and food trucks, both for the food and for the social atmosphere.  In the past, Will has really enjoyed eating from food trucks at music festivals, but he has not used a food truck in Albuquerque.</p>
-			<p>Frustrations and needs:  Not only does Will hate to cook, but his apartment has a tiny kitchen which is too cramped to prepare anything except coffee.  Will has a few favorite resturants in Albuquerque, but he wants to try new resturants and he is hoping to find some good food trucks in town.  To find food trucks, he could simply Google "food trucks Albuquerque", but then he would have to wade through each food truck's website, looking for the type of food they serve, and trying to find their schedule of days, times and locations.</p>
-			<p>Goals:  Will is going out with friends this Saturday night.  They plan to meet in the downtown area around 8 pm, and look for a late dinner.  Will suspects they can find food trucks downtown on a Saturday night, and he would like to learn where the food trucks will be located that night.  On Saturday afternoon, Will wants to use his laptop to find which trucks will be located in downtown Albuquerque that night, where exactly they will be parked, and what kind of food they will be serving.</p>
+			<p>Name: Will B. Hungry</p>
+			<p>Age: 29</p>
+			<p>Profession: Will is a history instructor at CNM.</p>
+			<p>Technology: Will always carries his Android smart phone in his pocket.  At home, he uses a Dell laptop running Linux.  His network connection at home is just fast enough for streaming movies, but is not extremely speedy.</p>
+			<p>Attitudes and behaviors: Will does not like to cook.  He loves eating at resturants and food trucks, both for the food and for the social atmosphere.  In the past, Will has really enjoyed eating from food trucks at music festivals, but he has not used a food truck in Albuquerque.</p>
+			<p>Frustrations and needs: Not only does Will hate to cook, but his apartment has a tiny kitchen which is too cramped to prepare anything except coffee.  Will has a few favorite resturants in Albuquerque, but he wants to try new resturants and he is hoping to find some good food trucks in town.  To find food trucks, he could simply Google "food trucks Albuquerque", but then he would have to wade through each food truck's website, looking for the type of food they serve, and trying to find their schedule of days, times and locations.</p>
+			<p>Goals: Will is going out with friends this Saturday night.  They plan to meet in the downtown area around 8 pm, and look for a late dinner.  Will suspects they can find food trucks downtown on a Saturday night, and he would like to learn where the food trucks will be located that night.  On Saturday afternoon, Will wants to use his laptop to find which trucks will be located in downtown Albuquerque that night, where exactly they will be parked, and what kind of food they will be serving.</p>
 
 			<h2>Interaction flow, for someone who plans to eat at a food truck in the future.</h2>
 				<ol>
@@ -206,6 +160,20 @@
 					<li>User clicks on the "Back to list" button, to look for more interesting trucks.</li>
 					<li>User chooses the truck they want to visit in the future, and bookmarks the truck profile page.</li>
 				</ol>
+
+			<h2>Conceptual model, of database structure:</h2>
+				<ul>
+					<li>Each user (owner [admin] or employee) can belong to many companies.</li>
+					<li>Each company can have more than one user.</li>
+					<li>The relationship between user and company is many-to-many.</li>
+					<li>Each company can have many trucks.</li>
+					<li>Each truck belongs to only one company.</li>
+					<li>The relationship between company and truck is one-to-many.</li>
+					<li>Each truck has many schedule items (location/time combinations).</li>
+					<li>Each schedule belongs to only one truck.</li>
+					<li>The relationship between schedule and truck is one-to-many.</li>
+					<li>The worker entity specifies the relationship between user and company.  Each worker has a workerType: "A" for admin, or "E" for employee. </li>
+				</ul>
 
 			<h2>ERD, diagram of database structure:</h2>
 				<img src="images/crumbtrail ERD.svg" alt="ERD" width="900px"/>
