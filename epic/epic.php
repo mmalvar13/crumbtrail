@@ -31,7 +31,7 @@
 					<ol>
 						<li>Shows the user's location, at the center of the map.</li>
 						<li>Shows the locations of nearby active food trucks.</li>
-						<li>"Truck login" button, at top right corner.</li>
+						<li>"Truck login/sign up" button, at top right corner.</li>
 						<li>"Complete list" of trucks button, at top left corner.</li>
 						<li>Search field, top center.</li>
 						<li>List of nearby active food trucks, slides up from bottom.  Shows nearest trucks first.</li>
@@ -48,6 +48,7 @@
 
 				<li>Food truck profile view:</li>
 					<ol>
+						<li>If the truck is serving, the user sees a green "Go to map" button, which shows the live food truck's location at the center of the map.</li>
 						<li>Business name.</li>
 						<li>Photo of the truck.</li>
 						<li>Blurb about who they are.</li>
@@ -55,7 +56,6 @@
 						<li>Links to social media (?).</li>
 						<li>Weekly schedule of locations.</li>
 						<li>Space for showing special event day and location.</li>
-						<li>Login button for food truck owner (admin).</li>
 					</ol>
 			</ul>
 			<br>
@@ -68,31 +68,34 @@
 					truck's location. </li>
 				<br>
 
-				<li>How the food truck uses the map view:</li>
+				<li>The map view for food truckers:</li>
 					<ol>
-						<li>The worker presses the "Truck login" button, which logs the truck in and activates the
-						truck's position on the users' maps.</li>
-						<li>The worker can look at the map view to confirm that their truck is now shown on the map.</li>
+						<li>The worker toggles a "Go Live" switch.  In the "on" position, the truck's location is visible on the user's map.</li>
+						<li>The truck's location is at the center of the trucker's map.</li>
+						<li>The worker can look at the "Go Live" switch to confirm that their truck is now shown on the map.</li>
+						<li>A button which links to the truck profile editing page.</li>
+						<li>A button which links to the truck settings page.</li>
 					</ol>
 				<br>
 
-				<li>Trucker's login/register page:</li>
+				<li>Trucker's login/registration page:</li>
 					<ol>
-						<li>Truck name field, password field, login button.</li>
+						<li>Truck name field, password field, login button.  Successful login takes the trucker to the trucker's map view.</li>
 						<li>"New truck registration" button, links to New Truck Registration page.</li>
 					</ol>
 				<br>
 
-				<li>Trucker's new registration page, with form boxes to fill in:</li>
+				<li>New truck registration page, with form boxes to fill in:</li>
 					<ol>
 						<li>Admin's first name, last name, email, phone number.</li>
 						<li>Company name.</li>
 						<li>Company address.</li>
-						<li>four?</li>
+						<li>Business license number.</li>
+						<li>Health inspection number?</li>
 					</ol>
 				<br>
 
-				<li>Food truck profile editing page, with editable field for:</li>
+				<li>Truck profile editing page, with editable field for:</li>
 				<ol>
 					<li>Business name.</li>
 					<li>Photo of the truck (a way to choose a photo?)</li>
@@ -101,15 +104,12 @@
 					<li>Links to social media (?).</li>
 					<li>Weekly schedule of locations.</li>
 					<li>Space for showing special event day and location.</li>
-					<li>Login button for food truck owner (admin).</li>
-					<li>At the bottom, a button to link to the Truck settings page</li>
 				</ol>
 				<br>
 
-				<li>Truck's settings page</li>
+				<li>Truck's settings page:</li>
 				<ol>
-					<li>A way to invite other admins or employees./li>
-					<li>other stuff?</li>
+					<li>A way to invite other admins or employees to login to their company./li>
 					<li>more?</li>
 					<li>more?</li>
 				</ol>
