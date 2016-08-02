@@ -189,7 +189,7 @@
 					<li>The relationship between schedule and truck is one-to-many.</li>
 					<li>The worker entity specifies the relationship between user and company.  Each worker has a workerType: "A" for admin, or "E" for employee. </li>
 				</ul>
-			<hr>
+			<hr> 
 			<h2>ERD, diagram of database structure:</h2>
 				<img src="images/crumbtrail ERD.svg" alt="ERD" width="900px"/>
 			<br>
