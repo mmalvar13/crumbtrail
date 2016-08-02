@@ -67,6 +67,39 @@
 					truck's location.</li>
 				<br>
 
+				<li>How the food truck uses the map view:</li>
+					<ol>
+						<li>The worker presses the "Truck login" button, which logs the truck in and activates the
+						truck's position on the users' maps.</li>
+						<li>The worker can look at the map view to confirm that their truck is now shown on the map.</li>
+					</ol>
+				<br>
+
+				<li>Trucker's login/register page:</li>
+					<ol>
+						<li>Two buttons: "Truck login" and "New truck registration".</li>
+						<li>"Truck login" button has truck name and password fields.</li>
+						<li>"New truck registration" button links to New Truck Registration page.</li>
+					</ol>
+
+				<li>
+					<ol>
+						<li></li>
+						<li></li>
+						<li></li>
+					</ol>
+
+
+				<li>
+					<ol>
+						<li></li>
+						<li></li>
+						<li></li>
+					</ol>
+
+
+
+
 				<li>
 					<ol>
 						<li>We want food truck owners to create a profile to inform users about their truck.</li>
@@ -77,13 +110,8 @@
 				</li>
 				<br>
 
-				<li>Food truck's "I'm serving here now" view:</li>
-					<ol>
-						<li>The trucker presses one button, which logs the truck in and activates the
-							truck's position on the users' maps.</li>
-						<li>A second button allows the trucker to see and edit the truck's profile.</li>
-					</ol>
-				<br>
+
+			</ul>
 
 			<ul>
 				<li><strong>Food trucks want to be able to quickly and easily advertise their location
@@ -107,14 +135,6 @@
 				<li>Image</li>
 				<li>Social media links</li>
 				<li>Automatic broadcast to social media?</li>
-			</ul>
-
-			<h2>Dreamthings:</h2>
-			<ul>
-				<li>automatic broadcast to social media</li>
-				<li>social media login via facebook</li>
-				<li>comment and rating system</li>
-				<li>future locations of food trucks represented by pings on map</li>
 			</ul>
 
 			<h2>Executive Summary</h2>
@@ -170,7 +190,6 @@
 					<li>User clicks on the "Back to list" button, to look for more interesting trucks.</li>
 					<li>User chooses the truck they want to visit in the future, and bookmarks the truck profile page.</li>
 				</ol>
-
 
 			<h2>ERD, diagram of database structure:</h2>
 				<img src="images/crumbtrail ERD.svg" alt="ERD" width="900px"/>
