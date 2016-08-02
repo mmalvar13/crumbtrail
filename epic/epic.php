@@ -145,7 +145,7 @@
 				</div>
 
 			<hr>
-			<h2>Persona for company worker</h2>
+			<h2>Persona for company employee</h2>
 			<p>NAME: Freddy foodtuck</p>
 			<p>AGE:22</p>
 			<p>PROFESSION: Student and working part time as a food truck driver & cashier</p>
@@ -158,16 +158,32 @@
 			<h2>User Story</h2>
 			<ul>
 				<li><strong>Who:</strong> Freddy Foodtruck</li>
-				<li><strong>What:</strong> Works for a food truck company</li>
+				<li><strong>What:</strong> Employee for a food truck company</li>
 				<li><strong>When:</strong> All times of day, and various days of the week</li>
 				<li><strong>Why:</strong> Because he needs to make money</li>
 				<li><strong>Where:</strong> In a truck on his andriod smartphone</li>
 			</ul>
 			<h2>Interaction Flow</h2>
 			<h4>Signing up for application</h4>
-			<p>Admin/owner of company account will enter the email of the person they wish to grant a worker account. This will generate an email which is sent to the worker. Once they click on the email, the worker is redirected to a unique signup page where their email is already pre-loaded. They then fill in their name, password x2, and a phone number to create a worker account. Once they submit all this information, they will receive an email asking them to verify their account creation.</p>
+			<ol>
+				<li>Admin/owner of company account will enter the email of the person they wish to grant a employee account.</li>
+				<li>This will generate an email which is sent to the employee.</li>
+				<li>Once they click on the email, the employee is redirected to a unique signup page where their email is already pre-loaded.</li>
+				<li>They then fill in their name, and password x2, and a phone number to create a employee account.</li>
+				<li>Once they submit all this information, they will receive an email asking them to verify their account creation.</li>
+				<li>After clicking on the link, their account has been created</li>
+			</ol>
+
 			<h4>Using the application</h4>
-			<p>worker will click on the </p>
+			<ol>
+				<li>Owner of a food truck company opens the Crumbtrail application</li>
+				<li>They then click on the login/signup button on the homepage</li>
+				<li>On the signup page there are two sections</li>
+				<li>The top section is for filling in user information </li>
+				<li>The user section requires name(first/last), email, phone number, and password</li>
+				<li>The bottom section is for filling in company information</li>
+				<li>The company section requires company-name, company-email, company-</li>
+			</ol>
 			<hr>
 
 			<h2>Persona, for someone who plans to eat at a food truck in the future.</h2>
