@@ -160,6 +160,7 @@
 					<li>User clicks on the "Back to list" button, to look for more interesting trucks.</li>
 					<li>User chooses the truck they want to visit in the future, and bookmarks the truck profile page.</li>
 				</ol>
+			<hr>
 			<h2>Persona for the user who wants to eat now.</h2>
 			<p>Name: Florence Gray</p>
 			<p>Age: 20</p>
@@ -174,6 +175,7 @@
 				<li>She will use the search bar and type in "tacos"</li>
 				<li>The map will post all food truck that are open in that area</li>
 			</ol>
+			<hr>
 			<h2>Conceptual model, of database structure:</h2>
 				<ul>
 					<li>Each user (owner [admin] or employee) can belong to many companies.</li>
@@ -187,7 +189,7 @@
 					<li>The relationship between schedule and truck is one-to-many.</li>
 					<li>The worker entity specifies the relationship between user and company.  Each worker has a workerType: "A" for admin, or "E" for employee. </li>
 				</ul>
-
+			<hr>
 			<h2>ERD, diagram of database structure:</h2>
 				<img src="images/crumbtrail ERD.svg" alt="ERD" width="900px"/>
 			<br>
