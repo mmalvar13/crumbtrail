@@ -25,19 +25,3 @@ h1 {
 	font-size: xx-large;
 }
 
-div{
-	background: #C136A1;
-	-webkit-transition: background-color 2s ease-out;
-	-moz-transition: background-color 2s ease-out;
-	-o-transition: background-color 2s ease-out;
-	transition: background-color 2s ease-out;
-}
-
-div:hover {
-	background-color: green;
-	cursor: pointer;
-	-webkit-transition: background-color 2s ease-out;
-	-moz-transition: background-color 2s ease-out;
-	-o-transition: background-color 2s ease-out;
-	transition: background-color 2s ease-out;
-}
