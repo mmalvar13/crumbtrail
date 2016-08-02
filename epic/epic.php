@@ -69,12 +69,14 @@
 				</li>
 				<br>
 
+				<div>
 				<li>Food truck's "I'm serving here now" view:</li>
 					<ol>
 						<li>The trucker presses one button, which logs the truck in and activates the
 							truck's position on the users' maps.</li>
 						<li>A second button allows the trucker to see and edit the truck's profile.</li>
 					</ol>
+				</div>
 					<br>
 
 				<li>Food truck's profile view, visible to users:</li>
