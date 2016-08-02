@@ -48,12 +48,13 @@
 
 				<li>Food truck profile view:</li>
 					<ol>
-						<li>Business Name</li>
-						<li>Photo of the truck</li>
-						<li>Blurb about who they are</li>
-						<li>General type of food served and/or menu</li>
+						<li>Business name.</li>
+						<li>Photo of the truck.</li>
+						<li>Blurb about who they are.</li>
+						<li>General type of food served and/or menu.</li>
 						<li>Links to social media (?).</li>
-						<li>Projected locations for the week/month</li>
+						<li>Weekly schedule of locations.</li>
+						<li>Space for showing special event day and location.</li>
 						<li>Login button for food truck owner (admin).</li>
 					</ol>
 			</ul>
@@ -84,25 +85,26 @@
 
 				<li>Trucker's new registration page, with form boxes to fill in:</li>
 					<ol>
-						<li>one?</li>
-						<li>two?</li>
-						<li>three?</li>
+						<li>Admin's first name, last name, email, phone number.</li>
+						<li>Company name.</li>
+						<li>Company address.</li>
 						<li>four?</li>
-						<li>five?</li>
 					</ol>
 				<br>
 
-				<li>Truck's profile editing page</li>
-					<ol>
-						<li>Truck name</li>
-						<li>Owner's name</li>
-						<li>Short description of food served</li>
-						<li>Longer blurb</li>
-						<li>Photo of truck?</li>
-						<li>more stuff?</li>
-						<li>At the bottom, a button to link to the Truck settings page</li>
-					</ol>
-					<br>
+				<li>Food truck profile editing page, with editable field for:</li>
+				<ol>
+					<li>Business name.</li>
+					<li>Photo of the truck (a way to choose a photo?)</li>
+					<li>Blurb about who they are.</li>
+					<li>General type of food served and/or menu.</li>
+					<li>Links to social media (?).</li>
+					<li>Weekly schedule of locations.</li>
+					<li>Space for showing special event day and location.</li>
+					<li>Login button for food truck owner (admin).</li>
+					<li>At the bottom, a button to link to the Truck settings page</li>
+				</ol>
+				<br>
 
 				<li>Truck's settings page</li>
 				<ol>
