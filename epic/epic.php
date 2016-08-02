@@ -50,7 +50,6 @@
 			</ul>
 			<br>
 
-
 			<p><strong>What do we want it to do?  Truck Side: </strong></p>
 			<ul>
 				<li>The core food truck experience will be also streamlined, with very little
@@ -180,6 +179,10 @@
 					<li>User chooses the truck they want to visit in the future, and bookmarks the truck profile page.</li>
 				</ol>
 
+
+			<h2>ERD, diagram of database structure:</h2>
+				<img src="images/erd 2nd example CrumbTrail.svg" alt="ERD" width="900px"/>
+			<br>
 		</main>
 	</body>
 </html>
