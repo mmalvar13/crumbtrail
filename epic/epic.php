@@ -159,6 +159,26 @@
 			<p>worker will click on the </p>
 			<hr>
 
+			<h2>Persona, for someone who plans to eat at a food truck in the future.</h2>
+			<p>Name:  Will B. Hungry</p>
+			<p>Age:  29</p>
+			<p>Profession:  Will is a history instructor at CNM.</p>
+			<p>Technology:  Will always carries his Android smart phone in his pocket.  At home, he uses a Dell laptop running Linux.  His network connection at home is just fast enough for streaming movies, but is not extremely speedy.</p>
+			<p>Attitudes and behaviors:  Will does not like to cook.  He loves eating at resturants and food trucks, both for the food and for the social atmosphere.  In the past, Will has really enjoyed eating from food trucks at music festivals, but he has not used a food truck in Albuquerque.</p>
+			<p>Frustrations and needs:  Not only does Will hate to cook, but his apartment has a tiny kitchen which is too cramped to prepare anything except coffee.  Will has a few favorite resturants in Albuquerque, but he wants to try new resturants and he is hoping to find some good food trucks in town.  To find food trucks, he could simply Google "food trucks Albuquerque", but then he would have to wade through each food truck's website, looking for the type of food they serve, and trying to find their schedule of days, times and locations.</p>
+			<p>Goals:  Will is going out with friends this Saturday night.  They plan to meet in the downtown area around 8 pm, and look for a late dinner.  Will suspects they can find food trucks downtown on a Saturday night, and he would like to learn where the food trucks will be located that night.  On Saturday afternoon, Will wants to use his laptop to find which trucks will be located in downtown Albuquerque that night, where exactly they will be parked, and what kind of food they will be serving.</p>
+
+			<h2>Interaction flow, for someone who plans to eat at a food truck in the future.</h2>
+				<ol>
+					<li>User opens the web browser on their laptop, and finds the crumbtrails website.</li>
+					<li>User sees the Map page, which shows the current locations of food trucks that are now serving food in Albuquerque.</li>
+					<li>User clicks the "Show complete list" button.</li>
+					<li>User sees a list of all the food trucks that are registered with crumbtrails.  For each truck, the list shows the truck name and a very short description of the type of food that the truck serves.</li>
+					<li>User scrolls through the list, looking for an interesting truck.</li>
+					<li>User clicks on the truck name, and is taken to that truck's profile page, which shows the truck name, the truck blurb, and the truck's schedule (and a photo of the truck?).</li>
+					<li>User clicks on the "Back to list" button, to look for more interesting trucks.</li>
+					<li>User chooses the truck they want to visit in the future, and bookmarks the truck profile page.</li>
+				</ol>
 
 		</main>
 	</body>
