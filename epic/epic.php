@@ -70,7 +70,9 @@
 
 				<li>The map view for food truckers:</li>
 					<ol>
-						<li>The worker toggles a "Go Live" switch.  In the "on" position, the truck's location is visible on the user's map.</li>
+						<li>When the truck is ready to serve food, the worker toggles a "Go Live" switch.</li>
+						<li>In the "on" position, switch is green and the truck's location is visible on the maps.</li>
+						<li>In the "off" position, switch is red and the truck's location is not visible on the maps.</li>
 						<li>The truck's location is at the center of the trucker's map.</li>
 						<li>The worker can look at the "Go Live" switch to confirm that their truck is now shown on the map.</li>
 						<li>A button which links to the truck profile editing page.</li>
