@@ -160,7 +160,20 @@
 					<li>User clicks on the "Back to list" button, to look for more interesting trucks.</li>
 					<li>User chooses the truck they want to visit in the future, and bookmarks the truck profile page.</li>
 				</ol>
-
+			<h2>Persona for the user who wants to eat now.</h2>
+			<p>Name: Florence Gray</p>
+			<p>Age: 20</p>
+			<p>Profession: Florence is a part time coffee shop worker in the downtown area. She works in-between classes and is always busy.</p>
+			<p>Technology: Florence is an Android phone user. However, she does have a Macbook Pro that she uses while in class. She is fluent with both platforms.</p>
+			<p>Attitudes and behaviors: Florence is a very busy worker and student. She does not like waiting in long lines for food. She is intrigued by new things, especially new types of food. Sometimes though, when she wants something specific she is set on that idea. She spends a lot of her time on her phone, so if she is going to search for anything it will be through mobile web or apps.</p>
+			<p>Frustrations and Needs: Florence is busy, she doesn't have time to just walk around a hope she finds something to eat. She wants it now, she wants to know where she is going. From the time she leaves class, she has about three to five minutes to decided where she is going to go. If she is leaving from work, she is more flexible, but doesn't want to spend a lot of time searching for something to eat, she is already exhausted from a long day.  </p>
+			<p>Goals: Florence just got out of class. She has one hour till her next class. She wants to go eat with some friends today. Tacos are the food choice they decide. Florence wants to hop onto CrumbTrail and track down the closest Taco truck so they can eat and get back to campus. </p>
+			<h2>Interaction Flow</h2>
+			<ol>
+				<li>Florence will look up www.crumbtrail.io</li>
+				<li>She will use the search bar and type in "tacos"</li>
+				<li>The map will post all food truck that are open in that area</li>
+			</ol>
 			<h2>Conceptual model, of database structure:</h2>
 				<ul>
 					<li>Each user (owner [admin] or employee) can belong to many companies.</li>
