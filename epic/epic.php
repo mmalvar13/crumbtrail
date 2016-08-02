@@ -119,29 +119,44 @@
 			<br>
 
 			<hr>
-			<h2>Persona for company worker</h2>
-			<p>NAME: Freddy Foodtruck</p>
-			<p>AGE: 22</p>
+			<h2>Persona for company employee</h2>
+			<p>NAME: Freddy foodtuck</p>
+			<p>AGE:22</p>
 			<p>PROFESSION: Student and working part time as a food truck driver & cashier</p>
-			<p>TECHNOLOGY: Using a Android smartphone</p>
+			<p>TECHNOLOGY: Using a Andriod smartphone</p>
 			<p>ATTITUDES & BEHAVIORS: Freddy is going to school and working part time as a food truck minion. Time is always of the essence, so he can't be wasting any trying to sign into an application and broadcast his location.</p>
 			<p>FRUSTRATIONS & NEEDS: Freddy needs to waste as little time as possible logging into the application, and broadcasting his signal. Additionally, he has no interest in spending anything more than a couple minutes registering his account with the application. He needs to login, broadcast location, and start cooking food and helping customers</p>
 			<p>GOALS: Freddy's goal is to have the process of using an application to broadcast his location take less than 20 seconds, so his boss knows he's working and where he is, and most importantly the customers know where he is.</p>
-			<h2>Use Case</h2>
-			<p> Freddy is going to school full time and working part time for a food truck company. He has very little time to set up the truck, prepare food, drive to the location and start serving customers. He needs a quick and efficient method of creating a profile in the application used by his boss which will allow him to login and broadcast his location.</p>
 			<h2>User Story</h2>
+			<p> Freddy is going to school full time and working part time for a food truck company. He has very little time to set up the truck, prepare food, drive to the location and start serving customers. He needs a quick and efficient method of creating a profile in the application used by his boss which will allow him to login and broadcast his location.</p>
+			<h2>Use Case</h2>
 			<ul>
 				<li><strong>Who:</strong> Freddy Foodtruck</li>
-				<li><strong>What:</strong> Works for a food truck company</li>
+				<li><strong>What:</strong> Employee for a food truck company</li>
 				<li><strong>When:</strong> All times of day, and various days of the week</li>
 				<li><strong>Why:</strong> Because he needs to make money</li>
-				<li><strong>Where:</strong> In a truck on his Android smartphone</li>
+				<li><strong>Where:</strong> In a truck on his andriod smartphone</li>
 			</ul>
 			<h2>Interaction Flow</h2>
 			<h4>Signing up for application</h4>
-			<p>Admin/owner of company account will enter the email of the person they wish to grant a worker account. This will generate an email which is sent to the worker. Once they click on the email, the worker is redirected to a unique signup page where their email is already pre-loaded. They then fill in their name, password x2, and a phone number to create a worker account. Once they submit all this information, they will receive an email asking them to verify their account creation.</p>
+			<ol>
+				<li>Admin/owner of company account will enter the email of the person they wish to grant a employee account.</li>
+				<li>This will generate an email which is sent to the employee.</li>
+				<li>Once the potential employee clicks on the email, they are redirected to a unique signup page where their email is already pre-loaded.</li>
+				<li>They then fill in their name, and password x2, and a phone number to create a employee account.</li>
+				<li>Once they submit all this information, they will receive an email asking them to verify their account creation.</li>
+				<li>After clicking on the link, their account has been created</li>
+			</ol>
+
 			<h4>Using the application</h4>
-			<p>worker will click on the</p>
+			<ol>
+				<li>Employee clicks on the CrumbTrail application icon on their phone</li>
+				<li>On the application home screen, they click on the login button, which opens a new page</li>
+				<li>On that page they enter their email and password to login</li>
+				<li>After logging in, they are directed to the 'truck-map' page, where they see their location in google maps, and have the option to broadcast their location</li>
+				<li>After clicking "broadcast now" the employee will be prompted to confirm the sharing of their location. After doing so, the map display changes to show a green "serving now" banner accross the top for as long as they wish to broadcast their location </li>
+				<li>Once the employee has finished serving, they click the "serving now" banner to cancel the transmission of their location.</li>
+			</ol>
 			<hr>
 
 			<h2>Persona, for someone who plans to eat at a food truck in the future.</h2>
