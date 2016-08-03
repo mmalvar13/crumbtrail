@@ -20,16 +20,16 @@
 						food trucks that are serving now</strong></p>
 			<br>
 
-			<p><strong>For the hungry user: </strong></p>
+			<p><strong>For the hungry eater: </strong></p>
 			<ul>
-				<li>The core user experience will be streamlined, with very little navigation necessary.
-					When the user opens the app, they will immediately see their location on a map as well
+				<li>The core experience of the hungry eater will be streamlined, with very little navigation necessary.
+					When the eater opens the app, they will immediately see their location on a map as well
 					as tickers for any trucks in the city</li>
 				<br>
 
-				<li>User's map view (Google Maps API):</li>
+				<li>Eater map page (using Google Maps API):</li>
 					<ol>
-						<li>Shows the user's location, at the center of the map.</li>
+						<li>Shows the eater's location, at the center of the map.</li>
 						<li>Shows the locations of nearby active food trucks.</li>
 						<li>"Truck login/sign up" button, at top right corner.</li>
 						<li>"Complete list" of trucks button, at top left corner.</li>
@@ -38,32 +38,29 @@
 					</ol>
 				<br>
 
-				<li>Complete list view:</li>
+				<li>Complete list of all companies:</li>
 					<ol>
-						<li>A list of all food trucks that are registered on crumbtrail.</li>
-						<li>Shows the name of the truck, and a short description of the food they serve.</li>
-						<li>By touching the name of a truck on a list, the user can see the truck's profile page.</li>
+						<li>A list of all food truck companies that are registered on crumbtrail.</li>
+						<li>Shows the name of the company, and a short description of the food they serve.</li>
+						<li>By touching the name of a company on a list, the user can see the company's profile page.</li>
 					</ol>
 			<br>
 
-				<li>Food truck profile view:</li>
+				<li>Company profile page:</li>
 					<ol>
-						<li>If the truck is serving, the user sees a green "Go to map" button, which shows the live food truck's location at the center of the map.</li>
+						<li>Shows whether or not any of the company's trucks are "Live" (serving now).</li>
 						<li>Business name.</li>
-						<li>Photo of the truck.</li>
+						<li>Photo of the truck(s).</li>
 						<li>Blurb about who they are.</li>
 						<li>General type of food served and/or menu.</li>
-						<li>Links to social media (?).</li>
 						<li>Weekly schedule of locations.</li>
 						<li>Space for showing special event day and location.</li>
-						<li>NEED: A company might have several trucks, so we need a good way for the company
-							to show which of their trucks is active; e.g. a green light next to active trucks, a red
-							light next to inactive trucks.</li>
 					</ol>
 			</ul>
 			<br>
+			<hr>
 
-			<p><strong>For the food truck owner or employee:</strong></p>
+			<p><strong>For the food truck owner (admin) or employee:</strong></p>
 			<ul>
 				<li>The core food truck experience will be also streamlined, with very little
 					navigation necessary. When a truck is ready to serve, the trucker hits
@@ -71,58 +68,76 @@
 					truck's location. </li>
 				<br>
 
-				<li>The map view for food truck workers:</li>
+				<li>User login/registration page:</li>
+				<ol>
+					<li>User gets to this page by pressing the top right button on the eater map page</li>
+					<li>Company name field, password field, login button.</li>
+					<li>"New company registration" button, links to New Company Registration page.</li>
+				</ol>
+				<br>
+
+				<li>Truck map page:</li>
 					<ol>
-						<li>The worker gets to this page via the Trucker's login/registration page.</li>
-						<li>When the truck is ready to serve food, the worker toggles a "Go Live" switch.</li>
+						<li>The user gets to this page via the user login/registration page.</li>
+						<li>When the truck is ready to serve food, the user toggles a "Go Live" switch.</li>
 						<li>In the "on" position, switch is green and the truck's location is visible on the maps.</li>
 						<li>In the "off" position, switch is red and the truck's location is not visible on the maps.</li>
-						<li>The truck's location is at the center of the trucker's map.</li>
-						<li>The worker can look at the "Go Live" switch to confirm that their truck is now shown on the map.</li>
-						<li>A button which links to the truck profile editing page.</li>
-						<li>A button which links to the truck settings page.</li>
-						<li>NEED: A company might have several trucks, so we need a good way for workers to specify
-							which truck they mean when they toggle the "Go Live" switch.</li>
+						<li>The truck's location is at the center of the truck map page.</li>
+						<li>User also sees radio buttons, to choose which of the company's trucks they are serving from: "Truck #1", "Truck #2", etc.</li>
+						<li>User can also set the "End time" for when the truck will close.</li>
 					</ol>
 				<br>
 
-				<li>Trucker's login/registration page:</li>
-					<ol>
-						<li>Truck name field, password field, login button.  Successful login takes the trucker to the trucker's map view.</li>
-						<li>"New truck registration" button, links to New Truck Registration page.</li>
-					</ol>
-				<br>
-
-				<li>New truck registration page, with form boxes to fill in:</li>
-					<ol>
-						<li>Admin's first name, last name, email, phone number.</li>
-						<li>Company name.</li>
-						<li>Company address.</li>
-						<li>Business license number.</li>
-						<li>Health inspection number?</li>
-					</ol>
-				<br>
-
-				<li>Truck profile editing page, with editable field for:</li>
+				<li>Edit company profile page:</li>
 				<ol>
+					<li>Admin gets to this page via the company profile page.</li>
 					<li>Business name.</li>
 					<li>Photo of the truck (a way to choose a photo?)</li>
 					<li>Blurb about who they are.</li>
 					<li>General type of food served and/or menu.</li>
-					<li>Links to social media (?).</li>
-					<li>Weekly schedule of locations.</li>
+					<li>A text field for them to enter their schedule of times/days and locations.</li>
 					<li>Space for showing special event day and location.</li>
 				</ol>
 				<br>
 
-				<li>Truck's settings page:</li>
+				<li>Edit user profile page:</li>
 				<ol>
-					<li>A way to invite other admins or employees to login to their company.</li>
-					<li>more?</li>
-					<li>more?</li>
+					<li>User name</li>
+					<li>User email.</li>
+					<li>User password</li>
+					<li>Permit number (admin only)</li>
+					<li>License number (admin only)</li>
+				</ol>
+
+				<li>Company settings page (admins only):</li>
+				<ol>
+					<li>Change number of trucks</li>
+					<li>Invite employees to become users, associated with that company</li>
+					<li>Change company email, etc.</li>
+				</ol>
+				<br>
+
+				<li>New user registration page:</li>
+				<ol>
+					<li>Name of user</li>
+					<li>Email of user</li>
+					<li>Business permit number (for admin)</li>
+					<li>Health inspection number (for admin)</li>
 				</ol>
 			</ul>
 			<br>
+
+			<li>New company profile creation page:</li>
+			<ol>
+				<li>Name of company</li>
+				<li>Company email</li>
+				<li>Company phone number</li>
+				<li>Menu</li>
+				<li>Weekly schedule, as a simple text box.</li>
+			</ol>
+			</ul>
+			<br>
+
 
 			<hr>
 			<h2>Persona for Company Admin</h2>
