@@ -140,6 +140,13 @@
 			<p><strong>What:</strong>iPhone6 with 4G Data Connection</p>
 			<p><strong>Who:</strong>Co-owner of a food truck business</p>
 			<p><strong>Why:</strong>She wants an easy to use program that will allow her and her employees to broadcast their location in real time while they are serving, to describe what their business is and serves, and a place to set a projected schedule for their customers (and new customers) to see. </p>
+			<h2>User Story</h2>
+			<ol>
+				<li>As a food truck owner, I have driven to the location where I am serving food and would like to quickly share my location and estimated end time over the CrumbTrail app so I can get to food prepping.</li>
+				<li>As a food truck owner, I am trying to sign up my FoodParty truck for CrumbTrail.</li>
+				<li>As a food truck owner and supervisor, I am doing administrative work in the office while my employee is out with the truck. This employee just dropped her smartphone in the toilet, so I need to be able to share her location while sitting in my office. I know that she is going to Hyder Park, and I found the address online.
+				</li>
+			</ol>
 
 			<hr>
 			<h2>Persona for company employee</h2>
