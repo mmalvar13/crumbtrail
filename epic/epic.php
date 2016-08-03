@@ -108,6 +108,7 @@
 					<li>Permit number (admin only)</li>
 					<li>License number (admin only)</li>
 				</ol>
+				<br>
 
 				<li>Company settings page (admins only):</li>
 				<ol>
