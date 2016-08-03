@@ -136,6 +136,10 @@
 			</p>
 			<p><strong>Goals:</strong>Gloria’s main goal is to find a way to easily broadcast the location of her food truck, which is always changing. She wants to be able to share that information with her loyal customers, as well as with new customers who have not tried or may have never heard of FoodParty. She is looking for an easy to use application that she can trust to allow her, her co-owner Truckina, and her employees to use in real time.</p>
 			<p>Her second goal of Gloria’s is to have a platform to share FoodParty’s projected schedule for the week, which typically doesn’t change too much, as well as share the dates and times for special events.</p>
+			<h2>Use Case</h2>
+			<p><strong>What:</strong>iPhone6 with 4G Data Connection</p>
+			<p><strong>Who:</strong>Co-owner of a food truck business</p>
+			<p><strong>Why:</strong>She wants an easy to use program that will allow her and her employees to broadcast their location in real time while they are serving, to describe what their business is and serves, and a place to set a projected schedule for their customers (and new customers) to see. </p>
 
 			<hr>
 			<h2>Persona for company employee</h2>
