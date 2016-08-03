@@ -125,7 +125,7 @@
 					<li>Business permit number (for admin)</li>
 					<li>Health inspection number (for admin)</li>
 				</ol>
-			</ul>
+
 			<br>
 
 			<li>New company profile creation page:</li>
