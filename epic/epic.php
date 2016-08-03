@@ -56,6 +56,9 @@
 						<li>Links to social media (?).</li>
 						<li>Weekly schedule of locations.</li>
 						<li>Space for showing special event day and location.</li>
+						<li>NEED: A company might have several trucks, so we need a good way for the company
+							to show which of their trucks is active; e.g. a green light next to active trucks, a red
+							light next to inactive trucks.</li>
 					</ol>
 			</ul>
 			<br>
@@ -68,8 +71,9 @@
 					truck's location. </li>
 				<br>
 
-				<li>The map view for food truckers:</li>
+				<li>The map view for food truck workers:</li>
 					<ol>
+						<li>The worker gets to this page via the Trucker's login/registration page.</li>
 						<li>When the truck is ready to serve food, the worker toggles a "Go Live" switch.</li>
 						<li>In the "on" position, switch is green and the truck's location is visible on the maps.</li>
 						<li>In the "off" position, switch is red and the truck's location is not visible on the maps.</li>
@@ -77,6 +81,8 @@
 						<li>The worker can look at the "Go Live" switch to confirm that their truck is now shown on the map.</li>
 						<li>A button which links to the truck profile editing page.</li>
 						<li>A button which links to the truck settings page.</li>
+						<li>NEED: A company might have several trucks, so we need a good way for workers to specify
+							which truck they mean when they toggle the "Go Live" switch.</li>
 					</ol>
 				<br>
 
