@@ -164,6 +164,7 @@
 				<li>click "register"</li>
 				<li>take to confirmation page that tells them their login information has been sent to a CrumbTrail admin to be confirmed, and to check their email in the next 48 hours</li>
 			</ol>
+			<h4>Goal: As a food truck owner, I have arrived at the location I am going to serve at and would like to share my location on CrumbTrail</h4>
 
 			<hr>
 			<h2>Persona for company employee</h2>
