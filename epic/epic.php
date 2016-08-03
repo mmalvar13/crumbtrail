@@ -184,7 +184,7 @@
 				</li>
 				<li>The user is prompted to enter location of employee, time, and which truck is out. User enters this information and clicks “ok”.
 				</li>
-				<li>When employee is done, user clicks “stop serving” button, or it is automatically shut off after the input end time.  </li>
+				<li>When the employee is done, user clicks “stop serving” button, or it is automatically shut off after the input end time.  </li>
 			</ol>
 
 			<hr>
