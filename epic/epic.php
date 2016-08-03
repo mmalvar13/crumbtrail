@@ -134,6 +134,8 @@
 			</p>
 			<p>Lastly, Gloria finds that her customers want to know where she will be in the future so they can plan their days/meals around it. She wants to be able to share her weekly schedule. Her schedule typically stays the same but can change from time to time so she wants to ability to edit it for the current week. She also does special events that she would like to share the dates and locations of. They are separate from her normal weekly routine, and many times require tickets to get into the event (e.g. event at balloon fiesta park) so she wants her customers to be able to see where they will be and get tickets if they want to.
 			</p>
+			<p><strong>Goals:</strong>Gloria’s main goal is to find a way to easily broadcast the location of her food truck, which is always changing. She wants to be able to share that information with her loyal customers, as well as with new customers who have not tried or may have never heard of FoodParty. She is looking for an easy to use application that she can trust to allow her, her co-owner Truckina, and her employees to use in real time.</p>
+			<p>Her second goal of Gloria’s is to have a platform to share FoodParty’s projected schedule for the week, which typically doesn’t change too much, as well as share the dates and times for special events.</p>
 
 			<hr>
 			<h2>Persona for company employee</h2>
