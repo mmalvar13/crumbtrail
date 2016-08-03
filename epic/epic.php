@@ -175,6 +175,17 @@
 				<li>When employee is done, user clicks “stop serving” button, or it is automatically shut off after the input end time
 				</li>
 			</ol>
+			<h4>Goal: As a food truck owner, I am at the office and need to put out the location for my employee who has the truck, but dropped her phone in the toilet</h4>
+			<ol>
+				<li>open app, or type in url</li>
+				<li>Opens to user's home map page. Push  "Sign In" in the top right corner</li>
+				<li>At Sign In page, user enters their personal email address and password that they registered with, and push “Log In”</li>
+				<li>User is now at the food truck home page, which is a map with their current location pinged, and the pinged locations of other active food trucks in the area. Click the button “Serving Now”
+				</li>
+				<li>The user is prompted to enter location of employee, time, and which truck is out. User enters this information and clicks “ok”.
+				</li>
+				<li>When employee is done, user clicks “stop serving” button, or it is automatically shut off after the input end time.  </li>
+			</ol>
 
 			<hr>
 			<h2>Persona for company employee</h2>
