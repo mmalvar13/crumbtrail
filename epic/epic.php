@@ -119,6 +119,14 @@
 			<br>
 
 			<hr>
+			<h2>Persona for Company Admin</h2>
+			<p>NAME: Gloria McTruckerson</p>
+			<p>AGE: 32</p>
+			<p>PROFESSION:Food truck business co-owner</p>
+			<p>TECHNOLOGY: A three year old laptop with a Windows 10 operating system. An iPhone 6s with a 4G Data Connection</p>
+			<p><strong>Attitudes & Behaviors</strong>Gloria is a co-owner of the FoodParty food truck business with her sister, Truckina. Both Gloria and her sister work about 60 hours/ week running the business. They have two trucks, one full time employee, and four part time employees. Gloria works in all aspects of the business. She orders supplies from distributors, she does the cooking, she does administrative/hiring work, she sends out payroll, and takes care of the webpage. She has a lot to do, but she is always looking for ways to improve the business.</p>
+
+			<hr>
 			<h2>Persona for company employee</h2>
 			<p>NAME: Freddy foodtuck</p>
 			<p>AGE:22</p>
