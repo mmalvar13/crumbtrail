@@ -168,6 +168,39 @@
 				<li>As a food truck owner and supervisor, I am doing administrative work in the office while my employee is out with the truck. This employee just dropped her smartphone in the toilet, so I need to be able to share her location while sitting in my office. I know that she is going to Hyder Park, and I found the address online.
 				</li>
 			</ol>
+			<h2>Interaction Flow</h2>
+			<h4>Goal: As a food truck owner, I want to set up an account with CrumbTrail</h4>
+			<ol>
+				<li>open app, or type in url
+				</li>
+				<li>opens up to user homepage. Click on “Sign In” in the top right corner</li>
+				<li>Click on "register new company" underneath the fields for sign in.</li>
+				<li>Takes user to the registration page. They have to input all of their info for the company, including their business license.</li>
+				<li>click "register"</li>
+				<li>take to confirmation page that tells them their login information has been sent to a CrumbTrail admin to be confirmed, and to check their email in the next 48 hours</li>
+			</ol>
+			<h4>Goal: As a food truck owner, I have arrived at the location I am going to serve at and would like to share my location on CrumbTrail</h4>
+			<ol>
+				<li>open app, or type in url</li>
+				<li>Opens to user's home map page. Push "Sign In" in the top right corner</li>
+				<li>at sign in page, user enters their personal email address and password that they registered with, and push "log in"</li>
+				<li>User is now at the food truck home page, which is a map with their current location pinged, and the pinged locations of other active food trucks in the area. Click the button "Serving Now"</li>
+				<li>The user is prompted to enter location (can enter one or use current location), end time, and which truck is out. User enters this information and clicks “ok”.
+				</li>
+				<li>When employee is done, user clicks “stop serving” button, or it is automatically shut off after the input end time
+				</li>
+			</ol>
+			<h4>Goal: As a food truck owner, I am at the office and need to put out the location for my employee who has the truck, but dropped her phone in the toilet</h4>
+			<ol>
+				<li>open app, or type in url</li>
+				<li>Opens to user's home map page. Push  "Sign In" in the top right corner</li>
+				<li>At Sign In page, user enters their personal email address and password that they registered with, and push “Log In”</li>
+				<li>User is now at the food truck home page, which is a map with their current location pinged, and the pinged locations of other active food trucks in the area. Click the button “Serving Now”
+				</li>
+				<li>The user is prompted to enter location of employee, time, and which truck is out. User enters this information and clicks “ok”.
+				</li>
+				<li>When the employee is done, user clicks “stop serving” button, or it is automatically shut off after the input end time.  </li>
+			</ol>
 
 			<hr>
 			<h2>Persona for company employee</h2>
