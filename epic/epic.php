@@ -38,7 +38,6 @@
 						<li>Search field, top center.</li>
 						<li>List of nearby active food trucks, slides up from bottom.  Shows nearest trucks first.</li>
 					</ol>
-				<br>
 
 				<h3>Complete list of all companies page:</h3>
 					<ol>
@@ -46,7 +45,6 @@
 						<li>Shows the name of the company, and a short description of the food they serve.</li>
 						<li>By touching the name of a company on a list, the user can see the company's profile page.</li>
 					</ol>
-			<br>
 
 				<h3>Company description page:</h3>
 					<ol>
@@ -58,7 +56,6 @@
 						<li>Weekly schedule of locations.</li>
 						<li>Space for showing special event day and location.</li>
 					</ol>
-			<br>
 
 				<h3>User login/registration page:</h3>
 				<ol>
@@ -66,7 +63,6 @@
 					<li>Company name field, password field, login button.</li>
 					<li>"New company registration" button, links to New Company Registration page.</li>
 				</ol>
-				<br>
 
 				<h3>Truck map page:</h3>
 					<ol>
@@ -78,7 +74,6 @@
 						<li>User also sees radio buttons, to choose which of the company's trucks they are serving from: "Truck #1", "Truck #2", etc.</li>
 						<li>User can also set the "End time" for when the truck will close.</li>
 					</ol>
-				<br>
 
 				<h3>Edit company profile page:</h3>
 				<ol>
@@ -90,7 +85,6 @@
 					<li>A text field for them to enter their schedule of times/days and locations.</li>
 					<li>Space for showing special event day and location.</li>
 				</ol>
-				<br>
 
 				<h3>Edit user profile page:</h3>
 				<ol>
@@ -100,7 +94,6 @@
 					<li>Permit number (admin only)</li>
 					<li>License number (admin only)</li>
 				</ol>
-				<br>
 
 				<h3>Company settings page (admins only):</h3>
 				<ol>
@@ -108,7 +101,6 @@
 					<li>Invite employees to become users, associated with that company</li>
 					<li>Change company email, etc.</li>
 				</ol>
-				<br>
 
 				<h3>New user registration page:</h3>
 				<ol>
@@ -117,7 +109,6 @@
 					<li>Business permit number (for admin)</li>
 					<li>Health inspection number (for admin)</li>
 				</ol>
-			<br>
 
 			<h3>New company profile creation page:</h3>
 			<ol>
