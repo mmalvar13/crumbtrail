@@ -1,36 +1,61 @@
 <?php
-
 /**
  * Created by PhpStorm.
- * User: crumbtrail
+ * User: kkirk4
  * Date: 8/4/16
  * Time: 2:55 PM
  */
 class Profile {
+	// The class Profile has 8 attributes: profileId, profileName, profileEmail, profilePhone,
+	// profileActivationToken, profileType, profileSalt, and profileHash.
+	// A profile is a person who is either a food truck owner or a food truck employee.
 
-
-
-<?php
-// This is the OOP for the Author entity.
-
-
-class Profile {
-	// The class Profile has 8 attributes: profileId and profileName
-
-	private $authorId;
-	/** This is the id number for an author.  This is the primary key.
-	 * @var int $authorId
+	private $profileId;
+	/** This is the id number for a profile.  This is the primary key.
+	 * @var int $profileId
+	 **/
+	private $profileName;
+	/** This is the name of a profile.
+	 * @var string $ProfileName
+	 **/
+	private $profileEmail;
+	/** This is the email of a profile.
+	 * @var string $profileEmail
+	 **/
+	private $profilePhone;
+	/** This is the phone number of a profile.
+	 * @var string $profilePhone
+	 **/
+	private $profileActivationToken;
+	/** This is the Activation Token for a profile.
+	 * @var int $profileActivationToken
+	 **/
+	private $profileType;
+	/** This is the type of profile: O for owner, E for employee.
+	 * @var string $profileName
+	 **/
+	private $profileSalt;
+	/** This is the salt for the password of a profile.
+	 * @var string $profileSalt
+	 **/
+	private $profileHash;
+	/** This is the hash for the password of a profile.
+	 * @var string $profileHash
 	 **/
 
-	private $authorName;
-	/** This is the name of an author.
-	 * @var string $authorName
-	 **/
 
 	/**
-	 * Constructor for this Author
-	 * @param int|null $newAuthorId id of this Author
-	 * @param string $newAuthorName name of this Author
+	 * Constructor for this Profile
+	 * @param int|null $newProfileId id of this Profile
+	 * @param string $newProfileName name of this Profile
+	 * @param string $newProfileEmail email of this Profile
+	 * @param string $newProfilePhone phone of this Profile
+	 * @param int\null $newProfileActivationToken activation token of this Profile
+	 * @param string $newProfileType type of this Profile (O owner, E employee)
+	 * @param string $newProfileSalt salt for the password of this Profile
+	 * @param string $newProfileHash hash for the password of this Profile
+
+	 *
 	 * @throws \InvalidArgumentException if the data types are not valide
 	 * @throws \RangeException if the data values are too large
 	 * @throws \TypeError if the data types violate type hints
@@ -56,13 +81,15 @@ class Profile {
 		}
 	}
 
-	/** Accessor method for author Id
+
+	/** Accessor method for profile Id
 	 *
-	 * @return int|null value of author Id
+	 * @return int|null value of profile Id
 	 **/
-	public function getAuthorId() {
-		return ($this->authorId);
+	public function getProfileId() {
+		return ($this->profileId);
 	}
+
 
 	/** Mutator method for author Id
 	 *
@@ -88,6 +115,7 @@ class Profile {
 		// Convert (??) and store the author id
 		$this->authorId = $newAuthorId;
 	}
+
 
 	/**
 	 * Accessor method for author name
