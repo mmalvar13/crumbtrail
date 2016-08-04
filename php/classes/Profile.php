@@ -45,28 +45,37 @@ class Profile {
 
 
 	/**
-	 * Constructor for this Profile
+	 * Constructor for this Profile      *** CHECK THE DATA TYPES ***
 	 * @param int|null $newProfileId id of this Profile
 	 * @param string $newProfileName name of this Profile
 	 * @param string $newProfileEmail email of this Profile
 	 * @param string $newProfilePhone phone of this Profile
-	 * @param int\null $newProfileActivationToken activation token of this Profile
+	 * @param int|null $newProfileActivationToken activation token of this Profile
 	 * @param string $newProfileType type of this Profile (O owner, E employee)
-	 * @param string $newProfileSalt salt for the password of this Profile
-	 * @param string $newProfileHash hash for the password of this Profile
+	 * @param int|null $newProfileSalt salt for the password of this Profile
+	 * @param int|null $newProfileHash hash for the password of this Profile
 
-	 *
+	 *          *** DO THESE AFTER CHECKING DATA TYPES ***
 	 * @throws \InvalidArgumentException if the data types are not valide
 	 * @throws \RangeException if the data values are too large
 	 * @throws \TypeError if the data types violate type hints
 	 * @throws \Exception if some other exception occurs
 	 **/
 
-	public function __construct(int $newAuthorId = null, string $newAuthorName) {
+	public function __construct(int $newProfileId = null, string $newProfileName), string $newProfileEmail,
+ string $newProfilePhone, int $newProfileActivationToken = null, string $newProfileType,
+ int $newProfileSalt = null, int $newProfileHash = null {
 		try {
-			$this->setAuthorId($newAuthorId);
-			$this->setAuthorName($newAuthorName);
+			$this->setProfileId($newProfileId);
+			$this->setProfileName($newProfileName);
+			$this->setProfileEmail($newProfileEmail);
+			$this->setProfilePhone($newProfilePhone);
+			$this->setProfileActivationToken($newProfileActivationToken);
+			$this->setProfileType($newProfileType);
+			$this->setProfileSalt($newProfileSalt);
+			$this->setProfileHash($newProfileHash);
 
+	//   *** NEED WAY MORE CATCH AND THROW LINES ***
 		} catch(\InvalidArgumentException $invalidArgument) {
 			throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
 
@@ -91,69 +100,66 @@ class Profile {
 	}
 
 
-	/** Mutator method for author Id
+	/** Mutator method for profile Id
 	 *
-	 * @param int|null $newAuthorId This is the new value of Author Id
-	 * @throws \RangeException if $newAuthorId is not positive
-	 * @throws \TypeError if $newAuthorId is not an integer
+	 * @param int|null $newProfileId This is the new value of Profile Id
+	 * @throws \RangeException if $newProfileId is not positive
+	 * @throws \TypeError if $newProfileId is not an integer
 	 **/
 
-	public function setAuthorId(int $newAuthorId = null) {
-		// Base case: if the author Id is null, then this is a new author,
-		// with no mySQL-assigned id yet.  This is weird because authorId
+	public function setProfileId(int $newProfileId = null) {
+		// Base case: if the profile Id is null, then this is a new profile,
+		// with no mySQL-assigned id yet.  This is weird because profileId
 		// is the primary key.
-		if($newAuthorId === null) {
-			$this->tweetId = null;
+		if($newProfileId === null) {
+			$this->ProfileId = null;
 			return;
 		}
 
-		// verify that the author id is positive
-		if($newAuthorId <= 0) {
-			throw(new \RangeException("The author id is not positive"));
+		// verify that the profile id is positive
+		if($newProfileId <= 0) {
+			throw(new \RangeException("The profile id is not positive"));
 		}
 
 		// Convert (??) and store the author id
-		$this->authorId = $newAuthorId;
+		$this->profileId = $newProfileId;
 	}
 
 
 	/**
-	 * Accessor method for author name
+	 * Accessor method for profile name
 	 *
-	 * @return string value of author name
+	 * @return string value of profile name
 	 **/
-	public function getAuthorName() {
-		return ($this->authorName);
+	public function getProfileName() {
+		return ($this->ProfileName);
 	}
 
 	/**
-	 * Mutator method for author name
+	 * Mutator method for profile name
 	 *
-	 * @param string $newAuthorName new value of author name
-	 * @throws \InvalidArgumentException if $newAuthorName is not a string or is insecure
-	 * @throws \RangeException if $newAuthorName is too long, > 128 characters
-	 * @throws \TypeError if $newAuthorName is not a string
+	 * @param string $newProfileName new value of profile name
+	 * @throws \InvalidArgumentException if $newProfileName is not a string or is insecure
+	 * @throws \RangeException if $newProfileName is too long, > 128 characters
+	 * @throws \TypeError if $newProfileName is not a string
 	 **/
-	public function setAuthorName(string $newAuthorName) {
-		// Verify that the author name is secure
-		$newAuthorName = trim($newAuthorName);
-		$newAuthorName = filter_var($newAuthorName);
-		if(empty($newAuthorName) === true) {
-			throw(new \InvalidArgumentException("Author name is empty or insecure"));
+	public function setProfileName(string $newProfileName) {
+		// Verify that the profile name is secure
+		$newProfileName = trim($newProfileName);
+		$newProfileName = filter_var($newProfileName);
+		if(empty($newProfileName) === true) {
+			throw(new \InvalidArgumentException("Profile name is empty or insecure."));
 		}
 
-		// Verify that the author name will fit into the database
-		if(strlen($newAuthorName) > 128) {
-			throw(new \RangeException("author name is too long"));
+		// Verify that the profile name will fit into the database
+		if(strlen($newProfileName) > 128) {
+			throw(new \RangeException("Profile name is too long."));
 		}
 
-		// Store the author name
-		$this->authorName = $newAuthorName;
+		// Store the profile name
+		$this->profileName = $newProfileName;
 	}
 }
+
 
 ?>
-
-
-
-}
