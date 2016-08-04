@@ -46,7 +46,7 @@
 					</ol>
 			<br>
 
-				<li>Company profile page:</li>
+				<li>Company description page:</li>
 					<ol>
 						<li>Shows whether or not any of the company's trucks are "Live" (serving now).</li>
 						<li>Business name.</li>
@@ -125,7 +125,6 @@
 					<li>Business permit number (for admin)</li>
 					<li>Health inspection number (for admin)</li>
 				</ol>
-
 			<br>
 
 			<li>New company profile creation page:</li>
@@ -138,7 +137,6 @@
 			</ol>
 			</ul>
 			<br>
-
 
 			<hr>
 			<h2>Persona for Company Admin</h2>
@@ -243,7 +241,7 @@
 			</ol>
 			<hr>
 
-			<h2>Persona, for someone who plans to eat at a food truck in the future.</h2>
+			<h2>Persona, for someone who plans to eat at a food truck in the future</h2>
 			<p>Name: Will B. Hungry</p>
 			<p>Age: 29</p>
 			<p>Profession: Will is a history instructor at CNM.</p>
@@ -252,7 +250,7 @@
 			<p>Frustrations and needs: Not only does Will hate to cook, but his apartment has a tiny kitchen which is too cramped to prepare anything except coffee.  Will has a few favorite resturants in Albuquerque, but he wants to try new resturants and he is hoping to find some good food trucks in town.  To find food trucks, he could simply Google "food trucks Albuquerque", but then he would have to wade through each food truck's website, looking for the type of food they serve, and trying to find their schedule of days, times and locations.</p>
 			<p>Goals: Will is going out with friends this Saturday night.  They plan to meet in the downtown area around 8 pm, and look for a late dinner.  Will suspects they can find food trucks downtown on a Saturday night, and he would like to learn where the food trucks will be located that night.  On Saturday afternoon, Will wants to use his laptop to find which trucks will be located in downtown Albuquerque that night, where exactly they will be parked, and what kind of food they will be serving.</p>
 
-			<h2>Interaction flow, for someone who plans to eat at a food truck in the future.</h2>
+			<h2>Interaction flow</h2>
 				<ol>
 					<li>User opens the web browser on their laptop, and finds the crumbtrails website.</li>
 					<li>User sees the Map page, which shows the current locations of food trucks that are now serving food in Albuquerque.</li>
@@ -279,19 +277,31 @@
 				<li>The map will post all food truck that are open in that area</li>
 			</ol>
 			<hr>
-			<h2>Conceptual model, of database structure:</h2>
+			<h2>Conceptual model: Database entities:</h2>
+			<ul>
+				<li>profile</li>
+				<li>company</li>
+				<li>image</li>
+				<li>truck</li>
+				<li>event</li>
+			</ul>
+			<h2>Conceptual model: Database relationships:</h2>
 				<ul>
-					<li>Each user (owner [admin] or employee) can belong to many companies.</li>
-					<li>Each company can have more than one user.</li>
-					<li>The relationship between user and company is many-to-many.</li>
+					<li>Each profile can work for many companies.</li>
+					<li>Each company can have many profiles.</li>
+					<li>So the relationship between profile and company is many-to-many.</li>
+					<li>So there will be a weak entity between profile and company.</li>
 					<li>Each company can have many trucks.</li>
-					<li>Each truck belongs to only one company.</li>
-					<li>The relationship between company and truck is one-to-many.</li>
-					<li>Each truck has many schedule items (location/time combinations).</li>
-					<li>Each schedule belongs to only one truck.</li>
-					<li>The relationship between schedule and truck is one-to-many.</li>
-					<li>The worker entity specifies the relationship between user and company.  Each worker has a workerType: "A" for admin, or "E" for employee. </li>
+					<li>Each truck is owned by one company.</li>
+					<li>So the relationship between company and truck is one-to-many.</li>
+					<li>Each company has one image.</li>
+					<li>Each image belongs to one company.</li>
+					<li>So the relationship between company and image is one-to-one.</li>
+					<li>Each event belongs to one truck.</li>
+					<li>Each truck has many events. (The current event and past events).</li>
+					<li>So the relationship between truck and event is one-to-many.</li>
 				</ul>
+				<br>
 			<hr>
 			<h2>ERD, diagram of database structure:</h2>
 				<img src="images/crumbtrail ERD.svg" alt="ERD" width="900px"/>
