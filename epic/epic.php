@@ -3,13 +3,13 @@
 	<head>
 		<meta charset="utf 8"/>
 		<title>Crumbtrail </title>
-		<!-- <link rel="stylesheet" href="css/stylesheet.css" type="text/css"/> -->
+		<link rel="stylesheet" href="css/stylesheet.css" type="text/css"/>
 	</head>
 	<body>
 		<main>
 			<div class
 			<header>
-				<h1>crumbtrail: Connecting food trucks and hungry people.</h1>
+				<h1 class="accent">crumbtrail: Connecting food trucks and hungry people.</h1>
 			</header>
 
 			<div class= mainheaders>
