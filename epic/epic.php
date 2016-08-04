@@ -277,7 +277,7 @@
 					<li>Each truck is owned by one company.</li>
 					<li>So the relationship between company and truck is one-to-many.</li>
 					<li>Each company can have many images.</li>
-					<li>Many image can belong to one company.</li>
+					<li>Many images can belong to one company.</li>
 					<li>So the relationship between company and image is one-to-many.</li>
 					<li>Each event belongs to one truck.</li>
 					<li>Each truck has many events. (The current event and past events).</li>
