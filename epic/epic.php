@@ -286,7 +286,7 @@
 				<br>
 			<hr>
 			<h2>ERD, diagram of database structure:</h2>
-				<img src="images/crumbtrail ERD.svg" alt="ERD" width="800px"/>
+				<img src="images/crumbtrail ERD2.svg" alt="ERD" width="800px"/>
 			<br>
 		</main>
 	</body>
