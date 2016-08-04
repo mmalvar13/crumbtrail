@@ -2,20 +2,20 @@
 
 /**
  * Created by PhpStorm.
- * User: klkirk
+ * User: crumbtrail
  * Date: 8/4/16
  * Time: 2:55 PM
  */
 class Profile {
 
 
+
 <?php
 // This is the OOP for the Author entity.
 
 
-
-class Author {
-	// The class Author has 2 attributes: authorId and authorName
+class Profile {
+	// The class Profile has 8 attributes: profileId and profileName
 
 	private $authorId;
 	/** This is the id number for an author.  This is the primary key.
