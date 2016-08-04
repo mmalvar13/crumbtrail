@@ -43,9 +43,8 @@ class Profile {
 	 * @var string $profileHash
 	 **/
 
-
 	/**
-	 * Constructor for this Profile      *** CHECK THE DATA TYPES ***
+	 * Constructor for this Profile                       *** CHECK THE DATA TYPES ***
 	 * @param int|null $newProfileId id of this Profile
 	 * @param string $newProfileName name of this Profile
 	 * @param string $newProfileEmail email of this Profile
@@ -75,7 +74,7 @@ class Profile {
 			$this->setProfileSalt($newProfileSalt);
 			$this->setProfileHash($newProfileHash);
 
-	//   *** NEED WAY MORE CATCH AND THROW LINES ***
+	//                                          *** NEED WAY MORE CATCH AND THROW LINES ***
 		} catch(\InvalidArgumentException $invalidArgument) {
 			throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
 
@@ -90,7 +89,6 @@ class Profile {
 		}
 	}
 
-
 	/** Accessor method for profile Id
 	 *
 	 * @return int|null value of profile Id
@@ -98,7 +96,6 @@ class Profile {
 	public function getProfileId() {
 		return ($this->profileId);
 	}
-
 
 	/** Mutator method for profile Id
 	 *
@@ -124,7 +121,6 @@ class Profile {
 		// Convert (??) and store the author id
 		$this->profileId = $newProfileId;
 	}
-
 
 	/**
 	 * Accessor method for profile name
