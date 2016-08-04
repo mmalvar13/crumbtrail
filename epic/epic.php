@@ -16,18 +16,20 @@
 				<h2>Goals</h2>
 			</div>
 			<div class="textfields"
-				<p><strong>Crumbtrail allows food trucks to share their location and allows users to find
-						food trucks that are serving now</strong></p>
+				<p><strong>Crumbtrail allows food trucks to share their location and allows hungry people to find
+						food trucks that are serving now.</strong></p>
+
+				<p>The core experience of the hungry eater will be streamlined, with very little navigation necessary.
+					When the eater opens the app, they will immediately see their location on a map as wellas tickers
+					for any trucks in the city.</p>
+
+				<p>The core food truck experience will be also streamlined, with very little
+				navigation necessary. When a truck is ready to serve, the trucker hits
+				one button in the app, and hungry users will immediately know the active
+				truck's location.</p>
 			<br>
 
-			<p><strong>For the hungry eater: </strong></p>
-			<ul>
-				<li>The core experience of the hungry eater will be streamlined, with very little navigation necessary.
-					When the eater opens the app, they will immediately see their location on a map as well
-					as tickers for any trucks in the city</li>
-				<br>
-
-				<li>Eater map page (using Google Maps API):</li>
+				<h3>Eater map page (using Google Maps API):</h3>
 					<ol>
 						<li>Shows the eater's location, at the center of the map.</li>
 						<li>Shows the locations of nearby active food trucks.</li>
@@ -38,7 +40,7 @@
 					</ol>
 				<br>
 
-				<li>Complete list of all companies:</li>
+				<h3>Complete list of all companies page:</h3>
 					<ol>
 						<li>A list of all food truck companies that are registered on crumbtrail.</li>
 						<li>Shows the name of the company, and a short description of the food they serve.</li>
@@ -46,7 +48,7 @@
 					</ol>
 			<br>
 
-				<li>Company description page:</li>
+				<h3>Company description page:</h3>
 					<ol>
 						<li>Shows whether or not any of the company's trucks are "Live" (serving now).</li>
 						<li>Business name.</li>
@@ -56,19 +58,9 @@
 						<li>Weekly schedule of locations.</li>
 						<li>Space for showing special event day and location.</li>
 					</ol>
-			</ul>
 			<br>
-			<hr>
 
-			<p><strong>For the food truck owner (admin) or employee:</strong></p>
-			<ul>
-				<li>The core food truck experience will be also streamlined, with very little
-					navigation necessary. When a truck is ready to serve, the trucker hits
-					one button in the app, and hungry users will immediately know the active
-					truck's location. </li>
-				<br>
-
-				<li>User login/registration page:</li>
+				<h3>User login/registration page:</h3>
 				<ol>
 					<li>User gets to this page by pressing the top right button on the eater map page</li>
 					<li>Company name field, password field, login button.</li>
@@ -76,7 +68,7 @@
 				</ol>
 				<br>
 
-				<li>Truck map page:</li>
+				<h3>Truck map page:</h3>
 					<ol>
 						<li>The user gets to this page via the user login/registration page.</li>
 						<li>When the truck is ready to serve food, the user toggles a "Go Live" switch.</li>
@@ -88,7 +80,7 @@
 					</ol>
 				<br>
 
-				<li>Edit company profile page:</li>
+				<h3>Edit company profile page:</h3>
 				<ol>
 					<li>Admin gets to this page via the company profile page.</li>
 					<li>Business name.</li>
@@ -100,7 +92,7 @@
 				</ol>
 				<br>
 
-				<li>Edit user profile page:</li>
+				<h3>Edit user profile page:</h3>
 				<ol>
 					<li>User name</li>
 					<li>User email.</li>
@@ -110,7 +102,7 @@
 				</ol>
 				<br>
 
-				<li>Company settings page (admins only):</li>
+				<h3>Company settings page (admins only):</h3>
 				<ol>
 					<li>Change number of trucks</li>
 					<li>Invite employees to become users, associated with that company</li>
@@ -118,7 +110,7 @@
 				</ol>
 				<br>
 
-				<li>New user registration page:</li>
+				<h3>New user registration page:</h3>
 				<ol>
 					<li>Name of user</li>
 					<li>Email of user</li>
@@ -127,7 +119,7 @@
 				</ol>
 			<br>
 
-			<li>New company profile creation page:</li>
+			<h3>New company profile creation page:</h3>
 			<ol>
 				<li>Name of company</li>
 				<li>Company email</li>
@@ -135,7 +127,6 @@
 				<li>Menu</li>
 				<li>Weekly schedule, as a simple text box.</li>
 			</ol>
-			</ul>
 			<br>
 
 			<hr>
