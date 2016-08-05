@@ -54,6 +54,7 @@ CREATE TABLE company (
 	UNIQUE(companyPermit),
 	UNIQUE(companyLicense),
 	PRIMARY KEY(companyId)
+
 );
 
 
