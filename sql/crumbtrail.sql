@@ -57,9 +57,12 @@ CREATE TABLE company (
 
 );
 
-
-
-
-
-
-)
+CREATE TABLE image (
+	imageId        INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	imageCompanyId INT UNSIGNED                NOT NULL,
+	imageFileType  VARCHAR(6)                  NOT NULL,
+	imageFileName  VARCHAR(128)                NOT NULL,
+	INDEX (imageCompanyId),
+	FOREIGN KEY (imageCompanyId) REFERENCES company (companyId),
+	PRIMARY KEY (imageId)
+);
