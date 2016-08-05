@@ -18,9 +18,9 @@ CREATE TABLE profile (
 	profileEmail           VARCHAR(128)                NOT NULL,
 	profilePhone           VARCHAR(32)                 NOT NULL,
 
-	profileActivationToken VARCHAR(128), -- look into this one,  see if data type and initial Null value is ok. ask dylan if correct!!!*****
+	profileActivationToken CHAR(32),
 
-	profileType            CHAR(1), -- to denote the 3 types of profiles (A-admin, O-owner, E-employee) look into this!!!!!!
+	profileType            CHAR(1) NOT NULL,
 
 	profileHash            CHAR(128)                   NOT NULL,
 	profileSalt            CHAR(64)                    NOT NULL,
@@ -45,11 +45,18 @@ CREATE TABLE company (
 	companyStreet2 VARCHAR(128) NOT NULL,
 	companyState CHAR(2) NOT NULL,
 	companyZip INT UNSIGNED NOT NULL,
-	companyDescription VARCHAR(512),
-	companyMenuText VARCHAR(512),
-	companyActivationToken VARCHAR(128),
+	companyDescription VARCHAR(255),
+	companyMenuText TEXT,
+	companyActivationToken CHAR(32),
 	companyApproved BOOL NOT NULL,
-	companyAccountCreator VARCHAR(128) NOT NULL,
+
+	-- companyAccountCreatorId is a foreign key from profile
+	companyAccountCreatorId VARCHAR(128) NOT NULL,
+	-- indext for foreign key companyAccountCreatorId
+	INDEX (companyAccountCreatorId),
+	-- declare foreign key for companyAccountCreatorId
+	FOREIGN KEY (companyAccountCreatorId) REFERENCES profile (profileId),
+
 	UNIQUE(companyEmail),
 	UNIQUE(companyPermit),
 	UNIQUE(companyLicense),
@@ -60,8 +67,8 @@ CREATE TABLE company (
 CREATE TABLE image (
 	imageId        INT UNSIGNED AUTO_INCREMENT NOT NULL,
 	imageCompanyId INT UNSIGNED                NOT NULL,
-	imageFileType  VARCHAR(6)                  NOT NULL,
-	imageFileName  VARCHAR(128)                NOT NULL,
+	imageFileType  VARCHAR(10)                  NOT NULL,
+	imageFileName  VARCHAR(255)                NOT NULL,
 	INDEX(imageCompanyId),
 	FOREIGN KEY(imageCompanyId) REFERENCES company(companyId),
 	PRIMARY KEY(imageId)
@@ -78,9 +85,9 @@ CREATE TABLE truck (
 CREATE TABLE event(
 	eventId INT UNSIGNED AUTO_INCREMENT NOT NULL,
 	eventTruckId INT UNSIGNED NOT NULL,
-	eventEnd DATETIME,
+	eventEnd DATETIME NOT NULL,
 	eventLocation POINT NOT NULL,
-	eventStart DATETIME,
+	eventStart DATETIME NOT NULL,
 	INDEX(eventTruckId),
 	FOREIGN KEY(eventTruckId) REFERENCES truck(truckId),
 	PRIMARY KEY(eventId)
@@ -88,7 +95,7 @@ CREATE TABLE event(
 
 CREATE TABLE employ(
 	employCompanyId INT UNSIGNED NOT NULL,
-	employProfileid INT UNSIGNED NOT NULL,
+	employProfileId INT UNSIGNED NOT NULL,
 	INDEX(employCompanyId),
 	INDEX(employProfileId),
 	FOREIGN KEY(employCompanyId) REFERENCES company(companyId),
