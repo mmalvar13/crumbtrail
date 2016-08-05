@@ -83,5 +83,15 @@ CREATE TABLE event(
 	eventStart DATETIME,
 	INDEX(eventTruckId),
 	FOREIGN KEY(eventTruckId) REFERENCES truck(truckId),
-	PRIMARYKEY(eventId)
+	PRIMARY KEY(eventId)
+);
+
+CREATE TABLE employ(
+	employCompanyId INT UNSIGNED NOT NULL,
+	employProfileid INT UNSIGNED NOT NULL,
+	INDEX(employCompanyId),
+	INDEX(employProfileId),
+	FOREIGN KEY(employCompanyId) REFERENCES company(companyId),
+	FOREIGN KEY(employProfileId) REFERENCES profile(profileId),
+	PRIMARY KEY(employCompanyId, employProfileId)
 );
