@@ -67,6 +67,14 @@ CREATE TABLE image (
 	PRIMARY KEY(imageId)
 );
 
+CREATE TABLE truck (
+	truckId INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	truckCompanyId INT UNSIGNED NOT NULL,
+	INDEX(truckCompanyId),
+	FOREIGN KEY(truckCompanyId) REFERENCES company(companyId),
+	PRIMARY KEY (truckId)
+);
+
 CREATE TABLE event(
 	eventId INT UNSIGNED AUTO_INCREMENT NOT NULL,
 	eventTruckId INT UNSIGNED NOT NULL,
