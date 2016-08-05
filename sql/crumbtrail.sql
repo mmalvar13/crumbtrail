@@ -62,7 +62,7 @@ CREATE TABLE image (
 	imageCompanyId INT UNSIGNED                NOT NULL,
 	imageFileType  VARCHAR(6)                  NOT NULL,
 	imageFileName  VARCHAR(128)                NOT NULL,
-	INDEX (imageCompanyId),
-	FOREIGN KEY (imageCompanyId) REFERENCES company (companyId),
-	PRIMARY KEY (imageId)
+	INDEX(imageCompanyId),
+	FOREIGN KEY(imageCompanyId) REFERENCES company(companyId),
+	PRIMARY KEY(imageId)
 );
