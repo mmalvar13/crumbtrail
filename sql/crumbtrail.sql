@@ -1,10 +1,11 @@
 -- drop tables in reverse order to start fresh every time
 
-DROP TABLE IF EXISTS ???;
-DROP TABLE IF EXISTS ?????;
-DROP TABLE IF EXISTS ?????;
-DROP TABLE IF EXISTS ?????;
-DROP TABLE IF EXISTS ?????;
+DROP TABLE IF EXISTS employ;
+DROP TABLE IF EXISTS event;
+DROP TABLE IF EXISTS truck;
+DROP TABLE IF EXISTS image;
+DROP TABLE IF EXISTS company;
+DROP TABLE IF EXISTS profile;
 
 
 CREATE TABLE profile (
@@ -32,8 +33,28 @@ CREATE TABLE profile (
 	PRIMARY KEY (profileId)
 );
 
-
-
+CREATE TABLE company (
+	companyId INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	companyName VARCHAR(128) NOT NULL,
+	companyEmail VARCHAR(128) NOT NULL,
+	companyPhone VARCHAR(32) NOT NULL,
+	companyPermit VARCHAR(128) NOT NULL,
+	companyLicense INT UNSIGNED NOT NULL,
+	companyAttn VARCHAR(128) NOT NULL,
+	companyStreet1 VARCHAR(128) NOT NULL,
+	companyStreet2 VARCHAR(128) NOT NULL,
+	companyState CHAR(2) NOT NULL,
+	companyZip INT UNSIGNED NOT NULL,
+	companyDescription VARCHAR(512),
+	companyMenuText VARCHAR(512),
+	companyActivationToken VARCHAR(128),
+	companyApproved BOOL NOT NULL,
+	companyAccountCreator VARCHAR(128) NOT NULL,
+	UNIQUE(companyEmail),
+	UNIQUE(companyPermit),
+	UNIQUE(companyLicense),
+	PRIMARY KEY(companyId)
+);
 
 
 
