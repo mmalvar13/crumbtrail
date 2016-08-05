@@ -17,9 +17,16 @@ CREATE TABLE profile(
 	profileEmail VARCHAR(128) NOT NULL ,
 	profilePhone VARCHAR(32) NOT NULL ,
 
-	profileActiationToken VARCHAR(128), -- look into this one,  see if data type and initial Null value is ok. ask dylan if correct!!!*****
+	profileActivationToken VARCHAR(128), -- look into this one,  see if data type and initial Null value is ok. ask dylan if correct!!!*****
 
-	profileType VARCHAR()
+	profileType CHAR(1), -- to denote the 3 types of profiles (A-admin, O-owner, E-employee) look into this!!!!!!
+
+	profileHash CHAR(128) NOT NULL,
+	profileSalt CHAR(64) NOT NULL,
+
+
+
+
 
 
 
