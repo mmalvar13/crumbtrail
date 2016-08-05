@@ -1,6 +1,6 @@
 -- drop tables in reverse order to start fresh every time
 
-DROP TABLE IF EXISTS ???;
+DROP TABLE IF EXISTS profile;
 DROP TABLE IF EXISTS ?????;
 DROP TABLE IF EXISTS ?????;
 DROP TABLE IF EXISTS ?????;
