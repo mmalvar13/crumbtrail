@@ -38,15 +38,17 @@
 						<li>Search field, top center.</li>
 						<li>List of nearby active food trucks, slides up from bottom.  Shows nearest trucks first.</li>
 					</ol>
+				<br>
 
-				<h3>Complete list of all companies page:</h3>
+				<li>Complete list of all companies:</li>
 					<ol>
 						<li>A list of all food truck companies that are registered on crumbtrail.</li>
 						<li>Shows the name of the company, and a short description of the food they serve.</li>
 						<li>By touching the name of a company on a list, the user can see the company's profile page.</li>
 					</ol>
+			<br>
 
-				<h3>Company description page:</h3>
+				<li>Company profile page:</li>
 					<ol>
 						<li>Shows whether or not any of the company's trucks are "Live" (serving now).</li>
 						<li>Business name.</li>
@@ -56,15 +58,27 @@
 						<li>Weekly schedule of locations.</li>
 						<li>Space for showing special event day and location.</li>
 					</ol>
+			</ul>
+			<br>
+			<hr>
 
-				<h3>User login/registration page:</h3>
+			<p><strong>For the food truck owner (admin) or employee:</strong></p>
+			<ul>
+				<li>The core food truck experience will be also streamlined, with very little
+					navigation necessary. When a truck is ready to serve, the trucker hits
+					one button in the app, and hungry users will immediately know the active
+					truck's location. </li>
+				<br>
+
+				<li>User login/registration page:</li>
 				<ol>
 					<li>User gets to this page by pressing the top right button on the eater map page</li>
 					<li>Company name field, password field, login button.</li>
 					<li>"New company registration" button, links to New Company Registration page.</li>
 				</ol>
+				<br>
 
-				<h3>Truck map page:</h3>
+				<li>Truck map page:</li>
 					<ol>
 						<li>The user gets to this page via the user login/registration page.</li>
 						<li>When the truck is ready to serve food, the user toggles a "Go Live" switch.</li>
@@ -74,8 +88,9 @@
 						<li>User also sees radio buttons, to choose which of the company's trucks they are serving from: "Truck #1", "Truck #2", etc.</li>
 						<li>User can also set the "End time" for when the truck will close.</li>
 					</ol>
+				<br>
 
-				<h3>Edit company profile page:</h3>
+				<li>Edit company profile page:</li>
 				<ol>
 					<li>Admin gets to this page via the company profile page.</li>
 					<li>Business name.</li>
@@ -85,8 +100,9 @@
 					<li>A text field for them to enter their schedule of times/days and locations.</li>
 					<li>Space for showing special event day and location.</li>
 				</ol>
+				<br>
 
-				<h3>Edit user profile page:</h3>
+				<li>Edit user profile page:</li>
 				<ol>
 					<li>User name</li>
 					<li>User email.</li>
@@ -94,15 +110,17 @@
 					<li>Permit number (admin only)</li>
 					<li>License number (admin only)</li>
 				</ol>
+				<br>
 
-				<h3>Company settings page (admins only):</h3>
+				<li>Company settings page (admins only):</li>
 				<ol>
 					<li>Change number of trucks</li>
 					<li>Invite employees to become users, associated with that company</li>
 					<li>Change company email, etc.</li>
 				</ol>
+				<br>
 
-				<h3>New user registration page:</h3>
+				<li>New user registration page:</li>
 				<ol>
 					<li>Name of user</li>
 					<li>Email of user</li>
@@ -110,7 +128,9 @@
 					<li>Health inspection number (for admin)</li>
 				</ol>
 
-			<h3>New company profile creation page:</h3>
+			<br>
+
+			<li>New company profile creation page:</li>
 			<ol>
 				<li>Name of company</li>
 				<li>Company email</li>
@@ -118,7 +138,9 @@
 				<li>Menu</li>
 				<li>Weekly schedule, as a simple text box.</li>
 			</ol>
+			</ul>
 			<br>
+
 
 			<hr>
 			<h2>Persona for Company Admin</h2>
@@ -223,7 +245,7 @@
 			</ol>
 			<hr>
 
-			<h2>Persona, for someone who plans to eat at a food truck in the future</h2>
+			<h2>Persona, for someone who plans to eat at a food truck in the future.</h2>
 			<p>Name: Will B. Hungry</p>
 			<p>Age: 29</p>
 			<p>Profession: Will is a history instructor at CNM.</p>
@@ -232,7 +254,7 @@
 			<p>Frustrations and needs: Not only does Will hate to cook, but his apartment has a tiny kitchen which is too cramped to prepare anything except coffee.  Will has a few favorite resturants in Albuquerque, but he wants to try new resturants and he is hoping to find some good food trucks in town.  To find food trucks, he could simply Google "food trucks Albuquerque", but then he would have to wade through each food truck's website, looking for the type of food they serve, and trying to find their schedule of days, times and locations.</p>
 			<p>Goals: Will is going out with friends this Saturday night.  They plan to meet in the downtown area around 8 pm, and look for a late dinner.  Will suspects they can find food trucks downtown on a Saturday night, and he would like to learn where the food trucks will be located that night.  On Saturday afternoon, Will wants to use his laptop to find which trucks will be located in downtown Albuquerque that night, where exactly they will be parked, and what kind of food they will be serving.</p>
 
-			<h2>Interaction flow</h2>
+			<h2>Interaction flow, for someone who plans to eat at a food truck in the future.</h2>
 				<ol>
 					<li>User opens the web browser on their laptop, and finds the crumbtrails website.</li>
 					<li>User sees the Map page, which shows the current locations of food trucks that are now serving food in Albuquerque.</li>
@@ -259,34 +281,22 @@
 				<li>The map will post all food truck that are open in that area</li>
 			</ol>
 			<hr>
-			<h2>Conceptual model: Database entities:</h2>
-			<ul>
-				<li>profile</li>
-				<li>company</li>
-				<li>image</li>
-				<li>truck</li>
-				<li>event</li>
-			</ul>
-			<h2>Conceptual model: Database relationships:</h2>
+			<h2>Conceptual model, of database structure:</h2>
 				<ul>
-					<li>Each profile can work for many companies.</li>
-					<li>Each company can have many profiles.</li>
-					<li>So the relationship between profile and company is many-to-many.</li>
-					<li>So there will be a weak entity between profile and company.</li>
+					<li>Each user (owner [admin] or employee) can belong to many companies.</li>
+					<li>Each company can have more than one user.</li>
+					<li>The relationship between user and company is many-to-many.</li>
 					<li>Each company can have many trucks.</li>
-					<li>Each truck is owned by one company.</li>
-					<li>So the relationship between company and truck is one-to-many.</li>
-					<li>Each company can have many images.</li>
-					<li>Many images can belong to one company.</li>
-					<li>So the relationship between company and image is one-to-many.</li>
-					<li>Each event belongs to one truck.</li>
-					<li>Each truck has many events. (The current event and past events).</li>
-					<li>So the relationship between truck and event is one-to-many.</li>
+					<li>Each truck belongs to only one company.</li>
+					<li>The relationship between company and truck is one-to-many.</li>
+					<li>Each truck has many schedule items (location/time combinations).</li>
+					<li>Each schedule belongs to only one truck.</li>
+					<li>The relationship between schedule and truck is one-to-many.</li>
+					<li>The worker entity specifies the relationship between user and company.  Each worker has a workerType: "A" for admin, or "E" for employee. </li>
 				</ul>
-				<br>
 			<hr>
 			<h2>ERD, diagram of database structure:</h2>
-				<img src="images/crumbtrail%20ERD%204.svg" alt="ERD" width="800px"/>
+				<img src="images/crumbtrail ERD.svg" alt="ERD" width="900px"/>
 			<br>
 		</main>
 	</body>
