@@ -16,5 +16,4 @@
  * @author Victoria Chacon <victoriousdesignco@gmail.com>
 **/
 //what does version apply to in the tweet example? is it necessary here?
-class Image
-//implements JsonSerializable?//
+class Image 
