@@ -15,7 +15,7 @@
  *
  * @author Victoria Chacon <victoriousdesignco@gmail.com>
 **/
-//what does version apply to in the tweet example? is it necessary here?
+//what does version apply to in the tweet example? is it necessary here?//
 class Image {
 	/**
 	 * id for this Image; this is the primary key
@@ -24,7 +24,12 @@ class Image {
 	private $imageId;
 	/**
 	 * this is the id of the image that relates to which company. This is a foreign key.
+	 * @var $imageCompanyId;
 	 */
 	private $imageCompanyId;
+	/**
+	 * this is the id that will identify what type of image the company is using. JPG, PNG etc (will add filetypes later).
+	 */
+	
 
 }
