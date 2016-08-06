@@ -31,7 +31,12 @@ class Image {
 	 * this is the id that will identify what type of image the company is using. JPG, PNG etc (will add filetypes later).
 	 * @var string $imageFileType;
 	 */
-	Private $imageFileType;
-	
+	private $imageFileType;
+	/**
+	 * this is the id that informs the user of the name of said image.
+	 * @var string $imageFileName;
+	 */
+	private $imageFileName;
+
 
 }
