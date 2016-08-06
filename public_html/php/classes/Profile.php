@@ -195,6 +195,34 @@ public function getProfileId(){
 	}
 
 
+	/**
+	 * mutator method for profileName
+	 * @param string, $newProfileName used to update profileName
+	 * @throw \RangeException if $newProfileName is empty or too long
+	 * @throw \InvalidArgumentException if $newProfileName is not a string
+	 * @throw \TypeError if $newProfileName is not a string
+	 */
+	public function setProfileName(string $newProfileName){
+		//first we need to strip out all the white space on either end of $newProfileName
+		$newProfileName = trim($newProfileName);
+		//Then we must sanitize $newProfileName
+		$newProfileName = filter_var($newProfileName, FILTER_SANITIZE_STRING);
+		//now check if $newProfileName is either empty or too long
+		if(strlen($newProfileName) === 0){
+			throw(new \RangeException("Profile name is too short"));
+			}
+
+		if(strlen($newProfileName > 128)){
+			throw(new \RangeException("Profile name is too long"));
+		}
+		//now assign $newProfileName to profileName and store in SQL
+		$this->profileName = $newProfileName;
+	}
+
+
+
+
+
 
 
 }
