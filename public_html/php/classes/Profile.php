@@ -222,7 +222,7 @@ public function getProfileId(){
 
 	/**
 	 * mutator method for profileEmail
-	 * @param string, $newProfileEmail used to assign new value of ProfileEmail
+	 * @param string, $newProfileEmail used to assign new value of profileEmail
 	 * @throws \InvalidArgumentException if $newProfileEmail is not a string or is insecure
 	 * @throws \RangeException if $newProfileEmail is longer than 128 char
 	 * @throws \TypeError if $newProfileEmail is not a string
@@ -246,6 +246,37 @@ public function getProfileId(){
 		//assign new email to profileEmail and enter it in mySQL
 		$this->profileEmail = $newProfileEmail;
 	}
+
+
+	/**
+	 * mutator method for profilePhone
+	 * @param string, $newProfilePhone used to assign new value of profilePhone
+	 * @throws \InvalidArgumentException if $newProfilePhone is not a string or is insecure
+	 * @throws \RangeException if $newProfilePhone is longer than 32 char
+	 * @throws \TypeError if $newProfilePhone is not a string
+	 */
+	public function setProfilePhone(string $newProfilePhone){
+		// first take out any white space on $newProfilePhone
+		$newProfilePhone = trim($newProfilePhone);
+		//next ensure that $newProfilePhone is sanitized
+		$newProfilePhone = filter_var($newProfilePhone, FILTER_SANITIZE_STRING);
+
+		//ensure that $newProfilePhone isnt empty
+		if(strlen($newProfilePhone)=== 0){
+			throw(new \RangeException("The phone number entered is too short"));
+		}
+
+		//ensure $newProfilePhone isn't too long
+		if(strlen($newProfilePhone) > 32){
+			throw(new \RangeException("Phone number entered is too long"));
+		}
+
+		//assign new email to $newProfilePhone and enter it in mySQL
+		$this->profilePhone = $newProfilePhone;
+	}
+
+
+
 
 
 
