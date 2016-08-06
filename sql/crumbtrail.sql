@@ -38,11 +38,12 @@ CREATE TABLE company (
 	companyName VARCHAR(128) NOT NULL,
 	companyEmail VARCHAR(128) NOT NULL,
 	companyPhone VARCHAR(32) NOT NULL,
-	companyPermit VARCHAR(128) NOT NULL,
-	companyLicense INT UNSIGNED NOT NULL,
+	companyPermit VARCHAR(32) NOT NULL,
+	companyLicense VARCHAR(32) NOT NULL,
 	companyAttn VARCHAR(128) NOT NULL,
 	companyStreet1 VARCHAR(128) NOT NULL,
-	companyStreet2 VARCHAR(128) NOT NULL,
+	companyStreet2 VARCHAR(128),
+	companyCity VARCHAR(128) NOT NULL,
 	companyState CHAR(2) NOT NULL,
 	companyZip INT UNSIGNED NOT NULL,
 	companyDescription VARCHAR(255),
@@ -61,7 +62,6 @@ CREATE TABLE company (
 	UNIQUE(companyPermit),
 	UNIQUE(companyLicense),
 	PRIMARY KEY(companyId)
-
 );
 
 CREATE TABLE image (
