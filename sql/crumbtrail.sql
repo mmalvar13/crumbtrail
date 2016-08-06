@@ -50,10 +50,11 @@ CREATE TABLE company (
 	companyMenuText TEXT,
 	companyActivationToken CHAR(32),
 	companyApproved BOOL NOT NULL,
+	companyAccountCreatorId INT UNSIGNED NOT,
 
 	-- companyAccountCreatorId is a foreign key from profile
 	companyAccountCreatorId VARCHAR(128) NOT NULL,
-	-- indext for foreign key companyAccountCreatorId
+	-- index for foreign key companyAccountCreatorId
 	INDEX (companyAccountCreatorId),
 	-- declare foreign key for companyAccountCreatorId
 	FOREIGN KEY (companyAccountCreatorId) REFERENCES profile (profileId),

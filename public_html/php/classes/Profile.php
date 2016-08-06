@@ -76,7 +76,123 @@ private $profileName;
 	private $profileHash;
 
 
+	/**
+	 * Constructor for Profile Class will go here!!!!
+	 */
+	public function __construct() {
 
+		/*FILL THIS IN, WE GON" NEED IT */
+	}
+
+/*--------------------ACCESSOR SECTION HERE---------------------------*/
+
+/**
+ * accessor method for profileId
+ * @return int|null value for profileId
+ */
+public function getProfileId(){
+	return($this-> profileId);
+}
+
+
+	/**
+	 * accessor method for profileName
+	 * @return string value for profileName
+	 */
+	public function getProfilename(){
+		return($this-> profileName);
+	}
+
+
+	/**
+	 * accessor method for profileEmail
+	 * @return string value for profileEmail
+	 */
+	public function getProfileEmail(){
+		return($this-> profileEmail);
+	}
+
+
+	/**
+	 * accessor method for profilePhone
+	 * @return string value for profilePhone  **WOULD THIS BE A STRING SINCE PHONE NUMBERS CAN BE VARIABLE LENGTHS?
+	 */
+	public function getProfilePhone(){
+		return($this-> profilePhone);
+	}
+
+
+	/**
+	 * accessor method for profileAccessToken
+	 * @return string value for profileAccessToken  **AGAIN, WOULD THIS BE A STRING OR INT VALUE??
+	 */
+	public function getProfileAccessToken(){
+		return($this-> profileAccessToken);
+	}
+
+
+	/**
+	 * accessor method for profileActivationToken
+	 * @return string value for profileActivationToken
+	 */
+	public function getProfileActivationToken(){
+		return($this-> profileActivationToken);
+	}
+
+
+	/**
+	 * accessor method for profileType
+	 * @return string value for profileType
+	 */
+	public function getProfileType(){
+		return($this-> profileType);
+	}
+
+
+	/**
+	 * accessor method for profileSalt
+	 * @return string value for profileSalt
+	 */
+	public function getProfileSalt(){
+		return($this-> profileSalt);
+	}
+
+
+	/**
+	 * accessor method for profileHash
+	 * @return string value for profileHash
+	 */
+	public function getProfileHash(){
+		return($this-> profileHash);
+	}
+
+
+
+	/*--------------------------MUTATOR SECTION HERE------------------------------------------------*/
+
+/**
+ * mutator method for profileId
+ * @param int|null  use $newProfileId to assign a new value to profileId
+ * @throws \RangeException if $newProfileId is not positive
+ * @throws \TypeError if $newProfileId is not an integer
+ */
+	public function setProfileId(int $newProfileId = null){
+		//create a base case where this is a new profile and profileId is null with no SQL assigned ID yet!
+		// is this because setProofileId takes in one argument, which then gets assigned to $newProfileId???
+		//ASK ON THIS!!!!!
+		if($newProfileId===null){
+			$this->profileId = null;
+			return;
+		}
+
+		//check to see if $newProfileId is positive
+		if($newProfileId <= 0){
+			throw(new \RangeException("The profile ID is not positive!"));
+		}
+
+		//convert and store the new profileId
+		$this->profileId = $newProfileId;
+	}
 
 
 
