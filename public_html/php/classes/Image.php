@@ -20,16 +20,18 @@ class Image {
 	/**
 	 * id for this Image; this is the primary key
 	 * @var int $imageId
-	 */
+	 **/
 	private $imageId;
 	/**
 	 * this is the id of the image that relates to which company. This is a foreign key.
-	 * @var $imageCompanyId;
-	 */
+	 * @var int $imageCompanyId;
+	 **/
 	private $imageCompanyId;
 	/**
 	 * this is the id that will identify what type of image the company is using. JPG, PNG etc (will add filetypes later).
+	 * @var string $imageFileType;
 	 */
+	Private $imageFileType;
 	
 
 }
