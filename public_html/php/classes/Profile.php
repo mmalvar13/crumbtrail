@@ -181,9 +181,20 @@ public function getProfileId(){
 		// is this because setProofileId takes in one argument, which then gets assigned to $newProfileId???
 		//ASK ON THIS!!!!!
 		if($newProfileId===null){
-
+			$this->profileId = null;
+			return;
 		}
 
+		//check to see if $newProfileId is positive
+		if($newProfileId <= 0){
+			throw(new \RangeException("The profile ID is not positive!"));
+		}
+
+		//convert and store the new profileId
+		$this->profileId = $newProfileId;
 	}
+
+
+
 
 }
