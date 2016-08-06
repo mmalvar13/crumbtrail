@@ -220,6 +220,34 @@ public function getProfileId(){
 	}
 
 
+	/**
+	 * mutator method for profileEmail
+	 * @param string, $newProfileEmail used to assign new value of ProfileEmail
+	 * @throws \InvalidArgumentException if $newProfileEmail is not a string or is insecure
+	 * @throws \RangeException if $newProfileEmail is longer than 128 char
+	 * @throws \TypeError if $newProfileEmail is not a string
+	 */
+	public function setProfileEmail(string $newProfileEmail){
+		// first take out any white space on $newProfileEmail
+		$newProfileEmail = trim($newProfileEmail);
+		//next ensure that $newProfileEmail is sanitized
+		$newProfileEmail = filter_var($newProfileEmail, FILTER_SANITIZE_EMAIL);
+
+		//ensure that $newProfileEmail isnt empty
+		if(strlen($newProfileEmail)=== 0){
+			throw(new \RangeException("The email entered is too short"));
+		}
+
+		//ensure $newProfileEmail isn't too long
+		if(strlen($newProfileEmail) > 128){
+			throw(new \RangeException("email entered is too long"));
+		}
+
+		//assign new email to profileEmail and enter it in mySQL
+		$this->profileEmail = $newProfileEmail;
+	}
+
+
 
 
 
