@@ -16,4 +16,15 @@
  * @author Victoria Chacon <victoriousdesignco@gmail.com>
 **/
 //what does version apply to in the tweet example? is it necessary here?
-class Image 
+class Image {
+	/**
+	 * id for this Image; this is the primary key
+	 * @var int $imageId
+	 */
+	private $imageId;
+	/**
+	 * this is the id of the image that relates to which company. This is a foreign key.
+	 */
+	private $imageCompanyId;
+
+}
