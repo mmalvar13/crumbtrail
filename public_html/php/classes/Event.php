@@ -47,4 +47,15 @@ class Event{ //implement JsonSerializable??
 	 *@throws \InvalidArgumentException if data types are not valid
 	 * @throws \RangeException if data values are out of bounds (e.g. Strings too long, negative integers)
 	 **/
+
+	/**
+	 * accessor method for eventId
+	 *
+	 * @return int|null value of eventId
+	 **/
+	public function getEventId(){
+		return($this->eventId);
+	}
+
+
 }
