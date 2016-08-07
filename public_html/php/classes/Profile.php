@@ -369,6 +369,33 @@ public function getProfileId(){
 	}
 
 
+	/**
+	 * CHECK ON THIS ONE!!!!!
+	 * mutator method for profileSalt
+	 * @param string, $newProfileSalt used to update profileSalt
+	 * @throw \RangeException if $newProfileSalt is empty or too long
+	 * @throw \InvalidArgumentException if $newProfileSalt is not a string
+	 * @throw \TypeError if $newProfileSalt is not a string
+	 */
+	public function setProfileSalt(string $newProfileSalt){
+		//first we need to strip out all the white space on either end of $newProfileSalt
+		$newProfileSalt = trim($newProfileSalt);
+		//Then we must sanitize $newProfileSalt
+		$newProfileSalt = filter_var($newProfileSalt, FILTER_SANITIZE_ENCODED); //SHOULD I USE ENCODE FOR THIS?????
+		//now check if $newProfileSalt is either empty or too long
+		if(strlen($newProfileSalt) === 0){
+			throw(new \RangeException("Profile salt is too short"));
+		}
+
+		//**doesnt salt and hash need to be EXACTLY the designated length?? CHECK ON THIS!!**
+		if(strlen($newProfileSalt === 64)){
+			throw(new \RangeException("Profile salt should be exactly 64 characters long"));
+		}
+		//now assign $newProfileSalt to profileSalt and store in SQL
+		$this->profileSalt = $newProfileSalt;
+	}
+
+
 
 
 
