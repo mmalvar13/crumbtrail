@@ -118,4 +118,12 @@ class Event{ //implement JsonSerializable??
 	public function getEventLocation(){
 		return($this->eventLocation);
 	}
+
+	/**
+	 * accessor method for event Start
+	 * @return \DateTime value of event start
+	 **/
+	public function getEventStart(){
+		return($this->eventStart);
+	}
 }
