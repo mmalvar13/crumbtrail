@@ -45,7 +45,7 @@ class Event{ //implement JsonSerializable??
 	 *@geography point $newEventLocation gps coordinates of Event //how do i write this? I added @geography again
 	 *@param \DateTime|string|null $newEventStart data and time Event starts or null if set to current date and time //i added null here since the date/time would not have been set yet. is this right?
 	 *@throws \InvalidArgumentException if data types are not valid
-	 * @throws \RangeException if data values are out of bounds (e.g. Strings too long, negative integers)
+	 *@throws \RangeException if data values are out of bounds (e.g. Strings too long, negative integers)
 	 **/
 
 	/**
@@ -55,6 +55,28 @@ class Event{ //implement JsonSerializable??
 	 **/
 	public function getEventId(){
 		return($this->eventId);
+	}
+
+	/**
+	 * mutator method for eventId
+	 * @param int|null $newEventId new value of eventId
+	 * @throws \InvalidArgumentException if data types are not valid
+	 * @throws \RangeException if $newEventId is not a positive
+	 * @throws \TypeError if $newEventId is not an integer
+	 **/
+	public function setEventId(int $newEventId = null){
+		//base case: if the eventId is null, this is a new event without a mySQL assigned id yet.
+		if ($newEventId === null){
+			$this ->eventId = null;
+			return;
+		}
+		//verify that the eventId is positive
+		if($newEventId <= 0){
+			throw(new \RangeException("event id is not positive"));
+		}
+
+		//convert and store the event id
+		$this->eventId= $newEventId;
 	}
 
 
