@@ -281,7 +281,7 @@ public function getProfileId(){
 	 * mutator method for profileAccessToken
 	 * @param string, $newProfileAccessToken used to assign new value of profileAccessToken
 	 * @throws \InvalidArgumentException if $newProfileAccessToken is not a string or is insecure
-	 * @throws \RangeException if $newProfileAccessToken is longer than 32 char
+	 * @throws \RangeException if $newProfileAccessToken is longer than 64 char
 	 * @throws \TypeError if $newProfileAccessToken is not a string
 	 */
 	public function setProfileAccessToken(string $newProfileAccessToken){
@@ -296,7 +296,7 @@ public function getProfileId(){
 		}
 
 		//ensure $newProfileAccessToken isn't too long
-		if(strlen($newProfileAccessToken) > 32){
+		if(strlen($newProfileAccessToken) > 64){
 			throw(new \RangeException("Access token is too long"));
 		}
 

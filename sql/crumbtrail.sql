@@ -18,7 +18,7 @@ CREATE TABLE profile (
 	profileEmail           VARCHAR(128)                NOT NULL,
 	profilePhone           VARCHAR(32)                 NOT NULL,
 
-	profileAccessToken CHAR(32),
+	profileAccessToken VARCHAR(64),
 	profileActivationToken CHAR(32),
 
 
