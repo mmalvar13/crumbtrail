@@ -69,5 +69,14 @@ class Image {
 		}
 	}
 
+	//adding in the accessor method for image.php
+	/**
+	 * accessor method for image id
+	 *
+	 * @return int|null value of image id
+	 **/
+	public function getImageId() {
+			return($this->imageId);
+	}
 
 }
