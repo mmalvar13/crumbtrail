@@ -531,7 +531,51 @@ public function getProfileId(){
 		$parameters = ["profileName"=>$this->profileName, "profileEmail"=>$this->profileEmail, "profilePhone"=>$this->profilePhone, "profileAccessToken"=>$this->profileAccessToken, "profileActivationToken"=>$this->profileActivationToken, "profileType"=>$this->profileType, "profileSalt"=>$this->profileSalt, "profileHash"=>$this->profileHash, "profileId"=>$this->profileId];
 		//execute
 		$statement->execute($parameters);
+}
 
+
+/**
+ * gets profile by the profile ID
+ * @param \PDO $pdo PDO connection object
+ * @param int $profileId used as the profileId to search for
+ * @return Profile|null Profile found or null if not found  ***Why is profile capitalized?? referencing the class??****
+ * @throws \PDOException when mySQL related errors occur
+ * @throws \TypeError when variables are not the correct data type
+ */
+public static function getProfileByProfileId(\PDO $pdo, int $profileId){
+	//sanitize the ID before searching for it
+	if($profileId <= 0){
+		throw(new \PDOException("The profileId is negative or zero"));
+	}
+	//create query template
+	$query = "SELECT profileId, profileName, profileEmail, profilePhone, profileAccessToken, profileActivationToken, profileType, profileHash, profileSalt FROM profile WHERE profileId = :profileId";
+
+	//prepare template
+	$statement = $pdo->prepare($query);
+
+	//bind the profileId to the placeholder in the template ***WHY JUST TO PROFILE ID?***
+	$parameters = ["profileId"=>$profileId];
+	//execute the SQL statement
+	$statement->execute($parameters);
+
+	//now that we have selected the correct profile, we need to grab it from mySQL
+	try{
+		$profile = null;   //new varible $profile is what we will assign all the information in this profile to, and return to whatever called this method
+		$statement->setFetchMode(\PDO::FETCH_ASSOC); //what is going on here? establishing the fetch mode for this method?
+		//$row is an empty array I think
+		$row = $statement->fetch(); //create new variable and assign it to $statement which is pointing to the value of fetch???
+
+		//what does it mean for the row to be false?? That the row is empty? Couldnt be retrieved???
+		if($row !== false){
+			//set $profile to a new object based on the Profile class with these values assigned into it (I think)
+			$profile = new Profile($row[profileId], $row[profileName], $row[profileEmail], $row[profilePhone], $row[profileAccessToken], $row[profileActivationToken], $row[profileType], $row[profileHash], $row[profileSalt]);
+		}
+		//catch statement
+	} catch(\Exception $exception){
+		// if the row couldnt be converted, re-throw it
+		throw(new \PDOException($exception->getMessage(), 0, $exception));
+	}
+	return($profile);
 }
 
 
