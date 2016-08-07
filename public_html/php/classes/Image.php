@@ -31,7 +31,26 @@ class Image {
 	 * this is the id that will identify what type of image the company is using. JPG, PNG etc (will add filetypes later).
 	 * @var string $imageFileType;
 	 */
-	Private $imageFileType;
-	
+	private $imageFileType;
+	/**
+	 * this is the id that informs the user of the name of said image.
+	 * @var string $imageFileName;
+	 */
+	private $imageFileName;
+
+	/**
+	 * constructor for this Image
+	 *
+	 * @param int|null $newImageId id of this Image or null if a new Image
+	 * @param int $newImageCompanyId id of the Image that relates to a company
+	 * @param string $newImageFileType string containing the file type of an image
+	 * @param string $newImageFileName string containing the name of each image
+	 * @throws \InvalidArgumentException if the data type is invalid
+	 * @throw \InvalidArgumentException if the id is negative
+	 * @throw \InvalidArgumentException if the image is not the correct file type
+	 * @throw \RangeException if the image name is longer than 255 characters
+	 */
+// WHAT WOULD I NEED TO DO IF I WANTED TO DEFINE FILE TYPE? //
+
 
 }

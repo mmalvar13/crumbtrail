@@ -18,7 +18,9 @@ CREATE TABLE profile (
 	profileEmail           VARCHAR(128)                NOT NULL,
 	profilePhone           VARCHAR(32)                 NOT NULL,
 
+	profileAccessToken VARCHAR(64),
 	profileActivationToken CHAR(32),
+
 
 	profileType            CHAR(1) NOT NULL,
 
@@ -50,13 +52,13 @@ CREATE TABLE company (
 	companyMenuText TEXT,
 	companyActivationToken CHAR(32),
 	companyApproved BOOL NOT NULL,
-	companyAccountCreatorId INT UNSIGNED NOT,
 
 	-- companyAccountCreatorId is a foreign key from profile
-	companyAccountCreatorId VARCHAR(128) NOT NULL,
+	companyAccountCreatorId INT UNSIGNED NOT NULL,
+
 	-- index for foreign key companyAccountCreatorId
 	INDEX (companyAccountCreatorId),
-	-- declare foreign key for companyAccountCreatorId
+	-- declare foreign key for companyAccountCreatorId, reference profileId
 	FOREIGN KEY (companyAccountCreatorId) REFERENCES profile (profileId),
 
 	UNIQUE(companyEmail),
