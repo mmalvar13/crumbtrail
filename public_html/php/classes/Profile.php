@@ -83,6 +83,7 @@ private $profileName;
 
 		//try statements
 		try{
+			//WHY ARE ALL OF THESE RED? SAYING THEY AREN'T DEFINED? WILL THEY BE FIXED ONCE WE MAKE THE PDO?
 			$this->setProfileId($newProfileId);
 			$this->setProfileName($newProfileName);
 			$this->setProfileEmail($newProfileEmail);
@@ -451,7 +452,36 @@ public function getProfileId(){
 	}
 
 
+/*-------------------------------PDO SECTION HERE--------------------------------------*/
 
+/**
+ * inserts this profile into mySQL
+ *
+ * @param \PDO    $pdo is the PDO connection object
+ * @throws \PDOException when mySQL related errors occur
+ * @throws \TypeError if $pdo is not a PDO connection object
+ */
+
+	public function insert(\PDO $pdo){
+		//ensure that the profileId is null, DONT want to insert a profileId that already exists
+		if($this->profileId !==null){
+			throw(new \PDOException("This is not a new profileId"));
+		}
+
+		//create query template
+		$query = "INSERT INTO profile(profileId, profileName, profileEmail, profilePhone, profileAccessToken, profileActivationToken, profileType, profileSalt, profileHash) VALUES(:profileId, :profileName, :profileEmail, :profilePhone, :profileAccessToken, :profileActivationToken, :profileType, :profileSalt, :profileHash)";
+
+		$statement = $pdo->prepare($query);
+
+		//bind the member variables to the place holder slots in the template. putting these into an array
+		$prameters = ["profileId"=>$this->profileId, "profileName"=>$this->profileName, "profileEmail"=>$this->profileEmail, "profilePhone"=>$this->profilePhone, "profileAccessToken"=>$this->profileAccessToken, "profileActivationToken"=>$this->profileActivationToken, "profileType"=>$this->profileType, "profileSalt"=>$this->profileSalt, "profileHash"=>$this->profileHash];
+
+		//execute the command held in $statement
+		$statement->execute($prameters);
+
+		//update the null profileId. Ask mySQL for the primary key value it assigned to this entry
+		$this->profileId = intval($pdo->lastInsertId());
+	}
 
 
 
