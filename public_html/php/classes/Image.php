@@ -51,6 +51,38 @@ class Image {
 	 * @throw \RangeException if the image name is longer than 255 characters
 	 */
 // WHAT WOULD I NEED TO DO IF I WANTED TO DEFINE FILE TYPE? //
+	public function __construct(int $newImageId = null, int $newImageCompanyId, string $newImageFileType, string $newImageFileName) {
+		try {
+			$this->setImageId($newImageId);
+			$this->setImageCompanyId($newImageCompanyId);
+			$this->setImageFileType($newImageFileType);
+			$this->setImageFileName($newImageFileName);
+		} catch(\InvalidArgumentException $invalidArgument) {
+			//rethrows exception to the caller//
+			throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
+		} catch(\InvalidArgumentException $invalidArgument) {
+			throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
+		} catch(\InvalidArgumentException $invalidArgument) {
+			throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
+		} catch(\RangeException $range) {
+			throw(new \RangeException($range->getMessage(), 0, $range));
+		}
+	}
 
+	//adding in the accessor method for image.php
+	/**
+	 * accessor method for image id
+	 *
+	 * @return int|null value of image id
+	 **/
+	public function getImageId() {
+			return($this->imageId);
+	}
+//DOES THE EXCEPTIONS DEFINED ABOVE APPLY SPECIFICALLY TO EACH ATTRIBUTE? EX., CAN I ONLY THROW THE INVALID ARGUMENT EXPRESSION FOR IMAGE ID?
+	/**
+	 * mutator method for image id
+	 *
+	 * @param int|null $newImageId
+	 */
 
 }
