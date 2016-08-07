@@ -111,4 +111,11 @@ class Event{ //implement JsonSerializable??
 		return($this->eventEnd);
 	}
 
+	/**
+	 * accessor method for event location
+	 * @return point value of event location //HOW DO I WRITE OUT THESE POINT DATA TYPES??
+	 **/
+	public function getEventLocation(){
+		return($this->eventLocation);
+	}
 }
