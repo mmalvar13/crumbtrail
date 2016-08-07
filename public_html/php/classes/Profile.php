@@ -460,6 +460,7 @@ public function getProfileId(){
  * @param \PDO    $pdo is the PDO connection object
  * @throws \PDOException when mySQL related errors occur
  * @throws \TypeError if $pdo is not a PDO connection object
+ * SINCE THIS IS FOR A NEW PROFILE INSERT, DO NOT INCLUDE profileId in the template or array
  **/
 
 	public function insert(\PDO $pdo){
@@ -468,14 +469,14 @@ public function getProfileId(){
 			throw(new \PDOException("This is not a new profileId"));
 		}
 
-		//create query template
-		$query = "INSERT INTO profile(profileId, profileName, profileEmail, profilePhone, profileAccessToken, profileActivationToken, profileType, profileSalt, profileHash) VALUES(:profileId, :profileName, :profileEmail, :profilePhone, :profileAccessToken, :profileActivationToken, :profileType, :profileSalt, :profileHash)";
+		//create query template do NOT include profileId in this list because it's a new profile you're inserting (I THINK)
+		$query = "INSERT INTO profile(profileName, profileEmail, profilePhone, profileAccessToken, profileActivationToken, profileType, profileSalt, profileHash) VALUES(:profileName, :profileEmail, :profilePhone, :profileAccessToken, :profileActivationToken, :profileType, :profileSalt, :profileHash)";
 
 		//prepare is used as an extra means of security
 		$statement = $pdo->prepare($query);
 
 		//bind the member variables to the place holder slots in the template. putting these into an array
-		$prameters = ["profileId"=>$this->profileId, "profileName"=>$this->profileName, "profileEmail"=>$this->profileEmail, "profilePhone"=>$this->profilePhone, "profileAccessToken"=>$this->profileAccessToken, "profileActivationToken"=>$this->profileActivationToken, "profileType"=>$this->profileType, "profileSalt"=>$this->profileSalt, "profileHash"=>$this->profileHash];
+		$prameters = ["profileName"=>$this->profileName, "profileEmail"=>$this->profileEmail, "profilePhone"=>$this->profilePhone, "profileAccessToken"=>$this->profileAccessToken, "profileActivationToken"=>$this->profileActivationToken, "profileType"=>$this->profileType, "profileSalt"=>$this->profileSalt, "profileHash"=>$this->profileHash];
 
 		//execute the command held in $statement
 		$statement->execute($prameters);
@@ -505,6 +506,33 @@ public function getProfileId(){
 		$parameters = ["profileId"=>$this->profileId];
 		$statement->execute($parameters);
 	}
+
+
+	/**
+	 * PDO statement to update this profile in mySQL
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 */
+
+	public function update(\PDO $pdo){
+			//ensure that this profile is not null (hasn't been entered into SQL). Can't update something that doesn't exist
+		if($this->profileId === null){
+			throw(new \PDOException("Can't update a profile that doesn't exist"));
+		}
+
+		//create a query template ***ASK ABOUT THIS, WHAT PARTS OF PROFILE IS THIS ACTUALLY LETTING US UPDATE
+		$query = "UPDATE profile SET profileName = :profileName, profilePhone = :profilePhone, profileAccessToken = :profileAccessToken, profileActivationToken = :profileActivationToken, profileType = :profileType, profileHash = :profileHash, profileSalt = :profileSalt WHERE profileId = :profileId";
+		// prepare statement
+		$statement = $pdo->prepare($query);
+
+		//bind the variables to the template and execute the SQL command (is that correct?) Why is the primary key last in the array????
+		//should $parameters always have every every entry that's in the selected table??
+		$parameters = ["profileName"=>$this->profileName, "profileEmail"=>$this->profileEmail, "profilePhone"=>$this->profilePhone, "profileAccessToken"=>$this->profileAccessToken, "profileActivationToken"=>$this->profileActivationToken, "profileType"=>$this->profileType, "profileSalt"=>$this->profileSalt, "profileHash"=>$this->profileHash, "profileId"=>$this->profileId];
+		//execute
+		$statement->execute($parameters);
+
+}
 
 
 
