@@ -38,5 +38,15 @@ class Image {
 	 */
 	private $imageFileName;
 
+	/**
+	 * constructor for this Image
+	 *
+	 * @param int|null $newImageId id of this Image or null if a new Image
+	 * @param int $newImageCompanyId id of the Image that relates to a company
+	 * @param string $newImageFileType string containing the file type of an image
+	 * @param string $newImageFileName string containing the name of each image
+	 * @throws 
+	 */
+
 
 }
