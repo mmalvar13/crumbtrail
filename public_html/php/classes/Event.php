@@ -79,5 +79,14 @@ class Event{ //implement JsonSerializable??
 		$this->eventId= $newEventId;
 	}
 
+	/**
+	 * accessor method for event truck id
+	 * @return int value of event truck id
+	 **/
+	public function getEventTruckId(){
+		return($this->eventTruckId);
+	}
+
+
 
 }
