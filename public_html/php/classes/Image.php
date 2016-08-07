@@ -48,8 +48,9 @@ class Image {
 	 * @throws \InvalidArgumentException if the data type is invalid
 	 * @throw \InvalidArgumentException if the id is negative
 	 * @throw \InvalidArgumentException if the image is not the correct file type
-	 * @throw \RangeException if the image name is longer than 255 characters
+	 * @throw \RangeException if the image name is longer than 255 characters or if a value is negative
 	 */
+	//exceptions, are they correct?
 // WHAT WOULD I NEED TO DO IF I WANTED TO DEFINE FILE TYPE? //
 	public function __construct(int $newImageId = null, int $newImageCompanyId, string $newImageFileType, string $newImageFileName) {
 		try {
@@ -82,7 +83,10 @@ class Image {
 	/**
 	 * mutator method for image id
 	 *
-	 * @param int|null $newImageId
-	 */
+	 * @param int|null $newImageId new value of image id
+	 * @throws \InvalidArgumentException is $newImageId is not an integer
+	 * @throws \RangeException if $newImageId is negative
+	 **/
+	
 
 }
