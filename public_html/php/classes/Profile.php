@@ -460,10 +460,10 @@ public function getProfileId(){
  * @param \PDO    $pdo is the PDO connection object
  * @throws \PDOException when mySQL related errors occur
  * @throws \TypeError if $pdo is not a PDO connection object
- */
+ **/
 
 	public function insert(\PDO $pdo){
-		//ensure that the profileId is null, DONT want to insert a profileId that already exists
+		//ensure that the profileId is null, DONT want to insert a profileId that already exists. This prevents modifying a primary key
 		if($this->profileId !==null){
 			throw(new \PDOException("This is not a new profileId"));
 		}
@@ -471,6 +471,7 @@ public function getProfileId(){
 		//create query template
 		$query = "INSERT INTO profile(profileId, profileName, profileEmail, profilePhone, profileAccessToken, profileActivationToken, profileType, profileSalt, profileHash) VALUES(:profileId, :profileName, :profileEmail, :profilePhone, :profileAccessToken, :profileActivationToken, :profileType, :profileSalt, :profileHash)";
 
+		//prepare is used as an extra means of security
 		$statement = $pdo->prepare($query);
 
 		//bind the member variables to the place holder slots in the template. putting these into an array
@@ -482,6 +483,31 @@ public function getProfileId(){
 		//update the null profileId. Ask mySQL for the primary key value it assigned to this entry
 		$this->profileId = intval($pdo->lastInsertId());
 	}
+
+
+	/**
+	 * deletes this profile from the mySQL database
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function delete(\PDO $pdo){
+		//first check to make sure the profileId isn't null, cant delete something that hasn't been entered into SQL yet
+		if($this->profileId === null){
+			throw(new \PDOException("The profile you selected does not exist"));
+		}
+
+		//create the query template
+		$query = "DELETE FROM profile WHERE profileId = :profileId";
+		$statement = $pdo->prepare($query);
+
+		//bind parameters and execute the function
+		$parameters = ["profileId"=>$this->profileId];
+		$statement->execute($parameters);
+	}
+
+
+
 
 
 
