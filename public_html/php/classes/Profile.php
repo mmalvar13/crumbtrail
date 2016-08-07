@@ -235,7 +235,7 @@ public function getProfileId(){
 
 		//ensure that $newProfileEmail isnt empty
 		if(strlen($newProfileEmail)=== 0){
-			throw(new \RangeException("The email entered is too short"));
+			throw(new \RangeException("The email entered is empty"));
 		}
 
 		//ensure $newProfileEmail isn't too long
@@ -263,7 +263,11 @@ public function getProfileId(){
 
 		//ensure that $newProfilePhone isnt empty
 		if(strlen($newProfilePhone)=== 0){
-			throw(new \RangeException("The phone number entered is too short"));
+			throw(new \RangeException("The phone number entered is empty"));
+		}
+
+		if(strlen($newProfilePhone) < 10){   //what do we need to do to ensure a valid phone number
+			throw(new \RangeException("Please enter a complete phone number starting with area-code"));
 		}
 
 		//ensure $newProfilePhone isn't too long
@@ -360,7 +364,7 @@ public function getProfileId(){
 		}
 
 		//make sure $newProfileType matches one of the required types (a,o,e)
-		if(($newProfileType !== 'a'||'o'||'e')){
+		if($newProfileType !== ('a'||'o'||'e')){
 			throw(new \InvalidArgumentException("Invalid profile type. Please designate a profile type by entering a single letter: 'a'(admin), 'o'(owner), or 'e'(employee)"));
 		}
 
@@ -388,13 +392,39 @@ public function getProfileId(){
 		}
 
 		//**doesnt salt and hash need to be EXACTLY the designated length?? CHECK ON THIS!!**
-		if(strlen($newProfileSalt === 64)){
+		if(strlen($newProfileSalt) !== 64){
 			throw(new \RangeException("Profile salt should be exactly 64 characters long"));
 		}
 		//now assign $newProfileSalt to profileSalt and store in SQL
 		$this->profileSalt = $newProfileSalt;
 	}
 
+
+	/**
+	 * CHECK ON THIS ONE TOO!!!!!
+	 * mutator method for profileHash
+	 * @param string, $newProfileHash used to update profileHash
+	 * @throw \RangeException if $newProfileHash is empty or too long
+	 * @throw \InvalidArgumentException if $newProfileHash is not a string
+	 * @throw \TypeError if $newProfileHash is not a string
+	 */
+	public function setProfileHash(string $newProfileHash){
+		//first we need to strip out all the white space on either end of $newProfileHash
+		$newProfileHash = trim($newProfileHash);
+		//Then we must sanitize $newProfileHash
+		$newProfileHash = filter_var($newProfileHash, FILTER_SANITIZE_ENCODED); //SHOULD I USE ENCODE FOR THIS?????
+		//now check if $newProfileHash is either empty or too long
+		if(strlen($newProfileHash) === 0){
+			throw(new \RangeException("Profile hash is too short"));
+		}
+
+		//**doesnt salt and hash need to be EXACTLY the designated length?? CHECK ON THIS!!**
+		if(strlen($newProfileHash) !== 128){
+			throw(new \RangeException("Profile hash should be exactly 128 characters long"));
+		}
+		//now assign $newProfileSalt to profileSalt and store in SQL
+		$this->profileHash = $newProfileHash;
+	}
 
 
 
