@@ -87,6 +87,19 @@ class Event{ //implement JsonSerializable??
 		return($this->eventTruckId);
 	}
 
-
+	/**
+	 * mutator method for $eventTruckId
+	 * @param int $newEventTruckId new value of eventTruckId
+	 * @throws \RangeException if $newEventTruckId is not positive
+	 * @throws \TypeError  if $newEventTruckId is not an integer
+	 **/
+	public function setEventTruckId(int $newEventTruckId){
+		//verify that the $newEventTruckId is positive
+		if($newEventTruckId <= 0) {
+			throw(new \RangeException("the event truck id is not positive"));
+		}
+		//convert and store event truck id
+		$this->eventTruckId = $newEventTruckId;
+		}
 
 }
