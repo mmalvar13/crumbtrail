@@ -276,6 +276,35 @@ public function getProfileId(){
 	}
 
 
+	/**
+	 * *********LOOK INTO THIS ONE***********
+	 * mutator method for profileAccessToken
+	 * @param string, $newProfileAccessToken used to assign new value of profileAccessToken
+	 * @throws \InvalidArgumentException if $newProfileAccessToken is not a string or is insecure
+	 * @throws \RangeException if $newProfileAccessToken is longer than 32 char
+	 * @throws \TypeError if $newProfileAccessToken is not a string
+	 */
+	public function setProfileAccessToken(string $newProfileAccessToken){
+		// first take out any white space on $newProfileAccessToken
+		$newProfileAccessToken = trim($newProfileAccessToken);
+		//next ensure that $newProfileAccessToken is sanitized
+		$newProfileAccessToken = filter_var($newProfileAccessToken, FILTER_SANITIZE_STRING);
+
+		//ensure that $newProfileAccessToken isnt empty ***CHECK ON THIS ONE!!!!!!!!!!!!!!!, How should it be????
+		if(strlen($newProfileAccessToken)=== 0){
+			throw(new \RangeException("The access token is too short"));
+		}
+
+		//ensure $newProfileAccessToken isn't too long
+		if(strlen($newProfileAccessToken) > 32){
+			throw(new \RangeException("Access token is too long"));
+		}
+
+		//assign new token to $newProfileAccessToken and enter it in mySQL
+		$this->profileAccessToken = $newProfileAccessToken;
+	}
+
+
 
 
 
