@@ -277,7 +277,7 @@ public function getProfileId(){
 
 
 	/**
-	 * *********LOOK INTO THIS ONE***********
+	 * *********LOOK INTO THIS ONE HOW IS THIS TOKEN GENERATED??***********
 	 * mutator method for profileAccessToken
 	 * @param string, $newProfileAccessToken used to assign new value of profileAccessToken
 	 * @throws \InvalidArgumentException if $newProfileAccessToken is not a string or is insecure
@@ -306,7 +306,7 @@ public function getProfileId(){
 
 
 	/**
-	 * *********LOOK INTO THIS ONE AS WELL***********
+	 * *********LOOK INTO THIS ONE AS WELL HOW ARE THESE TOKENS GENERATED?***********
 	 * mutator method for profileActivationToken
 	 * @param string, $newProfileActivationToken used to assign new value of profileActivationToken
 	 * @throws \InvalidArgumentException if $newProfileActivationToken is not a string or is insecure
@@ -331,6 +331,41 @@ public function getProfileId(){
 
 		//assign new activation token to $profileActivationToken and enter it in mySQL
 		$this->profileActivationTokenToken = $newProfileActivationToken;
+	}
+
+
+	/**
+	 * CHECK ON THIS ONE
+	 * mutator method for profileType
+	 * @param string $newProfileType will be used to change the value of profileType
+	 * @throws \InvalidArgumentException if the input value for $newProfileType is anything besides:
+	 * 	a(admin), o(owner), e(employee), or is insecure or not a string
+	 * @throws \RangeException if the input for $newProfileType is longer than 1
+	 * @throws \TypeError if $newProfileType is not a string
+	 */
+	public function setProfileType(string $newProfileType){
+		//strip out any white space
+		$newProfileType = trim($newProfileType);
+		//sterilize string
+		$newProfileType = filter_var($newProfileType, FILTER_SANITIZE_STRING);
+
+		//ensure input for $newProfileType is not empty
+		if(strlen($newProfileType)===0){
+			throw(new \RangeException("Please designate a profile type by entering a single letter: 'a'(admin), 'o'(owner), or 'e'(employee)"));
+		}
+
+		//ensure input for $newProfileType is valid
+		if(strlen($newProfileType)>1){
+			throw(new \InvalidArgumentException("Invalid profile type. Please designate a profile type by entering a single letter: 'a'(admin), 'o'(owner), or 'e'(employee)"));
+		}
+
+		//make sure $newProfileType matches one of the required types (a,o,e)
+		if(($newProfileType !== 'a'||'o'||'e')){
+			throw(new \InvalidArgumentException("Invalid profile type. Please designate a profile type by entering a single letter: 'a'(admin), 'o'(owner), or 'e'(employee)"));
+		}
+
+		//set profileType to $newProfileType and give it an assignment in SQL
+		$this->profileType = $newProfileType;
 	}
 
 
