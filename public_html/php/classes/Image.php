@@ -78,5 +78,11 @@ class Image {
 	public function getImageId() {
 			return($this->imageId);
 	}
+//DOES THE EXCEPTIONS DEFINED ABOVE APPLY SPECIFICALLY TO EACH ATTRIBUTE? EX., CAN I ONLY THROW THE INVALID ARGUMENT EXPRESSION FOR IMAGE ID?
+	/**
+	 * mutator method for image id
+	 *
+	 * @param int|null $newImageId
+	 */
 
 }
