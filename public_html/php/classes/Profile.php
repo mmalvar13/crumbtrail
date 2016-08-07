@@ -300,9 +300,40 @@ public function getProfileId(){
 			throw(new \RangeException("Access token is too long"));
 		}
 
-		//assign new token to $newProfileAccessToken and enter it in mySQL
+		//assign new token to $profileAccessToken and enter it in mySQL
 		$this->profileAccessToken = $newProfileAccessToken;
 	}
+
+
+	/**
+	 * *********LOOK INTO THIS ONE AS WELL***********
+	 * mutator method for profileActivationToken
+	 * @param string, $newProfileActivationToken used to assign new value of profileActivationToken
+	 * @throws \InvalidArgumentException if $newProfileActivationToken is not a string or is insecure
+	 * @throws \RangeException if $newProfileActivationToken is longer than 32 char
+	 * @throws \TypeError if $newProfileActivationToken is not a string
+	 */
+	public function setProfileActivationToken(string $newProfileActivationToken){
+		// first take out any white space on $newProfileActivationToken
+		$newProfileActivationToken = trim($newProfileActivationToken);
+		//next ensure that $newProfileAccessToken is sanitized
+		$newProfileActivationToken = filter_var($newProfileActivationToken, FILTER_SANITIZE_STRING);
+
+		//ensure that $newProfileActivationToken isnt empty ***CHECK ON THIS ONE!!!!!!!!!!!!!!!, How should it be????
+		if(strlen($newProfileActivationToken)=== 0){
+			throw(new \RangeException("The activation token is too short"));
+		}
+
+		//ensure $newProfileActivationToken isn't too long
+		if(strlen($newProfileActivationToken) > 32){
+			throw(new \RangeException("Activation token is too long"));
+		}
+
+		//assign new activation token to $profileActivationToken and enter it in mySQL
+		$this->profileActivationTokenToken = $newProfileActivationToken;
+	}
+
+
 
 
 
