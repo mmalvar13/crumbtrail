@@ -77,11 +77,24 @@ private $profileName;
 
 
 	/**
-	 * Constructor for Profile Class will go here!!!!
+	 * Constructor for Profile Class
 	 */
-	public function __construct() {
+	public function __construct(int $profileId = null, string $profileName, string $profileEmail, string $profilePhone, string $profileAccessToken, string $profileActivationToken, string $profileType, string $profileSalt, string $profileHash) {
 
-		/*FILL THIS IN, WE GON" NEED IT */
+		//try statements
+		try{
+			$this->setProfileId($newProfileId);
+			$this->setProfileName($newProfileName);
+			$this->setProfileEmail($newProfileEmail);
+			$this->setProfilePhone($newProfilePhone);
+			$this->setProfileAccessToken($newProfileAccessToken);
+			$this->setProfileActivationToken($newProfileActivationToken);
+			$this->setProfileType($newProfileType);
+			$this->setProfileSalt($newProfileSalt);
+			$this->setProfileHash($newProfileHash);
+		}
+
+
 	}
 
 /*--------------------ACCESSOR SECTION HERE---------------------------*/
