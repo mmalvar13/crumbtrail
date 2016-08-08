@@ -77,7 +77,18 @@ private $profileName;
 
 
 	/**
-	 * Constructor for Profile Class
+	 * Profile constructor.
+	 * @param int|null $newProfileId
+	 * @param string $newProfileName
+	 * @param string $newProfileEmail
+	 * @param string $newProfilePhone
+	 * @param string $newProfileAccessToken
+	 * @param string $newProfileActivationToken
+	 * @param string $newProfileType
+	 * @param string $newProfileSalt
+	 * @param string $newProfileHash
+	 * @throws \Exception
+	 * @throws \TypeError
 	 */
 	public function __construct(int $newProfileId = null, string $newProfileName, string $newProfileEmail, string $newProfilePhone, string $newProfileAccessToken, string $newProfileActivationToken, string $newProfileType, string $newProfileSalt, string $newProfileHash) {
 
@@ -538,7 +549,7 @@ public function getProfileId(){
  * gets profile by the profile ID
  * @param \PDO $pdo PDO connection object
  * @param int $profileId used as the profileId to search for
- * @return profile|null Profile found or null if not found  ***Why is profile capitalized?? referencing the class??****
+ * @return Profile|null Profile found or null if not found  ***Why is profile capitalized?? referencing the class??****
  * @throws \PDOException when mySQL related errors occur
  * @throws \TypeError when variables are not the correct data type
  */
@@ -583,7 +594,7 @@ public static function getProfileByProfileId(\PDO $pdo, int $profileId){
 * gets profile by the profile name
 * @param \PDO $pdo PDO connection object
 * @param string $profileName used as the profile name to search for
-* @return profile|null Profile found or null if not found
+* @return Profile|null Profile found or null if not found
 * @throws \PDOException when mySQL related errors occur
 * @throws \TypeError when variables are not the correct data type
 */
@@ -628,7 +639,7 @@ public static function getProfileByProfileId(\PDO $pdo, int $profileId){
 	 * gets profile by the profile email
 	 * @param \PDO $pdo PDO connection object
 	 * @param string $profileEmail used as the profile email to search for
-	 * @return profile|null profile found or null if not found
+	 * @return Profile|null Profile found or null if not found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 */
@@ -673,7 +684,7 @@ public static function getProfileByProfileId(\PDO $pdo, int $profileId){
 	 * gets profile by the profile phone
 	 * @param \PDO $pdo PDO connection object
 	 * @param string $profilePhone used as the profile phone to search for
-	 * @return profile|null profile found or null if not found
+	 * @return Profile|null Profile found or null if not found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 */
@@ -739,11 +750,14 @@ public static function getProfileByProfileId(\PDO $pdo, int $profileId){
 		//find out what this while-loop is actually doing
 		while(($row = $statement->fetch()) !==false){
 			try{
+
+				//this is getting the value from each of these keys in the array called $row
 				$profile = new Profile($row["profileId"], $row["profileName"], $row["profileEmail"], $row["profilePhone"], $row["profileAccessToken"], $row["profileActivationToken"], $row["profileType"], $row["profileHash"], $row["profileSalt"]);
 
-				//need this explained
-				$profiles[$profiles->key()]=$profile;
-				$profiles->next();  //WAT???
+				//now we are taking each profile and putting it into the array called $profiles which will collect all the profiles we have!
+				$profiles[$profiles->key()]=$profile; //inserts the first entry from the $profile array
+				$profiles->next();  //remember that we are still in the while-loop here. This step moves on to the next entry in the
+				//profile array to enter!!
 			} catch(\Exception $exception) {
 				// if the row couldn't be converted, rethrow it
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
