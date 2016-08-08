@@ -39,24 +39,35 @@ class Image {
 	private $imageFileName;
 //
 	//constructor will go here//
-	
-//	public function __construct(int $newImageId = null, int $newImageCompanyId, string $newImageFileType, string $newImageFileName) {
-		//try {
-			//$this->setImageId($newImageId);
-			//$this->setImageCompanyId($newImageCompanyId);
-			//$this->setImageFileType($newImageFileType);
-		//	$this->setImageFileName($newImageFileName);
-		//} catch(\InvalidArgumentException $invalidArgument) {
+	/**
+	 * Image constructor.
+	 * @param int|null $newImageId
+	 * @param int $newImageCompanyId
+	 * @param string $newImageFileType
+	 * @param string $newImageFileName
+	 * @throws RangeException
+	 * @throws InvalidArgumentException
+	 */
+	public function __construct(int $newImageId = null, int $newImageCompanyId, string $newImageFileType, string $newImageFileName) {
+		try {
+			$this->setImageId($newImageId);
+			$this->setImageCompanyId($newImageCompanyId);
+			$this->setImageFileType($newImageFileType);
+			$this->setImageFileName($newImageFileName);
+		} catch(\RangeException $range) {
 			//rethrows exception to the caller//
-			//throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
-	//	} catch(\InvalidArgumentException $invalidArgument) {
-		//	throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
-		//} catch(\InvalidArgumentException $invalidArgument) {
-		//	throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
-		//} catch(\RangeException $range) {
-		//	throw(new \RangeException($range->getMessage(), 0, $range));
-		//}
-	//}
+			throw(new \RangeException($range->getMessage(), 0, $range));
+		} catch(\RangeException $range) {
+			throw(new \RangeException($range->getMessage(), 0, $range));
+		} catch(\InvalidArgumentException $invalidArgument) {
+			throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
+		} catch(\RangeException $range) {
+			throw(new \RangeException($range->getMessage(), 0, $range));
+		}
+	}
+	/**
+	 *
+	 */
 
 	//adding in the accessor method for image.php
 	/**
