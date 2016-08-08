@@ -37,38 +37,37 @@ class Image {
 	 * @var string $imageFileName;
 	 */
 	private $imageFileName;
-
+//
+	//constructor will go here//
 	/**
-	 * constructor for this Image
-	 *
-	 * @param int|null $newImageId id of this Image or null if a new Image
-	 * @param int $newImageCompanyId id of the Image that relates to a company
-	 * @param string $newImageFileType string containing the file type of an image
-	 * @param string $newImageFileName string containing the name of each image
-	 * @throws \InvalidArgumentException if the data type is invalid
-	 * @throw \InvalidArgumentException if the id is negative
-	 * @throw \InvalidArgumentException if the image is not the correct file type
-	 * @throw \RangeException if the image name is longer than 255 characters or if a value is negative
+	 * Image constructor.
+	 * @param int|null $newImageId
+	 * @param int $newImageCompanyId
+	 * @param string $newImageFileType
+	 * @param string $newImageFileName
+	 * @throws RangeException
+	 * @throws InvalidArgumentException
 	 */
-	//exceptions, are they correct?
-// WHAT WOULD I NEED TO DO IF I WANTED TO DEFINE FILE TYPE? //
 	public function __construct(int $newImageId = null, int $newImageCompanyId, string $newImageFileType, string $newImageFileName) {
 		try {
 			$this->setImageId($newImageId);
 			$this->setImageCompanyId($newImageCompanyId);
 			$this->setImageFileType($newImageFileType);
 			$this->setImageFileName($newImageFileName);
-		} catch(\InvalidArgumentException $invalidArgument) {
+		} catch(\RangeException $range) {
 			//rethrows exception to the caller//
-			throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
-		} catch(\InvalidArgumentException $invalidArgument) {
-			throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
+			throw(new \RangeException($range->getMessage(), 0, $range));
+		} catch(\RangeException $range) {
+			throw(new \RangeException($range->getMessage(), 0, $range));
 		} catch(\InvalidArgumentException $invalidArgument) {
 			throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
 		} catch(\RangeException $range) {
 			throw(new \RangeException($range->getMessage(), 0, $range));
 		}
 	}
+	/**
+	 *
+	 */
 
 	//adding in the accessor method for image.php
 	/**
@@ -84,9 +83,76 @@ class Image {
 	 * mutator method for image id
 	 *
 	 * @param int|null $newImageId new value of image id
-	 * @throws \InvalidArgumentException is $newImageId is not an integer
-	 * @throws \RangeException if $newImageId is negative
+	 * @throw \RangeException if $newImageId is negative
 	 **/
-	
+	public function setImageId(int $newImageId = null) {
+		if($newImageId === null) {
+			$this->imageId = null;
+			return;
+		}
+		//verifying that the image id is positive??
+		if($newImageId <=0) {
+			throw(new \RangeException ("image id is not positive"));
+		}
+		}
 
-}
+	/**
+	 * accessor method for image company id
+	 *
+	 * @return int|null value of ImageCompanyId
+	 */
+	public function getImageCompanyId() {
+		return $this->imageCompanyId;
+	}
+	/** 
+	 * mutator method for image company id
+	 * @param int|null $newImageCompanyId new value of image company id
+	 * @throw \RangeException if $ImageCompanyId is negative
+	 **/
+	public function setImageCompanyId(int $newImageCompanyId = null) {
+		if($newImageCompanyId <=0) {
+			throw(new \RangeException ("Image Company Id is not positive"));
+		}
+	}
+	/** accessor method for image file type
+	 *
+	 * @return string value of imageFileType
+	 */
+	public function getImageFileType() {
+		return $this->imageFileType;
+	}
+	/**
+	 * mutator for image file type
+	 *
+	 * @param string $newImageFileType new value of image file type
+	 * @throw \InvalidArgumentException if $newImageFileType is not a string
+	 * @throw \RangeException if $newImageFileType > 10 characters
+	 */
+	public function setImageFileType(string $newImageFileType) {
+		$validFileType = ["image/jpeg","image/png" ];
+		$validFileType = strtolower($validFileType);
+		if(in_array($newImageFileType,$validFileType)=== false) {
+			throw(new \InvalidArgumentException("This is not the proper image type. Please insert jpeg, or png"));
+		}
+	}
+	/**
+	 * accessor for the image file name
+	 *
+	 * @return string value for imageFileName
+	 **/
+	public function getImageFileName() {
+		return $this->imageFileName;
+	}
+	/**
+	 * mutator for image file name
+	 *
+	 * @param string $newImageFileName new value of image file name
+	 * @throw /RangeException if $newImageFileName > 255 characters
+	 */
+	public function setImageFileName(string $newImageFileName) {
+		if($newImageFileName >255) {
+			throw(new \RangeException("Image file name is too long"));
+		}
+	}
+	}
+	

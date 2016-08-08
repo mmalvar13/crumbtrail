@@ -111,7 +111,6 @@ class Company {
 	 **/
 	private $companyAccountCreatorId;
 
-	
 
 	// ACCESSOR METHODS:
 
@@ -228,8 +227,6 @@ class Company {
 	}
 
 
-	
-	
 	// MUTATOR METHODS:
 
 	/**  Mutator method (setter) for companyId.
@@ -582,22 +579,61 @@ class Company {
 	// CONSTRUCTOR:
 
 	/**
-	 * Constructor for Company class
+	 * Constructor for the class Company. A magic method that creates a new company object.  
+	 * @param int|null $newCompanyId  id of this Company or null if a new Company
+	 * @param string $newCompanyName  string of the company name
+	 * @param string $newCompanyEmail  string of the company email
+	 * @param string $newCompanyPermit  string of the company permit
+	 * @param int $newCompanyLicense  int of the company name
+	 * @param string $newCompanyAttn  string of the company attn
+	 * @param string $newCompanyStreet1  string of the company street1
+	 * @param string $newCompanyStreet2  string of the company street2
+	 * @param string $newCompanyCity  string of the company city
+	 * @param string $newCompanyState  string of the company state
+	 * @param int $newCompanyZip  int of the company zip
+	 * @param string $newCompanyDescription  string of the company description
+	 * @param string $newCompanyMenuText  string of the company menu text
+	 * @param int $newCompanyActivationToken  int of the company activation token
+	 * @param bool $newCompanyApproved  bool of the whether the company has been approved by us
+	 * @param int $newCompanyAccountCreatorId  int of the ProfileId of the creator of this company's account
+	 * @throws \InvalidArgumentException if data types are not valid.
+	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers).
+	 * @throws \TypeError if data types violate type hints.
+	 * @throws \Exception if some other exception occurs.
 	 */
-	public function __construct(int $newCompayId = null, string $newProfileName, string $newProfileEmail, string $newProfilePhone, string $newProfileAccessToken, string $newProfileActivationToken, string $newProfileType, string $newProfileSalt, string $newProfileHash) {
-
-		//try statements
-		try{
-			//WHY ARE ALL OF THESE RED? SAYING THEY AREN'T DEFINED? WILL THEY BE FIXED ONCE WE MAKE THE PDO?
-			$this->setProfileId($newProfileId);
-			$this->setProfileName($newProfileName);
-			$this->setProfileEmail($newProfileEmail);
-			$this->setProfilePhone($newProfilePhone);
-			$this->setProfileAccessToken($newProfileAccessToken);
-			$this->setProfileActivationToken($newProfileActivationToken);
-			$this->setProfileType($newProfileType);
-			$this->setProfileSalt($newProfileSalt);
-			$this->setProfileHash($newProfileHash);
+	public function __construct (int $newCompanyId = null,
+										 string $newCompanyName, 
+										 string $newCompanyEmail, 
+										 int $newCompanyPermit,
+										 int $newCompanyLicense,
+										 string $newCompanyAttn,
+										 string $newCompanyStreet1,
+										 string $newCompanyStreet2,
+										 string $newCompanyCity,
+										 string $newCompanyState,
+										 int $newCompanyZip,
+										 string $newCompanyDescription,
+										 string $newCompanyMenuText,
+										 int $newCompanyActivationToken,
+										 bool $newCompanyApproved,
+										 int $newCompanyActivationToken) {
+		try {
+			$this->setCompanyId($newCompanyId);
+			$this->setCompanyName($newCompanyName);
+			$this->setCompanyEmail($newCompanyEmail);
+			$this->setCompanyPermit($newCompanyPermit);
+			$this->setCompanyLicense($newCompanyLicense);
+			$this->setCompanyAttn($newCompanyAttn);
+			$this->setCompanyStreet1($newCompanyStreet1);
+			$this->setCompanyStreet2($newCompanyStreet2);
+			$this->setCompanyCity($newCompanyCity);
+			$this->setCompanyState($newCompanyState);
+			$this->setCompanyZip($newCompanyZip);
+			$this->setCompanyDescription($newCompanyId);
+			$this->setCompanyMenuText($newCompanyMenuText);
+			$this->setCompanyActivationToken($newCompanyActivationToken);
+			$this->setCompanyApproved($newCompanyApproved);
+			$this->setCompanyAccountCreatorId($newCompanyAccountCreatorId);
 		} catch(\InvalidArgumentException $invalidArgument) {
 			// rethrow the exception to the caller
 			throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
@@ -611,39 +647,12 @@ class Company {
 			// rethrow the exception to the caller
 			throw(new \Exception($exception->getMessage(), 0, $exception));
 		}
-
-
-
-
-
-		/**
-	 * Constructor for the class Company.
-	 * This creates a new company object.
-	 * A constructor = a magic method = a contract.
-	 * @param int $newCompanyId  The new companyId.
-	 * @throws \UnexpectedValueException  If parameter is invalid, throw an exception.
-	 **/
-	public function __construct($newCompanyId, ...) {
-		try {
-			$this->setCompanyId($newCompanyId);
-		} catch(UnexpectedValueException $exception) {
-			throw(new UnexpectedValueException("Unable to construct Company"), 0, $exception));
-			
-		// 	***  NEED more exception catch and throw statements  ***
-		}
 	}
-}
-
-
-
-
-
-
-
 
 
 
 	// SEARCHES (getFooByBars):
+
 	// getFooByBars: Need them only for:
 	//  primary key, foreign key, getCompanyIdByCompanyMenuTextOrCompanyName
 
