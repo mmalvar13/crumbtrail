@@ -111,7 +111,6 @@ class Company {
 	 **/
 	private $companyAccountCreatorId;
 
-	
 
 	// ACCESSOR METHODS:
 
@@ -228,8 +227,6 @@ class Company {
 	}
 
 
-	
-	
 	// MUTATOR METHODS:
 
 	/**  Mutator method (setter) for companyId.
@@ -583,11 +580,26 @@ class Company {
 
 	/**
 	 * Constructor for the class Company. A magic method that creates a new company object.  
-	 * 
-	 * @params
-	 * 
-	 * @throws
-	 * 
+	 * @param int|null $newCompanyId  id of this Company or null if a new Company
+	 * @param string $newCompanyName  string of the company name
+	 * @param string $newCompanyEmail  string of the company email
+	 * @param string $newCompanyPermit  string of the company permit
+	 * @param int $newCompanyLicense  int of the company name
+	 * @param string $newCompanyAttn  string of the company attn
+	 * @param string $newCompanyStreet1  string of the company street1
+	 * @param string $newCompanyStreet2  string of the company street2
+	 * @param string $newCompanyCity  string of the company city
+	 * @param string $newCompanyState  string of the company state
+	 * @param int $newCompanyZip  int of the company zip
+	 * @param string $newCompanyDescription  string of the company description
+	 * @param string $newCompanyMenuText  string of the company menu text
+	 * @param int $newCompanyActivationToken  int of the company activation token
+	 * @param bool $newCompanyApproved  bool of the whether the company has been approved by us
+	 * @param int $newCompanyAccountCreatorId  int of the ProfileId of the creator of this company's account
+	 * @throws \InvalidArgumentException if data types are not valid.
+	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers).
+	 * @throws \TypeError if data types violate type hints.
+	 * @throws \Exception if some other exception occurs.
 	 */
 	public function __construct (int $newCompanyId = null,
 										 string $newCompanyName, 
@@ -605,7 +617,6 @@ class Company {
 										 int $newCompanyActivationToken,
 										 bool $newCompanyApproved,
 										 int $newCompanyActivationToken) {
-
 		try {
 			$this->setCompanyId($newCompanyId);
 			$this->setCompanyName($newCompanyName);
@@ -623,7 +634,6 @@ class Company {
 			$this->setCompanyActivationToken($newCompanyActivationToken);
 			$this->setCompanyApproved($newCompanyApproved);
 			$this->setCompanyAccountCreatorId($newCompanyAccountCreatorId);
-
 		} catch(\InvalidArgumentException $invalidArgument) {
 			// rethrow the exception to the caller
 			throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
@@ -641,57 +651,8 @@ class Company {
 
 
 
-
-
-
-	/**
-	 * constructor for this Tweet
-	 *
-	 * @param int|null $newTweetId id of this Tweet or null if a new Tweet
-	 * @param int $newTweetProfileId id of the Profile that sent this Tweet
-	 * @param string $newTweetContent string containing actual tweet data
-	 * @param \DateTime|string|null $newTweetDate date and time Tweet was sent or null if set to current date and time
-	 * @throws \InvalidArgumentException if data types are not valid
-	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
-	 * @throws \TypeError if data types violate type hints
-	 * @throws \Exception if some other exception occurs
-	 **/
-	public function __construct(int $newTweetId = null, 
-										 int $newTweetProfileId, 
-										 string $newTweetContent, 
-										 $newTweetDate = null) {
-		
-	try {
-		$this->setTweetId($newTweetId);
-		$this->setTweetProfileId($newTweetProfileId);
-		$this->setTweetContent($newTweetContent);
-		$this->setTweetDate($newTweetDate);
-	} catch(\InvalidArgumentException $invalidArgument) {
-		// rethrow the exception to the caller
-		throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
-	} catch(\RangeException $range) {
-		// rethrow the exception to the caller
-		throw(new \RangeException($range->getMessage(), 0, $range));
-	} catch(\TypeError $typeError) {
-		// rethrow the exception to the caller
-		throw(new \TypeError($typeError->getMessage(), 0, $typeError));
-	} catch(\Exception $exception) {
-		// rethrow the exception to the caller
-		throw(new \Exception($exception->getMessage(), 0, $exception));
-	}
-}
-
-
-
-
-
-
-
-
-
-
-
 	// SEARCHES (getFooByBars):
+
 	// getFooByBars: Need them only for:
 	//  primary key, foreign key, getCompanyIdByCompanyMenuTextOrCompanyName
 
