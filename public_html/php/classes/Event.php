@@ -144,8 +144,7 @@ class Event { //implement JsonSerializable??
 	public function setEventEnd() {
 		if($newEventEnd = null) {
 			throw(new \InvalidArgumentException("Must enter the time length of the event"));
-		}
-		if($newEventEnd < $this->eventStart){
+		}elseif($newEventEnd < $this->eventStart){
 			throw(new \RangeException("Start time cannot be greater than end time")); //is this correct??
 		}
 		try {
