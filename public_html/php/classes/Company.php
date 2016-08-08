@@ -6,7 +6,7 @@ require_once("autoload.php");
 /**
  * class Company for the Company entity in the crumbtrail application.
  * State variables, constructor, mutators, accessors, PDOs, and getFooByBar methods.
- * @author Kevin Lee Kirk
+ * @author  Kevin Lee Kirk
  */
 
 class Company {
