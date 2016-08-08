@@ -6,7 +6,7 @@ require_once("autoload.php");
 /**
  * class Company for the Company entity in the crumbtrail application.
  * State variables, constructor, mutators, accessors, PDOs, and getFooByBar methods.
- * @author Kevin Lee Kirk
+ * @author  Kevin Lee Kirk
  */
 
 class Company {
@@ -649,12 +649,223 @@ class Company {
 		}
 	}
 
+	
+	
+	// PDO STUFF:
+
+	/**
+	 * INSERT this company object into mySQL.
+	 * @param \PDO    $pdo is the PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function insert(\PDO $pdo) {
+		// Make sure the companyId is null.
+		if($this->companyId !==null){
+			throw(new \PDOException("This is not a new companyId"));
+		}
+		
+		// Create a query template.
+		$query = "INSERT INTO company (companyName, companyEmail, companyPermit, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved, companyAccountCreatorId) VALUES (:companyName, :companyEmail, :companyPermit, :companyLicense, :companyAttn, :companyStreet1, :companyStreet2, :companyCity, :companyState, :companyZip, :companyDescription, :companyMenuText, :companyActivationToken, :companyApproved, :companyAccountCreatorId)";
+
+		// Prepare is used as an extra means of security.
+		$statement = $pdo->prepare($query);
+
+		// Bind the variables to the place holder slots in the template, then put into an array.
+		$companyparameters = ["companyName"=>$this->companyName, "companyEmail"=>$this->companyEmail, "companyPermit"=>$this->companyPermit, "companyLicense"=>$this->companyLicense, "companyAttn"=>$this->companyAttn, "companyStreet1"=>$this->companyStreet1, "companyStreet2"=>$this->companyStreet2, "companyCity"=>$this->companyCity, "companyState"=>$this->companyState, "companyZip"=>$this->companyZip, "companyDescription"=>$this->companyDescription, "companyMenuText"=>$this->companyMenuText, "companyActivationToken"=>$this->companyActivationToken, "companyApproved"=>$this->companyApproved, "companyAccountCreatorId"=>$this->AccountCreatorId];
+
+		//execute the command held in $statement
+		$statement->execute($companyparameters);
+
+		// Update the null companyId. Ask mySQL for the primary key value it assigned to this entry.
+		$this->companyId = intval($pdo->lastInsertId());
+	}
 
 
-	// SEARCHES (getFooByBars):
+	/**
+	 * DELETE this company from the mySQL database.
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function delete(\PDO $pdo){
+		// Check to make sure the companyId isn't null.
+		if($this->companyId === null){
+			throw(new \PDOException("The company you selected does not exist"));
+		}
 
-	// getFooByBars: Need them only for:
-	//  primary key, foreign key, getCompanyIdByCompanyMenuTextOrCompanyName
+		// Create the query template.
+		$query = "DELETE FROM company WHERE companyId = :companyId";
+		$statement = $pdo->prepare($query);
 
+		// Bind parameters and execute the function
+		$parameters = ["companyId"=>$this->companyId];
+		$statement->execute($parameters);
+	}
+
+
+	/**
+	 * UPDATE this company in mySQL.
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 */
+	public function update(\PDO $pdo){
+		// Ensure that this company is not null (hasn't been entered into SQL).
+		if($this->companyId === null){
+			throw(new \PDOException("Can't update a company that doesn't exist"));
+		}
+
+		// Create a query template.
+		$query = "UPDATE company (companyName, companyEmail, companyPermit, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved, companyAccountCreatorId) SET (:companyName, :companyEmail, :companyPermit, :companyLicense, :companyAttn, :companyStreet1, :companyStreet2, :companyCity, :companyState, :companyZip, :companyDescription, :companyMenuText, :companyActivationToken, :companyApproved, :companyAccountCreatorId)";
+		
+		// Prepare this query.
+		$statement = $pdo->prepare($query);
+
+		// Bind the variables to the template.
+		$companyparameters = ["companyName"=>$this->companyName, "companyEmail"=>$this->companyEmail, "companyPermit"=>$this->companyPermit, "companyLicense"=>$this->companyLicense, "companyAttn"=>$this->companyAttn, "companyStreet1"=>$this->companyStreet1, "companyStreet2"=>$this->companyStreet2, "companyCity"=>$this->companyCity, "companyState"=>$this->companyState, "companyZip"=>$this->companyZip, "companyDescription"=>$this->companyDescription, "companyMenuText"=>$this->companyMenuText, "companyActivationToken"=>$this->companyActivationToken, "companyApproved"=>$this->companyApproved, "companyAccountCreatorId"=>$this->AccountCreatorId];
+		
+		// Execute the mySQL statement.
+		$statement->execute($companyparameters);
+	}
+
+
+
+	// SEARCHES (All of the getFooByBars):
+
+	/**
+	 * Get company by the CompanyId.
+	 * @param \PDO $pdo PDO connection object
+	 * @param int $CompanyId  The company id we want to find.
+	 * @return Company|null  Returns the company found, or null if not found.
+	 * @throws \PDOException  When mySQL related errors occur.
+	 * @throws \TypeError  When variables are not the correct data type.
+	 */
+	public static function getCompanyByCompanyId(\PDO $pdo, int $CompanyId){
+		// Sanitize the ID before searching for it.
+		if($CompanyId <= 0){
+			throw(new \PDOException("The Company ID is negative or zero"));
+		}
+
+		// Create the query template.
+		$query = "SELECT CompanyId, CompanyName, CompanyEmail, CompanyPermit, CompanyLicense, CompanyAttn, CompanyStreet1, CompanyStreet2, CompanyCity, CompanyState, CompanyZip, CompanyDescription, CompanyMenuText, CompanyActivationToken, CompanyApproved, CompanyAccountCreatorId FROM Company WHERE CompanyId = :CompanyId";
+
+		// Prepare the template.
+		$statement = $pdo->prepare($query);
+
+		// Bind the CompanyId to the placeholder in the template.
+		$parameters = ["CompanyId"=>$CompanyId];
+
+		// Execute the SQL statement
+		$statement->execute($parameters);
+
+		// Now that we have selected the correct Company, we need to get it from mySQL.
+		try{
+			$Company = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+
+			if($row !== false){
+				$Company = new Company($row["CompanyId"], $row["CompanyName"], $row["CompanyEmail"], $row["CompanyPermit"], $row["CompanyLicense"], $row["CompanyAttn"], $row["CompanyStreet1"], $row["CompanyStreet2"], $row["CompanyCity", $row["CompanyState", $row["CompanyZip", $row["CompanyDescription", $row["CompanyMenuText", $row["CompanyActivationToken", $row["CompanyApproved", $row["CompanyAccountCreatorId"]);
+			}
+
+			// Catch exception.
+		} catch(\Exception $exception){
+			// If the row could not be converted, then re-throw it.
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($Company);
+	}
+
+
+	/**
+	 * Get company by the CompanyAccountCreatorId.
+	 * @param \PDO $pdo PDO connection object
+	 * @param int $CompanyAccountCreatorId  The company account creator we want to find.
+	 * @return Company|null  Returns the company found, or null if not found.
+	 * @throws \PDOException  When mySQL related errors occur.
+	 * @throws \TypeError  When variables are not the correct data type.
+	 */
+	public static function getCompanyByCompanyAccountCreatorId(\PDO $pdo, int $CompanyAccountCreatorId){
+		// Sanitize the ID before searching for it.
+		if($CompanyAccountCreatorId <= 0){
+			throw(new \PDOException("The CompanyAccountCreator is negative or zero"));
+		}
+
+		// Create the query template.
+		$query = "SELECT CompanyId, CompanyName, CompanyEmail, CompanyPermit, CompanyLicense, CompanyAttn, CompanyStreet1, CompanyStreet2, CompanyCity, CompanyState, CompanyZip, CompanyDescription, CompanyMenuText, CompanyActivationToken, CompanyApproved, CompanyAccountCreatorId FROM Company WHERE CompanyAccountCreatorId = :CompanyAccountCreatorId";
+
+		// Prepare the template.
+		$statement = $pdo->prepare($query);
+
+		// Bind the CompanyAccountCreatorId to the placeholder in the template.
+		$parameters = ["CompanyAccountCreatorId"=>$CompanyAccountCreatorId];
+
+		// Execute the SQL statement
+		$statement->execute($parameters);
+
+		// Now that we have selected the correct Company, we need to get it from mySQL.
+		try{
+			$Company = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+
+			if($row !== false){
+				$Company = new Company($row["CompanyId"], $row["CompanyName"], $row["CompanyEmail"], $row["CompanyPermit"], $row["CompanyLicense"], $row["CompanyAttn"], $row["CompanyStreet1"], $row["CompanyStreet2"], $row["CompanyCity", $row["CompanyState", $row["CompanyZip", $row["CompanyDescription", $row["CompanyMenuText", $row["CompanyActivationToken", $row["CompanyApproved", $row["CompanyAccountCreatorId"]);
+			}
+
+			// Catch exception.
+		} catch(\Exception $exception){
+			// If the row could not be converted, then re-throw it.
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($Company);
+	}
+
+
+
+	/**
+	 * Get company by CompanyMenuText, e.g. search for tacos.
+	 * @param \PDO $pdo PDO connection object
+	 * @param int $CompanyMenuText  The company Menu Text we want to find.
+	 * @return Company|null  Returns the company found, or null if not found.
+	 * @throws \PDOException  When mySQL related errors occur.
+	 * @throws \TypeError  When variables are not the correct data type.
+	 */
+	public static function getCompanyByCompanyMenuText(\PDO $pdo, int $CompanyMenuText){
+		// Sanitize the ID before searching for it.
+		if($CompanyId <= 0){
+			throw(new \PDOException("The Company Menu Text is negative or zero"));
+		}
+
+		// Create the query template.
+		$query = "SELECT CompanyId, CompanyName, CompanyEmail, CompanyPermit, CompanyLicense, CompanyAttn, CompanyStreet1, CompanyStreet2, CompanyCity, CompanyState, CompanyZip, CompanyDescription, CompanyMenuText, CompanyActivationToken, CompanyApproved, CompanyAccountCreatorId FROM Company WHERE CompanyMenuText = :CompanyMenuText";
+
+		// Prepare the template.
+		$statement = $pdo->prepare($query);
+
+		// Bind the CompanyMenuText to the placeholder in the template.
+		$parameters = ["CompanyMenuText"=>$Companyv];
+
+		// Execute the SQL statement
+		$statement->execute($parameters);
+
+		// Now that we have selected the correct Company, we need to get it from mySQL.
+		try{
+			$Company = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+
+			if($row !== false){
+				$Company = new Company($row["CompanyId"], $row["CompanyName"], $row["CompanyEmail"], $row["CompanyPermit"], $row["CompanyLicense"], $row["CompanyAttn"], $row["CompanyStreet1"], $row["CompanyStreet2"], $row["CompanyCity", $row["CompanyState", $row["CompanyZip", $row["CompanyDescription", $row["CompanyMenuText", $row["CompanyActivationToken", $row["CompanyApproved", $row["CompanyAccountCreatorId"]);
+			}
+
+			// Catch exception.
+		} catch(\Exception $exception){
+			// If the row could not be converted, then re-throw it.
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($Company);
+	}
 
 }
