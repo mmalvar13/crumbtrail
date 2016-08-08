@@ -568,7 +568,7 @@ public static function getProfileByProfileId(\PDO $pdo, int $profileId){
 		//what does it mean for the row to be false?? That the row is empty? Couldnt be retrieved???
 		if($row !== false){
 			//set $profile to a new object based on the Profile class with these values assigned into it (I think)
-			$profile = new Profile($row[profileId], $row[profileName], $row[profileEmail], $row[profilePhone], $row[profileAccessToken], $row[profileActivationToken], $row[profileType], $row[profileHash], $row[profileSalt]);
+			$profile = new Profile($row["profileId"], $row["profileName"], $row["profileEmail"], $row["profilePhone"], $row["profileAccessToken"], $row["profileActivationToken"], $row["profileType"], $row["profileHash"], $row["profileSalt"]);
 		}
 		//catch statement
 	} catch(\Exception $exception){
@@ -613,7 +613,7 @@ public static function getProfileByProfileId(\PDO $pdo, int $profileId){
 			//what does it mean for the row to be false?? That the row is empty? Couldnt be retrieved???
 			if($row !== false){
 				//set $profile to a new object based on the Profile class with these values assigned into it (I think)
-				$profile = new Profile($row[profileId], $row[profileName], $row[profileEmail], $row[profilePhone], $row[profileAccessToken], $row[profileActivationToken], $row[profileType], $row[profileHash], $row[profileSalt]);
+				$profile = new Profile($row["profileId"], $row["profileName"], $row["profileEmail"], $row["profilePhone"], $row["profileAccessToken"], $row["profileActivationToken"], $row["profileType"], $row["profileHash"], $row["profileSalt"]);
 			}
 			//catch statement
 		} catch(\Exception $exception){
@@ -658,7 +658,7 @@ public static function getProfileByProfileId(\PDO $pdo, int $profileId){
 			//what does it mean for the row to be false?? That the row is empty? Couldnt be retrieved???
 			if($row !== false){
 				//set $profile to a new object based on the Profile class with these values assigned into it (I think)
-				$profile = new Profile($row[profileId], $row[profileName], $row[profileEmail], $row[profilePhone], $row[profileAccessToken], $row[profileActivationToken], $row[profileType], $row[profileHash], $row[profileSalt]);
+				$profile = new Profile($row["profileId"], $row["profileName"], $row["profileEmail"], $row["profilePhone"], $row["profileAccessToken"], $row["profileActivationToken"], $row["profileType"], $row["profileHash"], $row["profileSalt"]);
 			}
 			//catch statement
 		} catch(\Exception $exception){
@@ -705,7 +705,7 @@ public static function getProfileByProfileId(\PDO $pdo, int $profileId){
 			//what does it mean for the row to be false?? That the row is empty? Couldnt be retrieved???
 			if($row !== false){
 				//set $profile to a new object based on the Profile class with these values assigned into it (I think)
-				$profile = new Profile($row[profileId], $row[profileName], $row[profileEmail], $row[profilePhone], $row[profileAccessToken], $row[profileActivationToken], $row[profileType], $row[profileHash], $row[profileSalt]);
+				$profile = new Profile($row["profileId"], $row["profileName"], $row["profileEmail"], $row["profilePhone"], $row["profileAccessToken"], $row["profileActivationToken"], $row["profileType"], $row["profileHash"], $row["profileSalt"]);
 			}
 			//catch statement
 		} catch(\Exception $exception){
@@ -739,7 +739,7 @@ public static function getProfileByProfileId(\PDO $pdo, int $profileId){
 		//find out what this while-loop is actually doing
 		while(($row = $statement->fetch()) !==false){
 			try{
-				$profile = new Profile($row[profileId], $row[profileName], $row[profileEmail], $row[profilePhone], $row[profileAccessToken], $row[profileActivationToken], $row[profileType], $row[profileHash], $row[profileSalt]);
+				$profile = new Profile($row["profileId"], $row["profileName"], $row["profileEmail"], $row["profilePhone"], $row["profileAccessToken"], $row["profileActivationToken"], $row["profileType"], $row["profileHash"], $row["profileSalt"]);
 
 				//need this explained
 				$profiles[$profiles->key()]=$profile;
@@ -748,8 +748,8 @@ public static function getProfileByProfileId(\PDO $pdo, int $profileId){
 				// if the row couldn't be converted, rethrow it
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
-			return($profiles);
 		}
+		return($profiles);
 	}
 
 
