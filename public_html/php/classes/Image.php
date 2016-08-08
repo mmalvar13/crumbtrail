@@ -57,18 +57,11 @@ class Image {
 		} catch(\RangeException $range) {
 			//rethrows exception to the caller//
 			throw(new \RangeException($range->getMessage(), 0, $range));
-		} catch(\RangeException $range) {
-			throw(new \RangeException($range->getMessage(), 0, $range));
-		} catch(\InvalidArgumentException $invalidArgument) {
+		}catch(\InvalidArgumentException $invalidArgument) {
 			throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
-		} catch(\RangeException $range) {
-			throw(new \RangeException($range->getMessage(), 0, $range));
 		}
+		
 	}
-	/**
-	 *
-	 */
-
 	//adding in the accessor method for image.php
 	/**
 	 * accessor method for image id
@@ -78,7 +71,6 @@ class Image {
 	public function getImageId() {
 			return($this->imageId);
 	}
-//DOES THE EXCEPTIONS DEFINED ABOVE APPLY SPECIFICALLY TO EACH ATTRIBUTE? EX., CAN I ONLY THROW THE INVALID ARGUMENT EXPRESSION FOR IMAGE ID?
 	/**
 	 * mutator method for image id
 	 *
@@ -130,8 +122,8 @@ class Image {
 	 */
 	public function setImageFileType(string $newImageFileType) {
 		$validFileType = ["image/jpeg","image/png" ];
-		$validFileType = strtolower($validFileType);
-		if(in_array($newImageFileType,$validFileType)=== false) {
+		$newImageFileType = strtolower($newImageFileType);
+		if(in_array($newImageFileType,$validFileType) === false) {
 			throw(new \InvalidArgumentException("This is not the proper image type. Please insert jpeg, or png"));
 		}
 	}
