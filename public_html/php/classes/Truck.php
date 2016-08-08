@@ -11,3 +11,16 @@
  * 
  * @author Victoria Chacon <victoriousdesignco@gmail.com>
  **/
+//begin class here
+class Truck {
+	/**
+	 * id for this truck; this is the primary key
+	 * @var $truckId;
+	 **/
+	private $truckId;
+	/**
+	 * id for the truck and company, this is a foreign key.
+	 * @var $truckCompanyId;
+	 */
+	private $truckCompanyId;
+}
