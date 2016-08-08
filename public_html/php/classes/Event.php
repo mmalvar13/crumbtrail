@@ -41,7 +41,7 @@ class Event{ //implement JsonSerializable??
 	 *
 	 *@param int|null $newEventId id of this Event or null if new Event
 	 *@param int $newEventTruckId id of the Truck that is attending this Event
-	 *@param \DateTime|string|null $newEventEnd date and time Event is over //do i add "or null if set to current date and time"?
+	 *@param \DateTime|string $newEventEnd date and time Event is over //do i add "or null if set to current date and time"?
 	 *@geography point $newEventLocation gps coordinates of Event //how do i write this? I added @geography again
 	 *@param \DateTime|string|null $newEventStart data and time Event starts or null if set to current date and time //i added null here since the date/time would not have been set yet. is this right?
 	 *@throws \InvalidArgumentException if data types are not valid
@@ -170,25 +170,19 @@ class Event{ //implement JsonSerializable??
 
 	/**
 	 * mutator method for event Start
-	 * @param \DateTime|string|null $newEventStart eventStart as a DateTime object or string (or null to load the current time)
-	 * @throws \InvalidArgumentException if $newEventStart is not a valid object or string
-	 * @throws \RangeException if $newEventStart is a date that does not exist
+	 * @param \DateTime|string|null $newEventStart eventStart as a DateTime object or string. A null value loads the current time.
+	 * @throws \Exception if $newEventStart is not null
 	 **/
 	public function setEventStart($newEventStart = null){
 		//if the date is null, use the current date and time
 		if($newEventStart === null){
 			$this->eventStart = new \DateTime();
 			return;
+		} else {
+			// Throw exception
+			throw(new \Exception("the start time is not null"));
 		}
-		//store the event start
-		try{
-			$newEventStart = self::validateDateTime($newEventStart); //WHAT?!?!!!!!111
-		} catch(\InvalidArgumentException $invalidArgument){
-			throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
- 		} catch(\RangeException $range) {
-			throw(new \RangeException($range->getMessage(), 0, $range));
-		}
-		$this->eventStart = $newEventStart;
 	}
+
 
 }

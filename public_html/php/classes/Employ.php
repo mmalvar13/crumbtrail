@@ -34,7 +34,7 @@ class Employ{
 	 * accessor method for employCompanyId
 	 * @return int $employCompanyId
 	 **/
-	public function getEmployCompanyId(int $newEmployCompanId){
+	public function getEmployCompanyId(int $newEmployCompanyId){
 		return($this->employCompanyId);
 	}
 }
