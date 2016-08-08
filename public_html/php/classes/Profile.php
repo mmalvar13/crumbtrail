@@ -79,7 +79,7 @@ private $profileName;
 	/**
 	 * Constructor for Profile Class
 	 */
-	public function __construct(int $profileId = null, string $profileName, string $profileEmail, string $profilePhone, string $profileAccessToken, string $profileActivationToken, string $profileType, string $profileSalt, string $profileHash) {
+	public function __construct(int $newProfileId = null, string $newProfileName, string $newProfileEmail, string $newProfilePhone, string $newProfileAccessToken, string $newProfileActivationToken, string $newProfileType, string $newProfileSalt, string $newProfileHash) {
 
 		//try statements
 		try{
@@ -287,8 +287,8 @@ public function getProfileId(){
 		$newProfilePhone = filter_var($newProfilePhone, FILTER_SANITIZE_STRING);
 
 		//ensure that $newProfilePhone isnt empty
-		if(strlen($newProfilePhone)=== 0){
-			throw(new \RangeException("The phone number entered is empty"));
+		if(strlen($newProfilePhone)< 10){
+			throw(new \RangeException("The phone number entered is too short. Please enter a phone number including 3 digit area-code"));
 		}
 
 		if(strlen($newProfilePhone) < 10){   //what do we need to do to ensure a valid phone number
@@ -538,7 +538,7 @@ public function getProfileId(){
  * gets profile by the profile ID
  * @param \PDO $pdo PDO connection object
  * @param int $profileId used as the profileId to search for
- * @return Profile|null Profile found or null if not found  ***Why is profile capitalized?? referencing the class??****
+ * @return profile|null Profile found or null if not found  ***Why is profile capitalized?? referencing the class??****
  * @throws \PDOException when mySQL related errors occur
  * @throws \TypeError when variables are not the correct data type
  */
@@ -568,7 +568,7 @@ public static function getProfileByProfileId(\PDO $pdo, int $profileId){
 		//what does it mean for the row to be false?? That the row is empty? Couldnt be retrieved???
 		if($row !== false){
 			//set $profile to a new object based on the Profile class with these values assigned into it (I think)
-			$profile = new Profile($row[profileId], $row[profileName], $row[profileEmail], $row[profilePhone], $row[profileAccessToken], $row[profileActivationToken], $row[profileType], $row[profileHash], $row[profileSalt]);
+			$profile = new Profile($row["profileId"], $row["profileName"], $row["profileEmail"], $row["profilePhone"], $row["profileAccessToken"], $row["profileActivationToken"], $row["profileType"], $row["profileHash"], $row["profileSalt"]);
 		}
 		//catch statement
 	} catch(\Exception $exception){
@@ -582,18 +582,18 @@ public static function getProfileByProfileId(\PDO $pdo, int $profileId){
 /**
 * gets profile by the profile name
 * @param \PDO $pdo PDO connection object
-* @param int $profileId used as the profileId to search for
-* @return Profile|null Profile found or null if not found
+* @param string $profileName used as the profile name to search for
+* @return profile|null Profile found or null if not found
 * @throws \PDOException when mySQL related errors occur
 * @throws \TypeError when variables are not the correct data type
 */
 	public static function getProfileByProfileName(\PDO $pdo, string $profileName){
 		//sanitize the ID before searching for it
-		if($profileName <= 0){
+		if(strlen($profileName) === 0){
 			throw(new \PDOException("The profile name is empty"));
 		}
 		//create query template
-		$query = "SELECT profileId, profileName, profileEmail, profilePhone, profileAccessToken, profileActivationToken, profileType, profileHash, profileSalt FROM profile WHERE profileName = :profilename";
+		$query = "SELECT profileId, profileName, profileEmail, profilePhone, profileAccessToken, profileActivationToken, profileType, profileHash, profileSalt FROM profile WHERE profileName = :profileName";
 
 		//prepare template
 		$statement = $pdo->prepare($query);
@@ -613,7 +613,99 @@ public static function getProfileByProfileId(\PDO $pdo, int $profileId){
 			//what does it mean for the row to be false?? That the row is empty? Couldnt be retrieved???
 			if($row !== false){
 				//set $profile to a new object based on the Profile class with these values assigned into it (I think)
-				$profile = new Profile($row[profileId], $row[profileName], $row[profileEmail], $row[profilePhone], $row[profileAccessToken], $row[profileActivationToken], $row[profileType], $row[profileHash], $row[profileSalt]);
+				$profile = new Profile($row["profileId"], $row["profileName"], $row["profileEmail"], $row["profilePhone"], $row["profileAccessToken"], $row["profileActivationToken"], $row["profileType"], $row["profileHash"], $row["profileSalt"]);
+			}
+			//catch statement
+		} catch(\Exception $exception){
+			// if the row couldnt be converted, re-throw it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($profile);
+	}
+
+
+	/**
+	 * gets profile by the profile email
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $profileEmail used as the profile email to search for
+	 * @return profile|null profile found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 */
+	public static function getProfileByProfileEmail(\PDO $pdo, string $profileEmail){
+		//sanitize the ID before searching for it
+		if(strlen($profileEmail) === 0){
+			throw(new \PDOException("The profile email is empty"));
+		}
+		//create query template
+		$query = "SELECT profileId, profileName, profileEmail, profilePhone, profileAccessToken, profileActivationToken, profileType, profileHash, profileSalt FROM profile WHERE profileEmail = :profileEmail";
+
+		//prepare template
+		$statement = $pdo->prepare($query);
+
+		//bind the profileId to the placeholder in the template ***WHY JUST TO PROFILE Name?***
+		$parameters = ["profileEmail"=>$profileEmail];
+		//execute the SQL statement
+		$statement->execute($parameters);
+
+		//now that we have selected the correct profile, we need to grab it from mySQL
+		try{
+			$profile = null;   //new varible $profile is what we will assign all the information in this profile to, and return to whatever called this method
+			$statement->setFetchMode(\PDO::FETCH_ASSOC); //what is going on here? establishing the fetch mode for this method?
+			//$row is an empty array I think
+			$row = $statement->fetch(); //create new variable and assign it to $statement which is pointing to the value of fetch???
+
+			//what does it mean for the row to be false?? That the row is empty? Couldnt be retrieved???
+			if($row !== false){
+				//set $profile to a new object based on the Profile class with these values assigned into it (I think)
+				$profile = new Profile($row["profileId"], $row["profileName"], $row["profileEmail"], $row["profilePhone"], $row["profileAccessToken"], $row["profileActivationToken"], $row["profileType"], $row["profileHash"], $row["profileSalt"]);
+			}
+			//catch statement
+		} catch(\Exception $exception){
+			// if the row couldnt be converted, re-throw it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($profile);
+	}
+
+
+	/**
+	 * gets profile by the profile phone
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $profilePhone used as the profile phone to search for
+	 * @return profile|null profile found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 */
+	public static function getProfileByProfilePhone(\PDO $pdo, string $profilePhone){
+		//sanitize the ID before searching for it
+		//do we want to enforce a 10 digit phone number
+		if(strlen($profilePhone) < 7){
+			throw(new \PDOException("The profile phone number is too short"));
+		}
+
+		//create query template
+		$query = "SELECT profileId, profileName, profileEmail, profilePhone, profileAccessToken, profileActivationToken, profileType, profileHash, profileSalt FROM profile WHERE profilePhone = :profilePhone";
+
+		//prepare template
+		$statement = $pdo->prepare($query);
+
+		//bind the profilePhone to the placeholder in the template ***WHY JUST TO PROFILE phone?***
+		$parameters = ["profilePhone"=>$profilePhone];
+		//execute the SQL statement
+		$statement->execute($parameters);
+
+		//now that we have selected the correct profile, we need to grab it from mySQL
+		try{
+			$profile = null;   //new varible $profile is what we will assign all the information in this profile to, and return to whatever called this method
+			$statement->setFetchMode(\PDO::FETCH_ASSOC); //what is going on here? establishing the fetch mode for this method?
+			//$row is an empty array I think
+			$row = $statement->fetch(); //create new variable and assign it to $statement which is pointing to the value of fetch???
+
+			//what does it mean for the row to be false?? That the row is empty? Couldnt be retrieved???
+			if($row !== false){
+				//set $profile to a new object based on the Profile class with these values assigned into it (I think)
+				$profile = new Profile($row["profileId"], $row["profileName"], $row["profileEmail"], $row["profilePhone"], $row["profileAccessToken"], $row["profileActivationToken"], $row["profileType"], $row["profileHash"], $row["profileSalt"]);
 			}
 			//catch statement
 		} catch(\Exception $exception){
@@ -625,11 +717,38 @@ public static function getProfileByProfileId(\PDO $pdo, int $profileId){
 
 
 
+	/**
+	 * gets all Profiles  **WHY IS Profile CAPITALIZED**
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @return \SplFixedArray SplFixedArray of Profiles found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public function getAllProfiles(\PDO $pdo){
+		//create query template
+		$query = "SELECT profileId, profileName, profileEmail, profilePhone, profileAccessToken, profileActivationToken, profileType, profileHash, profileSalt FROM profile";
 
+		$statement = $pdo->prepare($query);
+		$statement->execute();
 
+		//build an array to put all the profiles into. What does the *new* keyword do??
+		$profiles = new \SplFixedArray($statement->rowCount());  //make an array fixed to the length of the row count found in statement, which has the complete list of profiles
+		$statement->setFetchMode(\PDO::FETCH_ASSOC); //still not exactly sure what this does
 
+		//find out what this while-loop is actually doing
+		while(($row = $statement->fetch()) !==false){
+			try{
+				$profile = new Profile($row["profileId"], $row["profileName"], $row["profileEmail"], $row["profilePhone"], $row["profileAccessToken"], $row["profileActivationToken"], $row["profileType"], $row["profileHash"], $row["profileSalt"]);
 
-
-
-
+				//need this explained
+				$profiles[$profiles->key()]=$profile;
+				$profiles->next();  //WAT???
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($profiles);
+	}
 }
