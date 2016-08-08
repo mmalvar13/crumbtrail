@@ -119,6 +119,7 @@ class Image {
 	 */
 	public function setImageFileType(string $newImageFileType) {
 		$validFileType = ["image/jpeg","image/png" ];
+		$validFileType = strtolower($validFileType);
 		if(in_array($newImageFileType,$validFileType)=== false) {
 			throw(new \InvalidArgumentException("This is not the proper image type. Please insert jpeg, or png"));
 		}
@@ -138,7 +139,9 @@ class Image {
 	 * @throw /RangeException if $newImageFileName > 255 characters
 	 */
 	public function setImageFileName(string $newImageFileName) {
-		
+		if($newImageFileName >255) {
+			throw(new \RangeException("Image file name is too long"));
+		}
 	}
 	}
 	
