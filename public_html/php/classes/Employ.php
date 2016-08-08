@@ -16,4 +16,7 @@ class Employ{
 	 * id of the Company that employed the profile, this is a foreign key. Composite key with $employProfileId.
 	 * @var int $employCompanyId
 	 **/
+	private $employCompanyId;
+
+
 }
