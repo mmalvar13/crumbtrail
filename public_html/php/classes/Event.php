@@ -8,7 +8,7 @@ require_once("autoload.php"); //idk
  *
  **/
 class Event{ //implement JsonSerializable??
-
+	use ValidateDate; //do i?
 	/**
 	 * id for this event; this is the primary key
 	 * @var int $eventId
