@@ -79,7 +79,7 @@ private $profileName;
 	/**
 	 * Constructor for Profile Class
 	 */
-	public function __construct(int $profileId = null, string $profileName, string $profileEmail, string $profilePhone, string $profileAccessToken, string $profileActivationToken, string $profileType, string $profileSalt, string $profileHash) {
+	public function __construct(int $newProfileId = null, string $newProfileName, string $newProfileEmail, string $newProfilePhone, string $newProfileAccessToken, string $newProfileActivationToken, string $newProfileType, string $newProfileSalt, string $newProfileHash) {
 
 		//try statements
 		try{
