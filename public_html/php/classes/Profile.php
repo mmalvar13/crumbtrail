@@ -751,10 +751,4 @@ public static function getProfileByProfileId(\PDO $pdo, int $profileId){
 		}
 		return($profiles);
 	}
-
-
-
-
-
-
 }
