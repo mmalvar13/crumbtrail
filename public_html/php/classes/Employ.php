@@ -9,12 +9,12 @@ require_once("autoload.php");
 class Employ{
 	/**
 	 * id of the profile that is employed by the company, this is a foreign key. Composite key with $employCompanyId.
-	 * @var int|null $employProfileId
+	 * @var int|null $employProfileId //null??
 	 **/
 	private $employProfileId;
 	/**
 	 * id of the Company that employed the profile, this is a foreign key. Composite key with $employProfileId.
-	 * @var int|null $employCompanyId
+	 * @var int|null $employCompanyId //null??
 	 **/
 	private $employCompanyId;
 
@@ -26,7 +26,15 @@ class Employ{
  * accessor method for employProfileId
  * @return int $employProfileId
  **/
-public function getEmployProfileId(int $newEmployProfileId = null){ //null??
-	return($this->employProfileId);
-}
+	public function getEmployProfileId(int $newEmployProfileId = null){ //null??
+		return($this->employProfileId);
+	}
+
+	/**
+	 * accessor method for employCompanyId
+	 * @return int $employCompanyId
+	 **/
+	public function getEmployCompanyId(int $newEmployCompanId){
+		return($this->employCompanyId);
+	}
 }
