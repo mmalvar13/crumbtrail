@@ -1,5 +1,14 @@
 <?php
 
+namespace Edu\Cnm\mmalvar13\crumbtrail;
+require_once("autoload.php");
+
+/**
+ * class Company for the Company entity in crumbtrail application.
+ * State variables, constructor, mutators, accessors, PDOs, and getFooByBar methods.
+ * @author Kevin Lee Kirk
+ */
+
 class Company {
 	/**
 	 * The primary key = companyId.
@@ -153,7 +162,7 @@ class Company {
 	/**  Accessor method (getter) for companyStreet2.
 	 * @return string $companyStreet2  The value of companyStreet2.
 	 **/
-	public function gecompanyStreet2() {
+	public function getCompanyStreet2() {
 		return($this->companyStreet2);
 	}
 
@@ -214,20 +223,55 @@ class Company {
 	}
 
 
-
-
 	/**  Mutator method (setter) for companyId.
-	 * @param int $newCompanyId  The new value of companyId.
-	 * @throws UnexpectedValueException  if #newCompanyId is not an integer.
+	 * @param int|null $newCompanyId  The new value of companyId.
+	 * @throws \RangeException  if #newCompanyId is not a positive.
+	 * @throws \TypeError if $newCompanyId is not an integer.
 	 **/
-	public function setCompanyId($newCompanyId) {
-		//  ***   Do the filter_var stuff, to make sure the tweetId is valid and safe.  ***
+	public function setCompanyId($newCompanyId = null) {
+		// Base case, for a new company.
+		if($newCompanyId===null) {
+			$this->companyId = null;
+			return;
+		}
 
-		$this->companyId = intval($newCompanyId);
+		// Is $newCompanyId positive?  If not, then throw an exception.
+		if($newCompanyId <= 0) {
+			throw(new \RangeException("The company ID is not positive."));
+		}
+
+		$this->companyId = ($newCompanyId);
 	}
 
-	//  ***  Now, write  mutator methods for each of the rest of
-	//  the attributes of class Company.   ***
+	/**
+	 * Mutator method for companyName.
+	 * @param string, $newCompanyName  The new value of companyName.
+	 * @throw \RangeException if $newCompanyName is empty or too long
+	 * @throw \InvalidArgumentException if $newCompanyName is not a string
+	 * @throw \TypeError if $newCompanyName is not a string
+	 */
+	public function setCompanyName(string $newCompanyName){
+		// Strip out the white space on either end of the string.
+		$newCompanyName = trim($newCompanyName);
+		// Sanitize $newCompanyName.
+		$newCompanyName = filter_var($newCompanyName, FILTER_SANITIZE_STRING);
+		// If $newCompanyName is empty or too long, then throw an exception.
+		if(strlen($newCompanyName) === 0){
+			throw(new \RangeException("Company name is too short."));
+		}
+		if(strlen($newCompanyName > 128)){
+			throw(new \RangeException("Company name is too long."));
+		}
+		// Assign $newProfileName to profileName, then store in SQL.
+		$this->companyName = $newCompanyName;
+	}
+
+
+
+
+
+
+
 
 
 
