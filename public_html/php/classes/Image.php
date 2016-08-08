@@ -104,11 +104,8 @@ class Image {
 		}
 	}
 	/** accessor method for image file type
-	 * @param string $newImageFileType new value of image file type
+	 *
 	 * @return string value of imageFileType
-	 */
-	/**
-	 * @return string
 	 */
 	public function getImageFileType() {
 		return $this->imageFileType;
@@ -118,7 +115,7 @@ class Image {
 	 *
 	 * @param string $newImageFileType new value of image file type
 	 * @throw \InvalidArgumentException if $newImageFileType is not a string
-	 * @throw \RangeException if $newImageFileType > 4 characters
+	 * @throw \RangeException if $newImageFileType > 10 characters
 	 */
 	public function setImageFileType(string $newImageFileType) {
 		$validFileType = ["image/jpeg","image/png" ];
@@ -126,6 +123,22 @@ class Image {
 			throw(new \InvalidArgumentException("This is not the proper image type. Please insert jpeg, or png"));
 		}
 	}
-	
+	/**
+	 * accessor for the image file name
+	 *
+	 * @return string value for imageFileName
+	 **/
+	public function getImageFileName() {
+		return $this->imageFileName;
+	}
+	/**
+	 * mutator for image file name
+	 *
+	 * @param string $newImageFileName new value of image file name
+	 * @throw /RangeException if $newImageFileName > 255 characters
+	 */
+	public function setImageFileName(string $newImageFileName) {
+		
+	}
 	}
 	
