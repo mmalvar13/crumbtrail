@@ -26,22 +26,24 @@ class Employ{ //implement JsonSerializable??
 	 * @throws \TypeError if data types violate type hints
 	 * @throws \Exception if any other exception occurs
 	 **/
-public function __construct(int $newEmployProfileId, int $newEmployCompanyId){
-	try{
-		$this->setEmployProfileId($newEmployProfileId);
-		$this->setEmployCompanyId($newEmployCompanyId);
-	}catch (\InvalidArgumentException $invalidArgument){
-		//rethrow the exception to the caller
-		throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
-	} catch(\RangeException $range){
-		//rethrow the exception to the caller
-		throw(new \RangeException($range->getMessage(), 0, $range));
-	}catch(\TypeError $typeError){
-		//rethrow exception to the caller
-		throw(new \TypeError($typeError->getMessage(),0,$typeError));
-	}catch(\Exception $exception){
-		//rethrow the exception to the caller
-		throw(new \Exception($exception->getMessage(),0,$exception));
+
+
+	public function __construct(int $newEmployProfileId, int $newEmployCompanyId){
+		try{
+			$this->setEmployProfileId($newEmployProfileId);
+			$this->setEmployCompanyId($newEmployCompanyId);
+		}catch (\InvalidArgumentException $invalidArgument){
+			//rethrow the exception to the caller
+			throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
+		}catch(\RangeException $range){
+			//rethrow the exception to the caller
+			throw(new \RangeException($range->getMessage(), 0, $range));
+		}catch(\TypeError $typeError){
+			//rethrow exception to the caller
+			throw(new \TypeError($typeError->getMessage(),0,$typeError));
+		}catch(\Exception $exception){
+			//rethrow the exception to the caller
+			throw(new \Exception($exception->getMessage(),0,$exception));
 	}
 }
 
