@@ -48,6 +48,21 @@ public function __construct(int $newEmployProfileId, int $newEmployCompanyId){
 		return($this->employProfileId);
 	}
 
+	/**
+	 * mutator method for employProfileId
+	 * @param int $newEmployProfileId new value of employProfileId
+	 * @throws \RangeException if $newEmployProfileId is not positive
+	 * @throws \TypeError if $newEmployProfileId is not an integer
+	 * @throws \Exception if any other exception occurs
+	 **/
+	public function setEmployProfileId(int $newEmployProfileId){
+		//verify that the profile id is positive
+		if($newEmployProfileId <= 0){
+			throw(new \RangeException("employ profile id is not positive"));
+		}
+		//convert and store the employProfileId
+		$this->employProfileId = $newEmployProfileId;
+	}
 
 
 	/**
