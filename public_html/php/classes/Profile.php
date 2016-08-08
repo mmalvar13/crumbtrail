@@ -717,7 +717,40 @@ public static function getProfileByProfileId(\PDO $pdo, int $profileId){
 
 
 
+	/**
+	 * gets all Profiles  **WHY IS Profile CAPITALIZED**
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @return \SplFixedArray SplFixedArray of Profiles found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public function getAllProfiles(\PDO $pdo){
+		//create query template
+		$query = "SELECT profileId, profileName, profileEmail, profilePhone, profileAccessToken, profileActivationToken, profileType, profileHash, profileSalt FROM profile";
 
+		$statement = $pdo->prepare($query);
+		$statement->execute();
+
+		//build an array to put all the profiles into. What does the *new* keyword do??
+		$profiles = new \SplFixedArray($statement->rowCount());  //make an array fixed to the length of the row count found in statement, which has the complete list of profiles
+		$statement->setFetchMode(\PDO::FETCH_ASSOC); //still not exactly sure what this does
+
+		//find out what this while-loop is actually doing
+		while(($row = $statement->fetch()) !==false){
+			try{
+				$profile = new Profile($row[profileId], $row[profileName], $row[profileEmail], $row[profilePhone], $row[profileAccessToken], $row[profileActivationToken], $row[profileType], $row[profileHash], $row[profileSalt]);
+
+				//need this explained
+				$profiles[$profiles->key()]=$profile;
+				$profiles->next();  //WAT???
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+			return($profiles);
+		}
+	}
 
 
 
