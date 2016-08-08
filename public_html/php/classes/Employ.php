@@ -73,5 +73,18 @@ public function __construct(int $newEmployProfileId, int $newEmployCompanyId){
 		return($this->employCompanyId);
 	}
 
-
+	/**
+	 * mutator method for employCompanyId
+	 * @param int $newEmployCompanyId is the new value of employCompanyId
+	 * @throws \RangeException if $newEmployCompanyId is not positive
+	 * @throws \TypeError if $newEmployCompanyId is not an integer
+	 * @throws \Exception if any other exception occurs
+	 **/
+	public function setEmployCompanyId(int $newEmployCompanyId){
+		if($newEmployCompanyId <= 0){
+			throw(new \RangeException("employ company id is not positive"));
+		}
+		//convert and store the employCOmpanyId
+		$this->employCompanyId = $newEmployCompanyId;
+	}
 }
