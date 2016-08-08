@@ -18,9 +18,14 @@ class Employ{ //implement JsonSerializable??
 	 **/
 	private $employCompanyId;
 
-/**
- * constructor for this EMPLOY??
- **/
+	/**
+	 * Employ class constructor.
+	 * @param int $newEmployProfileId id of employProfile
+	 * @param int $newEmployCompanyId id of employCompany
+	 * @throws \RangeException if id is not positive
+	 * @throws \TypeError if data types violate type hints
+	 * @throws \Exception if any other exception occurs
+	 **/
 public function __construct(int $newEmployProfileId, int $newEmployCompanyId){
 	try{
 		$this->setEmployProfileId($newEmployProfileId);
