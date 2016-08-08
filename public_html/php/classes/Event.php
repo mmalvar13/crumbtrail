@@ -46,7 +46,30 @@ class Event{ //implement JsonSerializable??
 	 *@param \DateTime|string|null $newEventStart data and time Event starts or null if set to current date and time //i added null here since the date/time would not have been set yet. is this right?
 	 *@throws \InvalidArgumentException if data types are not valid
 	 *@throws \RangeException if data values are out of bounds (e.g. Strings too long, negative integers)
+	 * @throws \TypeError if data types violate type hints
+	 * @throws \Exception if some other exception occurs
 	 **/
+	public function __construct(int $newEventId = null, int $newEventTruckId, \DateTime $newEventEnd, point $newEventLocation, \DateTime $newEventStart = null){
+		try{
+			$this->setEventId($newEventId);
+			$this->setEventTruckId($newEventTruckId);
+			$this->setEventEnd($newEventEnd);
+			$this->setEventLocation($newEventLocation);
+			$this->setEventStart($newEventStart);
+		} catch(\InvalidArgumentException $invalidArgument){
+			//rethrow the exception to the caller
+			throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
+		} catch(\RangeException $range){
+			//rethrow the exception to the caller
+			throw(new \RangeException($range->getMessage(), 0, $range));
+		} catch(\TypeError $typeError){
+			//rethrow the exception to the caller
+			throw(new \TypeError($typeError->getMessage(), 0, $typeError));
+		} catch(\Exception $exception){
+			//rethrow the exception to the caller
+			throw(new \Exception($exception->getMessage(), 0, $exception));
+		}
+	}
 
 	/**
 	 * accessor method for eventId
@@ -79,6 +102,8 @@ class Event{ //implement JsonSerializable??
 		$this->eventId= $newEventId;
 	}
 
+
+
 	/**
 	 * accessor method for event truck id
 	 * @return int value of event truck id
@@ -103,6 +128,7 @@ class Event{ //implement JsonSerializable??
 	}
 
 
+
 	/**
 	 *accessor method for event end
 	 *@return \DateTime value of event end
@@ -110,6 +136,11 @@ class Event{ //implement JsonSerializable??
 	public function getEventEnd(){
 		return($this->eventEnd);
 	}
+
+	/**
+	 * mutator method for event end
+	 * @param \DateTime //I ALSO HAVE NO IDEA
+	 **/
 
 
 
@@ -120,6 +151,14 @@ class Event{ //implement JsonSerializable??
 	public function getEventLocation(){
 		return($this->eventLocation);
 	}
+
+	/**
+	 * mutator method for event location
+	 * @param \point $newEventLocation new gps point location of event //WHAT IS THIS?
+	 * @throws \ //I HAVE NO IDEA
+	 **/
+
+
 
 	/**
 	 * accessor method for event Start
