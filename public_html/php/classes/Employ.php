@@ -91,7 +91,7 @@ class Employ{ //implement JsonSerializable??
 		if($newEmployCompanyId <= 0){
 			throw(new \RangeException("employ company id is not positive"));
 		}
-		//convert and store the employCOmpanyId
+		//convert and store the employCompanyId
 		$this->employCompanyId = $newEmployCompanyId;
 	}
 }
