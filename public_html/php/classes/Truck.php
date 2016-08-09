@@ -25,11 +25,21 @@ class Truck {
 	private $truckCompanyId;
 
 //constructor goes here//
-//public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
-	//try {
-		//$this->setTruckId($newTruckId);
-		//$this->setTruckCompanyId($newTruckCompanyId);
-	//} catch //
+	/**
+	 * Truck constructor.
+	 * @param int|null $newTruckId
+	 * @param int $newTruckCompanyId
+	 * @throws RangeException
+	 */
+
+public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
+	try {
+	$this->setTruckId($newTruckId);
+	$this->setTruckCompanyId($newTruckCompanyId);
+	} catch (\RangeException $range) {
+		throw(new \RangeException ($range->getMessage(), 0, $range));
+	}
+}
 	/**
 	 * accessor for the truck id
 	 *
