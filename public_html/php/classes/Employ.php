@@ -54,7 +54,7 @@ class Employ implements \JsonSerializable {
 	 * accessor method for employProfileId
 	 * @return int $employProfileId
 	 **/
-	public function getEmployProfileId(int $NewEmployProfileId) {
+	public function getEmployProfileId() {
 		return ($this->employProfileId);
 	}
 
@@ -79,7 +79,7 @@ class Employ implements \JsonSerializable {
 	 * accessor method for employCompanyId
 	 * @return int $employCompanyId
 	 **/
-	public function getEmployCompanyId(int $newEmployCompanyId) {
+	public function getEmployCompanyId() {
 		return ($this->employCompanyId);
 	}
 
