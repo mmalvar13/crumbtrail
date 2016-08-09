@@ -22,8 +22,8 @@ class Point implements \JsonSerializable {
 
 	/**
 	 *Constructor for this Point
-	 * @param int $newPointLatitude the latitude for this point
-	 * @param int $newPointLongitude the longitude
+	 * @param float $newPointLatitude the latitude for this point
+	 * @param float $newPointLongitude the longitude
 	 * @throws \RangeException if coordinate values are out of range
 	 * @throws \TypeError if data types are incorrect
 	 * @throws \Exception if any other exception occurs

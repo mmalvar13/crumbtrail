@@ -49,7 +49,7 @@ class Event implements \JsonSerializable{ //implement JsonSerializable??
 	 * @throws \TypeError if data types violate type hints
 	 * @throws \Exception if some other exception occurs
 	 **/
-	public function __construct(int $newEventId = null, int $newEventTruckId, \DateTime $newEventEnd, point $newEventLocation, \DateTime $newEventStart = null) {
+	public function __construct(int $newEventId = null, int $newEventTruckId, \DateTime $newEventEnd, float $newEventLocation, \DateTime $newEventStart = null) {
 		try {
 			$this->setEventId($newEventId);
 			$this->setEventTruckId($newEventTruckId);
@@ -168,7 +168,7 @@ class Event implements \JsonSerializable{ //implement JsonSerializable??
 
 	/**
 	 * mutator method for event location
-	 * @param \point $newEventLocation new gps point location of event //WHAT IS THIS?
+	 * @param float $newEventLocation new gps point location of event //WHAT IS THIS?
 	 * @throws \ //I HAVE NO IDEA
 	 **/
 
