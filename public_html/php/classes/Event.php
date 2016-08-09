@@ -243,4 +243,27 @@ class Event { //implement JsonSerializable??
 		$parameters = ["eventId"=>$this->eventId];
 		$statement->execute($parameters);
 	}
+
+	/**
+	 * Updates this Event in mySQL
+	 * @param \PDO $pdo PDO connection object
+	 * @throws |\PDOException if mySQL related errors occur
+	 * @throws \TypeError is $pdo is not a PDO connection object
+	 **/
+	public function update(\PDO $pdo){
+		//enforce the eventId is not null(i.e. don't update an event that hasn't been inserted)
+		if($this->eventId === null){
+			throw(new \PDOException("unable to update an event that does not exist"));
+		}
+		//create a query template
+		$query = "UPDATE event SET eventTruckId = :eventTruckId, eventEnd = :eventEnd, eventLocation = :eventLocation, eventStart = :eventStart WHERE eventId = :eventId";
+		$statement = $pdo->prepare($query);
+
+		//bind the member variables to the place holders in the template
+//		$formattedDate = $this->eventId->format("Y-m-d H:i:s"); do I add this like this?
+
+		$parameters = ["eventTruckid" => $this->eventTruckId, "eventEnd" => $this->eventEnd, "eventLocation" => $this->eventLocation, "eventStart" => $this->eventStart, "eventId"=>$this->eventId]; //do i assign start/end to formatted date?? do i add eventId here?
+
+		$statement->execute($parameters);
+	}
 }
