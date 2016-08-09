@@ -621,7 +621,7 @@ public static function getProfileByProfileId(\PDO $pdo, int $profileId){
 			//$row is an empty array I think
 			$row = $statement->fetch(); //create new variable and assign it to $statement which is pointing to the value of fetch???
 
-			//what does it mean for the row to be false?? That the row is empty? Couldnt be retrieved???
+			//what does it mean for the row to be false?? That the row is empty? Couldn't be retrieved???
 			if($row !== false){
 				//set $profile to a new object based on the Profile class with these values assigned into it (I think)
 				$profile = new Profile($row["profileId"], $row["profileName"], $row["profileEmail"], $row["profilePhone"], $row["profileAccessToken"], $row["profileActivationToken"], $row["profileType"], $row["profileHash"], $row["profileSalt"]);
@@ -740,7 +740,9 @@ public static function getProfileByProfileId(\PDO $pdo, int $profileId){
 		//create query template
 		$query = "SELECT profileId, profileName, profileEmail, profilePhone, profileAccessToken, profileActivationToken, profileType, profileHash, profileSalt FROM profile";
 
-		$statement = $pdo->prepare($query);
+		//assume this $pdo object is created somewhere else, we just take it and use it here
+		//prepare does a bunch of security prep on the $query template, getting it ready for SQL
+		$statement = $pdo->prepare($query); //statement is assigned to the $pdo prepared object!! not the initial $pdo object
 		$statement->execute();
 
 		//build an array to put all the profiles into. What does the *new* keyword do??
@@ -756,7 +758,7 @@ public static function getProfileByProfileId(\PDO $pdo, int $profileId){
 
 				//now we are taking each profile and putting it into the array called $profiles which will collect all the profiles we have!
 				$profiles[$profiles->key()]=$profile; //inserts the first entry from the $profile array
-				$profiles->next();  //remember that we are still in the while-loop here. This step moves on to the next entry in the
+				$profiles->next();  //next increments the key in the fixed array $profiles
 				//profile array to enter!!
 			} catch(\Exception $exception) {
 				// if the row couldn't be converted, rethrow it
