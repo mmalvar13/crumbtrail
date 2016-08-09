@@ -225,7 +225,17 @@ class Image implements \JsonSerializable {
 		
 		$parameters = ["imageCompanyId" => $this->imageCompanyId, "imageFileType" =>$this->imageFileType, "imageFileName" =>$this->imageFileName];
 		$statement->execute($parameters);
-		
 	}
+	//getFooByBar
+	//need this explained?
+	/**
+	 * gets image by company??
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $imageCompanyId image to search for
+	 * @return \SplFixedArray SplFixedArray of images found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are nor the correct data type
+	 */
 }
 	
