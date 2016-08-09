@@ -9,7 +9,7 @@ require_once("autoload.php");
  * @author Loren Baca
  */
 
-class Profile {
+class Profile implements \JsonSerializable{
 
 use ValidateDate;
 
@@ -78,17 +78,19 @@ private $profileName;
 
 	/**
 	 * Profile constructor.
-	 * @param int|null $newProfileId
-	 * @param string $newProfileName
-	 * @param string $newProfileEmail
-	 * @param string $newProfilePhone
-	 * @param string $newProfileAccessToken
-	 * @param string $newProfileActivationToken
-	 * @param string $newProfileType
+	 * @param int|null $newProfileId, null if it's a new profile
+	 * @param string $newProfileName, humans name who created this profile
+	 * @param string $newProfileEmail, humans email who created this profile
+	 * @param string $newProfilePhone, humans phone who created this profile
+	 * @param string $newProfileAccessToken, access token to later link social media to our app
+	 * @param string $newProfileActivationToken, access token to activated a user profile application
+	 * @param string $newProfileType, type of profile: 'a'(admin), 'o'(owner), or 'e'(employee)
 	 * @param string $newProfileSalt
 	 * @param string $newProfileHash
-	 * @throws \Exception
-	 * @throws \TypeError
+	 * @throws \InvalidArgumentException if data types are not valid
+	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
+	 * @throws \TypeError if data types violate type hints
+	 * @throws \Exception if some other exception occurs
 	 */
 	public function __construct(int $newProfileId = null, string $newProfileName, string $newProfileEmail, string $newProfilePhone, string $newProfileAccessToken, string $newProfileActivationToken, string $newProfileType, string $newProfileSalt, string $newProfileHash) {
 
@@ -421,7 +423,7 @@ public function getProfileId(){
 		//first we need to strip out all the white space on either end of $newProfileSalt
 		$newProfileSalt = trim($newProfileSalt);
 		//Then we must sanitize $newProfileSalt
-		$newProfileSalt = filter_var($newProfileSalt, FILTER_SANITIZE_ENCODED); //SHOULD I USE ENCODE FOR THIS?????
+		$newProfileSalt = filter_var($newProfileSalt, FILTER_SANITIZE_STRING); //SHOULD I USE ENCODE FOR THIS?????
 		//now check if $newProfileSalt is either empty or too long
 		if(strlen($newProfileSalt) === 0){
 			throw(new \RangeException("Profile salt is too short"));
@@ -448,7 +450,7 @@ public function getProfileId(){
 		//first we need to strip out all the white space on either end of $newProfileHash
 		$newProfileHash = trim($newProfileHash);
 		//Then we must sanitize $newProfileHash
-		$newProfileHash = filter_var($newProfileHash, FILTER_SANITIZE_ENCODED); //SHOULD I USE ENCODE FOR THIS?????
+		$newProfileHash = filter_var($newProfileHash, FILTER_SANITIZE_STRING); //SHOULD I USE ENCODE FOR THIS?????
 		//now check if $newProfileHash is either empty or too long
 		if(strlen($newProfileHash) === 0){
 			throw(new \RangeException("Profile hash is too short"));
@@ -766,5 +768,17 @@ public static function getProfileByProfileId(\PDO $pdo, int $profileId){
 			}
 		}
 		return($profiles);
+	}
+
+
+	/**
+	 * formats the state variables for JSON serialization
+	 *
+	 * @return array resulting state variables to serialize
+	 **/
+	public function jsonSerialize() {
+		$fields = get_object_vars($this);
+		$fields["tweetDate"] = $this->tweetDate->getTimestamp() * 1000;
+		return($fields);
 	}
 }

@@ -5,7 +5,7 @@ namespace Edu\Cnm\CrumbTrail;
 
 
 //autoload?//
-//require_once("autoload.php");//
+require_once("autoload.php");
 
 //Begin Docblock//
 
@@ -17,7 +17,7 @@ namespace Edu\Cnm\CrumbTrail;
  * @author Victoria Chacon <victoriousdesignco@gmail.com>
  **/
 //what does version apply to in the tweet example? is it necessary here?//
-class Image {
+class Image implements \JsonSerializable {
 	/**
 	 * id for this Image; this is the primary key
 	 * @var int $imageId
@@ -172,7 +172,7 @@ class Image {
 	 **/
 	public function insert(\PDO $pdo) {
 		//enforcer image id...essentially...don't put in an image that already exists.
-		if($this->imageId !==null) {
+		if($this->imageId !== null) {
 			throw(new \PDOException("Not a new image"));
 		}
 		//query template
@@ -197,7 +197,7 @@ class Image {
 	 **/
 	public function delete(\PDO $pdo) {
 		//don't delete and image that hasn't been inserted
-		if($this->imageId ===null) {
+		if($this->imageId === null) {
 			throw(new \PDOException("unable to delete an image that does not exist"));
 		}
 		//query template
@@ -214,7 +214,28 @@ class Image {
 	 * @param \PDO $pdo PDO connection object
 	 * @throws |PDOException when mySQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function update(\PDO $pdo) {
+		//don't update an image that hasn't been inserted
+		if($this->imageId === null) {
+			throw(new \PDOException("unable to update an image that does not exist"));
+		}
+		$query = "UPDATE image SET imageCompanyId = :imageCompanyId, imageFileType = :imageFileType, imageFileName =:imageFileName WHERE imageId = :imageId ";
+		$statement = $pdo->prepare($query);
+		
+		$parameters = ["imageCompanyId" => $this->imageCompanyId, "imageFileType" =>$this->imageFileType, "imageFileName" =>$this->imageFileName];
+		$statement->execute($parameters);
+	}
+	//getFooByBar
+	//need this explained?
+	/**
+	 * gets image by company??
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $imageCompanyId image to search for
+	 * @return \SplFixedArray SplFixedArray of images found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are nor the correct data type
 	 */
-
 }
 	
