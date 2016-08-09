@@ -382,5 +382,14 @@ class Event implements \JsonSerializable{ //implement JsonSerializable??
 			return($events);
 		}
 
+		/**
+		 * DO I NEED GETFOOBYBAR FOR EVENTEND AND EVENTSTART?? DO I EVEN NEED IT FOR EVENTLOCATION
+		 **/
+
+		/**
+		 * json serializable. howww???
+		 **/
+
+
 
 }
