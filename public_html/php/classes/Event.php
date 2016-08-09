@@ -387,9 +387,15 @@ class Event implements \JsonSerializable{ //implement JsonSerializable??
 		 **/
 
 		/**
-		 * json serializable. howww???
+		 * formats the state variables for JSON serialization
+		 * @return array resulting state variables to serialize
 		 **/
-
+		public function jsonSerialize() {
+			$fields = get_object_vars($this);
+			$fields["eventEnd"] = $this->eventEnd->getTimestamp() * 1000;
+			$fields["eventStart"] = $this->eventStart->getTimestamp() * 1000; //do i put two separate lines for this?
+			return($fields);
+		}
 
 
 }
