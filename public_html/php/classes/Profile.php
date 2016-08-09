@@ -429,6 +429,11 @@ public function getProfileId(){
 			throw(new \RangeException("Profile salt is too short"));
 		}
 
+		//gotta check if the salt is c_type x-digit
+		if(!ctype_xdigit($newProfileSalt)){
+			throw(new \InvalidArgumentException("The salt supplied does not contain c_type xdigit"));
+		}
+
 		//**doesnt salt and hash need to be EXACTLY the designated length?? CHECK ON THIS!!**
 		if(strlen($newProfileSalt) !== 64){
 			throw(new \RangeException("Profile salt should be exactly 64 characters long"));
@@ -454,6 +459,11 @@ public function getProfileId(){
 		//now check if $newProfileHash is either empty or too long
 		if(strlen($newProfileHash) === 0){
 			throw(new \RangeException("Profile hash is too short"));
+		}
+
+		//gotta check if the salt is c_type x-digit
+		if(!ctype_xdigit($newProfileHash)){
+			throw(new \InvalidArgumentException("The hash supplied does not contain c_type xdigit"));
 		}
 
 		//**doesnt salt and hash need to be EXACTLY the designated length?? CHECK ON THIS!!**
@@ -778,7 +788,7 @@ public static function getProfileByProfileId(\PDO $pdo, int $profileId){
 	 **/
 	public function jsonSerialize() {
 		$fields = get_object_vars($this);
-		$fields["Profile"] = $this->tweetDate->getTimestamp() * 1000;
+		$fields["?????"] = $this->tweetDate->getTimestamp() * 1000; //THIS NEEDS TO BE FIXED
 		return($fields);
 	}
 }
