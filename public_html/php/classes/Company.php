@@ -304,7 +304,7 @@ class Company {
 	 * @throw \InvalidArgumentException if $newCompanyPermit is not a string
 	 * @throw \TypeError if $newCompanyPermit is not a string
 	 */
-	public function setcompanyPermit(string $newCompanyPermit) {
+	public function setCompanyPermit(string $newCompanyPermit) {
 		// Strip out the white space on either end of the string.
 		$newCompanyPermit = trim($newCompanyPermit);
 		// Sanitize $newCompanyPermit.
@@ -327,7 +327,7 @@ class Company {
 	 * @throw \InvalidArgumentException if $newCompanyLicense is not a string
 	 * @throw \TypeError if $newCompanyLicense is not a string
 	 */
-	public function setcompanyLicense(string $newCompanyLicense) {
+	public function setCompanyLicense(string $newCompanyLicense) {
 		// Strip out the white space on either end of the string.
 		$newCompanyLicense = trim($newCompanyLicense);
 		// Sanitize $newCompanyLicense.
@@ -350,7 +350,7 @@ class Company {
 	 * @throw \InvalidArgumentException if $newCompanyAttn is not a string
 	 * @throw \TypeError if $newCompanyAttn is not a string
 	 */
-	public function setcompanyAttn(string $newCompanyAttn) {
+	public function setCompanyAttn(string $newCompanyAttn) {
 		// Strip out the white space on either end of the string.
 		$newCompanyAttn = trim($newCompanyAttn);
 		// Sanitize $newCompanyAttn.
@@ -373,7 +373,7 @@ class Company {
 	 * @throw \InvalidArgumentException if $newCompanyStreet1 is not a string
 	 * @throw \TypeError if $newCompanyStreet1 is not a string
 	 */
-	public function setcompanyStreet1(string $newCompanyStreet1) {
+	public function setCompanyStreet1(string $newCompanyStreet1) {
 		// Strip out the white space on either end of the string.
 		$newCompanyStreet1 = trim($newCompanyStreet1);
 		// Sanitize $newCompanyStreet1.
@@ -396,7 +396,7 @@ class Company {
 	 * @throw \InvalidArgumentException if $newCompanyStreet2 is not a string
 	 * @throw \TypeError if $newCompanyStreet2 is not a string
 	 */
-	public function setcompanyStreet2(string $newCompanyStreet2) {
+	public function setCompanyStreet2(string $newCompanyStreet2) {
 		// Strip out the white space on either end of the string.
 		$newCompanyStreet2 = trim($newCompanyStreet2);
 		// Sanitize $newCompanyStreet2.
@@ -419,12 +419,12 @@ class Company {
 	 * @throw \InvalidArgumentException if $newCompanyCity is not a string
 	 * @throw \TypeError if $newCompanyCity is not a string
 	 */
-	public function setcompanyCity(string $newCompanyCity) {
+	public function setCompanyCity(string $newCompanyCity) {
 		// Strip out the white space on either end of the string.
 		$newCompanyCity = trim($newCompanyCity);
 		// Sanitize $newCompanyCity.
 		$newCompanyCity = filter_var($newCompanyCity, FILTER_SANITIZE_STRING);
-		// If $newcompanyPermit is empty or too long, then throw an exception.
+		// If $newCompanyPermit is empty or too long, then throw an exception.
 		if(strlen($newCompanyCity) === 0) {
 			throw(new \RangeException("company City is too short."));
 		}
@@ -442,12 +442,12 @@ class Company {
 	 * @throw \InvalidArgumentException if $newCompanyState is not a string
 	 * @throw \TypeError if $newCompanyState is not a string
 	 */
-	public function setcompanyState(string $newCompanyState) {
+	public function setCompanyState(string $newCompanyState) {
 		// Strip out the white space on either end of the string.
 		$newCompanyState = trim($newCompanyState);
 		// Sanitize $newCompanyState.
 		$newCompanyState = filter_var($newCompanyState, FILTER_SANITIZE_STRING);
-		// If $newcompanyPermit is empty or too long, then throw an exception.
+		// If $newCompanyPermit is empty or too long, then throw an exception.
 		if(strlen($newCompanyState) === 0) {
 			throw(new \RangeException("company State is too short."));
 		}
@@ -463,7 +463,7 @@ class Company {
 	 * @throws \RangeException  if #newcompanyZip is not a positive.
 	 * @throws \TypeError if $newCompanyZip is not an integer.
 	 **/
-	public function setcompanyZip($newCompanyZip = null) {
+	public function setCompanyZip($newCompanyZip = null) {
 		// Base case, for a new company.
 		if($newCompanyZip === null) {
 			$this->companyZip = null;
@@ -484,12 +484,12 @@ class Company {
 	 * @throw \InvalidArgumentException if $newCompanyDescription is not a string
 	 * @throw \TypeError if $newCompanyDescription is not a string
 	 */
-	public function setcompanyDescription(string $newCompanyDescription) {
+	public function setCompanyDescription(string $newCompanyDescription) {
 		// Strip out the white space on either end of the string.
 		$newCompanyDescription = trim($newCompanyDescription);
 		// Sanitize $newCompanyDescription.
 		$newCompanyDescription = filter_var($newCompanyDescription, FILTER_SANITIZE_STRING);
-		// If $newcompanyPermit is empty or too long, then throw an exception.
+		// If $newCompanyDescription is empty or too long, then throw an exception.
 		if(strlen($newCompanyDescription) === 0) {
 			throw(new \RangeException("company Description is too short."));
 		}
@@ -507,12 +507,12 @@ class Company {
 	 * @throw \InvalidArgumentException if $newCompanyMenuText is not a string
 	 * @throw \TypeError if $newCompanyMenuText is not a string
 	 */
-	public function setcompanyMenuText(string $newCompanyMenuText) {
+	public function setCompanyMenuText(string $newCompanyMenuText) {
 		// Strip out the white space on either end of the string.
 		$newCompanyMenuText = trim($newCompanyMenuText);
 		// Sanitize $newCompanyMenuText.
 		$newCompanyMenuText = filter_var($newCompanyMenuText, FILTER_SANITIZE_STRING);
-		// If $newcompanyPermit is empty or too long, then throw an exception.
+		// If $newCompanyMenuText is empty or too long, then throw an exception.
 		if(strlen($newCompanyMenuText) === 0) {
 			throw(new \RangeException("company MenuText is too short."));
 		}
@@ -528,7 +528,7 @@ class Company {
 	 * @throws \RangeException  if #newcompanyActivationToken is not a positive.
 	 * @throws \TypeError if $newCompanyActivationToken is not an integer.
 	 **/
-	public function setcompanyActivationToken($newCompanyActivationToken = null) {
+	public function setCompanyActivationToken($newCompanyActivationToken = null) {
 		// Base case, for a new company.
 		if($newCompanyActivationToken === null) {
 			$this->companyActivationToken = null;
@@ -546,7 +546,7 @@ class Company {
 	 * @param int|null $newCompanyApproved The new value of companyApproved.
 	 * @throws \RangeException  if #newcompanyApproved is not 0 or 1.
 	 **/
-	public function setcompanyApproved($newCompanyApproved = null) {
+	public function setCompanyApproved($newCompanyApproved = null) {
 		// Base case, for a new company.
 		if($newCompanyApproved === null) {
 			$this->companyApproved = null;
@@ -565,7 +565,7 @@ class Company {
 	 * @throws \RangeException  if #newcompanyAccountCreatorId is not a positive.
 	 * @throws \TypeError if $newCompanyAccountCreatorId is not an integer.
 	 **/
-	public function setcompanyAccountCreatorId($newCompanyAccountCreatorId = null) {
+	public function setCompanyAccountCreatorId($newCompanyAccountCreatorId = null) {
 		// Base case, for a new company.
 		if($newCompanyAccountCreatorId === null) {
 			$this->companyAccountCreatorId = null;
@@ -584,6 +584,7 @@ class Company {
 
 	/**
 	 * Constructor for the class company. A magic method that creates a new company object.
+	 *
 	 * @param int|null $newCompanyId id of this company or null if a new company
 	 * @param string $newCompanyName string of the company name
 	 * @param string $newCompanyEmail string of the company email
@@ -755,7 +756,7 @@ class Company {
 			throw(new \PDOException("The company ID is negative or zero"));
 		}
 
-		// Create the query template.               Check this ? ??????????
+		// Create the query template.
 		$query = "SELECT companyId, companyName, companyEmail, companyPermit, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved, companyAccountCreatorId FROM company WHERE companyId = :companyId";
 
 		// Prepare the template.
@@ -801,7 +802,7 @@ class Company {
 			throw(new \PDOException("The companyAccountCreator is negative or zero"));
 		}
 
-		// Create the query template.          Need to check all my query blocks!   ??????????
+		// Create the query template.
 		$query = "SELECT companyId, companyName, companyEmail, companyPermit, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved, companyAccountCreatorId FROM company WHERE companyAccountCreatorId = :companyAccountCreatorId";
 
 		// Prepare the template.
