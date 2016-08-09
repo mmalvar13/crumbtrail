@@ -1,6 +1,6 @@
 <?php
 
-namespace Edu\Cnm\mmalvar13\crumbtrail;
+namespace Edu\Cnm\CrumbTrail;
 require_once("autoload.php");
 
 /**

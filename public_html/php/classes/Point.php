@@ -10,12 +10,12 @@ require_once ("autoload.php"); //idk
 abstract class Point { //is this an abstract class?
 	/**
 	 * latitude for this point
-	 * @geography point $pointLatitude
+	 * @var float $pointLatitude
 	 **/
 	private $pointLatitude;
 	/**
 	 * longitude for this  point
-	 * @geography point $pointLongitude
+	 * @var float $pointLongitude
 	 **/
 	private $pointLongitude;
 
@@ -24,6 +24,8 @@ abstract class Point { //is this an abstract class?
 	 * @param int $newPointLatitude the latitude for this point
 	 * @param int $newPointLongitude the longitude
 	 **/
-	public function __construct //method should have a body or be abstract
+	public function __construct(float $newPointLatitude, float $newPointLongitude) {
+
+	} //method should have a body or be
 
 }
