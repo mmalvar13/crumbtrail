@@ -324,5 +324,25 @@ class Event implements \JsonSerializable{ //implement JsonSerializable??
 		}
 		//create query template
 		$query = "SELECT eventId, eventTruckId, eventEnd, eventLocation, eventStart FROM event WHERE eventTruckId = :eventTruckId";
+		$statement = $pdo->prepare($query);
+
+		//bind the event truck id to the  place holder in the template
+		$parameters = ["eventTruckId"=>$eventTruckId];
+		$statement->execute($parameters);
+
+		//build an array of events WHY DO I BUILD AN ARRAY HERE??? WE DIDN'T IN THE LAST ONE.
+		$events = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch())!== false){
+			try{
+				$event = new Event($row["eventId"], $row["eventTruckId"], $row["eventEnd"], $row["eventLocation"], $row["eventStart"]);
+				$events[$events->key()] = $event;
+				$events->next();
+			} catch(\Exception $exception){
+				//if the row couldn't be converted rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($events);
 	}
 }
