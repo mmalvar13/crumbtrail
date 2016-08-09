@@ -1,7 +1,8 @@
 <?php
 
-//namespace?
 //namespace //
+namespace Edu\Cnm\CrumbTrail
+
 
 //autoload?//
 //require_once("autoload.php");//
@@ -207,6 +208,13 @@ class Image {
 		$parameters = ["imageId" =>$this->imageId];
 		$statement->execute($parameters);
 	}
-	
+	//update method here
+	/**
+	 *updates the image in mySQL
+	 * @param \PDO $pdo PDO connection object
+	 * @throws |PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 */
+
 }
 	
