@@ -223,4 +223,24 @@ class Event { //implement JsonSerializable??
 		//update the null eventId with what mySQL just gave us
 		$this->eventId = intval($pdo->lastInsertId());
 	}
+
+	/**
+	 * deletes this Event from mySQL
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function delete(\PDO $pdo){
+		//enforce the eventId is not null(i.e. don't delete a tweet that hasn't been inserted)
+		if($this->eventId === null){
+			throw(new \PDOException("unable to delete an event that does not exist"));
+		}
+		//create a query template
+		$query = "DELETE FROM event WHERE eventId = :eventId";
+		$statement = $pdo->prepare($query);
+
+		//bind the member variables to the place holder in the template
+		$parameters = ["eventId"=>$this->eventId];
+		$statement->execute($parameters);
+	}
 }
