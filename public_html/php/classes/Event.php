@@ -273,7 +273,7 @@ class Event implements \JsonSerializable{ //implement JsonSerializable??
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @param int $eventId event id to search for
-	 * @param \SplFixedArray SplFixedArray of Events found
+	 * @return event|null event found or null if not found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 */
@@ -330,7 +330,7 @@ class Event implements \JsonSerializable{ //implement JsonSerializable??
 		$parameters = ["eventTruckId"=>$eventTruckId];
 		$statement->execute($parameters);
 
-		//build an array of events WHY DO I BUILD AN ARRAY HERE??? WE DIDN'T IN THE LAST ONE.
+		//build an array of events WHY DO I BUILD AN ARRAY HERE??? WE DIDN'T IN THE LAST ONE. NEVERMIND I THINK I KNOW.
 		$events = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch())!== false){
@@ -345,4 +345,42 @@ class Event implements \JsonSerializable{ //implement JsonSerializable??
 		}
 		return($events);
 	}
+
+	/**
+	 * get Event by EventLocation
+	 * @param \PDO $pdo PDO connection object
+	 * @param float $eventLocation event location coordinates to search by
+	 * @return \SplFixedArray SplFixedArray of Events found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getEventbyEventLocation(\PDO $pdo, float $eventLocation){
+		if($eventLocation < [-90,-180] || $eventLocation > [90, 180]){ //is this how i write the coordinates??
+			throw(new \RangeException("this coordinate is not within the allowed range"));
+		}
+		//create query template
+		$query = "SELECT eventId, eventTruckId, eventEnd, eventLocation, eventStart FROM event WHERE $eventLocation = :eventLocation";
+		$statement = $pdo->prepare($query);
+
+		//bind the eventLocation to the placeholder in the template
+		$parameters = ["eventLocation" => $eventLocation];
+		$statement->execute($parameters);
+
+		//build an array of events
+		$events = new \SplFixedArray(($statement->rowCount()));
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false){
+			try{
+				$event = new Event($row["eventId"], $row["eventTruckId"], $row["eventEnd"], $row["eventLocation"], $row["eventStart"]);
+				$events[$events->key()] = $event;
+				$events->next();
+			} catch(\Exception $exception){
+				//if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+				}
+			}
+			return($events);
+		}
+
+
 }
