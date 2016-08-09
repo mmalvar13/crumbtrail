@@ -56,7 +56,18 @@ class Truck {
 	 *@return Int|null value of truck company Id
 	 */
 	public function getTruckCompanyId() {
-		return ($this->truckCompanyId);  
+		return ($this->truckCompanyId);
+	}
+	/**
+	 * mutator method for truck company id
+	 *
+	 * @param int|null $newTruckCompanyId new value of truck company Id
+	 * @throws \RangeException if $newTruckCompanyId is negative
+	 */
+	public function setTruckCompanyId(int $newTruckCompanyId =null) {
+		if($newTruckCompanyId <=0); {
+			throw (new \RangeException ("Truck Company Id is not positive"));
+		}
 	}
 
 }
