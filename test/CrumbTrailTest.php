@@ -1,9 +1,9 @@
 <?php
 
-namespace Edu\Cnm\CrumbTrail\Test;
+namespace Edu\Cnm\CrumbTrail\Test;								// TODO Is this namespace correct?   ???
 
 // grab the encrypted properties file
-require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
+require_once("/etc/apache2/capstone-mysql/encrypted-config.php");     // TODO What is our path?  ???
 
 /**
  * Abstract class containing universal and project specific mySQL parameters
