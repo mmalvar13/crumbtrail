@@ -666,7 +666,7 @@ class Company {
 		}
 
 		// Create a query template.
-		$query = "INSERT INTO company (companyName, companyEmail, companyPermit, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved, companyAccountCreatorId) VALUES (:companyName, :companyEmail, :companyPermit, :companyLicense, :companyAttn, :companyStreet1, :companyStreet2, :companyCity, :companyState, :companyZip, :companyDescription, :companyMenuText, :companyActivationToken, :companyApproved, :companyAccountCreatorId)";
+		$query = "INSERT INTO company(companyName, companyEmail, companyPermit, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved, companyAccountCreatorId) VALUES(:companyName, :companyEmail, :companyPermit, :companyLicense, :companyAttn, :companyStreet1, :companyStreet2, :companyCity, :companyState, :companyZip, :companyDescription, :companyMenuText, :companyActivationToken, :companyApproved, :companyAccountCreatorId)";
 
 		// Prepare is used as an extra means of security.
 		$statement = $pdo->prepare($query);
@@ -716,8 +716,8 @@ class Company {
 			throw(new \PDOException("Can't update a company that doesn't exist"));
 		}
 
-		// Create a query template.                   Something wrong with the next line.   ?????????
-		$query = "UPDATE company(companyName, companyEmail, companyPermit, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved, companyAccountCreatorId) SET (:companyName, :companyEmail, :companyPermit, :companyLicense, :companyAttn, :companyStreet1, :companyStreet2, :companyCity, :companyState, :companyZip, :companyDescription, :companyMenuText, :companyActivationToken, :companyApproved, :companyAccountCreatorId)";
+		// Create a query template.
+		$query = "UPDATE company SET companyName = :companyName, companyEmail = :companyEmail, companyPermit =:companyPermit, companyLicense = :companyLicense, companyAttn = :companyAttn, companyStreet1 = :companyStreet1, companyStreet2 = :companyStreet2, companyCity = :companyCity, companyState = :companyState, companyZip = :companyZip, companyDescription = :companyDescription, companyMenuText = :companyMenuText, companyActivationToken = :companyActivationToken, companyApproved = :companyApproved, companyAccountCreatorId = :companyAccountCreatorId WHERE companyId = :companyId";
 
 		// Prepare this query.
 		$statement = $pdo->prepare($query);
@@ -747,8 +747,8 @@ class Company {
 			throw(new \PDOException("The Company ID is negative or zero"));
 		}
 
-		// Create the query template.            What is wrong here? ??????????
-		$query = "SELECT CompanyId, CompanyName, CompanyEmail, CompanyPermit, CompanyLicense, CompanyAttn, CompanyStreet1, CompanyStreet2, CompanyCity, CompanyState, CompanyZip, CompanyDescription, CompanyMenuText, CompanyActivationToken, CompanyApproved, CompanyAccountCreatorId FROM Company WHERE CompanyId = :CompanyId";
+		// Create the query template.               Check this ? ??????????
+		$query = "SELECT companyId, companyName, companyEmail, companyPermit, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved, companyAccountCreatorId FROM company WHERE companyId = :companyId";
 
 		// Prepare the template.
 		$statement = $pdo->prepare($query);
@@ -774,7 +774,7 @@ class Company {
 			// If the row could not be converted, then re-throw it.
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
-		return ($Company);
+		return ($company);
 	}
 
 
