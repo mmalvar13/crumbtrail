@@ -12,10 +12,18 @@ require_once(dirname(__DIR__) . "/public_html/php/classes/autoload.php");
 /**
  * Full PHPUnit test for the Company class
  *
- * This is a complete PHPUnit test of the Tweet class. It is complete because *ALL* mySQL/PDO enabled methods
+ * This is a complete PHPUnit test of the Company class.
+ * It is complete because *ALL* mySQL/PDO enabled methods
  * are tested for both invalid and valid inputs.
  *
+ * Instead of testing every accessor and mutator method,   ****
+ * concentrate on testing the mySQL and PDO methods,
+ * since these use the accessor and mutator methods.
+ *
+ * INSERT, UPDATE, DELETE, getFooByBar for each attribute?   ****
+ *
   **/
+
 class CompanyTest extends CrumbTrailTest {
 	/**
 	 * content of the Tweet
@@ -29,11 +37,6 @@ class CompanyTest extends CrumbTrailTest {
 	 **/
 	protected $VALID_TWEETCONTENT2 = "PHPUnit test still passing";
 
-	/**
-	 * timestamp of the Tweet; this starts as null and is assigned later
-	 * @var DateTime $VALID_TWEETDATE
-	 **/
-	protected $VALID_TWEETDATE = null;
 
 	/**
 	 * Profile that created the Tweet; this is for foreign key relations
@@ -48,7 +51,7 @@ class CompanyTest extends CrumbTrailTest {
 		// run the default setUp() method first
 		parent::setUp();
 
-		// create and insert a Profile to own the test Tweet
+		// create and insert a Profile to own the test Tweet.   TODO What is going on here?  "own" ??
 		$this->profile = new Profile(null, "@phpunit", "test@phpunit.de", "+12125551212");
 		$this->profile->insert($this->getPDO());
 
