@@ -141,7 +141,7 @@ class Event { //implement JsonSerializable??
 	 * @throws \InvalidArgumentException if $newEventEnd is null
 	 * @throws \RangeException if $newEventEnd is greater than the eventStart datetime
 	 **/
-	public function setEventEnd() {
+	public function setEventEnd(\DateTime $newEventEnd) {//why is this greyed out? what data type do i put?
 		if($newEventEnd = null) {
 			throw(new \InvalidArgumentException("Must enter the time length of the event"));
 		}elseif($newEventEnd < $this->eventStart){
