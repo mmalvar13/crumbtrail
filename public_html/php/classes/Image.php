@@ -232,10 +232,40 @@ class Image implements \JsonSerializable {
 	 * gets image by company??
 	 *
 	 * @param \PDO $pdo PDO connection object
-	 * @param string $imageCompanyId image to search for
+	 * @param int, $imageCompanyId image to search for
 	 * @return \SplFixedArray SplFixedArray of images found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are nor the correct data type
 	 */
+	//WOULD WE NEED ANOTHER GETFOOBYBAR IF WE WANT TO ONLY PULL UP ONE IMAGE
+	public static function getImageByImageCompanyId(\PDO $pdo, int $imageCompanyId) {
+		//sanitize the description? before searching
+		if($imageCompanyId <=0) {
+			throw(new \PDOException("Image Company Id is not positive"));
+		}
+		//query template
+		$query ="SELECT imageId, imageCompanyId, imageFileType, imageFileName FROM image WHERE imageCompanyId= :imageCompanyId";
+		$statement = $pdo->prepare($query);
+		//bind the image company Id to the placeholder template
+		$parameters = ["imageCompanyId" => $imageCompanyId];
+		$statement->execute($parameters);
+		//build an array of images
+		//getting a single image, do i need a fixed array?
+		$images = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !==false) {
+			try {
+				$image = new Image($row["imageId"], $row["imageCompanyId"], $row["imageFileType"], $row["imageFileName"]);
+				$images[$images->key()] = $image;
+				$images->next();
+			} catch(\Exception $exception) {
+				//if row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(),0, $exception));
+			}
+		}
+		return($images);
+
+
+	}
 }
 	
