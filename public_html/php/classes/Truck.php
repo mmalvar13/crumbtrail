@@ -56,7 +56,7 @@ class Truck {
 	 *@return Int|null value of truck company Id
 	 */
 	public function getTruckCompanyId() {
-		return ($this->truckCompanyId); 
+		return ($this->truckCompanyId);  
 	}
 
 }
