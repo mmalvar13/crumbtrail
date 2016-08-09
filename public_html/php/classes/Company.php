@@ -1,7 +1,7 @@
 <?php
 
 namespace Edu\Cnm\mmalvar13\crumbtrail;
-require_once("autoload.php");
+require_once("autoload.php");              // Fix the path ??????
 
 /**
  * class Company for the Company entity in the crumbtrail application.
@@ -212,18 +212,18 @@ class Company {
 		return($this->companyActivationToken);
 	}
 
-	/**  Accessor method (getter) for companyApproval.
-	 * @return bool $companyApproval  The value of companyApproval.
+	/**  Accessor method (getter) for companyApproved.
+	 * @return bool $companyApproval  The value of companyApproved.
 	 **/
-	public function getCompanyApproval() {
-		return($this->companyApproval);
+	public function getCompanyApproved() {
+		return($this->companyApproved);
 	}
 
-	/**  Accessor method (getter) for companyAccountCreator.
-	 * @return int $companyAccountCreator  The value of companyAccountCreator.
+	/**  Accessor method (getter) for companyAccountCreatorId.
+	 * @return int $companyAccountCreatorId  The value of companyAccountCreatorId.
 	 **/
-	public function getCompanyAccountCreator() {
-		return($this->companyAccountCreator);
+	public function getCompanyAccountCreatorId() {
+		return($this->companyAccountCreatorId);
 	}
 
 
@@ -282,7 +282,7 @@ class Company {
 		// Strip out the white space on either end of the string.
 		$newCompanyEmail = trim($newCompanyEmail);
 		// Sanitize $newCompanyEmail.
-		$newCompanyEmail = filter_var($newCompanEmail, FILTER_SANITIZE_STRING);
+		$newCompanyEmail = filter_var($newCompanyEmail, FILTER_SANITIZE_STRING);
 		// If $newCompanyEmail is empty or too long, then throw an exception.
 		if(strlen($newCompanyEmail) === 0){
 			throw(new \RangeException("Company Email is too short."));
@@ -583,7 +583,7 @@ class Company {
 	 * @param int|null $newCompanyId  id of this Company or null if a new Company
 	 * @param string $newCompanyName  string of the company name
 	 * @param string $newCompanyEmail  string of the company email
-	 * @param string $newCompanyPermit  string of the company permit
+	 * @param string $newCompanyPermit  string of the company permit    // Argument type ??????
 	 * @param int $newCompanyLicense  int of the company name
 	 * @param string $newCompanyAttn  string of the company attn
 	 * @param string $newCompanyStreet1  string of the company street1
@@ -604,7 +604,7 @@ class Company {
 	public function __construct (int $newCompanyId = null,
 										 string $newCompanyName, 
 										 string $newCompanyEmail, 
-										 int $newCompanyPermit,
+										 string $newCompanyPermit,
 										 int $newCompanyLicense,
 										 string $newCompanyAttn,
 										 string $newCompanyStreet1,
@@ -616,7 +616,7 @@ class Company {
 										 string $newCompanyMenuText,
 										 int $newCompanyActivationToken,
 										 bool $newCompanyApproved,
-										 int $newCompanyActivationToken) {
+										 int $newCompanyAccountCreatorId) {
 		try {
 			$this->setCompanyId($newCompanyId);
 			$this->setCompanyName($newCompanyName);
@@ -672,7 +672,7 @@ class Company {
 		$statement = $pdo->prepare($query);
 
 		// Bind the variables to the place holder slots in the template, then put into an array.
-		$companyparameters = ["companyName"=>$this->companyName, "companyEmail"=>$this->companyEmail, "companyPermit"=>$this->companyPermit, "companyLicense"=>$this->companyLicense, "companyAttn"=>$this->companyAttn, "companyStreet1"=>$this->companyStreet1, "companyStreet2"=>$this->companyStreet2, "companyCity"=>$this->companyCity, "companyState"=>$this->companyState, "companyZip"=>$this->companyZip, "companyDescription"=>$this->companyDescription, "companyMenuText"=>$this->companyMenuText, "companyActivationToken"=>$this->companyActivationToken, "companyApproved"=>$this->companyApproved, "companyAccountCreatorId"=>$this->AccountCreatorId];
+		$companyparameters = ["companyName"=>$this->companyName, "companyEmail"=>$this->companyEmail, "companyPermit"=>$this->companyPermit, "companyLicense"=>$this->companyLicense, "companyAttn"=>$this->companyAttn, "companyStreet1"=>$this->companyStreet1, "companyStreet2"=>$this->companyStreet2, "companyCity"=>$this->companyCity, "companyState"=>$this->companyState, "companyZip"=>$this->companyZip, "companyDescription"=>$this->companyDescription, "companyMenuText"=>$this->companyMenuText, "companyActivationToken"=>$this->companyActivationToken, "companyApproved"=>$this->companyApproved, "companyAccountCreatorId"=>$this->companyAccountCreatorId];
 
 		//execute the command held in $statement
 		$statement->execute($companyparameters);
@@ -717,13 +717,13 @@ class Company {
 		}
 
 		// Create a query template.
-		$query = "UPDATE company (companyName, companyEmail, companyPermit, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved, companyAccountCreatorId) SET (:companyName, :companyEmail, :companyPermit, :companyLicense, :companyAttn, :companyStreet1, :companyStreet2, :companyCity, :companyState, :companyZip, :companyDescription, :companyMenuText, :companyActivationToken, :companyApproved, :companyAccountCreatorId)";
+		$query = "UPDATE company(companyName, companyEmail, companyPermit, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved, companyAccountCreatorId) SET (:companyName, :companyEmail, :companyPermit, :companyLicense, :companyAttn, :companyStreet1, :companyStreet2, :companyCity, :companyState, :companyZip, :companyDescription, :companyMenuText, :companyActivationToken, :companyApproved, :companyAccountCreatorId)";
 		
 		// Prepare this query.
 		$statement = $pdo->prepare($query);
 
 		// Bind the variables to the template.
-		$companyparameters = ["companyName"=>$this->companyName, "companyEmail"=>$this->companyEmail, "companyPermit"=>$this->companyPermit, "companyLicense"=>$this->companyLicense, "companyAttn"=>$this->companyAttn, "companyStreet1"=>$this->companyStreet1, "companyStreet2"=>$this->companyStreet2, "companyCity"=>$this->companyCity, "companyState"=>$this->companyState, "companyZip"=>$this->companyZip, "companyDescription"=>$this->companyDescription, "companyMenuText"=>$this->companyMenuText, "companyActivationToken"=>$this->companyActivationToken, "companyApproved"=>$this->companyApproved, "companyAccountCreatorId"=>$this->AccountCreatorId];
+		$companyparameters = ["companyName"=>$this->companyName, "companyEmail"=>$this->companyEmail, "companyPermit"=>$this->companyPermit, "companyLicense"=>$this->companyLicense, "companyAttn"=>$this->companyAttn, "companyStreet1"=>$this->companyStreet1, "companyStreet2"=>$this->companyStreet2, "companyCity"=>$this->companyCity, "companyState"=>$this->companyState, "companyZip"=>$this->companyZip, "companyDescription"=>$this->companyDescription, "companyMenuText"=>$this->companyMenuText, "companyActivationToken"=>$this->companyActivationToken, "companyApproved"=>$this->companyApproved, "companyAccountCreatorId"=>$this->companyAccountCreatorId];
 		
 		// Execute the mySQL statement.
 		$statement->execute($companyparameters);
@@ -766,7 +766,7 @@ class Company {
 			$row = $statement->fetch();
 
 			if($row !== false){
-				$Company = new Company($row["CompanyId"], $row["CompanyName"], $row["CompanyEmail"], $row["CompanyPermit"], $row["CompanyLicense"], $row["CompanyAttn"], $row["CompanyStreet1"], $row["CompanyStreet2"], $row["CompanyCity", $row["CompanyState", $row["CompanyZip", $row["CompanyDescription", $row["CompanyMenuText", $row["CompanyActivationToken", $row["CompanyApproved", $row["CompanyAccountCreatorId"]);
+				$Company = new Company($row["CompanyId"], $row["CompanyName"], $row["CompanyEmail"], $row["CompanyPermit"], $row["CompanyLicense"], $row["CompanyAttn"], $row["CompanyStreet1"], $row["CompanyStreet2"], $row["CompanyCity"], $row["CompanyState"], $row["CompanyZip"], $row["CompanyDescription"], $row["CompanyMenuText"], $row["CompanyActivationToken"], $row["CompanyApproved"], $row["CompanyAccountCreatorId"]);
 			}
 
 			// Catch exception.
@@ -811,7 +811,7 @@ class Company {
 			$row = $statement->fetch();
 
 			if($row !== false){
-				$Company = new Company($row["CompanyId"], $row["CompanyName"], $row["CompanyEmail"], $row["CompanyPermit"], $row["CompanyLicense"], $row["CompanyAttn"], $row["CompanyStreet1"], $row["CompanyStreet2"], $row["CompanyCity", $row["CompanyState", $row["CompanyZip", $row["CompanyDescription", $row["CompanyMenuText", $row["CompanyActivationToken", $row["CompanyApproved", $row["CompanyAccountCreatorId"]);
+				$Company = new Company($row["CompanyId"], $row["CompanyName"], $row["CompanyEmail"], $row["CompanyPermit"], $row["CompanyLicense"], $row["CompanyAttn"], $row["CompanyStreet1"], $row["CompanyStreet2"], $row["CompanyCity"], $row["CompanyState"], $row["CompanyZip"], $row["CompanyDescription"], $row["CompanyMenuText"], $row["CompanyActivationToken"], $row["CompanyApproved"], $row["CompanyAccountCreatorId"]);
 			}
 
 			// Catch exception.
@@ -834,7 +834,7 @@ class Company {
 	 */
 	public static function getCompanyByCompanyMenuText(\PDO $pdo, int $CompanyMenuText){
 		// Sanitize the ID before searching for it.
-		if($CompanyId <= 0){
+		if($CompanyMenuText <= 0){
 			throw(new \PDOException("The Company Menu Text is negative or zero"));
 		}
 
@@ -845,7 +845,7 @@ class Company {
 		$statement = $pdo->prepare($query);
 
 		// Bind the CompanyMenuText to the placeholder in the template.
-		$parameters = ["CompanyMenuText"=>$Companyv];
+		$parameters = ["CompanyMenuText"=>$Company];
 
 		// Execute the SQL statement
 		$statement->execute($parameters);
@@ -857,7 +857,7 @@ class Company {
 			$row = $statement->fetch();
 
 			if($row !== false){
-				$Company = new Company($row["CompanyId"], $row["CompanyName"], $row["CompanyEmail"], $row["CompanyPermit"], $row["CompanyLicense"], $row["CompanyAttn"], $row["CompanyStreet1"], $row["CompanyStreet2"], $row["CompanyCity", $row["CompanyState", $row["CompanyZip", $row["CompanyDescription", $row["CompanyMenuText", $row["CompanyActivationToken", $row["CompanyApproved", $row["CompanyAccountCreatorId"]);
+				$Company = new Company($row["CompanyId"], $row["CompanyName"], $row["CompanyEmail"], $row["CompanyPermit"], $row["CompanyLicense"], $row["CompanyAttn"], $row["CompanyStreet1"], $row["CompanyStreet2"], $row["CompanyCity"], $row["CompanyState"], $row["CompanyZip"], $row["CompanyDescription"], $row["CompanyMenuText"], $row["CompanyActivationToken"], $row["CompanyApproved"], $row["CompanyAccountCreatorId"]);
 			}
 
 			// Catch exception.
