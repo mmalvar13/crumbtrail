@@ -99,6 +99,7 @@ class Employ{ //implement JsonSerializable??
 	}
 
 	/*-------------------------------PDO Connection Objects Here------------------------------*/
+	/*----------------only need insert, delete, and select for this weak entity---------------*/
 	/**
 	 * inserts this employ into mySQL. is there a better way i can write this? that is not english.
 	 *

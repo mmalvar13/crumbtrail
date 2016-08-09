@@ -26,7 +26,7 @@ class Event implements \JsonSerializable{ //implement JsonSerializable??
 	private $eventEnd;
 	/**
 	 * gps point location for this event
-	 * @geography point $eventLocation //is this right??
+	 * @var float $eventLocation //is this right??
 	 */
 	private $eventLocation;
 	/**

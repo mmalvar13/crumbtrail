@@ -7,7 +7,7 @@ require_once ("autoload.php"); //idk
  * @package Edu\Cnm\Crumbtrail
  * welcome to the point class! this is for things! emjoy your stay!
  **/
-class Point {
+class Point implements \JsonSerializable{
 	/**
 	 * latitude for this point
 	 * @var float $pointLatitude
@@ -19,18 +19,8 @@ class Point {
 	 **/
 	private $pointLongitude;
 
-	/**
-	 * Constructor for this Point
-	 * @param int $newPointLatitude the latitude for this point
-	 * @param int $newPointLongitude the longitude
-	 **/
-	public function __construct(float $newPointLatitude, float $newPointLongitude) {
+
 
 	}
-
-	/**
-	 * accessor method for $pointLatitude
-	 * @returns float
-	 **/
 
 }
