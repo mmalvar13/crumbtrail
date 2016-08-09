@@ -9,7 +9,7 @@ require_once("autoload.php");
  * @author Loren Baca
  */
 
-class Profile {
+class Profile implements \JsonSerializable{
 
 use ValidateDate;
 
@@ -766,5 +766,17 @@ public static function getProfileByProfileId(\PDO $pdo, int $profileId){
 			}
 		}
 		return($profiles);
+	}
+
+
+	/**
+	 * formats the state variables for JSON serialization
+	 *
+	 * @return array resulting state variables to serialize
+	 **/
+	public function jsonSerialize() {
+		$fields = get_object_vars($this);
+		$fields["tweetDate"] = $this->tweetDate->getTimestamp() * 1000;
+		return($fields);
 	}
 }
