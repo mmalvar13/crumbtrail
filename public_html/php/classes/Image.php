@@ -272,7 +272,6 @@ class Image implements \JsonSerializable {
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are nor the correct data type
 	 **/
-		//WOULD WE NEED ANOTHER GETFOOBYBAR IF WE WANT TO ONLY PULL UP ONE IMAGE
 	public static function getImageByImageCompanyId(\PDO $pdo, int $imageCompanyId) {
 		//sanitize the description? before searching
 		if($imageCompanyId <=0) {
@@ -301,8 +300,14 @@ class Image implements \JsonSerializable {
 		return($images);
 	}
 	/**
-	 *
-	 */
+	 *gets images by image file name
+	 * 
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $imageFileName image file name to search for
+	 * @return \SplFixedArray SplFixedArray of Images found
+	 * @throws \PDOException whe mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
 
 }
 	
