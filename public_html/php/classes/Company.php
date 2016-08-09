@@ -838,7 +838,7 @@ class Company {
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @param string $companyMenuText The companyMenuText we want to find.
-	 * @return company|null  Returns the company found, or null if not found.
+	 * @return \SplFixedArray  Returns the company found, or null if not found.
 	 * @throws \PDOException  When mySQL related errors occur.
 	 * @throws \TypeError  When variables are not the correct data type.
 	 */
@@ -880,7 +880,7 @@ class Company {
 				// If the row could not be converted, then re-throw it.
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
-			return($companies);
 		}
+		return($companies);
 	}
 }

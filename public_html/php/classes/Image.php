@@ -46,8 +46,8 @@ class Image {
 	 * @param int $newImageCompanyId
 	 * @param string $newImageFileType
 	 * @param string $newImageFileName
-	 * @throws RangeException
-	 * @throws InvalidArgumentException
+	 * @throws \RangeException
+	 * @throws \InvalidArgumentException
 	 */
 	public function __construct(int $newImageId = null, int $newImageCompanyId, string $newImageFileType, string $newImageFileName) {
 		try {
