@@ -1,7 +1,7 @@
 <?php
 
 //namespace //
-namespace Edu\Cnm\CrumbTrail
+namespace Edu\Cnm\CrumbTrail; 
 
 
 //autoload?//
