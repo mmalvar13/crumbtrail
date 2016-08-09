@@ -1,7 +1,8 @@
 <?php
 
-//namespace?
 //namespace //
+namespace Edu\Cnm\CrumbTrail
+
 
 //autoload?//
 //require_once("autoload.php");//
@@ -161,6 +162,59 @@ class Image {
 		$this->imageFileName = $newImageFileName;
 	}
 	// start the PDO section here
+	//insert method here
+	/**
+	 * inserts this image into mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws |PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function insert(\PDO $pdo) {
+		//enforcer image id...essentially...don't put in an image that already exists.
+		if($this->imageId !==null) {
+			throw(new \PDOException("Not a new image"));
+		}
+		//query template
+		//why yellow????
+		$query = "INSERT INTO image(imageCompanyId, imageFileType, imageFileName) VALUES(:imageCompanyId, :imageFileType, :imageFileName)";
+		$statement =$pdo->prepare($query);
+
+		$parameters = ["imageCompanyId" => $this->imageCompanyId, "imageFileType" => $this ->imageFileType, "imageFileName" => $this->imageFileName];
+		$statement->execute($parameters);
+		
+		//update the null imageId with what SQL just gave us
+		$this->imageId = intval($pdo->lastInsertId());
+	}
+
+	//delete method here
+	/**
+	 * deletes this image from mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws |PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function delete(\PDO $pdo) {
+		//don't delete and image that hasn't been inserted
+		if($this->imageId ===null) {
+			throw(new \PDOException("unable to delete an image that does not exist"));
+		}
+		//query template
+		$query = "DELETE FROM image WHERE imageId = :imageId";
+		$statement =$pdo->prepare($query);
+
+		//bind the member variables to the place holder in the template????
+		$parameters = ["imageId" =>$this->imageId];
+		$statement->execute($parameters);
+	}
+	//update method here
+	/**
+	 *updates the image in mySQL
+	 * @param \PDO $pdo PDO connection object
+	 * @throws |PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 */
 
 }
 	
