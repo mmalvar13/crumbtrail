@@ -161,6 +161,28 @@ class Image {
 		$this->imageFileName = $newImageFileName;
 	}
 	// start the PDO section here
+	/**
+	 * inserts this image into mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws |PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function insert(\PDO $pdo) {
+		//enforcer image id...essentially...don't put in an image that already exists.
+		if($this->imageId !==null) {
+			throw(new \PDOException("Not a new image"));
+		}
+		//query template
+		//why yellow????
+		$query = "INSERT INTO image(imageCompanyId, imageFileType, imageFileName) VALUES(:imageCompanyId, :imageFileType, :imageFileName)";
+		$statement =$pdo->prepare($query);
 
+		$parameters = ["imageCompanyId" => $this->imageCompanyId, "imageFileType" => $this ->imageFileType, "imageFileName" => $this->imageFileName];
+		$statement->execute($parameters);
+		
+		//update the null imageId with what SQL just gave us
+		$this->imageId = intval($pdo->lastInsertId());
+	}
 }
 	
