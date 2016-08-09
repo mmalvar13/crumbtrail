@@ -117,7 +117,7 @@ class Company implements \JsonSerializable {
 	 * @param int|null $newCompanyId id of this company or null if a new company
 	 * @param string $newCompanyName string of the company name
 	 * @param string $newCompanyEmail string of the company email
-	 * @param string $newCompanyPermit string of the company permit    // Argument type ??????
+	 * @param string $newCompanyPermit string of the company permit
 	 * @param int $newCompanyLicense int of the company name
 	 * @param string $newCompanyAttn string of the company attn
 	 * @param string $newCompanyStreet1 string of the company street1
@@ -876,5 +876,16 @@ class Company implements \JsonSerializable {
 			}
 		}
 		return($companies);
+	}
+
+
+	/**
+	 * Formats the state variables for JSON serialization.
+	 *
+	 * @return array resulting state variables to serialize
+	 **/
+	public function jsonSerialize() {
+		$fields = get_object_vars($this);
+		return($fields);
 	}
 }
