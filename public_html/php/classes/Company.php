@@ -4,13 +4,13 @@ namespace Edu\Cnm\mmalvar13\crumbtrail;
 require_once("autoload.php");                          // Fix the path ??????
 
 /**
- * Hi!  Welcome to the company class.  Enjoy your stay!
+ * Hi!  Welcome to the Company class.  Enjoy your stay!
  * 
- * class company for the company entity in the crumbtrail application.
- * State variables, constructor, mutators, accessors, PDOs, and getFooByBar methods.
+ * class Company for the Company entity in the crumbtrail application.
+ * State variables, constructor, mutators, accessors, and PDO methods.
  * @author  Kevin Lee Kirk
  */
-class company {
+class Company {
 
 	// STATE VARIABLES:
 
@@ -113,468 +113,470 @@ class company {
 	private $companyAccountCreatorId;
 
 
+
 	// ACCESSOR METHODS:
 
 	/**  Accessor method (getter) for companyId.
 	 * @return int $companyId  The value of companyId.
 	 **/
-	public function getcompanyId() {
+	public function getCompanyId() {
 		return ($this->companyId);
 	}
 
 	/**  Accessor method (getter) for companyName.
 	 * @return string $companyName  The value of companyName.
 	 **/
-	public function getcompanyName() {
+	public function getCompanyName() {
 		return ($this->companyName);
 	}
 
 	/**  Accessor method (getter) for companyEmail.
 	 * @return string $companyEmail  The value of companyEmail.
 	 **/
-	public function getcompanyEmail() {
+	public function getCompanyEmail() {
 		return ($this->companyEmail);
 	}
 
 	/**  Accessor method (getter) for companyPermit.
 	 * @return string $companyPermit  The value of companyPermit.
 	 **/
-	public function getcompanyPermit() {
+	public function getCompanyPermit() {
 		return ($this->companyPermit);
 	}
 
 	/**  Accessor method (getter) for companyLicense.
 	 * @return int $companyLicense  The value of companyLicense.
 	 **/
-	public function getcompanyLicense() {
+	public function getCompanyLicense() {
 		return ($this->companyLicense);
 	}
 
 	/**  Accessor method (getter) for companyAttn.
 	 * @return string $companyAttn  The value of companyAttn.
 	 **/
-	public function getcompanyAttn() {
+	public function getCompanyAttn() {
 		return ($this->companyAttn);
 	}
 
 	/**  Accessor method (getter) for companyStreet1.
 	 * @return string $companyStreet1  The value of companyStreet1.
 	 **/
-	public function getcompanyStreet1() {
+	public function getCompanyStreet1() {
 		return ($this->companyStreet1);
 	}
 
 	/**  Accessor method (getter) for companyStreet2.
 	 * @return string $companyStreet2  The value of companyStreet2.
 	 **/
-	public function getcompanyStreet2() {
+	public function getCompanyStreet2() {
 		return ($this->companyStreet2);
 	}
 
 	/**  Accessor method (getter) for companyCity.
 	 * @return string $companyCity  The value of companyCity.
 	 **/
-	public function getcompanyCity() {
+	public function getCompanyCity() {
 		return ($this->companyCity);
 	}
 
 	/**  Accessor method (getter) for companyState.
 	 * @return string $companyState  The value of companyState
 	 **/
-	public function getcompanyState() {
+	public function getCompanyState() {
 		return ($this->companyState);
 	}
 
 	/**  Accessor method (getter) for companyZip.
 	 * @return int $companyZip  The value of companyZip.
 	 **/
-	public function getcompanyZip() {
+	public function getCompanyZip() {
 		return ($this->companyZip);
 	}
 
 	/**  Accessor method (getter) for companyDescription.
 	 * @return string $companyDescription  The value of companyDescription.
 	 **/
-	public function getcompanyDescription() {
+	public function getCompanyDescription() {
 		return ($this->companyDescription);
 	}
 
 	/**  Accessor method (getter) for companyMenuText.
 	 * @return string $companyMenuText  The value of companyMenuText.
 	 **/
-	public function getcompanyMenuText() {
+	public function getCompanyMenuText() {
 		return ($this->companyMenuText);
 	}
 
 	/**  Accessor method (getter) for companyActivationToken.
 	 * @return int $companyActivationToken  The value of companyActivationToken.
 	 **/
-	public function getcompanyActivationToken() {
+	public function getCompanyActivationToken() {
 		return ($this->companyActivationToken);
 	}
 
 	/**  Accessor method (getter) for companyApproved.
 	 * @return bool $companyApproval  The value of companyApproved.
 	 **/
-	public function getcompanyApproved() {
+	public function getCompanyApproved() {
 		return ($this->companyApproved);
 	}
 
 	/**  Accessor method (getter) for companyAccountCreatorId.
 	 * @return int $companyAccountCreatorId  The value of companyAccountCreatorId.
 	 **/
-	public function getcompanyAccountCreatorId() {
+	public function getCompanyAccountCreatorId() {
 		return ($this->companyAccountCreatorId);
 	}
 
+	
 
 	// MUTATOR METHODS:
 
 	/**  Mutator method (setter) for companyId.
-	 * @param int|null $newcompanyId The new value of companyId.
-	 * @throws \RangeException  if #newcompanyId is not a positive.
-	 * @throws \TypeError if $newcompanyId is not an integer.
+	 * @param int|null $newCompanyId The new value of companyId.
+	 * @throws \RangeException  if $newCompanyId is not a positive.
+	 * @throws \TypeError if $newCompanyId is not an integer.
 	 **/
-	public function setcompanyId($newcompanyId = null) {
+	public function setCompanyId(int $newCompanyId = null) {
 		// Base case, for a new company.
-		if($newcompanyId === null) {
+		if($newCompanyId === null) {
 			$this->companyId = null;
 			return;
 		}
-		// Is $newcompanyId positive?  If not, then throw an exception.
-		if($newcompanyId <= 0) {
+		// Is $newCompanyId positive?  If not, then throw an exception.
+		if($newCompanyId <= 0) {
 			throw(new \RangeException("The company ID is not positive."));
 		}
-		// Assign $newcompanyId to companyId, then store in SQL.
-		$this->companyId = $newcompanyId;
+		// Assign $newCompanyId to companyId, then store in SQL.
+		$this->companyId = $newCompanyId;
 	}
 
 	/**
 	 * Mutator method for companyName.
-	 * @param string , $newcompanyName  The new value of companyName.
-	 * @throw \RangeException if $newcompanyName is empty or too long
-	 * @throw \InvalidArgumentException if $newcompanyName is not a string
-	 * @throw \TypeError if $newcompanyName is not a string
+	 * @param string , $newCompanyName  The new value of companyName.
+	 * @throw \RangeException if $newCompanyName is empty or too long
+	 * @throw \InvalidArgumentException if $newCompanyName is not a string
+	 * @throw \TypeError if $newCompanyName is not a string
 	 */
-	public function setcompanyName(string $newcompanyName) {
+	public function setCompanyName(string $newCompanyName) {
 		// Strip out the white space on either end of the string.
-		$newcompanyName = trim($newcompanyName);
-		// Sanitize $newcompanyName.
-		$newcompanyName = filter_var($newcompanyName, FILTER_SANITIZE_STRING);
-		// If $newcompanyName is empty or too long, then throw an exception.
-		if(strlen($newcompanyName) === 0) {
-			throw(new \RangeException("company name is too short."));
+		$newCompanyName = trim($newCompanyName);
+		// Sanitize $newCompanyName.
+		$newCompanyName = filter_var($newCompanyName, FILTER_SANITIZE_STRING);
+		// If $newCompanyName is empty or too long, then throw an exception.
+		if(strlen($newCompanyName) === 0) {
+			throw(new \RangeException("Company name is too short."));
 		}
-		if(strlen($newcompanyName > 128)) {
-			throw(new \RangeException("company name is too long."));
+		if(strlen($newCompanyName > 128)) {
+			throw(new \RangeException("Company name is too long."));
 		}
-		// Assign $newcompanyName to companyName, then store in SQL.
-		$this->companyName = $newcompanyName;
+		// Assign $newCompanyName to companyName, then store in SQL.
+		$this->companyName = $newCompanyName;
 	}
 
 	/**
 	 * Mutator method for companyEmail.
 	 * @param string , $newcompanyEmail  The new value of companyEmail.
-	 * @throw \RangeException if $newcompanyEmail is empty or too long
-	 * @throw \InvalidArgumentException if $newcompanyEmail is not a string
-	 * @throw \TypeError if $newcompanyEmail is not a string
+	 * @throw \RangeException if $newCompanyEmail is empty or too long
+	 * @throw \InvalidArgumentException if $newCompanyEmail is not a string
+	 * @throw \TypeError if $newCompanyEmail is not a string
 	 */
-	public function setcompanyEmail(string $newcompanyEmail) {
+	public function setCompanyEmail(string $newCompanyEmail) {
 		// Strip out the white space on either end of the string.
-		$newcompanyEmail = trim($newcompanyEmail);
-		// Sanitize $newcompanyEmail.
-		$newcompanyEmail = filter_var($newcompanyEmail, FILTER_SANITIZE_STRING);
-		// If $newcompanyEmail is empty or too long, then throw an exception.
-		if(strlen($newcompanyEmail) === 0) {
-			throw(new \RangeException("company Email is too short."));
+		$newCompanyEmail = trim($newCompanyEmail);
+		// Sanitize $newCompanyEmail.
+		$newCompanyEmail = filter_var($newCompanyEmail, FILTER_SANITIZE_STRING);
+		// If $newCompanyEmail is empty or too long, then throw an exception.
+		if(strlen($newCompanyEmail) === 0) {
+			throw(new \RangeException("Company Email is too short."));
 		}
-		if(strlen($newcompanyEmail > 128)) {
-			throw(new \RangeException("company Email is too long."));
+		if(strlen($newCompanyEmail > 128)) {
+			throw(new \RangeException("Company Email is too long."));
 		}
-		// Assign $newcompanyEmail to companyEmail, then store in SQL.
-		$this->companyEmail = $newcompanyEmail;
+		// Assign $newCompanyEmail to companyEmail, then store in SQL.
+		$this->companyEmail = $newCompanyEmail;
 	}
 
 	/**
 	 * Mutator method for companyPermit.
-	 * @param string , $newcompanyPermit  The new value of companyPermit.
-	 * @throw \RangeException if $newcompanyPermit is empty or too long
-	 * @throw \InvalidArgumentException if $newcompanyPermit is not a string
-	 * @throw \TypeError if $newcompanyPermit is not a string
+	 * @param string , $newCompanyPermit  The new value of companyPermit.
+	 * @throw \RangeException if $newCompanyPermit is empty or too long
+	 * @throw \InvalidArgumentException if $newCompanyPermit is not a string
+	 * @throw \TypeError if $newCompanyPermit is not a string
 	 */
-	public function setcompanyPermit(string $newcompanyPermit) {
+	public function setcompanyPermit(string $newCompanyPermit) {
 		// Strip out the white space on either end of the string.
-		$newcompanyPermit = trim($newcompanyPermit);
-		// Sanitize $newcompanyPermit.
-		$newcompanyPermit = filter_var($newcompanyPermit, FILTER_SANITIZE_STRING);
-		// If $newcompanyPermit is empty or too long, then throw an exception.
-		if(strlen($newcompanyPermit) === 0) {
-			throw(new \RangeException("company Permit is too short."));
+		$newCompanyPermit = trim($newCompanyPermit);
+		// Sanitize $newCompanyPermit.
+		$newCompanyPermit = filter_var($newCompanyPermit, FILTER_SANITIZE_STRING);
+		// If $newCompanyPermit is empty or too long, then throw an exception.
+		if(strlen($newCompanyPermit) === 0) {
+			throw(new \RangeException("Company Permit is too short."));
 		}
-		if(strlen($newcompanyPermit > 128)) {
-			throw(new \RangeException("company Permit is too long."));
+		if(strlen($newCompanyPermit > 128)) {
+			throw(new \RangeException("Company Permit is too long."));
 		}
-		// Assign $newcompanyPermit to companyPermit, then store in SQL.
-		$this->companyPermit = $newcompanyPermit;
+		// Assign $newCompanyPermit to companyPermit, then store in SQL.
+		$this->companyPermit = $newCompanyPermit;
 	}
 
 	/**
 	 * Mutator method for companyLicense.
-	 * @param string , $newcompanyLicense  The new value of companyLicense.
-	 * @throw \RangeException if $newcompanyLicense is empty or too long
-	 * @throw \InvalidArgumentException if $newcompanyLicense is not a string
-	 * @throw \TypeError if $newcompanyLicense is not a string
+	 * @param string , $newCompanyLicense  The new value of companyLicense.
+	 * @throw \RangeException if $newCompanyLicense is empty or too long
+	 * @throw \InvalidArgumentException if $newCompanyLicense is not a string
+	 * @throw \TypeError if $newCompanyLicense is not a string
 	 */
-	public function setcompanyLicense(string $newcompanyLicense) {
+	public function setcompanyLicense(string $newCompanyLicense) {
 		// Strip out the white space on either end of the string.
-		$newcompanyLicense = trim($newcompanyLicense);
-		// Sanitize $newcompanyLicense.
-		$newcompanyLicense = filter_var($newcompanyLicense, FILTER_SANITIZE_STRING);
-		// If $newcompanyLicense is empty or too long, then throw an exception.
-		if(strlen($newcompanyLicense) === 0) {
-			throw(new \RangeException("company License is too short."));
+		$newCompanyLicense = trim($newCompanyLicense);
+		// Sanitize $newCompanyLicense.
+		$newCompanyLicense = filter_var($newCompanyLicense, FILTER_SANITIZE_STRING);
+		// If $newCompanyLicense is empty or too long, then throw an exception.
+		if(strlen($newCompanyLicense) === 0) {
+			throw(new \RangeException("Company License is too short."));
 		}
-		if(strlen($newcompanyLicense > 128)) {
-			throw(new \RangeException("company License is too long."));
+		if(strlen($newCompanyLicense > 128)) {
+			throw(new \RangeException("Company License is too long."));
 		}
-		// Assign $newcompanyLicense to companyLicense, then store in SQL.
-		$this->companyLicense = $newcompanyLicense;
+		// Assign $newCompanyLicense to companyLicense, then store in SQL.
+		$this->companyLicense = $newCompanyLicense;
 	}
 
 	/**
 	 * Mutator method for companyAttn.
-	 * @param string , $newcompanyAttn  The new value of companyAttn.
-	 * @throw \RangeException if $newcompanyAttn is empty or too long
-	 * @throw \InvalidArgumentException if $newcompanyAttn is not a string
-	 * @throw \TypeError if $newcompanyAttn is not a string
+	 * @param string , $newCompanyAttn  The new value of companyAttn.
+	 * @throw \RangeException if $newCompanyAttn is empty or too long
+	 * @throw \InvalidArgumentException if $newCompanyAttn is not a string
+	 * @throw \TypeError if $newCompanyAttn is not a string
 	 */
-	public function setcompanyAttn(string $newcompanyAttn) {
+	public function setcompanyAttn(string $newCompanyAttn) {
 		// Strip out the white space on either end of the string.
-		$newcompanyAttn = trim($newcompanyAttn);
-		// Sanitize $newcompanyAttn.
-		$newcompanyAttn = filter_var($newcompanyAttn, FILTER_SANITIZE_STRING);
-		// If $newcompanyAttn is empty or too long, then throw an exception.
-		if(strlen($newcompanyAttn) === 0) {
+		$newCompanyAttn = trim($newCompanyAttn);
+		// Sanitize $newCompanyAttn.
+		$newCompanyAttn = filter_var($newCompanyAttn, FILTER_SANITIZE_STRING);
+		// If $newCompanyAttn is empty or too long, then throw an exception.
+		if(strlen($newCompanyAttn) === 0) {
 			throw(new \RangeException("company Attn is too short."));
 		}
-		if(strlen($newcompanyAttn > 128)) {
+		if(strlen($newCompanyAttn > 128)) {
 			throw(new \RangeException("company Attn is too long."));
 		}
-		// Assign $newcompanyAttn to companyAttn, then store in SQL.
-		$this->companyAttn = $newcompanyAttn;
+		// Assign $newCompanyAttn to companyAttn, then store in SQL.
+		$this->companyAttn = $newCompanyAttn;
 	}
 
 	/**
 	 * Mutator method for companyStreet1.
-	 * @param string , $newcompanyStreet1  The new value of companyStreet1.
-	 * @throw \RangeException if $newcompanyStreet1 is empty or too long
-	 * @throw \InvalidArgumentException if $newcompanyStreet1 is not a string
-	 * @throw \TypeError if $newcompanyStreet1 is not a string
+	 * @param string , $newCompanyStreet1  The new value of companyStreet1.
+	 * @throw \RangeException if $newCompanyStreet1 is empty or too long
+	 * @throw \InvalidArgumentException if $newCompanyStreet1 is not a string
+	 * @throw \TypeError if $newCompanyStreet1 is not a string
 	 */
-	public function setcompanyStreet1(string $newcompanyStreet1) {
+	public function setcompanyStreet1(string $newCompanyStreet1) {
 		// Strip out the white space on either end of the string.
-		$newcompanyStreet1 = trim($newcompanyStreet1);
-		// Sanitize $newcompanyStreet1.
-		$newcompanyStreet1 = filter_var($newcompanyStreet1, FILTER_SANITIZE_STRING);
-		// If $newcompanyStreet1 is empty or too long, then throw an exception.
-		if(strlen($newcompanyStreet1) === 0) {
+		$newCompanyStreet1 = trim($newCompanyStreet1);
+		// Sanitize $newCompanyStreet1.
+		$newCompanyStreet1 = filter_var($newCompanyStreet1, FILTER_SANITIZE_STRING);
+		// If $newCompanyStreet1 is empty or too long, then throw an exception.
+		if(strlen($newCompanyStreet1) === 0) {
 			throw(new \RangeException("company Street1 is too short."));
 		}
-		if(strlen($newcompanyStreet1 > 128)) {
+		if(strlen($newCompanyStreet1 > 128)) {
 			throw(new \RangeException("company Street1 is too long."));
 		}
-		// Assign $newcompanyStreet1 to companyStreet1, then store in SQL.
-		$this->companyStreet1 = $newcompanyStreet1;
+		// Assign $newCompanyStreet1 to companyStreet1, then store in SQL.
+		$this->companyStreet1 = $newCompanyStreet1;
 	}
 
 	/**
 	 * Mutator method for companyStreet2.
-	 * @param string , $newcompanyStreet2  The new value of companyStreet2.
-	 * @throw \RangeException if $newcompanyStreet2 is empty or too long
-	 * @throw \InvalidArgumentException if $newcompanyStreet2 is not a string
-	 * @throw \TypeError if $newcompanyStreet2 is not a string
+	 * @param string , $newCompanyStreet2  The new value of companyStreet2.
+	 * @throw \RangeException if $newCompanyStreet2 is empty or too long
+	 * @throw \InvalidArgumentException if $newCompanyStreet2 is not a string
+	 * @throw \TypeError if $newCompanyStreet2 is not a string
 	 */
-	public function setcompanyStreet2(string $newcompanyStreet2) {
+	public function setcompanyStreet2(string $newCompanyStreet2) {
 		// Strip out the white space on either end of the string.
-		$newcompanyStreet2 = trim($newcompanyStreet2);
-		// Sanitize $newcompanyStreet2.
-		$newcompanyStreet2 = filter_var($newcompanyStreet2, FILTER_SANITIZE_STRING);
+		$newCompanyStreet2 = trim($newCompanyStreet2);
+		// Sanitize $newCompanyStreet2.
+		$newCompanyStreet2 = filter_var($newCompanyStreet2, FILTER_SANITIZE_STRING);
 		// If $newcompanyPermit is empty or too long, then throw an exception.
-		if(strlen($newcompanyStreet2) === 0) {
+		if(strlen($newCompanyStreet2) === 0) {
 			throw(new \RangeException("company Street2 is too short."));
 		}
-		if(strlen($newcompanyStreet2 > 128)) {
+		if(strlen($newCompanyStreet2 > 128)) {
 			throw(new \RangeException("company Street2 is too long."));
 		}
-		// Assign $newcompanyStreet2 to companyStreet2, then store in SQL.
-		$this->companyStreet2 = $newcompanyStreet2;
+		// Assign $newCompanyStreet2 to companyStreet2, then store in SQL.
+		$this->companyStreet2 = $newCompanyStreet2;
 	}
 
 	/**
 	 * Mutator method for companyCity.
-	 * @param string , $newcompanyCity  The new value of companyCity.
-	 * @throw \RangeException if $newcompanyCity is empty or too long
-	 * @throw \InvalidArgumentException if $newcompanyCity is not a string
-	 * @throw \TypeError if $newcompanyCity is not a string
+	 * @param string , $newCompanyCity  The new value of companyCity.
+	 * @throw \RangeException if $newCompanyCity is empty or too long
+	 * @throw \InvalidArgumentException if $newCompanyCity is not a string
+	 * @throw \TypeError if $newCompanyCity is not a string
 	 */
-	public function setcompanyCity(string $newcompanyCity) {
+	public function setcompanyCity(string $newCompanyCity) {
 		// Strip out the white space on either end of the string.
-		$newcompanyCity = trim($newcompanyCity);
-		// Sanitize $newcompanyCity.
-		$newcompanyCity = filter_var($newcompanyCity, FILTER_SANITIZE_STRING);
+		$newCompanyCity = trim($newCompanyCity);
+		// Sanitize $newCompanyCity.
+		$newCompanyCity = filter_var($newCompanyCity, FILTER_SANITIZE_STRING);
 		// If $newcompanyPermit is empty or too long, then throw an exception.
-		if(strlen($newcompanyCity) === 0) {
+		if(strlen($newCompanyCity) === 0) {
 			throw(new \RangeException("company City is too short."));
 		}
-		if(strlen($newcompanyCity > 128)) {
+		if(strlen($newCompanyCity > 128)) {
 			throw(new \RangeException("company City is too long."));
 		}
-		// Assign $newcompanyCity to companyCity, then store in SQL.
-		$this->companyCity = $newcompanyCity;
+		// Assign $newCompanyCity to companyCity, then store in SQL.
+		$this->companyCity = $newCompanyCity;
 	}
 
 	/**
 	 * Mutator method for companyState.
-	 * @param string , $newcompanyState  The new value of companyState.
-	 * @throw \RangeException if $newcompanyState is empty or too long
-	 * @throw \InvalidArgumentException if $newcompanyState is not a string
-	 * @throw \TypeError if $newcompanyState is not a string
+	 * @param string , $newCompanyState  The new value of companyState.
+	 * @throw \RangeException if $newCompanyState is empty or too long
+	 * @throw \InvalidArgumentException if $newCompanyState is not a string
+	 * @throw \TypeError if $newCompanyState is not a string
 	 */
-	public function setcompanyState(string $newcompanyState) {
+	public function setcompanyState(string $newCompanyState) {
 		// Strip out the white space on either end of the string.
-		$newcompanyState = trim($newcompanyState);
-		// Sanitize $newcompanyState.
-		$newcompanyState = filter_var($newcompanyState, FILTER_SANITIZE_STRING);
+		$newCompanyState = trim($newCompanyState);
+		// Sanitize $newCompanyState.
+		$newCompanyState = filter_var($newCompanyState, FILTER_SANITIZE_STRING);
 		// If $newcompanyPermit is empty or too long, then throw an exception.
-		if(strlen($newcompanyState) === 0) {
+		if(strlen($newCompanyState) === 0) {
 			throw(new \RangeException("company State is too short."));
 		}
-		if(strlen($newcompanyState > 128)) {
+		if(strlen($newCompanyState > 128)) {
 			throw(new \RangeException("company State is too long."));
 		}
-		// Assign $newcompanyState to companyState, then store in SQL.
-		$this->companyState = $newcompanyState;
+		// Assign $newCompanyState to companyState, then store in SQL.
+		$this->companyState = $newCompanyState;
 	}
 
 	/**  Mutator method (setter) for companyZip.
-	 * @param int|null $newcompanyZip The new value of companyZip.
+	 * @param int|null $newCompanyZip The new value of companyZip.
 	 * @throws \RangeException  if #newcompanyZip is not a positive.
-	 * @throws \TypeError if $newcompanyZip is not an integer.
+	 * @throws \TypeError if $newCompanyZip is not an integer.
 	 **/
-	public function setcompanyZip($newcompanyZip = null) {
+	public function setcompanyZip($newCompanyZip = null) {
 		// Base case, for a new company.
-		if($newcompanyZip === null) {
+		if($newCompanyZip === null) {
 			$this->companyZip = null;
 			return;
 		}
-		// Is $newcompanyZip positive?  If not, then throw an exception.
-		if($newcompanyZip <= 0) {
+		// Is $newCompanyZip positive?  If not, then throw an exception.
+		if($newCompanyZip <= 0) {
 			throw(new \RangeException("The company Zip is not positive."));
 		}
-		// Assign $newcompanyZip to companyZip, then store in SQL.
-		$this->companyZip = $newcompanyZip;
+		// Assign $newCompanyZip to companyZip, then store in SQL.
+		$this->companyZip = $newCompanyZip;
 	}
 
 	/**
 	 * Mutator method for companyDescription.
-	 * @param string , $newcompanyDescription  The new value of companyDescription.
-	 * @throw \RangeException if $newcompanyDescription is empty or too long
-	 * @throw \InvalidArgumentException if $newcompanyDescription is not a string
-	 * @throw \TypeError if $newcompanyDescription is not a string
+	 * @param string , $newCompanyDescription  The new value of companyDescription.
+	 * @throw \RangeException if $newCompanyDescription is empty or too long
+	 * @throw \InvalidArgumentException if $newCompanyDescription is not a string
+	 * @throw \TypeError if $newCompanyDescription is not a string
 	 */
-	public function setcompanyDescription(string $newcompanyDescription) {
+	public function setcompanyDescription(string $newCompanyDescription) {
 		// Strip out the white space on either end of the string.
-		$newcompanyDescription = trim($newcompanyDescription);
-		// Sanitize $newcompanyDescription.
-		$newcompanyDescription = filter_var($newcompanyDescription, FILTER_SANITIZE_STRING);
+		$newCompanyDescription = trim($newCompanyDescription);
+		// Sanitize $newCompanyDescription.
+		$newCompanyDescription = filter_var($newCompanyDescription, FILTER_SANITIZE_STRING);
 		// If $newcompanyPermit is empty or too long, then throw an exception.
-		if(strlen($newcompanyDescription) === 0) {
+		if(strlen($newCompanyDescription) === 0) {
 			throw(new \RangeException("company Description is too short."));
 		}
-		if(strlen($newcompanyDescription > 128)) {
+		if(strlen($newCompanyDescription > 128)) {
 			throw(new \RangeException("company Description is too long."));
 		}
-		// Assign $newcompanyDescription to companyDescription, then store in SQL.
-		$this->companyDescription = $newcompanyDescription;
+		// Assign $newCompanyDescription to companyDescription, then store in SQL.
+		$this->companyDescription = $newCompanyDescription;
 	}
 
 	/**
 	 * Mutator method for companyMenuText.
-	 * @param string , $newcompanyMenuText  The new value of companyMenuText.
-	 * @throw \RangeException if $newcompanyMenuText is empty or too long
-	 * @throw \InvalidArgumentException if $newcompanyMenuText is not a string
-	 * @throw \TypeError if $newcompanyMenuText is not a string
+	 * @param string , $newCompanyMenuText  The new value of companyMenuText.
+	 * @throw \RangeException if $newCompanyMenuText is empty or too long
+	 * @throw \InvalidArgumentException if $newCompanyMenuText is not a string
+	 * @throw \TypeError if $newCompanyMenuText is not a string
 	 */
-	public function setcompanyMenuText(string $newcompanyMenuText) {
+	public function setcompanyMenuText(string $newCompanyMenuText) {
 		// Strip out the white space on either end of the string.
-		$newcompanyMenuText = trim($newcompanyMenuText);
-		// Sanitize $newcompanyMenuText.
-		$newcompanyMenuText = filter_var($newcompanyMenuText, FILTER_SANITIZE_STRING);
+		$newCompanyMenuText = trim($newCompanyMenuText);
+		// Sanitize $newCompanyMenuText.
+		$newCompanyMenuText = filter_var($newCompanyMenuText, FILTER_SANITIZE_STRING);
 		// If $newcompanyPermit is empty or too long, then throw an exception.
-		if(strlen($newcompanyMenuText) === 0) {
+		if(strlen($newCompanyMenuText) === 0) {
 			throw(new \RangeException("company MenuText is too short."));
 		}
-		if(strlen($newcompanyMenuText > 128)) {
+		if(strlen($newCompanyMenuText > 128)) {
 			throw(new \RangeException("company MenuText is too long."));
 		}
-		// Assign $newcompanyMenuText to companyMenuText, then store in SQL.
-		$this->companyMenuText = $newcompanyMenuText;
+		// Assign $newCompanyMenuText to companyMenuText, then store in SQL.
+		$this->companyMenuText = $newCompanyMenuText;
 	}
 
 	/**  Mutator method (setter) for companyActivationToken.
-	 * @param int|null $newcompanyActivationToken The new value of companyActivationToken.
+	 * @param int|null $newCompanyActivationToken The new value of companyActivationToken.
 	 * @throws \RangeException  if #newcompanyActivationToken is not a positive.
-	 * @throws \TypeError if $newcompanyActivationToken is not an integer.
+	 * @throws \TypeError if $newCompanyActivationToken is not an integer.
 	 **/
-	public function setcompanyActivationToken($newcompanyActivationToken = null) {
+	public function setcompanyActivationToken($newCompanyActivationToken = null) {
 		// Base case, for a new company.
-		if($newcompanyActivationToken === null) {
+		if($newCompanyActivationToken === null) {
 			$this->companyActivationToken = null;
 			return;
 		}
-		// Is $newcompanyActivationToken positive?  If not, then throw an exception.
-		if($newcompanyActivationToken <= 0) {
+		// Is $newCompanyActivationToken positive?  If not, then throw an exception.
+		if($newCompanyActivationToken <= 0) {
 			throw(new \RangeException("The company ActivationToken is not positive."));
 		}
-		// Assign $newcompanyActivationToken to companyActivationToken, then store in SQL.
-		$this->companyActivationToken = $newcompanyActivationToken;
+		// Assign $newCompanyActivationToken to companyActivationToken, then store in SQL.
+		$this->companyActivationToken = $newCompanyActivationToken;
 	}
 
 	/**  Mutator method (setter) for companyApproved.
-	 * @param int|null $newcompanyApproved The new value of companyApproved.
+	 * @param int|null $newCompanyApproved The new value of companyApproved.
 	 * @throws \RangeException  if #newcompanyApproved is not 0 or 1.
 	 **/
-	public function setcompanyApproved($newcompanyApproved = null) {
+	public function setcompanyApproved($newCompanyApproved = null) {
 		// Base case, for a new company.
-		if($newcompanyApproved === null) {
+		if($newCompanyApproved === null) {
 			$this->companyApproved = null;
 			return;
 		}
-		// Is $newcompanyApproved 0 or 1?  If not, then throw an exception.
-		if(($newcompanyApproved != 0) or ($newcompanyApproved != 1)) {
+		// Is $newCompanyApproved 0 or 1?  If not, then throw an exception.
+		if(($newCompanyApproved != 0) or ($newCompanyApproved != 1)) {
 			throw(new \RangeException("The company Approved is not Boolean."));
 		}
-		// Assign $newcompanyApproved to companyApproved, then store in SQL.
-		$this->companyApproved = $newcompanyApproved;
+		// Assign $newCompanyApproved to companyApproved, then store in SQL.
+		$this->companyApproved = $newCompanyApproved;
 	}
 
 	/**  Mutator method (setter) for companyAccountCreatorId.
-	 * @param int|null $newcompanyAccountCreatorId The new value of companyAccountCreatorId.
+	 * @param int|null $newCompanyAccountCreatorId The new value of companyAccountCreatorId.
 	 * @throws \RangeException  if #newcompanyAccountCreatorId is not a positive.
-	 * @throws \TypeError if $newcompanyAccountCreatorId is not an integer.
+	 * @throws \TypeError if $newCompanyAccountCreatorId is not an integer.
 	 **/
-	public function setcompanyAccountCreatorId($newcompanyAccountCreatorId = null) {
+	public function setcompanyAccountCreatorId($newCompanyAccountCreatorId = null) {
 		// Base case, for a new company.
-		if($newcompanyAccountCreatorId === null) {
+		if($newCompanyAccountCreatorId === null) {
 			$this->companyAccountCreatorId = null;
 			return;
 		}
-		// Is $newcompanyAccountCreatorId positive?  If not, then throw an exception.
-		if($newcompanyAccountCreatorId <= 0) {
+		// Is $newCompanyAccountCreatorId positive?  If not, then throw an exception.
+		if($newCompanyAccountCreatorId <= 0) {
 			throw(new \RangeException("The company AccountCreatorId is not positive."));
 		}
-		// Assign $newcompanyAccountCreatorId to companyAccountCreatorId, then store in SQL.
-		$this->companyAccountCreatorId = $newcompanyAccountCreatorId;
+		// Assign $newCompanyAccountCreatorId to companyAccountCreatorId, then store in SQL.
+		$this->companyAccountCreatorId = $newCompanyAccountCreatorId;
 	}
 
 
@@ -582,60 +584,60 @@ class company {
 
 	/**
 	 * Constructor for the class company. A magic method that creates a new company object.
-	 * @param int|null $newcompanyId id of this company or null if a new company
-	 * @param string $newcompanyName string of the company name
-	 * @param string $newcompanyEmail string of the company email
-	 * @param string $newcompanyPermit string of the company permit    // Argument type ??????
-	 * @param int $newcompanyLicense int of the company name
-	 * @param string $newcompanyAttn string of the company attn
-	 * @param string $newcompanyStreet1 string of the company street1
-	 * @param string $newcompanyStreet2 string of the company street2
-	 * @param string $newcompanyCity string of the company city
-	 * @param string $newcompanyState string of the company state
-	 * @param int $newcompanyZip int of the company zip
-	 * @param string $newcompanyDescription string of the company description
-	 * @param string $newcompanyMenuText string of the company menu text
-	 * @param int $newcompanyActivationToken int of the company activation token
-	 * @param bool $newcompanyApproved bool of the whether the company has been approved by us
-	 * @param int $newcompanyAccountCreatorId int of the ProfileId of the creator of this company's account
+	 * @param int|null $newCompanyId id of this company or null if a new company
+	 * @param string $newCompanyName string of the company name
+	 * @param string $newCompanyEmail string of the company email
+	 * @param string $newCompanyPermit string of the company permit    // Argument type ??????
+	 * @param int $newCompanyLicense int of the company name
+	 * @param string $newCompanyAttn string of the company attn
+	 * @param string $newCompanyStreet1 string of the company street1
+	 * @param string $newCompanyStreet2 string of the company street2
+	 * @param string $newCompanyCity string of the company city
+	 * @param string $newCompanyState string of the company state
+	 * @param int $newCompanyZip int of the company zip
+	 * @param string $newCompanyDescription string of the company description
+	 * @param string $newCompanyMenuText string of the company menu text
+	 * @param int $newCompanyActivationToken int of the company activation token
+	 * @param bool $newCompanyApproved bool of the whether the company has been approved by us
+	 * @param int $newCompanyAccountCreatorId int of the ProfileId of the creator of this company's account
 	 * @throws \InvalidArgumentException if data types are not valid.
 	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers).
 	 * @throws \TypeError if data types violate type hints.
 	 * @throws \Exception if some other exception occurs.
 	 */
-	public function __construct(int $newcompanyId = null,
-										 string $newcompanyName,
-										 string $newcompanyEmail,
-										 string $newcompanyPermit,
-										 int $newcompanyLicense,
-										 string $newcompanyAttn,
-										 string $newcompanyStreet1,
-										 string $newcompanyStreet2,
-										 string $newcompanyCity,
-										 string $newcompanyState,
-										 int $newcompanyZip,
-										 string $newcompanyDescription,
-										 string $newcompanyMenuText,
-										 int $newcompanyActivationToken,
-										 bool $newcompanyApproved,
-										 int $newcompanyAccountCreatorId) {
+	public function __construct(int $newCompanyId = null,
+										 string $newCompanyName,
+										 string $newCompanyEmail,
+										 string $newCompanyPermit,
+										 int $newCompanyLicense,
+										 string $newCompanyAttn,
+										 string $newCompanyStreet1,
+										 string $newCompanyStreet2,
+										 string $newCompanyCity,
+										 string $newCompanyState,
+										 int $newCompanyZip,
+										 string $newCompanyDescription,
+										 string $newCompanyMenuText,
+										 int $newCompanyActivationToken,
+										 bool $newCompanyApproved,
+										 int $newCompanyAccountCreatorId) {
 		try {
-			$this->setcompanyId($newcompanyId);
-			$this->setcompanyName($newcompanyName);
-			$this->setcompanyEmail($newcompanyEmail);
-			$this->setcompanyPermit($newcompanyPermit);
-			$this->setcompanyLicense($newcompanyLicense);
-			$this->setcompanyAttn($newcompanyAttn);
-			$this->setcompanyStreet1($newcompanyStreet1);
-			$this->setcompanyStreet2($newcompanyStreet2);
-			$this->setcompanyCity($newcompanyCity);
-			$this->setcompanyState($newcompanyState);
-			$this->setcompanyZip($newcompanyZip);
-			$this->setcompanyDescription($newcompanyId);
-			$this->setcompanyMenuText($newcompanyMenuText);
-			$this->setcompanyActivationToken($newcompanyActivationToken);
-			$this->setcompanyApproved($newcompanyApproved);
-			$this->setcompanyAccountCreatorId($newcompanyAccountCreatorId);
+			$this->setCompanyId($newCompanyId);
+			$this->setCompanyName($newCompanyName);
+			$this->setCompanyEmail($newCompanyEmail);
+			$this->setCompanyPermit($newCompanyPermit);
+			$this->setCompanyLicense($newCompanyLicense);
+			$this->setCompanyAttn($newCompanyAttn);
+			$this->setCompanyStreet1($newCompanyStreet1);
+			$this->setCompanyStreet2($newCompanyStreet2);
+			$this->setCompanyCity($newCompanyCity);
+			$this->setCompanyState($newCompanyState);
+			$this->setCompanyZip($newCompanyZip);
+			$this->setCompanyDescription($newCompanyId);
+			$this->setCompanyMenuText($newCompanyMenuText);
+			$this->setCompanyActivationToken($newCompanyActivationToken);
+			$this->setCompanyApproved($newCompanyApproved);
+			$this->setCompanyAccountCreatorId($newCompanyAccountCreatorId);
 		} catch(\InvalidArgumentException $invalidArgument) {
 			// rethrow the exception to the caller
 			throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
@@ -657,6 +659,7 @@ class company {
 
 	/**
 	 * INSERT this company object into mySQL.
+	 *
 	 * @param \PDO $pdo is the PDO connection object
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
@@ -686,6 +689,7 @@ class company {
 
 	/**
 	 * DELETE this company from the mySQL database.
+	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
@@ -708,6 +712,7 @@ class company {
 
 	/**
 	 * UPDATE this company in mySQL.
+	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
@@ -737,13 +742,14 @@ class company {
 
 	/**
 	 * Get company by the companyId.
+	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @param int $companyId The company id we want to find.
 	 * @return company|null  Returns the company found, or null if not found.
 	 * @throws \PDOException  When mySQL related errors occur.
 	 * @throws \TypeError  When variables are not the correct data type.
 	 */
-	public static function getcompanyBycompanyId(\PDO $pdo, int $companyId) {
+	public static function getCompanyByCompanyId(\PDO $pdo, int $companyId) {
 		// Sanitize the ID before searching for it.
 		if($companyId <= 0) {
 			throw(new \PDOException("The company ID is negative or zero"));
@@ -782,13 +788,14 @@ class company {
 
 	/**
 	 * Get company by the companyAccountCreatorId.
+	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @param int $companyAccountCreatorId The company account creator we want to find.
 	 * @return company|null  Returns the company found, or null if not found.
 	 * @throws \PDOException  When mySQL related errors occur.
 	 * @throws \TypeError  When variables are not the correct data type.
 	 */
-	public static function getcompanyBycompanyAccountCreatorId(\PDO $pdo, int $companyAccountCreatorId) {
+	public static function getCompanyByCompanyAccountCreatorId(\PDO $pdo, int $companyAccountCreatorId) {
 		// Sanitize the ID before searching for it.
 		if($companyAccountCreatorId <= 0) {
 			throw(new \PDOException("The companyAccountCreator is negative or zero"));
@@ -834,7 +841,7 @@ class company {
 	 * @throws \PDOException  When mySQL related errors occur.
 	 * @throws \TypeError  When variables are not the correct data type.
 	 */
-	public static function getcompanyBycompanyMenuText(\PDO $pdo, int $companyMenuText) {
+	public static function getCompanyByCompanyMenuText(\PDO $pdo, int $companyMenuText) {
 		// Sanitize the search string before searching for it.
 		$companyMenuText = trim($companyMenuText);
 		$companyMenuText = filter_var($companyMenuText, FILTER_SANITIZE_STRING);
@@ -868,7 +875,7 @@ class company {
 				$company = new Company($row["companyId"], $row["companyName"], $row["companyEmail"], $row["companyPermit"], $row["companyLicense"], $row["companyAttn"], $row["companyStreet1"], $row["companyStreet2"], $row["companyCity"], $row["companyState"], $row["companyZip"], $row["companyDescription"], $row["companyMenuText"], $row["companyActivationToken"], $row["companyApproved"], $row["companyAccountCreatorId"]);
 				$companies[$companies->key()] = $company;
 				$companies->next();
-				
+
 				} catch(\Exception $exception) {
 				// If the row could not be converted, then re-throw it.
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
