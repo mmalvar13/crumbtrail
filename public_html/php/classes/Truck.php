@@ -50,4 +50,13 @@ class Truck {
 			throw (new \RangeException ("Truck Id is not positive"));
 		}
 	}
+	/**
+	 * accessor for the truck company Id
+	 *
+	 *@return Int|null value of truck company Id
+	 */
+	public function getTruckCompanyId() {
+		return ($this->truckCompanyId);
+	}
+	
 }
