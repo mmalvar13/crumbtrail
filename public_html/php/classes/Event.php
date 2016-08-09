@@ -307,5 +307,22 @@ class Event implements \JsonSerializable{ //implement JsonSerializable??
 		return($event);
 	}
 
-
+	/**
+	 * get the event by the eventTruckId
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param int $eventTruckId event truck id to search by
+	 * @return \SplFixedArray SplFixedArray of Events found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 * @throws \RangeException when out of range //do i need to add this here? the example didn't.
+	 **/
+	public static function getEventbyEventTruckId(\PDO $pdo, int $eventTruckId){
+		//sanitize the truck id before searching by making sure it is positive
+		if($eventTruckId <= 0){
+			throw(new \RangeException("event truck id must be positive"));
+		}
+		//create query template
+		$query = "SELECT eventId, eventTruckId, eventEnd, eventLocation, eventStart FROM event WHERE eventTruckId = :eventTruckId";
+	}
 }
