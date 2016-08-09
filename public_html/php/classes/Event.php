@@ -267,4 +267,45 @@ class Event implements \JsonSerializable{ //implement JsonSerializable??
 
 		$statement->execute($parameters);
 	}
+
+	/**
+	 * gets the Event by eventId
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param int $eventId event id to search for
+	 * @param \SplFixedArray SplFixedArray of Events found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 */
+
+	public static function getEventbyEventId(\PDO $pdo, int $eventId){
+		//sanitize the eventId before searching by checking that it is a positive number
+		if($eventId <= 0){
+			throw(new \PDOException("eventId is not positive"));
+		}
+
+		//create query template
+		$query = "SELECT eventId, eventTruckId, eventEnd, eventLocation, eventStart FROM event /*is this the class?*/ WHERE eventId = :eventId";
+		$statement = $pdo->prepare($query);
+
+		//bind the event id to the place holder in the template
+		$parameters = ["eventId" => $eventId];
+		$statement->execute($parameters);
+
+		//grab the event from mySQL
+		try {
+			$event = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$event = new Event($row["eventId"], $row["eventTruckId"], $row["eventEnd"], $row["eventLocation"], $row["eventStart"]);
+			}
+		}catch(\Exception $exception){
+			//if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($event);
+	}
+
+
 }
