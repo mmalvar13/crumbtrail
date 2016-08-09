@@ -421,7 +421,7 @@ public function getProfileId(){
 		//first we need to strip out all the white space on either end of $newProfileSalt
 		$newProfileSalt = trim($newProfileSalt);
 		//Then we must sanitize $newProfileSalt
-		$newProfileSalt = filter_var($newProfileSalt, FILTER_SANITIZE_ENCODED); //SHOULD I USE ENCODE FOR THIS?????
+		$newProfileSalt = filter_var($newProfileSalt, FILTER_SANITIZE_STRING); //SHOULD I USE ENCODE FOR THIS?????
 		//now check if $newProfileSalt is either empty or too long
 		if(strlen($newProfileSalt) === 0){
 			throw(new \RangeException("Profile salt is too short"));
@@ -448,7 +448,7 @@ public function getProfileId(){
 		//first we need to strip out all the white space on either end of $newProfileHash
 		$newProfileHash = trim($newProfileHash);
 		//Then we must sanitize $newProfileHash
-		$newProfileHash = filter_var($newProfileHash, FILTER_SANITIZE_ENCODED); //SHOULD I USE ENCODE FOR THIS?????
+		$newProfileHash = filter_var($newProfileHash, FILTER_SANITIZE_STRING); //SHOULD I USE ENCODE FOR THIS?????
 		//now check if $newProfileHash is either empty or too long
 		if(strlen($newProfileHash) === 0){
 			throw(new \RangeException("Profile hash is too short"));
