@@ -1,7 +1,7 @@
 <?php
 
 namespace Edu\Cnm\mmalvar13\crumbtrail;
-require_once("autoload.php");              // Fix the path ??????
+require_once("autoload.php");                  // Fix the path ??????
 
 /**
  * class Company for the Company entity in the crumbtrail application.
@@ -716,7 +716,7 @@ class Company {
 			throw(new \PDOException("Can't update a company that doesn't exist"));
 		}
 
-		// Create a query template.
+		// Create a query template.                   Something wrong with the next line.   ?????????
 		$query = "UPDATE company(companyName, companyEmail, companyPermit, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved, companyAccountCreatorId) SET (:companyName, :companyEmail, :companyPermit, :companyLicense, :companyAttn, :companyStreet1, :companyStreet2, :companyCity, :companyState, :companyZip, :companyDescription, :companyMenuText, :companyActivationToken, :companyApproved, :companyAccountCreatorId)";
 		
 		// Prepare this query.
@@ -747,7 +747,7 @@ class Company {
 			throw(new \PDOException("The Company ID is negative or zero"));
 		}
 
-		// Create the query template.
+		// Create the query template.            What is wrong here? ??????????
 		$query = "SELECT CompanyId, CompanyName, CompanyEmail, CompanyPermit, CompanyLicense, CompanyAttn, CompanyStreet1, CompanyStreet2, CompanyCity, CompanyState, CompanyZip, CompanyDescription, CompanyMenuText, CompanyActivationToken, CompanyApproved, CompanyAccountCreatorId FROM Company WHERE CompanyId = :CompanyId";
 
 		// Prepare the template.
@@ -792,7 +792,7 @@ class Company {
 			throw(new \PDOException("The CompanyAccountCreator is negative or zero"));
 		}
 
-		// Create the query template.
+		// Create the query template.          Need to check all my query blocks!   ??????????
 		$query = "SELECT CompanyId, CompanyName, CompanyEmail, CompanyPermit, CompanyLicense, CompanyAttn, CompanyStreet1, CompanyStreet2, CompanyCity, CompanyState, CompanyZip, CompanyDescription, CompanyMenuText, CompanyActivationToken, CompanyApproved, CompanyAccountCreatorId FROM Company WHERE CompanyAccountCreatorId = :CompanyAccountCreatorId";
 
 		// Prepare the template.
@@ -838,14 +838,14 @@ class Company {
 			throw(new \PDOException("The Company Menu Text is negative or zero"));
 		}
 
-		// Create the query template.
+		// Create the query template.              Check this query block too!   ??????????
 		$query = "SELECT CompanyId, CompanyName, CompanyEmail, CompanyPermit, CompanyLicense, CompanyAttn, CompanyStreet1, CompanyStreet2, CompanyCity, CompanyState, CompanyZip, CompanyDescription, CompanyMenuText, CompanyActivationToken, CompanyApproved, CompanyAccountCreatorId FROM Company WHERE CompanyMenuText = :CompanyMenuText";
 
 		// Prepare the template.
 		$statement = $pdo->prepare($query);
 
 		// Bind the CompanyMenuText to the placeholder in the template.
-		$parameters = ["CompanyMenuText"=>$Company];
+		$parameters = ["CompanyMenuText"=>$CompanyMenuText];
 
 		// Execute the SQL statement
 		$statement->execute($parameters);
