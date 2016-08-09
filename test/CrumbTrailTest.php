@@ -17,9 +17,8 @@ require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
  * 4. Have all table specific tests include this class.
  *
  * *NOTE*: Tables must be added in the order they were created in step (2).
- *
- * @author Dylan McDonald <dmcdonald21@cnm.edu>
  **/
+
 abstract class CrumbTrailTest extends \PHPUnit_Extensions_Database_TestCase {
 	/**
 	 * invalid id to use for an INT UNSIGNED field (maximum allowed INT UNSIGTNED in mySQL) + 1
