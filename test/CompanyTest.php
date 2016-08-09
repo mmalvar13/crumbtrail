@@ -1,8 +1,7 @@
 <?php
 namespace Edu\Cnm\CrumbTrail\Test;   							 // TODO Check this namespace ???
 
-use Edu\Cnm\Mmalvar13\CrumbTrail\{***, ***};  				// TODO Change the *** to class Name(s)  ???
-
+use Edu\Cnm\Mmalvar13\CrumbTrail\{Company};
 // grab the project test parameters
 require_once("CrumbTrailTest.php");
 
@@ -16,66 +15,65 @@ require_once(dirname(__DIR__) . "/public_html/php/classes/autoload.php");
  * It is complete because *ALL* mySQL/PDO enabled methods
  * are tested for both invalid and valid inputs.
  *
- * Instead of testing every accessor and mutator method,   ****
+ * Instead of testing every accessor and mutator method,         ****
  * concentrate on testing the mySQL and PDO methods,
  * since these use the accessor and mutator methods.
  *
- * INSERT, UPDATE, DELETE, getFooByBar for each attribute?   ****
+ * INSERT, UPDATE, DELETE, getFooByBar for each attribute?        ****
  *
   **/
 
 class CompanyTest extends CrumbTrailTest {
 	/**
-	 * content of the Tweet
-	 * @var string $VALID_TWEETCONTENT
+	 * name of the Company
+	 * @var string $VALID_COMPANYNAME
 	 **/
-	protected $VALID_TWEETCONTENT = "PHPUnit test passing";
+	protected $VALID_COMPANYNAME = "PHPUnit test passing";
 
 	/**
-	 * content of the updated Tweet
-	 * @var string $VALID_TWEETCONTENT2
+	 * content of the updated Company
+	 * @var string $VALID_COMPANYNAME2
 	 **/
-	protected $VALID_TWEETCONTENT2 = "PHPUnit test still passing";
-
+	protected $VALID_COMPANYNAME2 = "PHPUnit test still passing";
 
 	/**
-	 * Profile that created the Tweet; this is for foreign key relations
+	 * Profile that created the Company; this is for foreign key relations.
 	 * @var Profile profile
 	 **/
 	protected $profile = null;
 
+
+
 	/**
-	 * create dependent objects before running each test
+	 * Create dependent objects before running each test.
 	 **/
 	public final function setUp() {
 		// run the default setUp() method first
 		parent::setUp();
 
-		// create and insert a Profile to own the test Tweet.   TODO What is going on here?  "own" ??
+		// create and insert a Profile to own the test Company.
 		$this->profile = new Profile(null, "@phpunit", "test@phpunit.de", "+12125551212");
 		$this->profile->insert($this->getPDO());
-
-		// calculate the date (just use the time the unit test was setup...)
-		$this->VALID_TWEETDATE = new \DateTime();
 	}
 
-	/**
-	 * test inserting a valid Tweet and verify that the actual mySQL data matches
-	 **/
-	public function testInsertValidTweet() {
-		// count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("tweet");
 
-		// create a new Tweet and insert to into mySQL
-		$tweet = new Tweet(null, $this->profile->getProfileId(), $this->VALID_TWEETCONTENT, $this->VALID_TWEETDATE);
-		$tweet->insert($this->getPDO());
+	/**
+	 * test inserting a valid Company and verify that the actual mySQL data matches.
+	 **/
+	public function testInsertValidCompany() {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("company");
+
+		// create a new Company and insert to into mySQL
+		$company = new Company(null, $this->profile->getProfileId(), $this->VALID_COMPANYNAME);
+		$company->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$pdoTweet = Tweet::getTweetByTweetId($this->getPDO(), $tweet->getTweetId());
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("tweet"));
+		$pdoCompany = Company::getCompanyByCompanyId($this->getPDO(), $company->getCompanyId());
+
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("company"));
 		$this->assertEquals($pdoTweet->getProfileId(), $this->profile->getProfileId());
-		$this->assertEquals($pdoTweet->getTweetContent(), $this->VALID_TWEETCONTENT);
-		$this->assertEquals($pdoTweet->getTweetDate(), $this->VALID_TWEETDATE);
+		$this->assertEquals($pdoTweet->getTweetContent(), $this->VALID_COMPANYNAME);
 	}
 
 	/**
@@ -83,132 +81,129 @@ class CompanyTest extends CrumbTrailTest {
 	 *
 	 * @expectedException PDOException
 	 **/
-	public function testInsertInvalidTweet() {
-		// create a Tweet with a non null tweet id and watch it fail
-		$tweet = new Tweet(DataDesignTest::INVALID_KEY, $this->profile->getProfileId(), $this->VALID_TWEETCONTENT, $this->VALID_TWEETDATE);
+	public function testInsertInvalidCompany() {
+		// create a Company with a non null company id and watch it fail
+		$tweet = new Company(DataDesignTest::INVALID_KEY, $this->profile->getProfileId(), $this->VALID_COMPANYNAME);
 		$tweet->insert($this->getPDO());
 	}
 
 	/**
-	 * test inserting a Tweet, editing it, and then updating it
+	 * test inserting a Company, editing it, and then updating it
 	 **/
-	public function testUpdateValidTweet() {
+	public function testUpdateValidCompany() {
 		// count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("tweet");
+		$numRows = $this->getConnection()->getRowCount("company");
 
-		// create a new Tweet and insert to into mySQL
-		$tweet = new Tweet(null, $this->profile->getProfileId(), $this->VALID_TWEETCONTENT, $this->VALID_TWEETDATE);
-		$tweet->insert($this->getPDO());
+		// create a new Company and insert to into mySQL
+		$company = new Company(null, $this->profile->getProfileId(), $this->VALID_COMPANYNAME);
+		$company->insert($this->getPDO());
 
-		// edit the Tweet and update it in mySQL
-		$tweet->setTweetContent($this->VALID_TWEETCONTENT2);
-		$tweet->update($this->getPDO());
+		// edit the Company and update it in mySQL
+		$company->setCompanyName($this->VALID_COMPANYNAME2);
+		$company->update($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$pdoTweet = Tweet::getTweetByTweetId($this->getPDO(), $tweet->getTweetId());
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("tweet"));
-		$this->assertEquals($pdoTweet->getProfileId(), $this->profile->getProfileId());
-		$this->assertEquals($pdoTweet->getTweetContent(), $this->VALID_TWEETCONTENT2);
-		$this->assertEquals($pdoTweet->getTweetDate(), $this->VALID_TWEETDATE);
+		$pdoTweet = Company::getCompanyByCompanyId($this->getPDO(), $company->getCompanyId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("$company"));
+		$this->assertEquals($pdoCompany->getProfileId(), $this->profile->getProfileId());
+		$this->assertEquals($pdoCompany->getCompanyName(), $this->VALID_COMPANYNAME2);
 	}
 
 	/**
-	 * test updating a Tweet that does not exist
+	 * test updating a Company that does not exist
 	 *
 	 * @expectedException PDOException
 	 **/
-	public function testUpdateInvalidTweet() {
-		// create a Tweet, try to update it without actually updating it and watch it fail
-		$tweet = new Tweet(null, $this->profile->getProfileId(), $this->VALID_TWEETCONTENT, $this->VALID_TWEETDATE);
-		$tweet->update($this->getPDO());
+	public function testUpdateInvalidCompany() {
+		// create a Company, try to update it without actually updating it and watch it fail
+		$company = new Company(null, $this->profile->getProfileId(), $this->VALID_COMPANYNAME);
+		$company->update($this->getPDO());
 	}
 
 	/**
-	 * test creating a Tweet and then deleting it
+	 * test creating a Company and then deleting it
 	 **/
-	public function testDeleteValidTweet() {
+	public function testDeleteValidCompany() {
 		// count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("tweet");
+		$numRows = $this->getConnection()->getRowCount("company");
 
-		// create a new Tweet and insert to into mySQL
-		$tweet = new Tweet(null, $this->profile->getProfileId(), $this->VALID_TWEETCONTENT, $this->VALID_TWEETDATE);
+		// create a new Company and insert to into mySQL
+		$tweet = new Company(null, $this->profile->getProfileId(), $this->VALID_TWEETCONTENT, $this->VALID_TWEETDATE);
 		$tweet->insert($this->getPDO());
 
-		// delete the Tweet from mySQL
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("tweet"));
+		// delete the Company from mySQL
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("company"));
 		$tweet->delete($this->getPDO());
 
-		// grab the data from mySQL and enforce the Tweet does not exist
-		$pdoTweet = Tweet::getTweetByTweetId($this->getPDO(), $tweet->getTweetId());
-		$this->assertNull($pdoTweet);
-		$this->assertEquals($numRows, $this->getConnection()->getRowCount("tweet"));
+		// grab the data from mySQL and enforce the Company does not exist
+		$pdoTweet = Company::getCompanyByCompanyId($this->getPDO(), $company->getCompanyId());
+		$this->assertNull($pdoCompany);
+		$this->assertEquals($numRows, $this->getConnection()->getRowCount("company"));
 	}
 
 	/**
-	 * test deleting a Tweet that does not exist
+	 * test deleting a Company that does not exist
 	 *
 	 * @expectedException PDOException
 	 **/
-	public function testDeleteInvalidTweet() {
-		// create a Tweet and try to delete it without actually inserting it
-		$tweet = new Tweet(null, $this->profile->getProfileId(), $this->VALID_TWEETCONTENT, $this->VALID_TWEETDATE);
+	public function testDeleteInvalidCompany() {
+		// create a Company and try to delete it without actually inserting it
+		$tweet = new Company(null, $this->profile->getProfileId(), $this->VALID_TWEETCONTENT);
 		$tweet->delete($this->getPDO());
 	}
 
 	/**
-	 * test grabbing a Tweet by tweet content
+	 * test grabbing a Company by company name
 	 **/
-	public function testGetValidTweetByTweetContent() {
+	public function testGetValidCompanyByCompanyName() {
 		// count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("tweet");
+		$numRows = $this->getConnection()->getRowCount("company");
 
-		// create a new Tweet and insert to into mySQL
-		$tweet = new Tweet(null, $this->profile->getProfileId(), $this->VALID_TWEETCONTENT, $this->VALID_TWEETDATE);
+		// create a new Company and insert to into mySQL
+		$tweet = new Company(null, $this->profile->getProfileId(), $this->VALID_TWEETCONTENT);
 		$tweet->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$results = Tweet::getTweetByTweetContent($this->getPDO(), $tweet->getTweetContent());
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("tweet"));
+		$results = Company::getCompanyByCompanyName($this->getPDO(), $company->getCompanyName());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("company"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Dmcdonald21\\DataDesign\\Tweet", $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\MMalvar13\\CrumbTrail\\Company", $results);
 
 		// grab the result from the array and validate it
-		$pdoTweet = $results[0];
-		$this->assertEquals($pdoTweet->getProfileId(), $this->profile->getProfileId());
-		$this->assertEquals($pdoTweet->getTweetContent(), $this->VALID_TWEETCONTENT);
-		$this->assertEquals($pdoTweet->getTweetDate(), $this->VALID_TWEETDATE);
+		$pdoCompany = $results[0];
+		$this->assertEquals($pdoCompany->getProfileId(), $this->profile->getProfileId());
+		$this->assertEquals($pdoCompany->getCompanyName(), $this->VALID_COMPANYNAME);
 	}
 
 	/**
-	 * test grabbing a Tweet by content that does not exist
+	 * test grabbing a Company by content that does not exist
 	 **/
-	public function testGetInvalidTweetByTweetContent() {
-		// grab a tweet by searching for content that does not exist
-		$tweet = Tweet::getTweetByTweetContent($this->getPDO(), "you will find nothing");
-		$this->assertCount(0, $tweet);
+	public function testGetInvalidCompanyByCompanyName() {
+		// grab a company by searching for name that does not exist
+		$tweet = Company::getCompanyByCompanyName($this->getPDO(), "you will find nothing");
+		$this->assertCount(0, $company);
 	}
 
 	/**
-	 * test grabbing all Tweets
+	 * test grabbing all Companies
 	 **/
-	public function testGetAllValidTweets() {
+	public function testGetAllValidCompany() {
 		// count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("tweet");
+		$numRows = $this->getConnection()->getRowCount("company");
 
-		// create a new Tweet and insert to into mySQL
-		$tweet = new Tweet(null, $this->profile->getProfileId(), $this->VALID_TWEETCONTENT, $this->VALID_TWEETDATE);
+		// create a new Company and insert to into mySQL
+		$tweet = new Company(null, $this->profile->getProfileId(), $this->VALID_COMPANYNAME);
 		$tweet->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$results = Tweet::getAllTweets($this->getPDO());
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("tweet"));
+		$results = Company::getAllCompanys($this->getPDO());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("company"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Dmcdonald21\\DataDesign\\Tweet", $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Mmalvar13\\CrumbTrail\\Company", $results);
 
 		// grab the result from the array and validate it
-		$pdoTweet = $results[0];
+		$pdoCompany= $results[0];
 		$this->assertEquals($pdoTweet->getProfileId(), $this->profile->getProfileId());
-		$this->assertEquals($pdoTweet->getTweetContent(), $this->VALID_TWEETCONTENT);
-		$this->assertEquals($pdoTweet->getTweetDate(), $this->VALID_TWEETDATE);
+		$this->assertEquals($pdoTweet->getCompanyName(), $this->VALID_COMPANYNAME);
 	}
 }
