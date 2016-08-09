@@ -181,6 +181,44 @@ class Employ{ //implement JsonSerializable??
 		return($employ);
 	}
 
+	/**
+	 * get employ by employProfileId
+	 * @param \PDO $pdo PDO connection object
+	 * @param int $employProfileId employProfileId to search for
+	 * @return employ|null employ if found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getEmploybyEmployProfileId(\PDO $pdo, int $employProfileId){
+		//sanitize the employProfileId before searching by check that it is a positive number
+		if($employProfileId <= 0){
+			throw(new \PDOException("employProfileId is not positive"));
+		}
+
+		//create query template
+		$query = "SELECT employCompanyId, employProfileId FROM employ WHERE employProfileId = :employProfileId";
+		$statement = $pdo->prepare($query);
+
+		//bind employProfileId to the placeholder in the template
+		$parameters = ["employProfileId" => $employProfileId];
+		$statement->execute($parameters);
+
+		//grab the employ from mySQL
+		try{
+			$employ = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false){
+				$employ = new Employ($row["employCompanyId"], $row["employProfileId"]);
+			}
+		}catch(\Exception $exception){
+			//if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($employ);
+
+	}
+
 
 
 }
