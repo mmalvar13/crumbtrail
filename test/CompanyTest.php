@@ -1,7 +1,7 @@
 <?php
-namespace Edu\Cnm\CrumbTrail\Test;    // TODO Check this namespace ???
+namespace Edu\Cnm\CrumbTrail\Test;   							 // TODO Check this namespace ???
 
-use Edu\Cnm\Mmalvar13\CrumbTrail\{***, ***};  // TODO Change the *** to class Name(s)  ???
+use Edu\Cnm\Mmalvar13\CrumbTrail\{***, ***};  				// TODO Change the *** to class Name(s)  ???
 
 // grab the project test parameters
 require_once("CrumbTrailTest.php");
