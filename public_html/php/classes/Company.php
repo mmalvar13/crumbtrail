@@ -837,12 +837,12 @@ class Company {
 	 * Get company by companyMenuText, e.g. search for tacos.  Tacos!
 	 *
 	 * @param \PDO $pdo PDO connection object
-	 * @param int $companyMenuText The company Menu Text we want to find.
+	 * @param string $companyMenuText The companyMenuText we want to find.
 	 * @return company|null  Returns the company found, or null if not found.
 	 * @throws \PDOException  When mySQL related errors occur.
 	 * @throws \TypeError  When variables are not the correct data type.
 	 */
-	public static function getCompanyByCompanyMenuText(\PDO $pdo, int $companyMenuText) {
+	public static function getCompanyByCompanyMenuText(\PDO $pdo, string $companyMenuText) {
 		// Sanitize the search string before searching for it.
 		$companyMenuText = trim($companyMenuText);
 		$companyMenuText = filter_var($companyMenuText, FILTER_SANITIZE_STRING);
@@ -876,12 +876,11 @@ class Company {
 				$company = new Company($row["companyId"], $row["companyName"], $row["companyEmail"], $row["companyPermit"], $row["companyLicense"], $row["companyAttn"], $row["companyStreet1"], $row["companyStreet2"], $row["companyCity"], $row["companyState"], $row["companyZip"], $row["companyDescription"], $row["companyMenuText"], $row["companyActivationToken"], $row["companyApproved"], $row["companyAccountCreatorId"]);
 				$companies[$companies->key()] = $company;
 				$companies->next();
-
-				} catch(\Exception $exception) {
+			} catch(\Exception $exception) {
 				// If the row could not be converted, then re-throw it.
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+			return($companies);
 		}
-		return ($companies);
 	}
-
 }
