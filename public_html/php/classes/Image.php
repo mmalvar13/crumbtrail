@@ -87,6 +87,8 @@ class Image {
 		if($newImageId <= 0) {
 			throw(new \RangeException ("image id is not positive"));
 		}
+		//converting and storing Image Id
+		$this->imageId = $newImageId;
 	}
 
 	/**
@@ -107,6 +109,8 @@ class Image {
 		if($newImageCompanyId <= 0) {
 			throw(new \RangeException ("Image Company Id is not positive"));
 		}
+		//convert and store
+		$this->imageCompanyId = $newImageCompanyId;
 	}
 
 	/** accessor method for image file type
@@ -130,6 +134,8 @@ class Image {
 		if(in_array($newImageFileType, $validFileType) === false) {
 			throw(new \InvalidArgumentException("This is not the proper image type. Please insert jpeg, or png"));
 		}
+		//convert and store
+		$this->imageFileType = $newImageFileType;
 	}
 
 	/**
@@ -151,6 +157,10 @@ class Image {
 		if($newImageFileName > 255) {
 			throw(new \RangeException("Image file name is too long"));
 		}
+		//convert and store
+		$this->imageFileName = $newImageFileName;
 	}
+	// start the PDO section here
+
 }
 	
