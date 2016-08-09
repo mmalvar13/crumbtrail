@@ -23,4 +23,20 @@ class Truck {
 	 * @var $truckCompanyId;
 	 */
 	private $truckCompanyId;
+
+//constructor goes here//
+//public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
+	//try {
+		//$this->setTruckId($newTruckId);
+		//$this->setTruckCompanyId($newTruckCompanyId);
+	//} catch //
+	/**
+	 * accessor for the truck id
+	 *
+	 * @return
+	 */
+	public function getTruckId() {
+		return ($this->truckId);
+	}
+	
 }
