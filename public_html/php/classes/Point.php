@@ -44,6 +44,19 @@ public function __construct(float $newPointLatitude, float $newPointLongitude) {
 	}
 }
 
+/**
+ * accessor method for $pointLatitude
+ * @returns float coordinates for point latitude
+ *
+ * latitude: float in [-90, 90]
+ * longitude: float in [-180, 180]
+ **/
+public function getPointLatitude(){
+	return($this->pointLatitude);
+}
+
+
+
 
 
 
