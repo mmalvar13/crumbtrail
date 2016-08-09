@@ -229,6 +229,41 @@ class Image implements \JsonSerializable {
 	//getFooByBar
 	//need this explained?
 	/**
+	 * gets image by image id
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param int $imageId image id to search for
+	 * @return Image|null Tweet found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getImageByImageId(\PDO $pdo, int $imageId) {
+		//sanitize the imageId before searching
+		if($imageId <=0) {
+			throw(new \PDOException("Image Id is not positive"));
+		}
+		//query template
+		$query = "SELECT imageId, imageCompanyId, imageFileType, imageFileName FROM image WHERE imageId =:imageId";
+		$statement = $pdo->prepare($query);
+		//bind the image id to the place holder in the template
+		$parameters = ["imageId" => $imageId];
+		$statement->execute($parameters);
+		
+		//grab image from mySQL
+		try {
+			$image =null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$image = new Image($row["imageId"], $row["imageCompanyId"], $row["imageFileType"], $row["imageFileName"]);
+			}
+		} catch(\Exception $exception) {
+			//if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($image);
+	}
+	/**
 	 * gets image by company??
 	 *
 	 * @param \PDO $pdo PDO connection object
@@ -236,8 +271,8 @@ class Image implements \JsonSerializable {
 	 * @return \SplFixedArray SplFixedArray of images found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are nor the correct data type
-	 */
-	//WOULD WE NEED ANOTHER GETFOOBYBAR IF WE WANT TO ONLY PULL UP ONE IMAGE
+	 **/
+		//WOULD WE NEED ANOTHER GETFOOBYBAR IF WE WANT TO ONLY PULL UP ONE IMAGE
 	public static function getImageByImageCompanyId(\PDO $pdo, int $imageCompanyId) {
 		//sanitize the description? before searching
 		if($imageCompanyId <=0) {
@@ -264,8 +299,10 @@ class Image implements \JsonSerializable {
 			}
 		}
 		return($images);
-
-
 	}
+	/**
+	 *
+	 */
+
 }
 	
