@@ -71,7 +71,13 @@ public function setPointLatitude(float $newPointLatitude){
 	$this->pointLatitude = $newPointLatitude;
 }
 
-
+/**
+ * accessor method for $pointLongitude
+ * @returns float coordinates for point longitude
+ **/
+public function getPointLongitude(){
+	return($this->pointLongitude);
+}
 
 
 
