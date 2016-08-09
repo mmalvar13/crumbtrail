@@ -79,6 +79,21 @@ public function getPointLongitude(){
 	return($this->pointLongitude);
 }
 
+/**
+ * mutator method for $pointLatitude
+ * @param float $newPointLongitude new coordinate value of point longitude
+ * @throws \RangeException if $newPointLongitude is not within [-180, 180]
+ * @throws \TypeError if $newPointLatitude is wrong data type
+ * @throws \Exception if any other exception occurs
+ **/
+public function setPointLongitude(float $newPointLongitude){
+	if($newPointLongitude < -180 || $newPointLongitude > 180){
+		throw(new \RangeException("This coordinate is not within the [-180, 180] range"));
+	}
+	//store the pointLongitude content
+	$this->pointLongitude = $newPointLongitude;
+}
+
 
 
 
