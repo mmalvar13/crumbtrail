@@ -6,7 +6,7 @@ require_once("autoload.php");
 /**
  * Welcome to the Employ class! Enjoy your stay!
  **/
-class Employ{ //implement JsonSerializable??
+class Employ implements \JsonSerializable{
 	/**
 	 * id of the profile that is employed by the company, this is a foreign key. Composite key with $employCompanyId.
 	 * @var int|null $employProfileId //null??
@@ -149,7 +149,7 @@ class Employ{ //implement JsonSerializable??
 	 * get employ by employCompanyId
 	 * @param \PDO $pdo PDO connection object
 	 * @param int $employCompanyId employ company id to search for
-	 * @return employ|null employ if found or null if not found
+	 * @return \SplFixedArray SplFixedArray of employs found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
@@ -163,35 +163,36 @@ class Employ{ //implement JsonSerializable??
 		$statement = $pdo->prepare($query);
 
 		//bind the employCompanyId to the place holder in the  template
-		$parameters = ["employCompanyId => $employCompanyId"];
+		$parameters = ["employCompanyId" => $employCompanyId];
 		$statement->execute($parameters);
 
-		//grab the employ from mySQL
-		try{
-			$employ = null;
-			$statement->setFetchMode(\PDO::FETCH_ASSOC);
-			$row = $statement->fetch();
-			if($row !== false){
+		//build an array of employs...
+		$employs = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false){
+			try{
 				$employ = new Employ($row["employCompanyId"], $row["employProfileId"]);
+				$employs[$employs->key()] = $employ;
+				$employs->next();
+			}catch(\Exception $exception){
+				//if the row couldn't be converted rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
-		}catch(\Exception $exception){
-			//if the row couldn't be converted, rethrow i t
-			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
-		return($employ);
+		return($employs);
 	}
 
 	/**
 	 * get employ by employProfileId
 	 * @param \PDO $pdo PDO connection object
 	 * @param int $employProfileId employProfileId to search for
-	 * @return employ|null employ if found or null if not found
+	 * @return \SplFixedArray SplFixedArray of employs found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
-	public static function getEmploybyEmployProfileId(\PDO $pdo, int $employProfileId){
+	public static function getEmploybyEmployProfileId(\PDO $pdo, int $employProfileId) {
 		//sanitize the employProfileId before searching by check that it is a positive number
-		if($employProfileId <= 0){
+		if($employProfileId <= 0) {
 			throw(new \PDOException("employProfileId is not positive"));
 		}
 
@@ -203,22 +204,24 @@ class Employ{ //implement JsonSerializable??
 		$parameters = ["employProfileId" => $employProfileId];
 		$statement->execute($parameters);
 
-		//grab the employ from mySQL
-		try{
-			$employ = null;
-			$statement->setFetchMode(\PDO::FETCH_ASSOC);
-			$row = $statement->fetch();
-			if($row !== false){
+		//build an array of employs
+		$employs = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
 				$employ = new Employ($row["employCompanyId"], $row["employProfileId"]);
+				$employs[$employs->key()] = $employ;
+				$employs->next();
+			} catch(\Exception $exception) {
+				//if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
-		}catch(\Exception $exception){
-			//if the row couldn't be converted, rethrow it
-			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
-		return($employ);
-
+		return ($employs);
 	}
 
 
+
+	}
 
 }
