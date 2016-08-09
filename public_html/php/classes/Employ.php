@@ -1,5 +1,5 @@
 <?php
-namespace Edu\Cnm\Crumbtrail; //idk
+namespace Edu\Cnm\CrumbTrail; //idk
 
 require_once("autoload.php");
 
@@ -18,6 +18,9 @@ class Employ{ //implement JsonSerializable??
 	 **/
 	private $employCompanyId;
 
+
+	/*-------------------------------Constructor--------------------------------*/
+
 	/**
 	 * Employ class constructor.
 	 * @param int $newEmployProfileId id of employProfile
@@ -26,8 +29,6 @@ class Employ{ //implement JsonSerializable??
 	 * @throws \TypeError if data types violate type hints
 	 * @throws \Exception if any other exception occurs
 	 **/
-
-
 	public function __construct(int $newEmployProfileId, int $newEmployCompanyId){
 		try{
 			$this->setEmployProfileId($newEmployProfileId);
@@ -46,6 +47,8 @@ class Employ{ //implement JsonSerializable??
 			throw(new \Exception($exception->getMessage(),0,$exception));
 	}
 }
+
+/*-------------------------Accessor and Mutator Methods----------------------------*/
 
 /**
  * accessor method for employProfileId
@@ -93,5 +96,20 @@ class Employ{ //implement JsonSerializable??
 		}
 		//convert and store the employCompanyId
 		$this->employCompanyId = $newEmployCompanyId;
+	}
+
+	/*-------------------------------PDO Connection Objects Here------------------------------*/
+	/**
+	 * inserts this employ into mySQL. is there a better way i can write this? that is not english.
+	 *
+	 *@param \PDO $pdo PDO Connection object
+	 *@throws \PDOException when mySQL related errors occur
+	 *@throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function insert(\PDO $pdo){
+		//enforce that this employProfileId is not null (i.e. don't insert an employProfileId that hasn't been assigned. Right?? its a foreign key.
+		if($this->employProfileId === null){
+			throw(new \PDOException("cannot insert a foreign key that does not exist")) //usually for insert we don't want to enter something that already exists. is this normal for weak entities?
+		}
 	}
 }
