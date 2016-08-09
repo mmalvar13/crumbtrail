@@ -29,7 +29,8 @@ class Point {
 	}
 
 	/**
-	 * accessor method for $pointLo
+	 * accessor method for $pointLatitude
+	 * @returns float
 	 **/
 
 }

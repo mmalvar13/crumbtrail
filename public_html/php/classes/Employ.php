@@ -119,6 +119,30 @@ class Employ{ //implement JsonSerializable??
 		//bind the member variables to the placeholders in the template
 		$parameters = ["employProfileId"=>$this->employProfileId, "employCompanyId"=>$this->employCompanyId];
 		$statement->execute($parameters);
+
+		//in the twitter example i t says to update the null tweetId with what mySQL just gave us using $this->tweetId =intval($pdo->lastInsertId()). I don't have to add another line here right? because we are not creating a new whatever the equivelent of tweet is. idk. IDK OK?!!?!?
+	}
+
+	/**
+	 * delete this employ into mySQL.
+	 *
+	 *@param \PDO $pdo PDO connection object
+	 *@throws |\PDOException when mySQL related errors occur
+	 *@throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function delete(\PDO $pdo){
+		//enforce that the employProfileId and employCompanyId are not null (i.e. don't delete a composite key that does not exist)
+		if($this->employCompanyId === null || $this->employProfileId === null){
+			throw(new \PDOException("cannot delete a composite key that does not exist"));
+		}
+		//create query template
+		$query = "DELETE FROM employ WHERE employCompanyId = :employCompanyId AND employProfileId = :employProfileId"; //is this correct? would we ever need to use this IRL??? composite keys should never die! right?
+
+		$statement = $pdo->prepare($query);
+
+		//bind the member variables to the place holder in the template
+		$parameters = ["employCompanyId" => $this->employCompanyId, "employProfileId" => $this->employProfileId];
+		$statement->execute($parameters);
 	}
 
 }

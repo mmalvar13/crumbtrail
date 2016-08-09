@@ -7,8 +7,8 @@ require_once("autoload.php"); //idk
  * What do I explain here? Welcome to the Event class!
  *
  **/
-class Event { //implement JsonSerializable??
-	use ValidateDate; //do i?
+class Event implements \JsonSerializable{ //implement JsonSerializable??
+	use ValidateDate; //indeed
 	/**
 	 * id for this event; this is the primary key
 	 * @var int $eventId
