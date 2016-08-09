@@ -78,17 +78,19 @@ private $profileName;
 
 	/**
 	 * Profile constructor.
-	 * @param int|null $newProfileId
-	 * @param string $newProfileName
-	 * @param string $newProfileEmail
-	 * @param string $newProfilePhone
-	 * @param string $newProfileAccessToken
-	 * @param string $newProfileActivationToken
-	 * @param string $newProfileType
+	 * @param int|null $newProfileId, null if it's a new profile
+	 * @param string $newProfileName, humans name who created this profile
+	 * @param string $newProfileEmail, humans email who created this profile
+	 * @param string $newProfilePhone, humans phone who created this profile
+	 * @param string $newProfileAccessToken, access token to later link social media to our app
+	 * @param string $newProfileActivationToken, access token to activated a user profile application
+	 * @param string $newProfileType, type of profile: 'a'(admin), 'o'(owner), or 'e'(employee)
 	 * @param string $newProfileSalt
 	 * @param string $newProfileHash
-	 * @throws \Exception
-	 * @throws \TypeError
+	 * @throws \InvalidArgumentException if data types are not valid
+	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
+	 * @throws \TypeError if data types violate type hints
+	 * @throws \Exception if some other exception occurs
 	 */
 	public function __construct(int $newProfileId = null, string $newProfileName, string $newProfileEmail, string $newProfilePhone, string $newProfileAccessToken, string $newProfileActivationToken, string $newProfileType, string $newProfileSalt, string $newProfileHash) {
 
