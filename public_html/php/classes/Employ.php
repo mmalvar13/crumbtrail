@@ -6,7 +6,7 @@ require_once("autoload.php");
 /**
  * Welcome to the Employ class! Enjoy your stay!
  **/
-class Employ implements \JsonSerializable{
+class Employ implements \JsonSerializable {
 	/**
 	 * id of the profile that is employed by the company, this is a foreign key. Composite key with $employCompanyId.
 	 * @var int|null $employProfileId //null??
@@ -29,33 +29,33 @@ class Employ implements \JsonSerializable{
 	 * @throws \TypeError if data types violate type hints
 	 * @throws \Exception if any other exception occurs
 	 **/
-	public function __construct(int $newEmployProfileId, int $newEmployCompanyId){
-		try{
+	public function __construct(int $newEmployProfileId, int $newEmployCompanyId) {
+		try {
 			$this->setEmployProfileId($newEmployProfileId);
 			$this->setEmployCompanyId($newEmployCompanyId);
-		}catch (\InvalidArgumentException $invalidArgument){
+		} catch(\InvalidArgumentException $invalidArgument) {
 			//rethrow the exception to the caller
 			throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
-		}catch(\RangeException $range){
+		} catch(\RangeException $range) {
 			//rethrow the exception to the caller
 			throw(new \RangeException($range->getMessage(), 0, $range));
-		}catch(\TypeError $typeError){
+		} catch(\TypeError $typeError) {
 			//rethrow exception to the caller
-			throw(new \TypeError($typeError->getMessage(),0,$typeError));
-		}catch(\Exception $exception){
+			throw(new \TypeError($typeError->getMessage(), 0, $typeError));
+		} catch(\Exception $exception) {
 			//rethrow the exception to the caller
-			throw(new \Exception($exception->getMessage(),0,$exception));
+			throw(new \Exception($exception->getMessage(), 0, $exception));
+		}
 	}
-}
 
-/*-------------------------Accessor and Mutator Methods----------------------------*/
+	/*-------------------------Accessor and Mutator Methods----------------------------*/
 
-/**
- * accessor method for employProfileId
- * @return int $employProfileId
- **/
-	public function getEmployProfileId(int $NewEmployProfileId){
-		return($this->employProfileId);
+	/**
+	 * accessor method for employProfileId
+	 * @return int $employProfileId
+	 **/
+	public function getEmployProfileId(int $NewEmployProfileId) {
+		return ($this->employProfileId);
 	}
 
 	/**
@@ -65,9 +65,9 @@ class Employ implements \JsonSerializable{
 	 * @throws \TypeError if $newEmployProfileId is not an integer
 	 * @throws \Exception if any other exception occurs
 	 **/
-	public function setEmployProfileId(int $newEmployProfileId){
+	public function setEmployProfileId(int $newEmployProfileId) {
 		//verify that the profile id is positive
-		if($newEmployProfileId <= 0){
+		if($newEmployProfileId <= 0) {
 			throw(new \RangeException("employ profile id is not positive"));
 		}
 		//convert and store the employProfileId
@@ -79,8 +79,8 @@ class Employ implements \JsonSerializable{
 	 * accessor method for employCompanyId
 	 * @return int $employCompanyId
 	 **/
-	public function getEmployCompanyId(int $newEmployCompanyId){
-		return($this->employCompanyId);
+	public function getEmployCompanyId(int $newEmployCompanyId) {
+		return ($this->employCompanyId);
 	}
 
 	/**
@@ -90,8 +90,8 @@ class Employ implements \JsonSerializable{
 	 * @throws \TypeError if $newEmployCompanyId is not an integer
 	 * @throws \Exception if any other exception occurs
 	 **/
-	public function setEmployCompanyId(int $newEmployCompanyId){
-		if($newEmployCompanyId <= 0){
+	public function setEmployCompanyId(int $newEmployCompanyId) {
+		if($newEmployCompanyId <= 0) {
 			throw(new \RangeException("employ company id is not positive"));
 		}
 		//convert and store the employCompanyId
@@ -103,11 +103,11 @@ class Employ implements \JsonSerializable{
 	/**
 	 * inserts this employ into mySQL. is there a better way i can write this? that is not english.
 	 *
-	 *@param \PDO $pdo PDO Connection object
-	 *@throws \PDOException when mySQL related errors occur
-	 *@throws \TypeError if $pdo is not a PDO connection object
+	 * @param \PDO $pdo PDO Connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
-	public function insert(\PDO $pdo){
+	public function insert(\PDO $pdo) {
 		//enforce that this employProfileId is not null (i.e. don't insert an employProfileId that hasn't been assigned. Right?? its a foreign key.
 		if($this->employProfileId === null || $this->employCompanyId === null) {
 			throw(new \PDOException("cannot insert a foreign key that does not exist")); //usually for insert we don't want to enter something that already exists. is this normal for weak entities?
@@ -118,7 +118,7 @@ class Employ implements \JsonSerializable{
 		$statement = $pdo->prepare($query);
 
 		//bind the member variables to the placeholders in the template
-		$parameters = ["employProfileId"=>$this->employProfileId, "employCompanyId"=>$this->employCompanyId];
+		$parameters = ["employProfileId" => $this->employProfileId, "employCompanyId" => $this->employCompanyId];
 		$statement->execute($parameters);
 
 		//in the twitter example i t says to update the null tweetId with what mySQL just gave us using $this->tweetId =intval($pdo->lastInsertId()). I don't have to add another line here right? because we are not creating a new whatever the equivelent of tweet is. idk. IDK OK?!!?!?
@@ -126,13 +126,13 @@ class Employ implements \JsonSerializable{
 
 	/**
 	 * delete this employ into mySQL.
-	 *@param \PDO $pdo PDO connection object
-	 *@throws |\PDOException when mySQL related errors occur
-	 *@throws \TypeError if $pdo is not a PDO connection object
+	 * @param \PDO $pdo PDO connection object
+	 * @throws |\PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
-	public function delete(\PDO $pdo){
+	public function delete(\PDO $pdo) {
 		//enforce that the employProfileId and employCompanyId are not null (i.e. don't delete a composite key that does not exist)
-		if($this->employCompanyId === null || $this->employProfileId === null){
+		if($this->employCompanyId === null || $this->employProfileId === null) {
 			throw(new \PDOException("cannot delete a composite key that does not exist"));
 		}
 		//create query template
@@ -153,9 +153,9 @@ class Employ implements \JsonSerializable{
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
-	public static function getEmploybyEmployCompanyId(\PDO $pdo, int $employCompanyId){
+	public static function getEmploybyEmployCompanyId(\PDO $pdo, int $employCompanyId) {
 		//sanitize the employCompanyId before searching by checking that it is a positive number
-		if($employCompanyId <= 0){
+		if($employCompanyId <= 0) {
 			throw(new \PDOException("employCompanyId is not positive"));
 		}
 		//create query template
@@ -169,17 +169,17 @@ class Employ implements \JsonSerializable{
 		//build an array of employs...
 		$employs = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
-		while(($row = $statement->fetch()) !== false){
-			try{
+		while(($row = $statement->fetch()) !== false) {
+			try {
 				$employ = new Employ($row["employCompanyId"], $row["employProfileId"]);
 				$employs[$employs->key()] = $employ;
 				$employs->next();
-			}catch(\Exception $exception){
+			} catch(\Exception $exception) {
 				//if the row couldn't be converted rethrow it
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
 		}
-		return($employs);
+		return ($employs);
 	}
 
 	/**
@@ -219,6 +219,7 @@ class Employ implements \JsonSerializable{
 		}
 		return ($employs);
 	}
+
 	/**
 	 * get employ by employCompanyId and employProfileId*
 	 * @param \PDO $pdo PDO connection object
@@ -229,9 +230,9 @@ class Employ implements \JsonSerializable{
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
 
-	public static function getEmploybyEmployCompanyIdandEmployProfileId(\PDO $pdo, int $employCompanyId, int $employProfileId){
+	public static function getEmploybyEmployCompanyIdandEmployProfileId(\PDO $pdo, int $employCompanyId, int $employProfileId) {
 		//sanitize the employeeCompanyId and the employeeProfileId by checking that they're positive
-		if($employCompanyId <= 0 || $employProfileId <= 0){
+		if($employCompanyId <= 0 || $employProfileId <= 0) {
 			throw(new \PDOException("employCompanyId and employProfileId must be positive"));
 		}
 
@@ -240,24 +241,32 @@ class Employ implements \JsonSerializable{
 		$statement = $pdo->prepare($query);
 
 		//bind employCompanyId and employProfileId to the placeholder in the template
-		$parameters = ["employCompanyId"=> $employCompanyId, "employProfileId"=>$employProfileId];
+		$parameters = ["employCompanyId" => $employCompanyId, "employProfileId" => $employProfileId];
 		$statement->execute($parameters);
 
 		//grab the employ from mySQL
-		try{
-			$employ =null;
+		try {
+			$employ = null;
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
-			if($row !== false){
+			if($row !== false) {
 				$employ = new Employ($row["employCompanyId"], $row["employProfileId"]);
 			}
-		}catch(\Exception $exception){
+		} catch(\Exception $exception) {
 			//if the row couldn't be converted, rethrow it
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
 		return $employ;
 	}
 
-}
+	/**
+	 * formats the state variables for JSON serialization
+	 *
+	 * @return array resulting in state variables  to serialize
+	 **/
+	public function jsonSerialize() {
+		$fields = get_object_vars($this);
+		return ($fields);
+	}
 
 }
