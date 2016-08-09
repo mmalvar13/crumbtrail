@@ -775,7 +775,7 @@ class Company {
 			$row = $statement->fetch();
 
 			if($row !== false) {
-				$company = new company($row["companyId"], $row["companyName"], $row["companyEmail"], $row["companyPermit"], $row["companyLicense"], $row["companyAttn"], $row["companyStreet1"], $row["companyStreet2"], $row["companyCity"], $row["companyState"], $row["companyZip"], $row["companyDescription"], $row["companyMenuText"], $row["companyActivationToken"], $row["companyApproved"], $row["companyAccountCreatorId"]);
+				$company = new Company($row["companyId"], $row["companyName"], $row["companyEmail"], $row["companyPermit"], $row["companyLicense"], $row["companyAttn"], $row["companyStreet1"], $row["companyStreet2"], $row["companyCity"], $row["companyState"], $row["companyZip"], $row["companyDescription"], $row["companyMenuText"], $row["companyActivationToken"], $row["companyApproved"], $row["companyAccountCreatorId"]);
 			}
 
 			// Catch exception.
@@ -783,7 +783,7 @@ class Company {
 			// If the row could not be converted, then re-throw it.
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
-		return ($company);
+		return($company);
 	}
 
 
@@ -791,7 +791,7 @@ class Company {
 	 * Get company by the companyAccountCreatorId.
 	 *
 	 * @param \PDO $pdo PDO connection object
-	 * @param int $companyAccountCreatorId The company account creator we want to find.
+	 * @param int $companyAccountCreatorId  The company account creator we want to find.
 	 * @return company|null  Returns the company found, or null if not found.
 	 * @throws \PDOException  When mySQL related errors occur.
 	 * @throws \TypeError  When variables are not the correct data type.
@@ -821,7 +821,7 @@ class Company {
 			$row = $statement->fetch();
 
 			if($row !== false) {
-				$company = new company($row["companyId"], $row["companyName"], $row["companyEmail"], $row["companyPermit"], $row["companyLicense"], $row["companyAttn"], $row["companyStreet1"], $row["companyStreet2"], $row["companyCity"], $row["companyState"], $row["companyZip"], $row["companyDescription"], $row["companyMenuText"], $row["companyActivationToken"], $row["companyApproved"], $row["companyAccountCreatorId"]);
+				$company = new Company($row["companyId"], $row["companyName"], $row["companyEmail"], $row["companyPermit"], $row["companyLicense"], $row["companyAttn"], $row["companyStreet1"], $row["companyStreet2"], $row["companyCity"], $row["companyState"], $row["companyZip"], $row["companyDescription"], $row["companyMenuText"], $row["companyActivationToken"], $row["companyApproved"], $row["companyAccountCreatorId"]);
 			}
 
 			// Catch exception.
@@ -829,7 +829,7 @@ class Company {
 			// If the row could not be converted, then re-throw it.
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
-		return ($company);
+		return($company);
 	}
 
 
