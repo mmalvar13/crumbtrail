@@ -108,8 +108,17 @@ class Employ{ //implement JsonSerializable??
 	 **/
 	public function insert(\PDO $pdo){
 		//enforce that this employProfileId is not null (i.e. don't insert an employProfileId that hasn't been assigned. Right?? its a foreign key.
-		if($this->employProfileId === null){
-			throw(new \PDOException("cannot insert a foreign key that does not exist")) //usually for insert we don't want to enter something that already exists. is this normal for weak entities?
+		if($this->employProfileId || $this->employCompanyId === null) {
+			throw(new \PDOException("cannot insert a foreign key that does not exist")); //usually for insert we don't want to enter something that already exists. is this normal for weak entities?
 		}
+
+		//create query template
+		$query = "INSERT INTO employ(employProfileId, employCompanyId) VALUES(:employProfileId, :employCompanyId)";
+		$statement = $pdo->prepare($query);
+
+		//bind the member variables to the placeholders in the template
+		$parameters = ["employProfileId"=>$this->employProfileId, "employCompanyId"=>$this->employCompanyId];
+		$statement->execute($parameters);
 	}
+
 }
