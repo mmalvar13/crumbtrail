@@ -95,12 +95,14 @@ class Point implements \JsonSerializable {
 	}
 
 	/**
+	 *formats the state variables for JSON serialization
 	 *
-	 * HOW DO I ADD THIS??
-	 * formats the state variables for JSON serialization
-	 *
-	 * @return array resulting state variables to serialize
+	 * @return array resulting state variables to seralize
 	 **/
+	public function jsonSerialize(){
+		$fields = get_object_vars($this);
+		return($fields);
+	}
 
 
 }
