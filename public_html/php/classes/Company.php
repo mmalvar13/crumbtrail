@@ -1,7 +1,7 @@
 <?php
 
 namespace Edu\Cnm\CrumbTrail;
-require_once("autoload.php");      // Add the autoload file to the classes folder !!!!!
+require_once("autoload.php");
 
 /**
  * Hi!  Welcome to the Company class.  Enjoy your stay!
@@ -10,9 +10,7 @@ require_once("autoload.php");      // Add the autoload file to the classes folde
  * State variables, constructor, mutators, accessors, and PDO methods.
  * @author  Kevin Lee Kirk
  */
-class Company {
-
-	// Add implement json.serializable !!!!!!!!!!!!
+class Company implements \JsonSerializable {
 
 	/**
 	 * The primary key = companyId.
