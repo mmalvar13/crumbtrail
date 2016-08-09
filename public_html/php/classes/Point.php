@@ -7,7 +7,7 @@ require_once ("autoload.php"); //idk
  * @package Edu\Cnm\Crumbtrail
  * welcome to the point class! this is for things! emjoy your stay!
  **/
-abstract class Point { //is this an abstract class?
+class Point {
 	/**
 	 * latitude for this point
 	 * @var float $pointLatitude
@@ -26,6 +26,10 @@ abstract class Point { //is this an abstract class?
 	 **/
 	public function __construct(float $newPointLatitude, float $newPointLongitude) {
 
-	} //method should have a body or be
+	}
+
+	/**
+	 * accessor method for $pointLo
+	 **/
 
 }

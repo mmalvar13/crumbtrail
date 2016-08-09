@@ -212,12 +212,13 @@ class Event { //implement JsonSerializable??
 		}
 		//create query template
 		$query = "INSERT INTO event(eventTruckId, eventEnd, eventLocation, eventStart)VALUES(:eventTruckId, :eventEnd, :eventLocation, :eventStart)";
-		$statement = $pdo->$pdo->prepare($query);
+		$statement = $pdo->prepare($query);
 
 		//bind the member variables to the place holders in the template
-		//$formattedDate = $this->eventStart (or eventEnd) ->format("Y-m-d H:i:s"); do i add this? and how?
+		$formattedEventStart = $this->eventStart->format("Y-m-d H:i:s");
+		$formattedEventEnd = $this->eventEnd->format("Y-m-d H:i:s");
 
-		$parameters=["eventTruckId"=>$this->eventTruckId, "eventEnd"=>$this->eventEnd, "eventLocation"=>$this->eventLocation,"eventStart"=>$this->eventStart];
+		$parameters=["eventTruckId"=>$this->eventTruckId, "eventEnd"=>$formattedEventEnd, "eventLocation"=>$this->eventLocation,"eventStart"=>$formattedEventStart];
 		$statement->execute($parameters);
 
 		//update the null eventId with what mySQL just gave us
