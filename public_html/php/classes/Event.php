@@ -199,4 +199,28 @@ class Event { //implement JsonSerializable??
 	}
 
 
+	/**
+	 * Inserts this Event into mySQL
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function insert(\PDO $pdo){
+		//enforce the eventId is null(i.e. don't insert an event that already exists)
+		if($this->eventId !== null){
+			throw(new \PDOException("not a new event"));
+		}
+		//create query template
+		$query = "INSERT INTO event(eventTruckId, eventEnd, eventLocation, eventStart)VALUES(:eventTruckId, :eventEnd, :eventLocation, :eventStart)";
+		$statement = $pdo->$pdo->prepare($query);
+
+		//bind the member variables to the place holders in the template
+		//$formattedDate = $this->eventStart (or eventEnd) ->format("Y-m-d H:i:s"); do i add this? and how?
+
+		$parameters=["eventTruckId"=>$this->eventTruckId, "eventEnd"=>$this->eventEnd, "eventLocation"=>$this->eventLocation,"eventStart"=>$this->eventStart];
+		$statement->execute($parameters);
+
+		//update the null eventId with what mySQL just gave us
+		$this->eventId = intval($pdo->lastInsertId());
+	}
 }
