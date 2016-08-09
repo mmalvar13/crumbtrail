@@ -1,6 +1,6 @@
 <?php
 
-namespace Edu\Cnm\CrumbTrail\Test;								// TODO Is this namespace correct?   ???
+namespace Edu\Cnm\CrumbTrail\Test;											// TODO Is this namespace correct?   ???
 
 // grab the encrypted properties file
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");     // TODO What is our path?  ???
@@ -21,11 +21,11 @@ require_once("/etc/apache2/capstone-mysql/encrypted-config.php");     // TODO Wh
 
 abstract class CrumbTrailTest extends \PHPUnit_Extensions_Database_TestCase {
 	/**
-	 * invalid id to use for an INT UNSIGNED field (maximum allowed INT UNSIGTNED in mySQL) + 1
+	 * invalid id to use for an INT UNSIGNED field (maximum allowed INT UNSIGNED in mySQL) + 1
 	 * @see https://dev.mysql.com/doc/refman/5.6/en/integer-types.html mySQL Integer Types
 	 * @var int INVALID_KEY
 	 **/
-	const INVALID_KEY = 4294967296;    // TODO Check this key value ???
+	const INVALID_KEY = 4294967296;   												 // TODO Check this key value ???
 
 	/**
 	 * PHPUnit database connection interface
@@ -43,7 +43,7 @@ abstract class CrumbTrailTest extends \PHPUnit_Extensions_Database_TestCase {
 
 		// add all the tables for the project here
 		// THESE TABLES *MUST* BE LISTED IN THE SAME ORDER THEY WERE CREATED!!!!
-		//                              TODO check this order:
+		//                            										  TODO check this order:
 		$dataset->addTable("company");
 		$dataset->addTable("employ");
 		$dataset->addTable("event");
@@ -87,8 +87,8 @@ abstract class CrumbTrailTest extends \PHPUnit_Extensions_Database_TestCase {
 		// if the connection hasn't been established, create it
 		if($this->connection === null) {
 			// connect to mySQL and provide the interface to PHPUnit
-			//                         TODO Check these config and pdo (properities file???)
-			$config = readConfig("/etc/apache2/mmalvar13/crumbtrail.ini");
+			//                        							 	TODO Check these config and pdo (properties file???)
+			$config = readConfig("/etc/apache2/mmalvar13/crumbtrail.ini");  // TODO Do these .ini files already exists?
 			$pdo = connectToEncryptedMySQL("/etc/apache2/mmalvar13/crumbtrail.ini");
 			$this->connection = $this->createDefaultDBConnection($pdo, $config["database"]);
 		}
