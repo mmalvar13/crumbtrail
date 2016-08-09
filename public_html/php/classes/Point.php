@@ -55,6 +55,22 @@ public function getPointLatitude(){
 	return($this->pointLatitude);
 }
 
+/**
+ * mutator method for $pointLatitude
+ * @param float $newPointLatitude new coordinate value of point latitude
+ * @throws \RangeException if $newPointLatitude is not within [-90, 90]
+ * @throws \TypeError if $newPointLatitude is wrong data type
+ * @throws \Exception if any other exception occurs
+ *
+ **/
+public function setPointLatitude(float $newPointLatitude){
+	if($newPointLatitude < -90 || $newPointLatitude > 90){
+		throw(new \RangeException("this coordinate is not within the [-90, 90] range"));
+	}
+	//store the pointLatitude content
+	$this->pointLatitude = $newPointLatitude;
+}
+
 
 
 
