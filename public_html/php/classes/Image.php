@@ -130,7 +130,7 @@ class Image implements \JsonSerializable {
 	 * @throw \RangeException if $newImageFileType > 10 characters
 	 */
 	public function setImageFileType(string $newImageFileType) {
-		$validFileType = ["image/jpeg", "image/png"];
+		$validFileType = ["image/jpeg", "image/jpg", "image/png"];
 		$newImageFileType = strtolower($newImageFileType);
 		if(in_array($newImageFileType, $validFileType) === false) {
 			throw(new \InvalidArgumentException("This is not the proper image type. Please insert jpeg, or png"));
