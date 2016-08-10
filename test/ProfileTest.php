@@ -259,7 +259,27 @@ class ProfileTest extends CrumbTrailTest {
 		$this->assertEquals($pdoProfile->getProfileType(), $this->VALID_PROFILETYPE2);
 		$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_PROFILEHASH2);
 		$this->assertEquals($pdoProfile->getProfileSalt(), $this->VALID_PROFILESALT2);
+	}
 
+
+
+	/**
+	 * test updating a profile that does not exist
+	 */
+	public function testUpdateInvalidProfile(){
+		$profile = new Profile(null, $this->VALID_PROFILENAME1, $this->VALID_PROFILEEMAIL1, $this->VALID_PROFILEPHONE1, $this->VALID_PROFILEACCESSTOKEN1, $this->VALID_PROFILEACTIVATIONTOKEN1, $this->VALID_PROFILETYPE1, $this->VALID_PROFILEHASH1, $this->VALID_PROFILESALT1);
+
+		//now that the dummy profile has been created, we WONT insert it, but instead try and update it in SQL
+		$profile->update($this->getPDO());
+	}
+
+
+
+	/**
+	 * test creating a profile and then 410'ing it
+	 */
+	public function testDeleteValidProfile(){
+		//count the rows, assign that number to a variable, and save it for later
 	}
 }
 
