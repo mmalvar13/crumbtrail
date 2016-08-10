@@ -99,8 +99,8 @@ class Company implements \JsonSerializable {
 
 	/**
 	 * If this company's registration has been approved by us,
-	 * then companyApproved = TRUE, else FALSE.
-	 * @var bool $companyApproved
+	 * then companyApproved = 1, else 0.
+	 * @var int $companyApproved
 	 **/
 	private $companyApproved;
 
@@ -128,7 +128,7 @@ class Company implements \JsonSerializable {
 	 * @param string $newCompanyDescription string of the company description
 	 * @param string $newCompanyMenuText string of the company menu text
 	 * @param int $newCompanyActivationToken int of the company activation token
-	 * @param bool $newCompanyApproved bool of the whether the company has been approved by us
+	 * @param int $newCompanyApproved int of the whether the company has been approved by us; 0 = no, 1 = yes.
 	 * @param int $newCompanyAccountCreatorId int of the ProfileId of the creator of this company's account
 	 * @throws \InvalidArgumentException if data types are not valid.
 	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers).
@@ -149,7 +149,7 @@ class Company implements \JsonSerializable {
 										 string $newCompanyDescription,
 										 string $newCompanyMenuText,
 										 int $newCompanyActivationToken,
-										 bool $newCompanyApproved,
+										 int $newCompanyApproved,
 										 int $newCompanyAccountCreatorId) {
 		try {
 			$this->setCompanyId($newCompanyId);
@@ -603,7 +603,7 @@ class Company implements \JsonSerializable {
 
 
 	/**  Accessor method (getter) for companyApproved.
-	 * @return bool $companyApproval  The value of companyApproved.
+	 * @return int $companyApproval  The value of companyApproved.
 	 **/
 	public function getCompanyApproved() {
 		return ($this->companyApproved);
@@ -621,7 +621,7 @@ class Company implements \JsonSerializable {
 		}
 		// Is $newCompanyApproved 0 or 1?  If not, then throw an exception.
 		if(($newCompanyApproved != 0) or ($newCompanyApproved != 1)) {
-			throw(new \RangeException("The company Approved is not Boolean."));
+			throw(new \RangeException("The company Approved is not either 0 or 1."));
 		}
 		// Assign $newCompanyApproved to companyApproved, then store in SQL.
 		$this->companyApproved = $newCompanyApproved;

@@ -1,7 +1,9 @@
 <?php
-namespace Edu\Cnm\CrumbTrail\Test;   							 // TODO Check this namespace ???
+namespace Edu\Cnm\CrumbTrail\Test;
+require_once("/etc/apache2/capstone-mysql/encrypted-config.php")			// TODO Need this?
 
-use Edu\Cnm\Mmalvar13\CrumbTrail\{Company};
+use Edu\Cnm\Mmalvar13\CrumbTrail\{Company, Profile};
+
 // grab the project test parameters
 require_once("CrumbTrailTest.php");
 
@@ -15,15 +17,14 @@ require_once(dirname(__DIR__) . "/public_html/php/classes/autoload.php");
  * It is complete because *ALL* mySQL/PDO enabled methods
  * are tested for both invalid and valid inputs.
  *
- * Instead of testing every accessor and mutator method,         ****
- * concentrate on testing the mySQL and PDO methods,
- * since these use the accessor and mutator methods.
+ * @see Company
+ * @author Kevin Lee Kirk
  *
- * INSERT, UPDATE, DELETE, getFooByBar for each attribute?        ****
- *
-  **/
+ **/
 
 class CompanyTest extends CrumbTrailTest {
+
+	// Set the protected parameter values.
 	/**
 	 * name of the Company
 	 * @var string $VALID_COMPANYNAME
@@ -36,11 +37,60 @@ class CompanyTest extends CrumbTrailTest {
 	 **/
 	protected $VALID_COMPANYNAME2 = "PHPUnit test still passing";
 
-	/**
-	 * Profile that created the Company; this is for foreign key relations.
-	 * @var Profile profile
-	 **/
-	protected $profile = null;
+	// ************
+
+	protected $VALID_COMPANYNAME = "Bob's tacos";
+	protected $VALID_COMPANYNAME2 = "Bob's tacos new";
+
+	protected $VALID_COMPANYEMAIL = "bob@bobs.com";
+	protected $VALID_COMPANYEMAIL2 = "bobnew@bobs.com";
+
+	protected $VALID_COMPANYPERMIT = "12345";
+	protected $VALID_COMPANYPERMIT2 = "67890";
+
+	protected $VALID_COMPANYLICENSE = "2468";
+	protected $VALID_COMPANYLICENSE2 = "1012";
+
+	protected $VALID_COMPANYATTN = "Bob Smith";
+	protected $VALID_COMPANYATTN2 = "Bob New Smith";
+
+	protected $VALID_COMPANYSTREET1 = "123 Old Street";
+	protected $VALID_COMPANYSTREET12 = "123 New Street";
+
+	protected $VALID_COMPANYSTREET2 = "Appt. 1A";
+	protected $VALID_COMPANYSTREET22 = "Appt. 2B";
+
+	protected $VALID_COMPANYCITY = "Springfield";
+	protected $VALID_COMPANYCITY2 = "New Springfield";
+
+	protected $VALID_COMPANYSTATE = "NM";
+	protected $VALID_COMPANYSTATE2 = "CO";
+
+	protected $VALID_COMPANYZIP = "97405";
+	protected $VALID_COMPANYZIP2 = "87048";
+
+	protected $VALID_COMPANYDESCRIPTION = "This is a description of a food truck company";
+	protected $VALID_COMPANYDESCRIPTION2 = "This is a new description of a food truck company";
+
+	protected $VALID_COMPANYMENUTEXT = "Tacos, burritos, beer";
+	protected $VALID_COMPANYMENUTEXT2 = "Ham, cheese, wine";
+
+	protected $VALID_COMPANYACTIVATIONTOKEN = "12345678";
+	protected $VALID_COMPANYACTIVATIONTOKEN2 = "23456789";
+
+	protected $VALID_COMPANYAPPROVED = "0";
+	protected $VALID_COMPANYAPPROVED2 = "1";
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -179,7 +229,7 @@ class CompanyTest extends CrumbTrailTest {
 	 * test grabbing a Company by content that does not exist
 	 **/
 	public function testGetInvalidCompanyByCompanyName() {
-		// grab a company by searching for name that does not exist
+		// grab a company by searching for a company name that does not exist
 		$tweet = Company::getCompanyByCompanyName($this->getPDO(), "you will find nothing");
 		$this->assertCount(0, $company);
 	}
