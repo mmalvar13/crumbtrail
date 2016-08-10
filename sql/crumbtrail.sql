@@ -71,9 +71,11 @@ CREATE TABLE company (
 
 CREATE TABLE image (
 	imageId        INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	-- foreign key imageCompanyId
 	imageCompanyId INT UNSIGNED                NOT NULL,
 	imageFileType  VARCHAR(10)                  NOT NULL,
 	imageFileName  VARCHAR(255)                NOT NULL,
+	-- index foreign key imageCompanyId
 	INDEX(imageCompanyId),
 	FOREIGN KEY(imageCompanyId) REFERENCES company(companyId),
 	PRIMARY KEY(imageId)

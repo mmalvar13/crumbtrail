@@ -337,6 +337,43 @@ class Image implements \JsonSerializable {
 		}
 		return($images);
 	}
-
+	/** gets all images
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @return \SplFixedArray SplFixedArray of Images found or null if not found
+	 * @throws \PDOException when mySQL related error occur
+	 * @throws \TypeError when variables are nor the correct data type
+	 **/
+	Public static function getAllimages(\PDO $pdo) {
+		//query template
+		//Do I need to select all attributes? Should I exclude file type?
+		$query = "SELECT imageId, imageCompanyId, imageFileType, imageFileName FROM image";
+		$statement = $pdo->prepare($query);
+		$statement->execute();
+		//build an array of images
+		$images = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$image = new Image($row["imageId"], ["imageCompanyId"], ["imageFileType"], ["imageFileName"]);
+				$images[$images->key()] =$image;
+				$images->next();
+			} catch(\Exception $exception) {
+				//if row can't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return ($images);
+	}
+	/**
+	 * formats the state variables for JSON serialization
+	 *
+	 * @return array rsulting state variavles to serialize
+	 **/
+	public function jsonSerialize() {
+		$fields = get_object_vars($this);
+		//$fields[?no date needed here "tweetDate"] = $this->tweetDate->getTimestamp() 8 1000;
+		return($fields);
+	}
 }
-	
+//The end of Image Class

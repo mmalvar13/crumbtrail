@@ -1,7 +1,9 @@
 <?php
-namespace Edu\Cnm\CrumbTrail\Test;   							 // TODO Check this namespace ???
+namespace Edu\Cnm\CrumbTrail\Test;
+require_once("/etc/apache2/capstone-mysql/encrypted-config.php")			// TODO Need this?
 
-use Edu\Cnm\Mmalvar13\CrumbTrail\{Company};
+use Edu\Cnm\Mmalvar13\CrumbTrail\{Company, Profile};
+
 // grab the project test parameters
 require_once("CrumbTrailTest.php");
 
@@ -15,33 +17,168 @@ require_once(dirname(__DIR__) . "/public_html/php/classes/autoload.php");
  * It is complete because *ALL* mySQL/PDO enabled methods
  * are tested for both invalid and valid inputs.
  *
- * Instead of testing every accessor and mutator method,         ****
- * concentrate on testing the mySQL and PDO methods,
- * since these use the accessor and mutator methods.
+ * @see Company
+ * @author Kevin Lee Kirk
  *
- * INSERT, UPDATE, DELETE, getFooByBar for each attribute?        ****
- *
-  **/
+ **/
 
 class CompanyTest extends CrumbTrailTest {
+
+	// Set the protected parameter values.
+
 	/**
 	 * name of the Company
 	 * @var string $VALID_COMPANYNAME
 	 **/
 	protected $VALID_COMPANYNAME = "PHPUnit test passing";
-
 	/**
-	 * content of the updated Company
+	 * name of the updated Company
 	 * @var string $VALID_COMPANYNAME2
 	 **/
 	protected $VALID_COMPANYNAME2 = "PHPUnit test still passing";
 
 	/**
-	 * Profile that created the Company; this is for foreign key relations.
-	 * @var Profile profile
+	 * email of the Company
+	 * @var string $VALID_COMPANYEMAIL
 	 **/
-	protected $profile = null;
+	protected $VALID_COMPANYEMAIL = "bob@bobs.com";
+	/**
+	 * email of the updated Company
+	 * @var string $VALID_COMPANYEMAIL2
+	 **/
+	protected $VALID_COMPANYEMAIL2 = "bobnew@bobs.com";
 
+	/**
+	 * permit of the Company
+	 * @var string $VALID_COMPANYPERMIT
+	 **/
+	protected $VALID_COMPANYPERMIT = "12345";
+	/**
+	 * permit of the updated Company
+	 * @var string $VALID_COMPANYPERMIT2
+	 **/
+	protected $VALID_COMPANYPERMIT2 = "67890";
+
+	/**
+	 * license of the Company
+	 * @var string $VALID_COMPANYLICENSE
+	 **/
+	protected $VALID_COMPANYLICENSE = "2468";
+	/**
+	 * license of the updated Company
+	 * @var string $VALID_COMPANYLICENSE2
+	 **/
+	protected $VALID_COMPANYLICENSE2 = "1012";
+
+	/**
+	 * attn of the Company
+	 * @var string $VALID_COMPANYATTN
+	 **/
+	protected $VALID_COMPANYATTN = "Bob Smith";
+	/**
+	 * attn of the updated Company
+	 * @var string $VALID_COMPANYATTN2
+	 **/
+	protected $VALID_COMPANYATTN2 = "Bob New Smith";
+
+	/**
+	 * street1 of the Company
+	 * @var string $VALID_COMPANYSTREET1
+	 **/
+	protected $VALID_COMPANYSTREET1 = "123 Old Street";
+	/**
+	 * street1 of the updated Company
+	 * @var string $VALID_COMPANYSTREET12
+	 **/
+	protected $VALID_COMPANYSTREET12 = "123 New Street";
+
+	/**
+	 * street2 of the Company
+	 * @var string $VALID_COMPANYSTREET2
+	 **/
+	protected $VALID_COMPANYSTREET2 = "Appt. 1A";
+	/**
+	 * street2 of the updated Company
+	 * @var string $VALID_COMPANYSTREET22
+	 **/
+	protected $VALID_COMPANYSTREET22 = "Appt. 2B";
+
+	/**
+	 * city of the Company
+	 * @var string $VALID_COMPANYCITY
+	 **/
+	protected $VALID_COMPANYCITY = "Springfield";
+	/**
+	 * city of the updated Company
+	 * @var string $VALID_COMPANYCITY2
+	 **/
+	protected $VALID_COMPANYCITY2 = "New Springfield";
+
+	/**
+	 * state of the Company
+	 * @var string $VALID_COMPANYSTATE
+	 **/
+	protected $VALID_COMPANYSTATE = "NM";
+	/**
+	 * state of the updated Company
+	 * @var string $VALID_COMPANYSTATE2
+	 **/
+	protected $VALID_COMPANYSTATE2 = "CO";
+
+	/**
+	 * zip of the Company
+	 * @var int $VALID_COMPANYZIP
+	 **/
+	protected $VALID_COMPANYZIP = "97405";
+	/**
+	 * zip of the updated Company
+	 * @var int $VALID_COMPANYZIP2
+	 **/
+	protected $VALID_COMPANYZIP2 = "87048";
+
+	/**
+	 * description of the Company
+	 * @var string $VALID_COMPANYDESCRIPTION
+	 **/
+	protected $VALID_COMPANYDESCRIPTION = "This is a description of a food truck company";
+	/**
+	 * description of the updated Company
+	 * @var string $VALID_COMPANYDESCRIPTION2
+	 **/
+	protected $VALID_COMPANYDESCRIPTION2 = "This is a new description of a food truck company";
+
+	/**
+	 * menu text of the Company
+	 * @var string $VALID_COMPANYMENUTEXT
+	 **/
+	protected $VALID_COMPANYMENUTEXT = "Tacos, burritos, beer";
+	/**
+	 * menu text of the updated Company
+	 * @var string $VALID_COMPANYMENUTEXT2
+	 **/
+	protected $VALID_COMPANYMENUTEXT2 = "Ham, cheese, wine";
+
+	/**
+	 * activation token of the Company
+	 * @var string $VALID_COMPANYACTIVATIONTOKEN
+	 **/
+	protected $VALID_COMPANYACTIVATIONTOKEN = "12345678";
+	/**
+	 * activation token of the updated Company
+	 * @var string $VALID_COMPANYACTIVATION2
+	 **/
+	protected $VALID_COMPANYACTIVATIONTOKEN2 = "23456789";
+
+	/**
+	 * approved of the Company
+	 * @var string $VALID_COMPANYAPPROVED
+	 **/
+	protected $VALID_COMPANYAPPROVED = "0";
+	/**
+	 * approved of the updated Company
+	 * @var string $VALID_COMPANYAPPROVED2
+	 **/
+	protected $VALID_COMPANYAPPROVED2 = "1";
 
 
 	/**
@@ -179,7 +316,7 @@ class CompanyTest extends CrumbTrailTest {
 	 * test grabbing a Company by content that does not exist
 	 **/
 	public function testGetInvalidCompanyByCompanyName() {
-		// grab a company by searching for name that does not exist
+		// grab a company by searching for a company name that does not exist
 		$tweet = Company::getCompanyByCompanyName($this->getPDO(), "you will find nothing");
 		$this->assertCount(0, $company);
 	}
