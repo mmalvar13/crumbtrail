@@ -165,7 +165,7 @@ class ProfileTest extends CrumbTrailTest {
 		$numRows = $this->getConnection()->getRowCount("profile");  // so..get connection to SQL, and get the count of rows for a particular profile??
 
 		//create a new profile and insert it into SQL
-		$profile = new Profile(null, $this->profile->getProfileId(), $this->VALID_PROFILENAME1, $this->VALID_PROFILEEMAIL1, $this->VALID_PROFILEPHONE1, $this->VALID_PROFILEACCESSTOKEN1, $this->VALID_PROFILEACTIVATIONTOKEN1, $this->VALID_PROFILETYPE1, $this->VALID_PROFILEHASH1, $this->VALID_PROFILESALT1);
+		$profile = new Profile(null, $this->VALID_PROFILENAME1, $this->VALID_PROFILEEMAIL1, $this->VALID_PROFILEPHONE1, $this->VALID_PROFILEACCESSTOKEN1, $this->VALID_PROFILEACTIVATIONTOKEN1, $this->VALID_PROFILETYPE1, $this->VALID_PROFILEHASH1, $this->VALID_PROFILESALT1);
 
 		//insert the mock profile in SQL
 		$profile->insert($this->getPDO());
@@ -210,7 +210,55 @@ class ProfileTest extends CrumbTrailTest {
 		$profile = new Profile(CrumbTrailTest::INVALID_KEY, $this->VALID_PROFILENAME1, $this->VALID_PROFILEEMAIL1, $this->VALID_PROFILEPHONE1, $this->VALID_PROFILEACCESSTOKEN1, $this->VALID_PROFILEACTIVATIONTOKEN1, $this->VALID_PROFILEHASH1, $this->VALID_PROFILESALT1);
 
 		//now insert it into SQL and hope it throws an error!
-		$profile->insert($this->getPDO());  //What PDO are we exactly getting here??
+		//this uses the insert PDO method we wrote back in our class, and all the capabilities it has
+		$profile->insert($this->getPDO());
+	}
+
+
+
+	/**
+	 * test inserting a profile, editing it, and then updating it
+	 */
+	public function TestUpdateValidProfile(){
+		//count the initial number of rows and assign it to the variable $numRows
+		$numRows = $this->getConnection()->getRowCount("profile");
+
+		//create a new profile and insert it into SQL
+		$profile = new Profile(null, $this->VALID_PROFILENAME1, $this->VALID_PROFILEEMAIL1, $this->VALID_PROFILEPHONE1, $this->VALID_PROFILEACCESSTOKEN1, $this->VALID_PROFILEACTIVATIONTOKEN1, $this->VALID_PROFILETYPE1, $this->VALID_PROFILEHASH1, $this->VALID_PROFILESALT1);
+
+		//insert the mock profile in SQL
+		$profile->insert($this->getPDO());
+
+		//edit the profile and update it in SQL
+		$profile->setProfileName($this->VALID_PROFILENAME2);
+		$profile->setProfileEmail($this->VALID_PROFILEEMAIL2);
+		$profile->setProfilePhone($this->VALID_PROFILEPHONE2);
+		$profile->setProfileAccessToken($this->VALID_PROFILEACCESSTOKEN2);
+		$profile->setProfileActivationToken($this->VALID_PROFILEACTIVATIONTOKEN2);
+		$profile->setProfileType($this->VALID_PROFILETYPE2);
+		$profile->setProfileHash($this->VALID_PROFILEHASH2);
+		$profile->setProfileSalt($this->VALID_PROFILESALT2);
+
+		//now call the update PDO method we wrote in the class
+		$profile->update($this->getPDO());
+
+		//now grab the data back out of SQL to make sure it matches what we put in
+
+		//$pdoProfile is a new declaration...then we call our PDO get method: getProfileByProfileId which requires 2 parameters:
+		//the first is a PDO object, the other is our profileId, which we use the accessor method we wrote (getProfileId) to get!
+		// $pdoProfile now contains all the information for our dummy profile
+		$pdoProfile = Profile::getProfileByProfileId($this->getPDO(), $profile->getProfileId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
+
+		//the following will all best testing to match that the data in the database matches the data we thought we put in the database
+		$this->assertEquals($pdoProfile->getProfileName(), $this->VALID_PROFILENAME2);
+		$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_PROFILEEMAIL2);
+		$this->assertEquals($pdoProfile->getProfilePhone(), $this->VALID_PROFILEPHONE2);
+		$this->assertEquals($pdoProfile->getProfileAccessToken(), $this->VALID_PROFILEACCESSTOKEN2);
+		$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_PROFILEACTIVATIONTOKEN2);
+		$this->assertEquals($pdoProfile->getProfileType(), $this->VALID_PROFILETYPE2);
+		$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_PROFILEHASH2);
+		$this->assertEquals($pdoProfile->getProfileSalt(), $this->VALID_PROFILESALT2);
 
 	}
 }
