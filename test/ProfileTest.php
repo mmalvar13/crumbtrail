@@ -29,10 +29,17 @@ class ProfileTest extends CrumbTrailTest {
 	/*----------------------------Declare Protected State Variables ----------------*/
 
 	/**
-	 * name of the Profile
-	 * @var string $VALID_PROFILENAME     //why is this in all caps, what's up with this syntax?
+	 * Default input data set for a string 1
+	 * @var string $VALID_STRING1     //why is this in all caps, what's up with this syntax?
 	 */
-	protected $VALID_PROFILENAME = "A girl has a name...";
+	protected $VALID_STRING1 = "A man needs a name...";
+
+/**
+ * default input data for a string 2
+ * @var string  $VALID_STRING2
+ */
+protected $VALID_STRING2 = "A girl has no name";
+
 
 
 }
