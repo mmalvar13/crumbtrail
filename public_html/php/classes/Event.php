@@ -148,7 +148,7 @@ class Event implements \JsonSerializable{ //implement JsonSerializable??
 			throw(new \RangeException("Start time cannot be greater than end time")); //is this correct??
 		}
 		try {
-			$newEventEnd = self::ValidateDateTime($newEventEnd);
+			$newEventEnd = self::validateDateTime($newEventEnd);
 		} catch(\InvalidArgumentException $invalidArgument) {
 			throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
 		} catch(\RangeException $range) {
