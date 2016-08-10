@@ -219,7 +219,7 @@ class ProfileTest extends CrumbTrailTest {
 	/**
 	 * test inserting a profile, editing it, and then updating it
 	 */
-	public function TestUpdateValidProfile(){
+	public function testUpdateValidProfile(){
 		//count the initial number of rows and assign it to the variable $numRows
 		$numRows = $this->getConnection()->getRowCount("profile");
 
@@ -280,6 +280,28 @@ class ProfileTest extends CrumbTrailTest {
 	 */
 	public function testDeleteValidProfile(){
 		//count the rows, assign that number to a variable, and save it for later
+		$numRows = $this->getConnection()->getRowCount("profile");
+
+		//create a dummy profile
+		$profile = new Profile(null, $this->VALID_PROFILENAME1, $this->VALID_PROFILEEMAIL1, $this->VALID_PROFILEPHONE1, $this->VALID_PROFILEACCESSTOKEN1, $this->VALID_PROFILEACTIVATIONTOKEN1, $this->VALID_PROFILETYPE1, $this->VALID_PROFILEHASH1, $this->VALID_PROFILESALT1);
+
+		//insert it into SQL
+		$profile->insert($this->getPDO());
+
+		//check to be sure that the profile was properly inserted
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
+
+		//delete the profile
+		$profile->delete($this->getPDO());
+
+		// $pdoProfile now contains all the information for our dummy profile
+		$pdoProfile = Profile::getProfileByProfileId($this->getPDO(), $profile->getProfileId());
+		//assert that its null
+		$this->assertNull($pdoProfile);
+
+		//assert that the rows are empty
+		$this->assertEquals($numRows, $this->getConnection()->getRowCount("profile"));
+
 	}
 }
 
