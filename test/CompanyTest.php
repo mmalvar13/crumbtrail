@@ -2,7 +2,7 @@
 namespace Edu\Cnm\CrumbTrail\Test;
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php")			// TODO Need this?
 
-use Edu\Cnm\Mmalvar13\CrumbTrail\{Company, Profile};
+use Edu\Cnm\Mmalvar13\CrumbTrail\{Company, Profile};			// TODO Check this path.
 
 // grab the project test parameters
 require_once("CrumbTrailTest.php");
@@ -182,35 +182,49 @@ class CompanyTest extends CrumbTrailTest {
 
 
 	/**
-	 * Create dependent objects before running each test.  Company needs a Profile object.
+	 * The Profile of the person who created this account = companyAccountCreator,
+	 * which is the foreign key.
+	 * @var Profile profile
+	 */
+	protected $profile = null;
+
+
+	/**
+	 * Create dependent objects before running each test.
+	 *
+	 * Profile is a foreign key in Company,
+	 * so we need a fake Profile to use in the test of Company.
+	 * The companyAccountCreatorId is the profileId of the person who created this account.
 	 **/
 	public final function setUp() {
 		// run the default setUp() method first
 		parent::setUp();
 
-		// create and insert a Profile to own the test Company.
+		// create and insert a Profile to own the test Company.   // TODO Fix the long integers.
 		$this->profile = new Profile(null, "Bob Smith", "test@phpunit.de", "+12125551212", "0000000000000000000000000000000000000000000000000000000000004444", "00000000000000000000000000000022", "O", null, null);
 		$this->profile->insert($this->getPDO());
 	}
 
 
 	/**
-	 * Test inserting a valid Company and verify that the actual mySQL data matches.
+	 * Test inserting a valid Company into the mySQL database,
+	 * then check if the data in the database is equal to the
+	 * data that you put into the database.
 	 **/
 	public function testInsertValidCompany() {
-		// count the number of rows and save it for later
+		// Count the number of rows and save it for later.
 		$numRows = $this->getConnection()->getRowCount("company");
 
-		// Create a new Company and insert to into mySQL
-		//					TODO Need this: $this->company->getCompanyId() or $this->profile->getProfileId() ???
-		$company = new Company(null, $this->VALID_COMPANYNAME, $this->VALID_COMPANYEMAIL, $this->VALID_COMPANYPERMIT, $this->VALID_COMPANYLICENSE, $this->VALID_COMPANYATTN, $this->VALID_COMPANYSTREET1, $this->VALID_COMPANYSTREET2, $this->VALID_COMPANYCITY, $this->VALID_COMPANYSTATE, $this->VALID_COMPANYZIP, $this->VALID_COMPANYDESCRIPTION, $this->VALID_COMPANYMENUTEXT, $this->VALID_COMPANYACTIVATIONTOKEN, $this->VALID_COMPANYAPPROVED);
+		// Create a new Company and insert to into mySQL.
+		$company = new Company(null, $this->VALID_COMPANYNAME, $this->VALID_COMPANYEMAIL, $this->VALID_COMPANYPERMIT, $this->VALID_COMPANYLICENSE, $this->VALID_COMPANYATTN, $this->VALID_COMPANYSTREET1, $this->VALID_COMPANYSTREET2, $this->VALID_COMPANYCITY, $this->VALID_COMPANYSTATE, $this->VALID_COMPANYZIP, $this->VALID_COMPANYDESCRIPTION, $this->VALID_COMPANYMENUTEXT, $this->VALID_COMPANYACTIVATIONTOKEN, $this->VALID_COMPANYAPPROVED, $this->profile->getProfileId());
+
 		$company->insert($this->getPDO());
 
 		// Grab the data from mySQL and enforce the fields match our expectations
 		$pdoCompany = Company::getCompanyByCompanyId($this->getPDO(), $company->getCompanyId());
 
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("company"));
-		// TODO Need a ProfileId line ???
+
 		$this->assertEquals($pdoCompany->getCompanyId(), $this->company->getCompanyId());
 		$this->assertEquals($pdoCompany->getCompanyName(), $this->company->getCompanyName());
 		$this->assertEquals($pdoCompany->getCompanyEmail(), $this->company->getCompanyEmail());
@@ -226,6 +240,7 @@ class CompanyTest extends CrumbTrailTest {
 		$this->assertEquals($pdoCompany->getCompanyMenuText(), $this->company->getCompanyMenuText());
 		$this->assertEquals($pdoCompany->getCompanyActivationToken(), $this->company->getCompanyActivationToken());
 		$this->assertEquals($pdoCompany->getCompanyApproved(), $this->company->getCompanyApproved());
+		$this->assertEquals($pdoCompany->getProfileId(), $this->profile->getProfileId());
 	}
 
 	/**
@@ -235,7 +250,7 @@ class CompanyTest extends CrumbTrailTest {
 	 **/
 	public function testInsertInvalidCompany() {
 		//   TODO Do we need a $this->profile->getProfileId() ???
-		$company = new Company(CrumbTrailTest::INVALID_KEY, $this->VALID_COMPANYNAME, $this->VALID_COMPANYEMAIL, $this->VALID_COMPANYPERMIT, $this->VALID_COMPANYLICENSE, $this->VALID_COMPANYATTN, $this->VALID_COMPANYSTREET1, $this->VALID_COMPANYSTREET2, $this->VALID_COMPANYCITY, $this->VALID_COMPANYSTATE, $this->VALID_COMPANYZIP, $this->VALID_COMPANYDESCRIPTION, $this->VALID_COMPANYMENUTEXT, $this->VALID_COMPANYACTIVATIONTOKEN, $this->VALID_COMPANYAPPROVED);
+		$company = new Company(CrumbTrailTest::INVALID_KEY, $this->VALID_COMPANYNAME, $this->VALID_COMPANYEMAIL, $this->VALID_COMPANYPERMIT, $this->VALID_COMPANYLICENSE, $this->VALID_COMPANYATTN, $this->VALID_COMPANYSTREET1, $this->VALID_COMPANYSTREET2, $this->VALID_COMPANYCITY, $this->VALID_COMPANYSTATE, $this->VALID_COMPANYZIP, $this->VALID_COMPANYDESCRIPTION, $this->VALID_COMPANYMENUTEXT, $this->VALID_COMPANYACTIVATIONTOKEN, $this->VALID_COMPANYAPPROVED, $this->profile->getProfileId());
 
 		$company>insert($this->getPDO());
 	}
@@ -249,7 +264,7 @@ class CompanyTest extends CrumbTrailTest {
 		$numRows = $this->getConnection()->getRowCount("company");
 
 		// Create a new Company and insert to into mySQL.
-		$company = new Company(null, $this->VALID_COMPANYNAME, $this->VALID_COMPANYEMAIL, $this->VALID_COMPANYPERMIT, $this->VALID_COMPANYLICENSE, $this->VALID_COMPANYATTN, $this->VALID_COMPANYSTREET1, $this->VALID_COMPANYSTREET2, $this->VALID_COMPANYCITY, $this->VALID_COMPANYSTATE, $this->VALID_COMPANYZIP, $this->VALID_COMPANYDESCRIPTION, $this->VALID_COMPANYMENUTEXT, $this->VALID_COMPANYACTIVATIONTOKEN, $this->VALID_COMPANYAPPROVED);
+		$company = new Company(null, $this->VALID_COMPANYNAME, $this->VALID_COMPANYEMAIL, $this->VALID_COMPANYPERMIT, $this->VALID_COMPANYLICENSE, $this->VALID_COMPANYATTN, $this->VALID_COMPANYSTREET1, $this->VALID_COMPANYSTREET2, $this->VALID_COMPANYCITY, $this->VALID_COMPANYSTATE, $this->VALID_COMPANYZIP, $this->VALID_COMPANYDESCRIPTION, $this->VALID_COMPANYMENUTEXT, $this->VALID_COMPANYACTIVATIONTOKEN, $this->VALID_COMPANYAPPROVED, $this->profile->getProfileId());
 
 		$company->insert($this->getPDO());
 
@@ -268,6 +283,7 @@ class CompanyTest extends CrumbTrailTest {
 		$company->setCompanyMenuText($this->VALID_COMPANYMENUTEXT2);
 		$company->setCompanyActivationToken($this->VALID_COMPANYACTIVATIONTOKEN2);
 		$company->setCompanyApproved($this->VALID_COMPANYAPPROVED2);
+		$this->assertEquals($pdoCompany->getProfileId(), $this->profile->getProfileId());
 
 		$company->update($this->getPDO());
 
@@ -292,6 +308,7 @@ class CompanyTest extends CrumbTrailTest {
 		$this->assertEquals($pdoCompany->getCompanyMenuText(), $this->VALID_COMPANYMENUTEXT2());
 		$this->assertEquals($pdoCompany->getCompanyActivationToken(), $this->VALID_COMPANYACTIVATIONTOKEN2());
 		$this->assertEquals($pdoCompany->getCompanyApproved(), $this->VALID_COMPANYAPPROVED2());
+		$this->assertEquals($pdoCompany->getProfileId(), $this->profile->getProfileId());
 	}
 
 	/**
@@ -301,7 +318,7 @@ class CompanyTest extends CrumbTrailTest {
 	 **/
 	public function testUpdateInvalidCompany() {
 		// Create a Company, try to update it (without actually updating it), and watch it fail.
-		$company = new Company(null, $this->VALID_COMPANYNAME, $this->VALID_COMPANYEMAIL, $this->VALID_COMPANYPERMIT, $this->VALID_COMPANYLICENSE, $this->VALID_COMPANYATTN, $this->VALID_COMPANYSTREET1, $this->VALID_COMPANYSTREET2, $this->VALID_COMPANYCITY, $this->VALID_COMPANYSTATE, $this->VALID_COMPANYZIP, $this->VALID_COMPANYDESCRIPTION, $this->VALID_COMPANYMENUTEXT, $this->VALID_COMPANYACTIVATIONTOKEN, $this->VALID_COMPANYAPPROVED);
+		$company = new Company(null, $this->VALID_COMPANYNAME, $this->VALID_COMPANYEMAIL, $this->VALID_COMPANYPERMIT, $this->VALID_COMPANYLICENSE, $this->VALID_COMPANYATTN, $this->VALID_COMPANYSTREET1, $this->VALID_COMPANYSTREET2, $this->VALID_COMPANYCITY, $this->VALID_COMPANYSTATE, $this->VALID_COMPANYZIP, $this->VALID_COMPANYDESCRIPTION, $this->VALID_COMPANYMENUTEXT, $this->VALID_COMPANYACTIVATIONTOKEN, $this->VALID_COMPANYAPPROVED, $this->profile->getProfileId());
 
 		$company->update($this->getPDO());
 	}
@@ -314,8 +331,9 @@ class CompanyTest extends CrumbTrailTest {
 		$numRows = $this->getConnection()->getRowCount("company");
 
 		// Create a new Company and insert to into mySQL.
-		$tweet = new Company(null, $this->VALID_COMPANYNAME, $this->VALID_COMPANYEMAIL, $this->VALID_COMPANYPERMIT, $this->VALID_COMPANYLICENSE, $this->VALID_COMPANYATTN, $this->VALID_COMPANYSTREET1, $this->VALID_COMPANYSTREET2, $this->VALID_COMPANYCITY, $this->VALID_COMPANYSTATE, $this->VALID_COMPANYZIP, $this->VALID_COMPANYDESCRIPTION, $this->VALID_COMPANYMENUTEXT, $this->VALID_COMPANYACTIVATIONTOKEN, $this->VALID_COMPANYAPPROVED);
-		$tweet->insert($this->getPDO());
+		$tweet = new Company(null, $this->VALID_COMPANYNAME, $this->VALID_COMPANYEMAIL, $this->VALID_COMPANYPERMIT, $this->VALID_COMPANYLICENSE, $this->VALID_COMPANYATTN, $this->VALID_COMPANYSTREET1, $this->VALID_COMPANYSTREET2, $this->VALID_COMPANYCITY, $this->VALID_COMPANYSTATE, $this->VALID_COMPANYZIP, $this->VALID_COMPANYDESCRIPTION, $this->VALID_COMPANYMENUTEXT, $this->VALID_COMPANYACTIVATIONTOKEN, $this->VALID_COMPANYAPPROVED, $this->profile->getProfileId());
+
+		$company->insert($this->getPDO());
 
 		// Delete the Company from mySQL.
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("company"));
@@ -380,7 +398,7 @@ class CompanyTest extends CrumbTrailTest {
 		$numRows = $this->getConnection()->getRowCount("company");
 
 		// Create a new Company and insert to into mySQL.
-		$company = new Company(null, $this->VALID_COMPANYNAME, $this->VALID_COMPANYEMAIL, $this->VALID_COMPANYPERMIT, $this->VALID_COMPANYLICENSE, $this->VALID_COMPANYATTN, $this->VALID_COMPANYSTREET1, $this->VALID_COMPANYSTREET2, $this->VALID_COMPANYCITY, $this->VALID_COMPANYSTATE, $this->VALID_COMPANYZIP, $this->VALID_COMPANYDESCRIPTION, $this->VALID_COMPANYMENUTEXT, $this->VALID_COMPANYACTIVATIONTOKEN, $this->VALID_COMPANYAPPROVED);
+		$company = new Company(null, $this->VALID_COMPANYNAME, $this->VALID_COMPANYEMAIL, $this->VALID_COMPANYPERMIT, $this->VALID_COMPANYLICENSE, $this->VALID_COMPANYATTN, $this->VALID_COMPANYSTREET1, $this->VALID_COMPANYSTREET2, $this->VALID_COMPANYCITY, $this->VALID_COMPANYSTATE, $this->VALID_COMPANYZIP, $this->VALID_COMPANYDESCRIPTION, $this->VALID_COMPANYMENUTEXT, $this->VALID_COMPANYACTIVATIONTOKEN, $this->VALID_COMPANYAPPROVED, $this->profile->getProfileId());
 		$company->insert($this->getPDO());
 
 		// Get the data from mySQL, and check that fields match our expectations.
@@ -404,5 +422,6 @@ class CompanyTest extends CrumbTrailTest {
 		$this->assertEquals($pdoCompany->getCompanyMenuText(), $this->VALID_COMPANYMENUTEXT());
 		$this->assertEquals($pdoCompany->getCompanyActivationToken(), $this->VALID_COMPANYACTIVATIONTOKEN());
 		$this->assertEquals($pdoCompany->getCompanyApproved(), $this->VALID_COMPANYAPPROVED());
+		$this->assertEquals($pdoCompany->getProfileId(), $this->profile->getProfileId());
 	}
 }
