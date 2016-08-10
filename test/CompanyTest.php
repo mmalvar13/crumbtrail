@@ -210,7 +210,7 @@ class CompanyTest extends CrumbTrailTest {
 		$pdoCompany = Company::getCompanyByCompanyId($this->getPDO(), $company->getCompanyId());
 
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("company"));
-		// TODO Need a ProfileID line ???
+		// TODO Need a ProfileId line ???
 		$this->assertEquals($pdoCompany->getCompanyId(), $this->company->getCompanyId());
 		$this->assertEquals($pdoCompany->getCompanyName(), $this->company->getCompanyName());
 		$this->assertEquals($pdoCompany->getCompanyEmail(), $this->company->getCompanyEmail());
@@ -344,20 +344,20 @@ class CompanyTest extends CrumbTrailTest {
 	 * Test getting a Company by company name
 	 **/
 	public function testGetValidCompanyByCompanyName() {
-		// count the number of rows and save it for later
+		// Count the number of rows and save it for later.
 		$numRows = $this->getConnection()->getRowCount("company");
 
-		// create a new Company and insert to into mySQL
+		// Create a new Company and insert to into mySQL.
 		$tweet = new Company(null, $this->profile->getProfileId(), $this->VALID_TWEETCONTENT);
 		$tweet->insert($this->getPDO());
 
-		// grab the data from mySQL and enforce the fields match our expectations
+		// Grab the data from mySQL and enforce the fields match our expectations.
 		$results = Company::getCompanyByCompanyName($this->getPDO(), $company->getCompanyName());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("company"));
 		$this->assertCount(1, $results);
 		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\MMalvar13\\CrumbTrail\\Company", $results);
 
-		// grab the result from the array and validate it
+		// Grab the result from the array and validate it.
 		$pdoCompany = $results[0];
 		$this->assertEquals($pdoCompany->getProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoCompany->getCompanyName(), $this->VALID_COMPANYNAME);
@@ -367,31 +367,42 @@ class CompanyTest extends CrumbTrailTest {
 	 * Test getting a Company by content that does not exist
 	 **/
 	public function testGetInvalidCompanyByCompanyName() {
-		// grab a company by searching for a company name that does not exist
+		// Grab a company by searching for a company name that does not exist.
 		$tweet = Company::getCompanyByCompanyName($this->getPDO(), "you will find nothing");
 		$this->assertCount(0, $company);
 	}
 
 	/**
-	 * Test getting all Companies
+	 * Test getting all Companies.
 	 **/
 	public function testGetAllValidCompany() {
-		// count the number of rows and save it for later
+		// Count the number of rows and save it for later.
 		$numRows = $this->getConnection()->getRowCount("company");
 
-		// create a new Company and insert to into mySQL
-		$tweet = new Company(null, $this->profile->getProfileId(), $this->VALID_COMPANYNAME);
-		$tweet->insert($this->getPDO());
+		// Create a new Company and insert to into mySQL.
+		$company = new Company(null, $this->VALID_COMPANYNAME, $this->VALID_COMPANYEMAIL, $this->VALID_COMPANYPERMIT, $this->VALID_COMPANYLICENSE, $this->VALID_COMPANYATTN, $this->VALID_COMPANYSTREET1, $this->VALID_COMPANYSTREET2, $this->VALID_COMPANYCITY, $this->VALID_COMPANYSTATE, $this->VALID_COMPANYZIP, $this->VALID_COMPANYDESCRIPTION, $this->VALID_COMPANYMENUTEXT, $this->VALID_COMPANYACTIVATIONTOKEN, $this->VALID_COMPANYAPPROVED);
+		$company->insert($this->getPDO());
 
-		// grab the data from mySQL and enforce the fields match our expectations
+		// Get the data from mySQL, and check that fields match our expectations.
 		$results = Company::getAllCompanys($this->getPDO());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("company"));
 		$this->assertCount(1, $results);
 		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Mmalvar13\\CrumbTrail\\Company", $results);
 
-		// grab the result from the array and validate it
+		// Get the result from the array, and validate it.
 		$pdoCompany= $results[0];
-		$this->assertEquals($pdoTweet->getProfileId(), $this->profile->getProfileId());
-		$this->assertEquals($pdoTweet->getCompanyName(), $this->VALID_COMPANYNAME);
+		$this->assertEquals($pdoCompany->getCompanyEmail(), $this->VALID_COMPANYEMAIL());
+		$this->assertEquals($pdoCompany->getCompanyPermit(), $this->VALID_COMPANYPERMIT());
+		$this->assertEquals($pdoCompany->getCompanyLicense(), $this->VALID_COMPANYLICENSE());
+		$this->assertEquals($pdoCompany->getCompanyAttn(), $this->VALID_COMPANYATTN());
+		$this->assertEquals($pdoCompany->getCompanyStreet1(), $this->VALID_COMPANYSTREET1());
+		$this->assertEquals($pdoCompany->getCompanyStreet2(), $this->VALID_COMPANYSTREET2());
+		$this->assertEquals($pdoCompany->getCompanyCity(), $this->VALID_COMPANYCITY());
+		$this->assertEquals($pdoCompany->getCompanyState(), $this->VALID_COMPANYSTATE());
+		$this->assertEquals($pdoCompany->getCompanyZip(), $this->VALID_COMPANYZIP());
+		$this->assertEquals($pdoCompany->getCompanyDescription(), $this->VALID_COMPANYDESCRIPTION());
+		$this->assertEquals($pdoCompany->getCompanyMenuText(), $this->VALID_COMPANYMENUTEXT());
+		$this->assertEquals($pdoCompany->getCompanyActivationToken(), $this->VALID_COMPANYACTIVATIONTOKEN());
+		$this->assertEquals($pdoCompany->getCompanyApproved(), $this->VALID_COMPANYAPPROVED());
 	}
 }
