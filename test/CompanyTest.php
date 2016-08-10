@@ -30,12 +30,12 @@ class CompanyTest extends CrumbTrailTest {
 	 * name of the Company
 	 * @var string $VALID_COMPANYNAME
 	 **/
-	protected $VALID_COMPANYNAME = "PHPUnit test passing";
+	protected $VALID_COMPANYNAME = "Bob's hamburgers";
 	/**
 	 * name of the updated Company
 	 * @var string $VALID_COMPANYNAME2
 	 **/
-	protected $VALID_COMPANYNAME2 = "PHPUnit test still passing";
+	protected $VALID_COMPANYNAME2 = "Joe's tacos";
 
 	/**
 	 * email of the Company
@@ -171,126 +171,177 @@ class CompanyTest extends CrumbTrailTest {
 
 	/**
 	 * approved of the Company
-	 * @var string $VALID_COMPANYAPPROVED
+	 * @var int $VALID_COMPANYAPPROVED
 	 **/
 	protected $VALID_COMPANYAPPROVED = "0";
 	/**
 	 * approved of the updated Company
-	 * @var string $VALID_COMPANYAPPROVED2
+	 * @var int $VALID_COMPANYAPPROVED2
 	 **/
 	protected $VALID_COMPANYAPPROVED2 = "1";
 
 
 	/**
-	 * Create dependent objects before running each test.
+	 * Create dependent objects before running each test.  Company needs a Profile object.
 	 **/
 	public final function setUp() {
 		// run the default setUp() method first
 		parent::setUp();
 
 		// create and insert a Profile to own the test Company.
-		$this->profile = new Profile(null, "@phpunit", "test@phpunit.de", "+12125551212");
+		$this->profile = new Profile(null, "Bob Smith", "test@phpunit.de", "+12125551212", "0000000000000000000000000000000000000000000000000000000000004444", "00000000000000000000000000000022", "O", null, null);
 		$this->profile->insert($this->getPDO());
 	}
 
 
 	/**
-	 * test inserting a valid Company and verify that the actual mySQL data matches.
+	 * Test inserting a valid Company and verify that the actual mySQL data matches.
 	 **/
 	public function testInsertValidCompany() {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("company");
 
-		// create a new Company and insert to into mySQL
-		$company = new Company(null, $this->profile->getProfileId(), $this->VALID_COMPANYNAME);
+		// Create a new Company and insert to into mySQL
+		//					TODO Need this: $this->company->getCompanyId() or $this->profile->getProfileId() ???
+		$company = new Company(null, $this->VALID_COMPANYNAME, $this->VALID_COMPANYEMAIL, $this->VALID_COMPANYPERMIT, $this->VALID_COMPANYLICENSE, $this->VALID_COMPANYATTN, $this->VALID_COMPANYSTREET1, $this->VALID_COMPANYSTREET2, $this->VALID_COMPANYCITY, $this->VALID_COMPANYSTATE, $this->VALID_COMPANYZIP, $this->VALID_COMPANYDESCRIPTION, $this->VALID_COMPANYMENUTEXT, $this->VALID_COMPANYACTIVATIONTOKEN, $this->VALID_COMPANYAPPROVED);
 		$company->insert($this->getPDO());
 
-		// grab the data from mySQL and enforce the fields match our expectations
+		// Grab the data from mySQL and enforce the fields match our expectations
 		$pdoCompany = Company::getCompanyByCompanyId($this->getPDO(), $company->getCompanyId());
 
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("company"));
-		$this->assertEquals($pdoTweet->getProfileId(), $this->profile->getProfileId());
-		$this->assertEquals($pdoTweet->getTweetContent(), $this->VALID_COMPANYNAME);
+		// TODO Need a ProfileID line ???
+		$this->assertEquals($pdoCompany->getCompanyId(), $this->company->getCompanyId());
+		$this->assertEquals($pdoCompany->getCompanyName(), $this->company->getCompanyName());
+		$this->assertEquals($pdoCompany->getCompanyEmail(), $this->company->getCompanyEmail());
+		$this->assertEquals($pdoCompany->getCompanyPermit(), $this->company->getCompanyPermit());
+		$this->assertEquals($pdoCompany->getCompanyLicense(), $this->company->getCompanyLicense());
+		$this->assertEquals($pdoCompany->getCompanyAttn(), $this->company->getCompanyAttn());
+		$this->assertEquals($pdoCompany->getCompanyStreet1(), $this->company->getCompanyStreet1());
+		$this->assertEquals($pdoCompany->getCompanyStreet2(), $this->company->getCompanyStreet2());
+		$this->assertEquals($pdoCompany->getCompanyCity(), $this->company->getCompanyCity());
+		$this->assertEquals($pdoCompany->getCompanyState(), $this->company->getCompanyState());
+		$this->assertEquals($pdoCompany->getCompanyZip(), $this->company->getCompanyZip());
+		$this->assertEquals($pdoCompany->getCompanyDescription(), $this->company->getCompanyDescription());
+		$this->assertEquals($pdoCompany->getCompanyMenuText(), $this->company->getCompanyMenuText());
+		$this->assertEquals($pdoCompany->getCompanyActivationToken(), $this->company->getCompanyActivationToken());
+		$this->assertEquals($pdoCompany->getCompanyApproved(), $this->company->getCompanyApproved());
 	}
 
 	/**
-	 * test inserting a Tweet that already exists
-	 *
+	 * Test inserting a Company that already exists.
+	 * Create a Company with a non-null company id and watch it fail.
 	 * @expectedException PDOException
 	 **/
 	public function testInsertInvalidCompany() {
-		// create a Company with a non null company id and watch it fail
-		$tweet = new Company(DataDesignTest::INVALID_KEY, $this->profile->getProfileId(), $this->VALID_COMPANYNAME);
-		$tweet->insert($this->getPDO());
+		//   TODO Do we need a $this->profile->getProfileId() ???
+		$company = new Company(CrumbTrailTest::INVALID_KEY, $this->VALID_COMPANYNAME, $this->VALID_COMPANYEMAIL, $this->VALID_COMPANYPERMIT, $this->VALID_COMPANYLICENSE, $this->VALID_COMPANYATTN, $this->VALID_COMPANYSTREET1, $this->VALID_COMPANYSTREET2, $this->VALID_COMPANYCITY, $this->VALID_COMPANYSTATE, $this->VALID_COMPANYZIP, $this->VALID_COMPANYDESCRIPTION, $this->VALID_COMPANYMENUTEXT, $this->VALID_COMPANYACTIVATIONTOKEN, $this->VALID_COMPANYAPPROVED);
+
+		$company>insert($this->getPDO());
 	}
 
+
 	/**
-	 * test inserting a Company, editing it, and then updating it
+	 * Test inserting a Company, editing it, and then updating it.
 	 **/
 	public function testUpdateValidCompany() {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("company");
 
-		// create a new Company and insert to into mySQL
-		$company = new Company(null, $this->profile->getProfileId(), $this->VALID_COMPANYNAME);
+		// Create a new Company and insert to into mySQL.
+		$company = new Company(null, $this->VALID_COMPANYNAME, $this->VALID_COMPANYEMAIL, $this->VALID_COMPANYPERMIT, $this->VALID_COMPANYLICENSE, $this->VALID_COMPANYATTN, $this->VALID_COMPANYSTREET1, $this->VALID_COMPANYSTREET2, $this->VALID_COMPANYCITY, $this->VALID_COMPANYSTATE, $this->VALID_COMPANYZIP, $this->VALID_COMPANYDESCRIPTION, $this->VALID_COMPANYMENUTEXT, $this->VALID_COMPANYACTIVATIONTOKEN, $this->VALID_COMPANYAPPROVED);
+
 		$company->insert($this->getPDO());
 
-		// edit the Company and update it in mySQL
+		// Edit the Company and update it in mySQL.
 		$company->setCompanyName($this->VALID_COMPANYNAME2);
+		$company->setCompanyEmail($this->VALID_COMPANYEMAIL2);
+		$company->setCompanyPermit($this->VALID_COMPANYPERMIT2);
+		$company->setCompanyLicense($this->VALID_COMPANYLICENSE2);
+		$company->setCompanyAttn($this->VALID_COMPANYATTN2);
+		$company->setCompanyStreet1($this->VALID_COMPANYSTREET12);
+		$company->setCompanyStreet2($this->VALID_COMPANYSTREET22);
+		$company->setCompanyCity($this->VALID_COMPANYCITY2);
+		$company->setCompanyState($this->VALID_COMPANYSTATE2);
+		$company->setCompanyZip($this->VALID_COMPANYZIP2);
+		$company->setCompanyDescription($this->VALID_COMPANYDESCRIPTION2);
+		$company->setCompanyMenuText($this->VALID_COMPANYMENUTEXT2);
+		$company->setCompanyActivationToken($this->VALID_COMPANYACTIVATIONTOKEN2);
+		$company->setCompanyApproved($this->VALID_COMPANYAPPROVED2);
+
 		$company->update($this->getPDO());
 
-		// grab the data from mySQL and enforce the fields match our expectations
-		$pdoTweet = Company::getCompanyByCompanyId($this->getPDO(), $company->getCompanyId());
+		// Grab the data from mySQL and check that the fields match our (updated) expectations.
+		$pdoCompany = Company::getCompanyByCompanyId($this->getPDO(), $company->getCompanyId());
+
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("$company"));
-		$this->assertEquals($pdoCompany->getProfileId(), $this->profile->getProfileId());
+
+		// TODO Need?  $this->assertEquals($pdoCompany->getProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoCompany->getCompanyName(), $this->VALID_COMPANYNAME2);
+
+		$this->assertEquals($pdoCompany->getCompanyEmail(), $this->VALID_COMPANYEMAIL2());
+		$this->assertEquals($pdoCompany->getCompanyPermit(), $this->VALID_COMPANYPERMIT2());
+		$this->assertEquals($pdoCompany->getCompanyLicense(), $this->VALID_COMPANYLICENSE2());
+		$this->assertEquals($pdoCompany->getCompanyAttn(), $this->VALID_COMPANYATTN2());
+		$this->assertEquals($pdoCompany->getCompanyStreet1(), $this->VALID_COMPANYSTREET12());
+		$this->assertEquals($pdoCompany->getCompanyStreet2(), $this->VALID_COMPANYSTREET22());
+		$this->assertEquals($pdoCompany->getCompanyCity(), $this->VALID_COMPANYCITY2());
+		$this->assertEquals($pdoCompany->getCompanyState(), $this->VALID_COMPANYSTATE2());
+		$this->assertEquals($pdoCompany->getCompanyZip(), $this->VALID_COMPANYZIP2());
+		$this->assertEquals($pdoCompany->getCompanyDescription(), $this->VALID_COMPANYDESCRIPTION2());
+		$this->assertEquals($pdoCompany->getCompanyMenuText(), $this->VALID_COMPANYMENUTEXT2());
+		$this->assertEquals($pdoCompany->getCompanyActivationToken(), $this->VALID_COMPANYACTIVATIONTOKEN2());
+		$this->assertEquals($pdoCompany->getCompanyApproved(), $this->VALID_COMPANYAPPROVED2());
 	}
 
 	/**
-	 * test updating a Company that does not exist
+	 * Test updating a Company that does not exist.
 	 *
 	 * @expectedException PDOException
 	 **/
 	public function testUpdateInvalidCompany() {
-		// create a Company, try to update it without actually updating it and watch it fail
-		$company = new Company(null, $this->profile->getProfileId(), $this->VALID_COMPANYNAME);
+		// Create a Company, try to update it (without actually updating it), and watch it fail.
+		$company = new Company(null, $this->VALID_COMPANYNAME, $this->VALID_COMPANYEMAIL, $this->VALID_COMPANYPERMIT, $this->VALID_COMPANYLICENSE, $this->VALID_COMPANYATTN, $this->VALID_COMPANYSTREET1, $this->VALID_COMPANYSTREET2, $this->VALID_COMPANYCITY, $this->VALID_COMPANYSTATE, $this->VALID_COMPANYZIP, $this->VALID_COMPANYDESCRIPTION, $this->VALID_COMPANYMENUTEXT, $this->VALID_COMPANYACTIVATIONTOKEN, $this->VALID_COMPANYAPPROVED);
+
 		$company->update($this->getPDO());
 	}
 
 	/**
-	 * test creating a Company and then deleting it
+	 * Test creating a Company and then deleting it
 	 **/
 	public function testDeleteValidCompany() {
-		// count the number of rows and save it for later
+		// Count the number of rows and save it for later.
 		$numRows = $this->getConnection()->getRowCount("company");
 
-		// create a new Company and insert to into mySQL
-		$tweet = new Company(null, $this->profile->getProfileId(), $this->VALID_TWEETCONTENT, $this->VALID_TWEETDATE);
+		// Create a new Company and insert to into mySQL.
+		$tweet = new Company(null, $this->VALID_COMPANYNAME, $this->VALID_COMPANYEMAIL, $this->VALID_COMPANYPERMIT, $this->VALID_COMPANYLICENSE, $this->VALID_COMPANYATTN, $this->VALID_COMPANYSTREET1, $this->VALID_COMPANYSTREET2, $this->VALID_COMPANYCITY, $this->VALID_COMPANYSTATE, $this->VALID_COMPANYZIP, $this->VALID_COMPANYDESCRIPTION, $this->VALID_COMPANYMENUTEXT, $this->VALID_COMPANYACTIVATIONTOKEN, $this->VALID_COMPANYAPPROVED);
 		$tweet->insert($this->getPDO());
 
-		// delete the Company from mySQL
+		// Delete the Company from mySQL.
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("company"));
 		$tweet->delete($this->getPDO());
 
-		// grab the data from mySQL and enforce the Company does not exist
+		// Get the data from mySQL and enforce the Company does not exist.
 		$pdoTweet = Company::getCompanyByCompanyId($this->getPDO(), $company->getCompanyId());
 		$this->assertNull($pdoCompany);
 		$this->assertEquals($numRows, $this->getConnection()->getRowCount("company"));
 	}
 
+
 	/**
-	 * test deleting a Company that does not exist
+	 * Test deleting a Company that does not exist.
 	 *
 	 * @expectedException PDOException
 	 **/
 	public function testDeleteInvalidCompany() {
-		// create a Company and try to delete it without actually inserting it
+		// Create a Company, and try to delete it, without actually inserting it.
 		$tweet = new Company(null, $this->profile->getProfileId(), $this->VALID_TWEETCONTENT);
 		$tweet->delete($this->getPDO());
 	}
 
+
 	/**
-	 * test grabbing a Company by company name
+	 * Test getting a Company by company name
 	 **/
 	public function testGetValidCompanyByCompanyName() {
 		// count the number of rows and save it for later
@@ -313,7 +364,7 @@ class CompanyTest extends CrumbTrailTest {
 	}
 
 	/**
-	 * test grabbing a Company by content that does not exist
+	 * Test getting a Company by content that does not exist
 	 **/
 	public function testGetInvalidCompanyByCompanyName() {
 		// grab a company by searching for a company name that does not exist
@@ -322,7 +373,7 @@ class CompanyTest extends CrumbTrailTest {
 	}
 
 	/**
-	 * test grabbing all Companies
+	 * Test getting all Companies
 	 **/
 	public function testGetAllValidCompany() {
 		// count the number of rows and save it for later
