@@ -2,7 +2,9 @@
 namespace Edu\Cnm\CrumbTrail\Test;
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php")			// TODO Need this?
 
-use Edu\Cnm\Mmalvar13\CrumbTrail\{Company, Profile};			// TODO Check this path.
+use Edu\Cnm\Mmalvar13\CrumbTrail\{Company, Profile};						// TODO Check this path.
+
+// TODO Check the "invalid key" thing, from the CrumbTrailTest.php file.
 
 // grab the project test parameters
 require_once("CrumbTrailTest.php");
@@ -179,7 +181,6 @@ class CompanyTest extends CrumbTrailTest {
 	 * @var int $VALID_COMPANYAPPROVED2
 	 **/
 	protected $VALID_COMPANYAPPROVED2 = "1";
-
 
 	/**
 	 * The Profile of the person who created this account = companyAccountCreator,
@@ -386,7 +387,7 @@ class CompanyTest extends CrumbTrailTest {
 	 **/
 	public function testGetInvalidCompanyByCompanyName() {
 		// Grab a company by searching for a company name that does not exist.
-		$tweet = Company::getCompanyByCompanyName($this->getPDO(), "you will find nothing");
+		$tweet = Company::getCompanyByCompanyName($this->getPDO(), "This is not a company name");
 		$this->assertCount(0, $company);
 	}
 
@@ -405,6 +406,8 @@ class CompanyTest extends CrumbTrailTest {
 		$results = Company::getAllCompanys($this->getPDO());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("company"));
 		$this->assertCount(1, $results);
+
+		// TODO What is going on in the next line?
 		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Mmalvar13\\CrumbTrail\\Company", $results);
 
 		// Get the result from the array, and validate it.
