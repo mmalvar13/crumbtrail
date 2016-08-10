@@ -29,7 +29,9 @@ CREATE TABLE profile (
 
 	-- make sure of elements that must be unique
 	UNIQUE (profileEmail),
+	UNIQUE (profileAccessToken),
 	UNIQUE (profileActivationToken),
+
 
 	-- declare primary key of profileId
 	PRIMARY KEY (profileId)

@@ -788,7 +788,7 @@ public static function getProfileByProfileId(\PDO $pdo, int $profileId){
 	 **/
 	public function jsonSerialize() {
 		$fields = get_object_vars($this);
-		$fields["?????"] = $this->tweetDate->getTimestamp() * 1000; //THIS NEEDS TO BE FIXED
+//		$fields["?????"] = $this->tweetDate->getTimestamp() * 1000; //THIS NEEDS TO BE FIXED
 		return($fields);
 	}
 }
