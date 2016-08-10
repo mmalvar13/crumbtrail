@@ -4,7 +4,9 @@
 namespace Edu\Cnm\Mmalvar13\CrumbTrail\Test;  /*LOOK INTO THIS FOR ACCURACY */
 
 use Edu\Cnm\CrumbTrail\Test\CrumbTrailTest;
-use Edu\Cnm\Mmalvar13\CrumbTrail\Test\{Profile};
+use Edu\Cnm\Mmalvar13\CrumbTrail\Test\{
+	Profile
+};
 
 //grab the parameters for the test, go the the abstract test file
 require_once("CrumbTrailTest.php");
@@ -23,31 +25,27 @@ require_once(dirname(__DIR__) . "/public_html/php/classes/autoload.php"); //wtf 
  * @see Profile\
  * @author Lo-B <baca.loren@gmail.com>
  **/
-
 class ProfileTest extends CrumbTrailTest {
 
 	/*----------------------------Declare Protected State Variables ----------------*/
 
 	/**
 	 * Default input data set for name
-	 * @var string $VALID_PROFILENAME1     //why is this in all caps, what's up with this syntax?
+	 * @var string $VALID_PROFILENAME1 //why is this in all caps, what's up with this syntax?
 	 */
 	protected $VALID_PROFILENAME1 = "Name";
 
-/**
- * default input data for updated name
- * @var string  $VALID_PROFILENAME2
- */
-protected $VALID_PROFILENAME2 = "NameUpdated";
-
-
-
+	/**
+	 * default input data for updated name
+	 * @var string $VALID_PROFILENAME2
+	 */
+	protected $VALID_PROFILENAME2 = "NameUpdated";
 
 
 	/**
- * Default input data set for email
- * @var string $VALID_PROFILEEMAIL1
- */
+	 * Default input data set for email
+	 * @var string $VALID_PROFILEEMAIL1
+	 */
 	protected $VALID_PROFILEEMAIL1 = "email.cnm.edu";
 
 	/**
@@ -55,9 +53,6 @@ protected $VALID_PROFILENAME2 = "NameUpdated";
 	 * @var string $VALID_PROFILEEMAIL2
 	 */
 	protected $VALID_PROFILEEMAIL2 = "emailupdated.cnm.edu";
-
-
-
 
 
 	/**
@@ -73,8 +68,6 @@ protected $VALID_PROFILENAME2 = "NameUpdated";
 	protected $VALID_PROFILEPHONE2 = "2222222222";
 
 
-
-
 	/**
 	 * Default input data set profile access token 64 chars
 	 * @var string $VALID_PROFILEACCESSTOKEN1
@@ -86,9 +79,6 @@ protected $VALID_PROFILENAME2 = "NameUpdated";
 	 * @var string $VALID_PROFILEACCESSTOKEN2
 	 */
 	protected $VALID_PROFILEACCESSTOKEN2 = "9999999999999999999999999999999999999999999999999999999999994444";
-
-
-
 
 
 	/**
@@ -104,9 +94,6 @@ protected $VALID_PROFILENAME2 = "NameUpdated";
 	protected $VALID_PROFILEACTIVATIONTOKEN2 = "99999999999999999999999999999922";
 
 
-
-
-
 	/**
 	 * Default input data set profile type
 	 * @var string $VALID_PROFILETYPE1
@@ -118,9 +105,6 @@ protected $VALID_PROFILENAME2 = "NameUpdated";
 	 * @var string $VALID_PROFILETYPE2
 	 */
 	protected $VALID_PROFILETYPE2 = "o";
-
-
-
 
 
 	/**
@@ -136,13 +120,10 @@ protected $VALID_PROFILENAME2 = "NameUpdated";
 	protected $VALID_PROFILEHASH2 = null;
 
 
-
-
-
 	/**
- * Default input data set profile salt 64 chars
- * @var string $VALID_PROFILESALT1
- */
+	 * Default input data set profile salt 64 chars
+	 * @var string $VALID_PROFILESALT1
+	 */
 	protected $VALID_PROFILESALT1 = null;
 
 	/**
@@ -152,15 +133,13 @@ protected $VALID_PROFILENAME2 = "NameUpdated";
 	protected $VALID_PROFILESALT2 = null;
 
 
-
-
 	//AM I CORRECT IN ASSUMING i DONT NEED ANYTHING FOR THE PRIMARY KEY, AND i DONT HAVE ANY FOREIGN KEYS, SO NOTHING FOR THAT
 
 
 	/**
 	 * create dependent objects before running each test
 	 */
-	public final function setUp(){
+	public final function setUp() {
 		//run the default abstract setUp() method from parent first
 		parent::setUp();
 
@@ -169,21 +148,21 @@ protected $VALID_PROFILENAME2 = "NameUpdated";
 
 		//all I need to do is initialize the hash and salt needed for the profile
 
-
+		$password = "abc123";
 		//is there any issue with declaring the hash before the salt?
-		$this->VALID_PROFILEHASH1 = hash_pbkdf2("sha512", $password, $salt, 262144);
-		$this->VALID_PROFILEHASH2 = hash_pbkdf2("sha512", $password, $salt, 262144);
-
 		$this->VALID_PROFILESALT1 = bin2hex(random_bytes(16));
 		$this->VALID_PROFILESALT2 = bin2hex(random_bytes(16));
 
-		}
+		$this->VALID_PROFILEHASH1 = hash_pbkdf2("sha512", $password, $salt, 262144);
+		$this->VALID_PROFILEHASH2 = hash_pbkdf2("sha512", $password, $salt, 262144);
+
+	}
 
 
 	/**
 	 * test inserting a valid profile and verify that what's in mySQL matches what was input
 	 */
-	public function testInsertValidProfile(){
+	public function testInsertValidProfile() {
 		// count the number of rows....being selected?.....being input? what number of rows?......and save them for later
 		$numRows = $this->getConnection()->getRowCount("profile");  // so..get connection to SQL, and get the count of rows for a particular profile??
 
@@ -198,6 +177,7 @@ protected $VALID_PROFILENAME2 = "NameUpdated";
 
 		//$pdoProfile is a new declaration...then we call our PDO get method: getProfileByProfileId which requires 2 parameters:
 		//the first is a PDO object, the other is our profileId, which we use the accessor method we wrote (getProfileId) to get!
+		// $pdoProfile now contains all the information for our dummy profile
 		$pdoProfile = Profile::getProfileByProfileId($this->getPDO(), $profile->getProfileId());
 
 		//make assertions here....be assertive
@@ -209,8 +189,30 @@ protected $VALID_PROFILENAME2 = "NameUpdated";
 		//on right right we have the updated row count of the object profile after having inserted a dummy profile
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
 
+		//the following will all best testing to match that the data in the database matches the data we thought we put in the database
+		$this->assertEquals($pdoProfile->getProfileName(), $this->VALID_PROFILENAME1);
+		$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_PROFILEEMAIL1);
+		$this->assertEquals($pdoProfile->getProfilePhone(), $this->VALID_PROFILEPHONE1);
+		$this->assertEquals($pdoProfile->getProfileAccessToken(), $this->VALID_PROFILEACCESSTOKEN1);
+		$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_PROFILEACTIVATIONTOKEN1);
+		$this->assertEquals($pdoProfile->getProfileType(), $this->VALID_PROFILETYPE1);
+		$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_PROFILEHASH1);
+		$this->assertEquals($pdoProfile->getProfileSalt(), $this->VALID_PROFILESALT1);
 	}
+
+
+	/**
+	 * test inserting a profile that already exists
+	 * @expectedException \PDOException
+	 **/
+	public function testInsertInvalidProfile(){
+		//create a profile with a non-null profileId and watch it fail. Uze the INVALID_KEY we defined inside the abstract class CrumbTrailTest
+		//here we are calling an object ($profile) based on the Profile class and feeding it initial values. BUT whereas normally we would define the primary key as NULL
+		//this time we are giving it a value (INVALID_KEY)
+		$profile = new Profile(CrumbTrailTest::INVALID_KEY, $this->VALID_PROFILENAME1, $this->VALID_PROFILEEMAIL1, $this->VALID_PROFILEPHONE1, $this->VALID_PROFILEACCESSTOKEN1, $this->VALID_PROFILEACTIVATIONTOKEN1, $this->VALID_PROFILEHASH1, $this->VALID_PROFILESALT1);
+
 	}
+}
 
 
 
