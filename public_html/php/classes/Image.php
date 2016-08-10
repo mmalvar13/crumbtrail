@@ -376,4 +376,4 @@ class Image implements \JsonSerializable {
 		return($fields);
 	}
 }
-	
+//The end of Image Class
