@@ -308,6 +308,35 @@ class Image implements \JsonSerializable {
 	 * @throws \PDOException whe mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
+	public static function getImageByImageFileName(\PDO $pdo, string $imageFileName) {
+		//sanitize the description before searching
+		$imageFileName = trim($imageFileName);
+		$imageFileName = filter_var($imageFileName, FILTER_SANITIZE_STRING);
+		if(empty($imageFileName) === true) {
+			throw(new \PDOException("image file name is invalid"));
+		}
+		//query template
+		$query = "SELECT imageId, imageCompanyId, imageFileType, imageFileName FROM image WHERE imageFileName LIKE :imageFileName";
+		$statement = $pdo->prepare($query);
+		//bind the image file name to the place holder in the template
+		$imageFileName = "%imageFileName%";
+		$parameters = ["imageFileName" => $imageFileName];
+		$statement->execute($parameters);
+		//array of images?
+		$imageFileName = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$image = new Image($row["imageId"], $row["imageCompanyId"], $row["imageFileType"], ["imageFileName"]);
+				$images[$image->key()] =$image;
+				$images->next();
+			} catch(\Exception $exception) {
+				//if the row can't be converted,rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($images);
+	}
 
 }
 	
