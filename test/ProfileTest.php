@@ -4,9 +4,7 @@
 namespace Edu\Cnm\Mmalvar13\CrumbTrail\Test;  /*LOOK INTO THIS FOR ACCURACY */
 
 use Edu\Cnm\CrumbTrail\Test\CrumbTrailTest;
-use Edu\Cnm\Mmalvar13\CrumbTrail\Test\{
-	Profile
-};
+use Edu\Cnm\Mmalvar13\CrumbTrail\Test\{Profile};
 
 //grab the parameters for the test, go the the abstract test file
 require_once("CrumbTrailTest.php");
@@ -210,6 +208,9 @@ class ProfileTest extends CrumbTrailTest {
 		//here we are calling an object ($profile) based on the Profile class and feeding it initial values. BUT whereas normally we would define the primary key as NULL
 		//this time we are giving it a value (INVALID_KEY)
 		$profile = new Profile(CrumbTrailTest::INVALID_KEY, $this->VALID_PROFILENAME1, $this->VALID_PROFILEEMAIL1, $this->VALID_PROFILEPHONE1, $this->VALID_PROFILEACCESSTOKEN1, $this->VALID_PROFILEACTIVATIONTOKEN1, $this->VALID_PROFILEHASH1, $this->VALID_PROFILESALT1);
+
+		//now insert it into SQL and hope it throws an error!
+		$profile->insert($this->getPDO());  //What PDO are we exactly getting here??
 
 	}
 }
