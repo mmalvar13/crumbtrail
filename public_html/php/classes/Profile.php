@@ -92,7 +92,7 @@ private $profileName;
 	 * @throws \TypeError if data types violate type hints
 	 * @throws \Exception if some other exception occurs
 	 */
-	public function __construct(int $newProfileId = null, string $newProfileName, string $newProfileEmail, string $newProfilePhone, string $newProfileAccessToken, string $newProfileActivationToken, string $newProfileType, string $newProfileSalt, string $newProfileHash) {
+	public function __construct(int $newProfileId = null, string $newProfileName, string $newProfileEmail, string $newProfilePhone, string $newProfileAccessToken, string $newProfileActivationToken, string $newProfileType, string $newProfileHash, string $newProfileSalt) {
 
 		//try statements
 		try{
@@ -104,8 +104,9 @@ private $profileName;
 			$this->setProfileAccessToken($newProfileAccessToken);
 			$this->setProfileActivationToken($newProfileActivationToken);
 			$this->setProfileType($newProfileType);
-			$this->setProfileSalt($newProfileSalt);
 			$this->setProfileHash($newProfileHash);
+			$this->setProfileSalt($newProfileSalt);
+
 		} catch(\InvalidArgumentException $invalidArgument) {
 			// rethrow the exception to the caller
 			throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));

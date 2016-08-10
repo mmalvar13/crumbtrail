@@ -148,13 +148,13 @@ class ProfileTest extends CrumbTrailTest {
 
 		//all I need to do is initialize the hash and salt needed for the profile
 
-
+		$password = "abc123";
 		//is there any issue with declaring the hash before the salt?
-		$this->VALID_PROFILEHASH1 = hash_pbkdf2("sha512", $password, $salt, 262144);
-		$this->VALID_PROFILEHASH2 = hash_pbkdf2("sha512", $password, $salt, 262144);
-
 		$this->VALID_PROFILESALT1 = bin2hex(random_bytes(16));
 		$this->VALID_PROFILESALT2 = bin2hex(random_bytes(16));
+
+		$this->VALID_PROFILEHASH1 = hash_pbkdf2("sha512", $password, $salt, 262144);
+		$this->VALID_PROFILEHASH2 = hash_pbkdf2("sha512", $password, $salt, 262144);
 
 	}
 
@@ -206,8 +206,10 @@ class ProfileTest extends CrumbTrailTest {
 	 * @expectedException \PDOException
 	 **/
 	public function testInsertInvalidProfile(){
-		//create a profile with a non-null profileId and watch it BURN
-		$profile = new Profile()
+		//create a profile with a non-null profileId and watch it fail. Uze the INVALID_KEY we defined inside the abstract class CrumbTrailTest
+		//here we are calling an object ($profile) based on the Profile class and feeding it initial values. BUT whereas normally we would define the primary key as NULL
+		//this time we are giving it a value (INVALID_KEY)
+		$profile = new Profile(CrumbTrailTest::INVALID_KEY, $this->VALID_PROFILENAME1, $this->VALID_PROFILEEMAIL1, $this->VALID_PROFILEPHONE1, $this->VALID_PROFILEACCESSTOKEN1, $this->VALID_PROFILEACTIVATIONTOKEN1, $this->VALID_PROFILEHASH1, $this->VALID_PROFILESALT1);
 
 	}
 }
