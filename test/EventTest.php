@@ -2,7 +2,7 @@
 namespace Edu\Cnm\CrumbTrail\Test;
 
 use Edu\Cnm\Crumbtrail\Event;
-use Edu\Cnm\mmalvar13\CrumbTrail\{Truck, Tweet}; //is this what i put here??
+use Edu\Cnm\mmalvar13\CrumbTrail\{Truck, //Event}; //is this what i put here??
 
 //grab the project test parameters
 require_once("CrumbTrailTest.php");
@@ -57,7 +57,7 @@ class EventTest extends CrumbTrailTest{
 
 		//calculate the date this event starts (just use the time the unit was setup
 		$this->VALID_EVENTSTART = new \DateTime();
-		//calculate the date this event ends?? do i?? i have no idea.
+		//calculate the date this event ends?? do i?? i have no idea. what is this for??
 	}
 
 	/**
@@ -71,5 +71,32 @@ class EventTest extends CrumbTrailTest{
 		$event = new Event(null, $this->truck->getTruckId(), $this->VALID_EVENTEND, $this->VALID_EVENTLOCATION,$this->VALID_EVENTSTART);
 		$event->insert($this->getPDO());
 	}
+
+	/**
+	 * test inserting an Event that already exists
+	 * @expectedException PDOException
+	 **/
+	public function testInsertInvalidEvent(){
+		//create an Event with a non null event id and watch it fail
+		$event = new Event(CrumbTrailTest::INVALID_KEY, $this->truck->getTruckId(), $this->VALID_EVENTEND, $this->VALID_EVENTLOCATION, $this->VALID_EVENTSTART);
+		$event->insert($this->getPDO());
+	}
+
+	/**
+	 * test inserting an Event, editing it, and then updating it
+	 **/
+	public function testUpdateValidEvent(){
+		//count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("event");
+
+		//create a new Event and insert it into mySQL
+		$event = new Event(null, $this->truck->getTruckId(), $this->VALID_EVENTEND, $this->VALID_EVENTLOCATION, $this->VALID_EVENTSTART);
+		$event->insert($this->getPDO());
+
+		//edit the Event and update it in mySQL
+		$event->setEve
+	}
+
+}
 }
 

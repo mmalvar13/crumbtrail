@@ -7,7 +7,7 @@ require_once("autoload.php"); //idk
  * What do I explain here? Welcome to the Event class!
  *
  **/
-class Event implements \JsonSerializable{ //implement JsonSerializable??
+class Event implements \JsonSerializable { //implement JsonSerializable??
 	use ValidateDate; //indeed
 	/**
 	 * id for this event; this is the primary key
@@ -144,7 +144,7 @@ class Event implements \JsonSerializable{ //implement JsonSerializable??
 	public function setEventEnd(\DateTime $newEventEnd) {//why is this greyed out? what data type do i put?
 		if($newEventEnd = null) {
 			throw(new \InvalidArgumentException("Must enter the time length of the event"));
-		}elseif($newEventEnd < $this->eventStart){
+		} elseif($newEventEnd < $this->eventStart) {
 			throw(new \RangeException("Start time cannot be greater than end time")); //is this correct??
 		}
 		try {
@@ -162,8 +162,8 @@ class Event implements \JsonSerializable{ //implement JsonSerializable??
 	 * accessor method for event location
 	 * @return point value of event location //HOW DO I WRITE OUT THESE POINT DATA TYPES??
 	 **/
-	public function getEventLocation(){
-		return($this->eventLocation);
+	public function getEventLocation() {
+		return ($this->eventLocation);
 	}
 
 	/**
@@ -173,13 +173,12 @@ class Event implements \JsonSerializable{ //implement JsonSerializable??
 	 **/
 
 
-
 	/**
 	 * accessor method for event Start
 	 * @return \DateTime value of event start
 	 **/
-	public function getEventStart(){
-		return($this->eventStart);
+	public function getEventStart() {
+		return ($this->eventStart);
 	}
 
 	/**
@@ -205,9 +204,9 @@ class Event implements \JsonSerializable{ //implement JsonSerializable??
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
-	public function insert(\PDO $pdo){
+	public function insert(\PDO $pdo) {
 		//enforce the eventId is null(i.e. don't insert an event that already exists)
-		if($this->eventId !== null){
+		if($this->eventId !== null) {
 			throw(new \PDOException("not a new event"));
 		}
 		//create query template
@@ -218,7 +217,7 @@ class Event implements \JsonSerializable{ //implement JsonSerializable??
 		$formattedEventStart = $this->eventStart->format("Y-m-d H:i:s");
 		$formattedEventEnd = $this->eventEnd->format("Y-m-d H:i:s");
 
-		$parameters=["eventTruckId"=>$this->eventTruckId, "eventEnd"=>$formattedEventEnd, "eventLocation"=>$this->eventLocation,"eventStart"=>$formattedEventStart];
+		$parameters = ["eventTruckId" => $this->eventTruckId, "eventEnd" => $formattedEventEnd, "eventLocation" => $this->eventLocation, "eventStart" => $formattedEventStart];
 		$statement->execute($parameters);
 
 		//update the null eventId with what mySQL just gave us
@@ -231,9 +230,9 @@ class Event implements \JsonSerializable{ //implement JsonSerializable??
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
-	public function delete(\PDO $pdo){
+	public function delete(\PDO $pdo) {
 		//enforce the eventId is not null(i.e. don't delete a tweet that hasn't been inserted)
-		if($this->eventId === null){
+		if($this->eventId === null) {
 			throw(new \PDOException("unable to delete an event that does not exist"));
 		}
 		//create a query template
@@ -241,7 +240,7 @@ class Event implements \JsonSerializable{ //implement JsonSerializable??
 		$statement = $pdo->prepare($query);
 
 		//bind the member variables to the place holder in the template
-		$parameters = ["eventId"=>$this->eventId];
+		$parameters = ["eventId" => $this->eventId];
 		$statement->execute($parameters);
 	}
 
@@ -251,9 +250,9 @@ class Event implements \JsonSerializable{ //implement JsonSerializable??
 	 * @throws |\PDOException if mySQL related errors occur
 	 * @throws \TypeError is $pdo is not a PDO connection object
 	 **/
-	public function update(\PDO $pdo){
+	public function update(\PDO $pdo) {
 		//enforce the eventId is not null(i.e. don't update an event that hasn't been inserted)
-		if($this->eventId === null){
+		if($this->eventId === null) {
 			throw(new \PDOException("unable to update an event that does not exist"));
 		}
 		//create a query template
@@ -263,7 +262,7 @@ class Event implements \JsonSerializable{ //implement JsonSerializable??
 		//bind the member variables to the place holders in the template
 //		$formattedDate = $this->eventId->format("Y-m-d H:i:s"); do I add this like this?
 
-		$parameters = ["eventTruckid" => $this->eventTruckId, "eventEnd" => $this->eventEnd, "eventLocation" => $this->eventLocation, "eventStart" => $this->eventStart, "eventId"=>$this->eventId]; //do i assign start/end to formatted date?? do i add eventId here?
+		$parameters = ["eventTruckid" => $this->eventTruckId, "eventEnd" => $this->eventEnd, "eventLocation" => $this->eventLocation, "eventStart" => $this->eventStart, "eventId" => $this->eventId]; //do i assign start/end to formatted date?? do i add eventId here?
 
 		$statement->execute($parameters);
 	}
@@ -278,9 +277,9 @@ class Event implements \JsonSerializable{ //implement JsonSerializable??
 	 * @throws \TypeError when variables are not the correct data type
 	 */
 
-	public static function getEventbyEventId(\PDO $pdo, int $eventId){
+	public static function getEventbyEventId(\PDO $pdo, int $eventId) {
 		//sanitize the eventId before searching by checking that it is a positive number
-		if($eventId <= 0){
+		if($eventId <= 0) {
 			throw(new \PDOException("eventId is not positive"));
 		}
 
@@ -300,11 +299,11 @@ class Event implements \JsonSerializable{ //implement JsonSerializable??
 			if($row !== false) {
 				$event = new Event($row["eventId"], $row["eventTruckId"], $row["eventEnd"], $row["eventLocation"], $row["eventStart"]);
 			}
-		}catch(\Exception $exception){
+		} catch(\Exception $exception) {
 			//if the row couldn't be converted, rethrow it
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
-		return($event);
+		return ($event);
 	}
 
 	/**
@@ -317,9 +316,9 @@ class Event implements \JsonSerializable{ //implement JsonSerializable??
 	 * @throws \TypeError when variables are not the correct data type
 	 * @throws \RangeException when out of range //do i need to add this here? the example didn't.
 	 **/
-	public static function getEventbyEventTruckId(\PDO $pdo, int $eventTruckId){
+	public static function getEventbyEventTruckId(\PDO $pdo, int $eventTruckId) {
 		//sanitize the truck id before searching by making sure it is positive
-		if($eventTruckId <= 0){
+		if($eventTruckId <= 0) {
 			throw(new \RangeException("event truck id must be positive"));
 		}
 		//create query template
@@ -327,23 +326,23 @@ class Event implements \JsonSerializable{ //implement JsonSerializable??
 		$statement = $pdo->prepare($query);
 
 		//bind the event truck id to the  place holder in the template
-		$parameters = ["eventTruckId"=>$eventTruckId];
+		$parameters = ["eventTruckId" => $eventTruckId];
 		$statement->execute($parameters);
 
 		//build an array of events WHY DO I BUILD AN ARRAY HERE??? WE DIDN'T IN THE LAST ONE. NEVERMIND I THINK I KNOW.
 		$events = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
-		while(($row = $statement->fetch())!== false){
-			try{
+		while(($row = $statement->fetch()) !== false) {
+			try {
 				$event = new Event($row["eventId"], $row["eventTruckId"], $row["eventEnd"], $row["eventLocation"], $row["eventStart"]);
 				$events[$events->key()] = $event;
 				$events->next();
-			} catch(\Exception $exception){
+			} catch(\Exception $exception) {
 				//if the row couldn't be converted rethrow it
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
 		}
-		return($events);
+		return ($events);
 	}
 
 	/**
@@ -354,8 +353,8 @@ class Event implements \JsonSerializable{ //implement JsonSerializable??
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
-	public static function getEventbyEventLocation(\PDO $pdo, float $eventLocation){
-		if($eventLocation < [-90,-180] || $eventLocation > [90, 180]){ //is this how i write the coordinates??
+	public static function getEventbyEventLocation(\PDO $pdo, float $eventLocation) {
+		if($eventLocation < [-90, -180] || $eventLocation > [90, 180]) { //is this how i write the coordinates??
 			throw(new \RangeException("this coordinate is not within the allowed range"));
 		}
 		//create query template
@@ -369,33 +368,67 @@ class Event implements \JsonSerializable{ //implement JsonSerializable??
 		//build an array of events
 		$events = new \SplFixedArray(($statement->rowCount()));
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
-		while(($row = $statement->fetch()) !== false){
-			try{
+		while(($row = $statement->fetch()) !== false) {
+			try {
 				$event = new Event($row["eventId"], $row["eventTruckId"], $row["eventEnd"], $row["eventLocation"], $row["eventStart"]);
 				$events[$events->key()] = $event;
 				$events->next();
-			} catch(\Exception $exception){
+			} catch(\Exception $exception) {
 				//if the row couldn't be converted, rethrow it
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
-				}
 			}
-			return($events);
+		}
+		return ($events);
+	}
+
+	/**
+	 * gets the event by the eventId and the eventTruckId
+	 * @param \PDO $pdo PDO connection object
+	 * @param int $eventId event id to search for
+	 * @param int $eventTruckId search for truck id that attended the event
+	 * @return event|null event if found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when values are not the correct data type
+	 **/
+	public static function getEventbyEventIdandEventTruckId(\PDO $pdo, int $eventId, int $eventTruckId) {
+		//sanitize the ids before searching by checking that they are positive
+		if($eventId <= 0 || $eventTruckId <= 0) {
+			throw(new \RangeException("eventId and eventTruckId must be positive"));
+		}
+		//create query template
+		$query = "SELECT eventId, eventTruckId FROM event WHERE eventId = :eventId AND eventTruckId = :eventTruckId";
+		$statement = $pdo->prepare($query);
+
+		//bind eventId and eventTruckId to the placeholder in the query
+		$parameters = ["eventId" => $eventId, "eventTruckId" => $eventTruckId];
+		$statement->execute($parameters);
+
+		//grab the event from mySQL
+		try {
+			$event = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$event = new Event($row["eventId"], $row["eventTruckId"]);
+			}
+		}catch
+			(\Exception $exception){
+				//if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+			return ($event);
 		}
 
-		/**
-		 * DO I NEED GETFOOBYBAR FOR EVENTEND AND EVENTSTART?? DO I EVEN NEED IT FOR EVENTLOCATION
-		 **/
-
-		/**
-		 * formats the state variables for JSON serialization
-		 * @return array resulting state variables to serialize
-		 **/
-		public function jsonSerialize() {
-			$fields = get_object_vars($this);
-			$fields["eventEnd"] = $this->eventEnd->getTimestamp() * 1000;
-			$fields["eventStart"] = $this->eventStart->getTimestamp() * 1000; //do i put two separate lines for this?
-			return($fields);
-		}
+	/**
+	 * formats the state variables for JSON serialization
+	 * @return array resulting state variables to serialize
+	 **/
+	public function jsonSerialize() {
+		$fields = get_object_vars($this);
+		$fields["eventEnd"] = $this->eventEnd->getTimestamp() * 1000;
+		$fields["eventStart"] = $this->eventStart->getTimestamp() * 1000; //do i put two separate lines for this?
+		return ($fields);
+	}
 
 
 }
