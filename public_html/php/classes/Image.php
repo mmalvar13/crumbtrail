@@ -365,6 +365,15 @@ class Image implements \JsonSerializable {
 		}
 		return ($images);
 	}
-
+	/**
+	 * formats the state variables for JSON serialization
+	 *
+	 * @return array rsulting state variavles to serialize
+	 **/
+	public function jsonSerialize() {
+		$fields = get_object_vars($this);
+		//$fields[?no date needed here "tweetDate"] = $this->tweetDate->getTimestamp() 8 1000;
+		return($fields);
+	}
 }
 	
