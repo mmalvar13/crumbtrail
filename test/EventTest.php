@@ -141,6 +141,18 @@ class EventTest extends CrumbTrailTest{
 	public function testDeleteValidTweet(){
 		//count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("event");
+		//create a new Event and insert it into mySQL
+		$event = new Event(null, $this->truck->getTruckId(), $this->VALID_EVENTEND, $this->VALID_EVENTLOCATION, $this->VALID_EVENTSTART);
+		$event->insert($this->getPDO());
+
+		//deletes the Event from mySQL
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("event"));
+		$event->delete($this->getPDO());
+
+		//grab the data from mySQL and enforce the Event does not exist
+		$pdoEvent = Event:: getEventbyEventId($this->getPDO(), $event->getEventId());
+		$this->assertNull($pdoEvent);
+		$this->assertEquals($numRows, $this->getConnection()->getRowCount("event"));
 	}
 
 
