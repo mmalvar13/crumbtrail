@@ -1,7 +1,7 @@
 <?php
-namespace Edu\Cnm\Crumbtrail\Test;
+namespace Edu\Cnm\Mmalvar13\CrumbTrail\Test;
 
-use Edu\Cnm\Crumbtrail\{Image, Company};
+use Edu\Cnm\CrumbTrail\{Image, Company};
 //why is company greyed out?
 
 //grab the project test parameters
@@ -78,7 +78,7 @@ class ImageTest extends CrumbTrailTest {
 	/**
 	 * test inserting an Image that already exists
 	 *
-	 * @expectedException PDOException
+	 * @expectedException \PDOException
 	 **/
 
 	public function testInsertInvalidImage() {
@@ -111,6 +111,16 @@ class ImageTest extends CrumbTrailTest {
 		$this->assertEquals($pdoImage->getImageFileType(), $this->VALID_IMAGEFILETYPE2);
 	}
 	/**
+	 * test updating and image that does not exist
+	 *
+	 * @expectedException \PDOException
+	 **/
+	public function testUpdateInvalidImage() {
+		// create an Image, try to update it without actually updating it, watch if fail.
+		$image = new Image(null, $this->company->getCompanyId(), $this->VALID_IMAGEFILENAME,$this->VALID_IMAGEFILETYPE);
+		$image->update($this->getPDO());
+	}
+	/**
 	 * test creating an image and deleting it
 	 */
 	public function testDeleteValidImage() {
@@ -123,7 +133,21 @@ class ImageTest extends CrumbTrailTest {
 
 		//delete the image from mySQL
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("image"));
+		$this->delete($this->getPDO());
 
+		//grab the data from mySQL and enforce that the Image does not exist.
+		$pdoImage = Image::getImageByImageId($this->getPDO(), $image->getImageId());
+		$this->assertNull($pdoImage);
+		$this->assertEquals($numRows, $this->getConnection()->getRowCount("image"));
 	}
-
+	/**
+	 * test deleting an Image that does not exist
+	 *
+	 * @expectedException \PDOException
+	 **/
+	public function testDeleteInvalidImage() {
+		//create an Image and try to delete it without actually inserting it
+		$image = new Image(null, $this->company->getCompanyId(), $this->VALID_IMAGEFILENAME, $this->VALID_IMAGEFILETYPE);
+		$image->delete($this->getPDO());
+	}
 }
