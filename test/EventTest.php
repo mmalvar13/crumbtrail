@@ -1,8 +1,8 @@
 <?php
-namespace Edu\Cnm\CrumbTrail\Test;
+namespace Edu\Cnm\Mmalvar13\CrumbTrail\Test;
 
-use Edu\Cnm\Crumbtrail\Event;
-use Edu\Cnm\mmalvar13\CrumbTrail\{Truck, //Event}; //is this what i put here??
+use Edu\Cnm\Crumbtrail\Test\CrumbTrailTest;
+use Edu\Cnm\mmalvar13\CrumbTrail\{Truck, Event}; //is this what i put here??
 
 //grab the project test parameters
 require_once("CrumbTrailTest.php");
@@ -31,6 +31,13 @@ class EventTest extends CrumbTrailTest{
 	 * @var \DateTime $VALID_EVENTEND
 	 **/
 	protected $VALID_EVENTEND = null;
+
+	/**
+	 * DO WE NEED THIS???
+	 * timestamp of updated end of this event;
+	 *@var \DateTime $VALID_EVENTEND
+	 */
+	protected $VALID_EVENTEND2 = "event end two is passing sorry no humor, this is SERIOUS";
 
 	/**
 	 * timestamp of the start of this Event; this starts as null and is assigned later
@@ -92,19 +99,32 @@ class EventTest extends CrumbTrailTest{
 
 	/**
 	 * test inserting an Event, editing it, and then updating it
+	 *
+	 * Here, what can we update? in the tweet example it gave tweet content as being updated. for our event is there anything we can actually update? i guess we can update the event end, by stopping it before. but updating the event location and the event start would just create new events. right?
 	 **/
 	public function testUpdateValidEvent(){
 		//count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("event");
 
 		//create a new Event and insert it into mySQL
-		$event = new Event(null, $this->truck->getTruckId(), $this->VALID_EVENTEND, $this->VALID_EVENTLOCATION, $this->VALID_EVENTSTART);
+		$event = new Event(null, $this->truck->getTruckId(), $this->VALID_EVENTEND, $this->VALID_EVENTLOCATION, $this->VALID_EVENTSTART); //is null supposed to represent the primary key here?
 		$event->insert($this->getPDO());
 
 		//edit the Event and update it in mySQL
-		$event->setEve
+		$event->setEventEnd($this->VALID_EVENTEND2);
+		$event->update($this->getPDO());
+
+		//grab the data from mySQL and enforce the fields match our expectations
+		$pdoEvent = Event::getEventbyEventId($this->getPDO(), $event->getEventId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("event"));
+		$this->assertEquals($pdoEvent->getTruckId(), $this->truck->getTruckId());
+		$this->assertEquals($pdoEvent->getEventEnd(), $this->VALID_EVENTEND2);
+		$this->assertEquals($pdoEvent->getEventLocation(), $this->VALID_EVENTLOCATION);
+		$this->assertEquals($pdoEvent->getEventStart(), $this->VALID_EVENTSTART);
 	}
 
-}
+
+
+
 }
 
