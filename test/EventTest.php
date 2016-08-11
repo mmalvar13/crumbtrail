@@ -138,7 +138,7 @@ class EventTest extends CrumbTrailTest{
 	 * test creating an Event and then deleting it
 	 *
 	 **/
-	public function testDeleteValidTweet(){
+	public function testDeleteValidEvent(){
 		//count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("event");
 		//create a new Event and insert it into mySQL
