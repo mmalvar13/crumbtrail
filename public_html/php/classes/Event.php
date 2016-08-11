@@ -491,7 +491,7 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 //		$parameters = ["eventStart"=> : $eventStart, "eventEnd"=> $eventEnd];
 
 
-	}
+
 
 
 	/**
