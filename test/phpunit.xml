@@ -9,12 +9,12 @@
 
 		?/ TODO Does the list of test files here need to be in a certain order??? Should it be in the same order the tables are created in SQL maybe?
 			<file>ProfileTest.php</file>
-			<file>CompanyTest.php</file>
-			<file>EmployTest.php</file>
-			<file>EventTest.php</file>
-			<file>ImageTest.php</file>
-			<file>PointTest.php</file>
-			<file>TruckTest.php</file>
+			<!-- <file>CompanyTest.php</file>
+			<!-- <file>EmployTest.php</file> -->
+			<!-- <file>EventTest.php</file> -->
+			<!-- <file>ImageTest.php</file> -->
+			<!-- <file>PointTest.php</file> -->
+			<!-- <file>TruckTest.php</file> -->
 			</testsuite>
 	</testsuites>
 	<filter>
