@@ -42,7 +42,7 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 	 * @param int|null $newEventId id of this Event or null if new Event
 	 * @param int $newEventTruckId id of the Truck that is attending this Event
 	 * @param \DateTime|string $newEventEnd date and time Event is over //do i add "or null if set to current date and time"?
-	 * @geography point $newEventLocation gps coordinates of Event //how do i write this? I added @geography again
+	 * @param float $newEventLocation gps coordinates of Event //how do i write this? I added @geography again
 	 * @param \DateTime|string|null $newEventStart data and time Event starts or null if set to current date and time //i added null here since the date/time would not have been set yet. is this right?
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \RangeException if data values are out of bounds (e.g. Strings too long, negative integers)
@@ -141,10 +141,10 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 	 * @throws \InvalidArgumentException if $newEventEnd is null
 	 * @throws \RangeException if $newEventEnd is greater than the eventStart datetime
 	 **/
-	public function setEventEnd(\DateTime $newEventEnd) {//why is this greyed out? what data type do i put?
+	public function setEventEnd(\DateTime $newEventEnd) {//why is this greyed out? what data type do i put? IT SAYS NEWEVENTEND IS OVERWRITTEN IMMEDIATELY
 		if($newEventEnd = null) {
 			throw(new \InvalidArgumentException("Must enter the time length of the event"));
-		} elseif($newEventEnd < $this->eventStart) {
+		} elseif($newEventEnd <= $this->eventStart) {
 			throw(new \RangeException("Start time cannot be greater than end time")); //is this correct??
 		}
 		try {
@@ -436,14 +436,14 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 	/**
 	 *gets the ACTIVE EVENTS
 	 *@param \PDO $pdo PDO connection object
-	 *@param \DateTime $eventStartDate to search by
-	 *@param \DateTime $eventEndDate to search by
+	 *@param \DateTime $eventStart to search by
+	 *@param \DateTime $eventEnd to search by
 	 *@return \SplFixedArray SplFixedArray of activeEvents found
 	 *@throws \PDOException when mySQL related errors occur
 	 *@throws \InvalidArgumentException
 	 *@throws \TypeError when values are not the correct data type
 	 */
-	public static function getEventbyEventEndandEventStart(\PDO $pdo, float $eventEnd, float $eventStart) {
+	public static function getEventbyEventEndandEventStart(\PDO $pdo, \DateTime $eventEnd, \DateTime $eventStart) {
 //		if($eventStart >= NOW() || $eventEnd <= NOW()) {
 //			throw(new \RangeException("These events are not active. eventStart must be less than current time. eventEnd must be greater than current time."));
 //		}
