@@ -1,5 +1,5 @@
 <?php
-namespace Edu\Cnm\Mmalvar13\CrumbTrail\Test;     // TODO Case: T or t?
+namespace Edu\Cnm\Mmalvar13\CrumbTrail\Test;
 use Edu\Cnm\CrumbTrail\{Company, Profile};
 
 // grab the project test parameters
