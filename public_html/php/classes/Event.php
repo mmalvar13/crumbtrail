@@ -168,9 +168,13 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 
 	/**
 	 * mutator method for event location
-	 * @param float $newEventLocation new gps point location of event //WHAT IS THIS?
-	 * @throws \ //I HAVE NO IDEA
+	 * @param float $newEventLocation new gps point location of event
+	 * @throws \\should i throw any exceptions here?
 	 **/
+
+	public function setEventLocation(){
+		$this->eventLocation = $newEventLocation; //should i throw any exceptions for this?
+	}
 
 
 	/**

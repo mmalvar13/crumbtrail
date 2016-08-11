@@ -100,7 +100,10 @@ class Point implements \JsonSerializable {
 	 * @return array resulting state variables to seralize
 	 **/
 	public function jsonSerialize(){
-		$fields = get_object_vars($this);
+		$fields = get_object_vars($this);//do i keep this??
+		$fields = [];
+		$fields["lat"] = $this->pointLat;
+		$fields["long"] = $this->pointLong;
 		return($fields);
 	}
 
