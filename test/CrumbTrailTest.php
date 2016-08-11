@@ -42,7 +42,7 @@ abstract class CrumbTrailTest extends \PHPUnit_Extensions_Database_TestCase {
 		$dataset = new \PHPUnit_Extensions_Database_DataSet_QueryDataSet($this->getConnection());
 
 		// add all the tables for the project here
-		// THESE TABLES *MUST* BE LISTED IN THE SAME ORDER THEY WERE CREATED!!!!  TODO Check order? ???
+		// THESE TABLES *MUST* BE LISTED IN THE SAME ORDER THEY WERE CREATED!!!!      TODO Check order? ???
 		$dataset->addTable("profile");
 		$dataset->addTable("company");
 		$dataset->addTable("image");
@@ -86,8 +86,8 @@ abstract class CrumbTrailTest extends \PHPUnit_Extensions_Database_TestCase {
 		// if the connection hasn't been established, create it
 		if($this->connection === null) {
 			// connect to mySQL and provide the interface to PHPUnit
-			//                        							 			TODO Check these config and pdo (properties file???)
-			$config = readConfig("/etc/apache2/mmalvar13/crumbtrail.ini");  // TODO Do these .ini files already exists?
+			//                        							 			  TODO Check these config and pdo (properties file???)
+			$config = readConfig("/etc/apache2/mmalvar13/crumbtrail.ini");   // TODO Do these .ini files already exists?
 			$pdo = connectToEncryptedMySQL("/etc/apache2/mmalvar13/crumbtrail.ini");
 			$this->connection = $this->createDefaultDBConnection($pdo, $config["database"]);
 		}
