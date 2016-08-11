@@ -188,6 +188,7 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 	/**
 	 * mutator method for event Start
 	 * @param \DateTime|string|null $newEventStart eventStart as a DateTime object or string. A null value loads the current time.
+	 * @throws \InvalidArgumentException
 	 * @throws \Exception if $newEventStart is not null
 	 **/
 	public function setEventStart($newEventStart = null) {
@@ -195,12 +196,20 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 		if($newEventStart === null) {
 			$this->eventStart = new \DateTime(); //store the eventStart date and time
 			return;
-		} else {
-			// Throw exception
-			throw(new \Exception("the start time is not null"));
+//		} else {
+//			// Throw exception
+//			throw(new \Exception("the start time is not null"));
 		}
+		//store the eventStart date
+		try {
+			$newEventStart = self::validateDateTime($newEventStart);
+		} catch(\InvalidArgumentException $invalidArgument) {
+			throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
+		} catch(\RangeException $range) {
+			throw(new \RangeException($range->getMessage(), 0, $range));
+		}
+		$this->eventStart = $newEventStart;
 	}
-
 
 	/**
 	 * Inserts this Event into mySQL
@@ -431,11 +440,15 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 	 *@param \DateTime $eventEndDate to search by
 	 *@return \SplFixedArray SplFixedArray of activeEvents found
 	 *@throws \PDOException when mySQL related errors occur
+	 *@throws \
 	 *@throws \TypeError when values are not the correct data type
 	 */
-	public static function getActiveEvents(\PDO $pdo, float $eventEndDate, float $eventStartDate) {
+	public static function getActiveEvents(\PDO $pdo, float $eventEnd, float $eventStart) {
 		//do i need to sanitize anything. i guess sanitize to make sure its active. idk if i need this neweventend is less than event start thing.
-		if($newEventEnd <= $this->eventStart) {
+		if($eventEnd <=0 || $eventStart <= 0){
+			throw()
+		}
+		($eventEnd <= $this->eventStart) {
 			throw(new \RangeException("Start time cannot be greater than end time"));
 		}
 		//create query template
