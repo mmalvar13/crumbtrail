@@ -459,7 +459,7 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 //			$parameters = ["eventStart" => $eventStart, "eventEnd" => $eventEnd];
 //			$statement->execute($parameters);
 
-		$query = "SELECT eventId, eventTruckId, eventEnd, eventLocation, eventStart FROM event WHERE $eventStart <= NOW() AND $eventEnd > NOW()";
+		$query = "SELECT eventId, eventTruckId, eventEnd, eventLocation, eventStart FROM event WHERE eventStart <= NOW() AND eventEnd > NOW()";
 
 		$statement = $pdo->prepare($query);
 		$statement->execute();
