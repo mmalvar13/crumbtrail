@@ -123,6 +123,25 @@ class EventTest extends CrumbTrailTest{
 		$this->assertEquals($pdoEvent->getEventStart(), $this->VALID_EVENTSTART);
 	}
 
+	/**
+	 * test updating an Event that already exists
+	 * @expectedException PDOException //why do some of them have exceptions in the doc blocks and some dont??
+	 * //so this is basically saying you're going to update something without changing anything?? like already having your end time at 3 and then "updating" it to end at 3?
+	 */
+	public function testUpdateInvalidEvent(){
+		//create an Event, try to update it without actually updating it and watch it fail
+		$event = new Event(null, $this->truck->getTruckId(), $this->VALIDEVENTEND, $this->VALID_EVENTLOCATION, $this->VALID_EVENTSTART);
+		$event->update($this->getPDO());
+	}
+
+	/**
+	 * test creating an Event and then deleting it
+	 *
+	 **/
+	public function testDeleteValidTweet(){
+		//count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("event");
+	}
 
 
 
