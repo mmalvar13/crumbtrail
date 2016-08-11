@@ -86,7 +86,7 @@ class EventTest extends CrumbTrailTest{
 	 **/
 	public function testInsertInvalidEvent(){
 		//create an Event with a non null event id and watch it fail
-		$event = new Event(CrumbTrailTest::INVALID_KEY, $this->truck->getTruckId(), $this->VALID_EVENTEND, $this->VALID_EVENTLOCATION, $this->VALID_EVENTSTART);
+		$event = new Event(CrumbTrailTest::INVALID_KEY, $this->truck->getTruckId(), $this->VALID_EVENTEND, $this->VALID_EVENTLOCATION, $this->VALID_EVENTSTART); //again, is truck the right thing to reference here? or should it say getEventTruckId
 		$event->insert($this->getPDO());
 	}
 
