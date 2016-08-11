@@ -5,6 +5,8 @@ namespace Edu\Cnm\CrumbTrail\Test;											// TODO Is this namespace correct? 
 // grab the encrypted properties file
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");     // TODO What is our path?  ???
 
+// TODO Do we need to add require_once(PHPUnit's files, classes, functions?) ???
+
 /**
  * Abstract class containing universal and project specific mySQL parameters
  *
@@ -21,8 +23,8 @@ require_once("/etc/apache2/capstone-mysql/encrypted-config.php");     // TODO Wh
 
 abstract class CrumbTrailTest extends \PHPUnit_Extensions_Database_TestCase {
 	/**
-	 * invalid id to use for an INT UNSIGNED field (maximum allowed INT UNSIGNED in mySQL) + 1
-	 * @see https://dev.mysql.com/doc/refman/5.6/en/integer-types.html mySQL Integer Types
+	 * Invalid id to use for an INT UNSIGNED field = (maximum allowed INT UNSIGNED in mySQL) + 1.
+	 * @see https://dev.mysql.com/doc/refman/5.6/en/integer-types.html mySQL Integer Types.
 	 * @var int INVALID_KEY
 	 **/
 	const INVALID_KEY = 4294967296;   												 // TODO Check this key value ???
