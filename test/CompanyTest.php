@@ -1,10 +1,8 @@
 <?php
 namespace Edu\Cnm\CrumbTrail\Test;
-require_once("/etc/apache2/capstone-mysql/encrypted-config.php")			// TODO Need this?
+require_once("/etc/apache2/capstone-mysql/encrypted-config.php");			// TODO Need this?
 
 use Edu\Cnm\Mmalvar13\CrumbTrail\{Company, Profile};						// TODO Check this path.
-
-// TODO Check the "invalid key" thing, from the CrumbTrailTest.php file.
 
 // grab the project test parameters
 require_once("CrumbTrailTest.php");
@@ -184,7 +182,7 @@ class CompanyTest extends CrumbTrailTest {
 
 	/**
 	 * The Profile of the person who created this account = companyAccountCreator,
-	 * which is the foreign key.
+	 * this is a foreign key in the Company class.
 	 * @var Profile profile
 	 */
 	protected $profile = null;
@@ -239,9 +237,8 @@ class CompanyTest extends CrumbTrailTest {
 		$this->assertEquals($pdoCompany->getCompanyZip(), $this->company->getCompanyZip());
 		$this->assertEquals($pdoCompany->getCompanyDescription(), $this->company->getCompanyDescription());
 		$this->assertEquals($pdoCompany->getCompanyMenuText(), $this->company->getCompanyMenuText());
-		$this->assertEquals($pdoCompany->getCompanyActivationToken(), $this->company->getCompanyActivationToken());
+		$this->assertEquals($pdoCompany->getCompanyActivationToken(), $this->company->getCompanyActivationToken())
 		$this->assertEquals($pdoCompany->getCompanyApproved(), $this->company->getCompanyApproved());
-		$this->assertEquals($pdoCompany->getProfileId(), $this->profile->getProfileId());
 	}
 
 	/**
@@ -250,7 +247,6 @@ class CompanyTest extends CrumbTrailTest {
 	 * @expectedException PDOException
 	 **/
 	public function testInsertInvalidCompany() {
-		//   TODO Do we need a $this->profile->getProfileId() ???
 		$company = new Company(CrumbTrailTest::INVALID_KEY, $this->VALID_COMPANYNAME, $this->VALID_COMPANYEMAIL, $this->VALID_COMPANYPERMIT, $this->VALID_COMPANYLICENSE, $this->VALID_COMPANYATTN, $this->VALID_COMPANYSTREET1, $this->VALID_COMPANYSTREET2, $this->VALID_COMPANYCITY, $this->VALID_COMPANYSTATE, $this->VALID_COMPANYZIP, $this->VALID_COMPANYDESCRIPTION, $this->VALID_COMPANYMENUTEXT, $this->VALID_COMPANYACTIVATIONTOKEN, $this->VALID_COMPANYAPPROVED, $this->profile->getProfileId());
 
 		$company>insert($this->getPDO());
@@ -284,7 +280,6 @@ class CompanyTest extends CrumbTrailTest {
 		$company->setCompanyMenuText($this->VALID_COMPANYMENUTEXT2);
 		$company->setCompanyActivationToken($this->VALID_COMPANYACTIVATIONTOKEN2);
 		$company->setCompanyApproved($this->VALID_COMPANYAPPROVED2);
-		$this->assertEquals($pdoCompany->getProfileId(), $this->profile->getProfileId());
 
 		$company->update($this->getPDO());
 
@@ -293,9 +288,7 @@ class CompanyTest extends CrumbTrailTest {
 
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("$company"));
 
-		// TODO Need?  $this->assertEquals($pdoCompany->getProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoCompany->getCompanyName(), $this->VALID_COMPANYNAME2);
-
 		$this->assertEquals($pdoCompany->getCompanyEmail(), $this->VALID_COMPANYEMAIL2());
 		$this->assertEquals($pdoCompany->getCompanyPermit(), $this->VALID_COMPANYPERMIT2());
 		$this->assertEquals($pdoCompany->getCompanyLicense(), $this->VALID_COMPANYLICENSE2());
@@ -309,7 +302,7 @@ class CompanyTest extends CrumbTrailTest {
 		$this->assertEquals($pdoCompany->getCompanyMenuText(), $this->VALID_COMPANYMENUTEXT2());
 		$this->assertEquals($pdoCompany->getCompanyActivationToken(), $this->VALID_COMPANYACTIVATIONTOKEN2());
 		$this->assertEquals($pdoCompany->getCompanyApproved(), $this->VALID_COMPANYAPPROVED2());
-		$this->assertEquals($pdoCompany->getProfileId(), $this->profile->getProfileId());
+		$this->assertEquals($pdoProfile->getProfileId(), $this->profile->getProfileId());
 	}
 
 	/**
@@ -407,7 +400,7 @@ class CompanyTest extends CrumbTrailTest {
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("company"));
 		$this->assertCount(1, $results);
 
-		// TODO What is going on in the next line?
+		//        TODO What is going on in the next line?
 		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Mmalvar13\\CrumbTrail\\Company", $results);
 
 		// Get the result from the array, and validate it.
@@ -425,6 +418,6 @@ class CompanyTest extends CrumbTrailTest {
 		$this->assertEquals($pdoCompany->getCompanyMenuText(), $this->VALID_COMPANYMENUTEXT());
 		$this->assertEquals($pdoCompany->getCompanyActivationToken(), $this->VALID_COMPANYACTIVATIONTOKEN());
 		$this->assertEquals($pdoCompany->getCompanyApproved(), $this->VALID_COMPANYAPPROVED());
-		$this->assertEquals($pdoCompany->getProfileId(), $this->profile->getProfileId());
+		$this->assertEquals($pdoProfile->getProfileId(), $this->profile->getProfileId());
 	}
 }
