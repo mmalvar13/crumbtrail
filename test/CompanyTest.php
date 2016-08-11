@@ -235,7 +235,7 @@ class CompanyTest extends CrumbTrailTest {
 		$this->assertEquals($pdoCompany->getCompanyZip(), $this->company->getCompanyZip());
 		$this->assertEquals($pdoCompany->getCompanyDescription(), $this->company->getCompanyDescription());
 		$this->assertEquals($pdoCompany->getCompanyMenuText(), $this->company->getCompanyMenuText());
-		$this->assertEquals($pdoCompany->getCompanyActivationToken(), $this->company->getCompanyActivationToken())
+		$this->assertEquals($pdoCompany->getCompanyActivationToken(), $this->company->getCompanyActivationToken());
 		$this->assertEquals($pdoCompany->getCompanyApproved(), $this->company->getCompanyApproved());
 	}
 
@@ -301,7 +301,6 @@ class CompanyTest extends CrumbTrailTest {
 		$this->assertEquals($pdoCompany->getCompanyMenuText(), $this->VALID_COMPANYMENUTEXT2());
 		$this->assertEquals($pdoCompany->getCompanyActivationToken(), $this->VALID_COMPANYACTIVATIONTOKEN2());
 		$this->assertEquals($pdoCompany->getCompanyApproved(), $this->VALID_COMPANYAPPROVED2());
-		$this->assertEquals($pdoProfile->getProfileId(), $this->profile->getProfileId());
 	}
 
 	/**
@@ -359,20 +358,7 @@ class CompanyTest extends CrumbTrailTest {
 		$numRows = $this->getConnection()->getRowCount("company");
 
 		// Create a new Company and insert to into mySQL.
-		$company = new Company(null, $this->profile->getProfileId(), $this->VALID_COMPANYNAME);
-
-		// TODO:  fix the above creation of a company !!!
-
-
-
-
-
-
-
-
-
-
-
+		$company = new Company(null, $this->VALID_COMPANYNAME, $this->VALID_COMPANYEMAIL, $this->VALID_COMPANYPERMIT, $this->VALID_COMPANYLICENSE, $this->VALID_COMPANYATTN, $this->VALID_COMPANYSTREET1, $this->VALID_COMPANYSTREET2, $this->VALID_COMPANYCITY, $this->VALID_COMPANYSTATE, $this->VALID_COMPANYZIP, $this->VALID_COMPANYDESCRIPTION, $this->VALID_COMPANYMENUTEXT, $this->VALID_COMPANYACTIVATIONTOKEN, $this->VALID_COMPANYAPPROVED, $this->profile->getProfileId());
 
 		$company->insert($this->getPDO());
 
@@ -406,6 +392,7 @@ class CompanyTest extends CrumbTrailTest {
 
 		// Create a new Company and insert to into mySQL.
 		$company = new Company(null, $this->VALID_COMPANYNAME, $this->VALID_COMPANYEMAIL, $this->VALID_COMPANYPERMIT, $this->VALID_COMPANYLICENSE, $this->VALID_COMPANYATTN, $this->VALID_COMPANYSTREET1, $this->VALID_COMPANYSTREET2, $this->VALID_COMPANYCITY, $this->VALID_COMPANYSTATE, $this->VALID_COMPANYZIP, $this->VALID_COMPANYDESCRIPTION, $this->VALID_COMPANYMENUTEXT, $this->VALID_COMPANYACTIVATIONTOKEN, $this->VALID_COMPANYAPPROVED, $this->profile->getProfileId());
+
 		$company->insert($this->getPDO());
 
 		// Get the data from mySQL, and check that fields match our expectations.
@@ -413,7 +400,6 @@ class CompanyTest extends CrumbTrailTest {
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("company"));
 		$this->assertCount(1, $results);
 
-		//        TODO What is going on in the next line?
 		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Mmalvar13\\CrumbTrail\\Company", $results);
 
 		// Get the result from the array, and validate it.
