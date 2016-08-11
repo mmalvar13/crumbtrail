@@ -90,6 +90,40 @@ class ImageTest extends CrumbTrailTest {
 	 * test inserting an Image, editing it, and then updating it
 	 **/
 	public function  testUpdateValidImage() {
+		//count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("image");
+
+		// create a new Image and insert into mySQL
+		$image = new Image(null, $this->company->getCompanyId(),$this->VALID_IMAGEFILENAME, $this->VALID_IMAGEFILETYPE);
+		$image->insert($this->getPDO());
+
+		//edit the Image and update it in mySQL
+		$image->setImageFileName($this->VALID_IMAGEFILENAME2);
+		$image->setImageFileType($this->VALID_IMAGEFILETYPE2);
+		// now set this up to update
+		$image->update($this->getPDO());
+
+		//grab the data from mySQL and enforce the fields match our expectations
+		$pdoImage = Image::getImageByImageId($this->getPDO(), $image->getImageId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("tweet"));
+		$this->assertEquals($pdoImage->getCompanyId(), $this->company->getCompanyId());
+		$this->assertEquals($pdoImage->getImageFileName(), $this->VALID_IMAGEFILETYPE2);
+		$this->assertEquals($pdoImage->getImageFileType(), $this->VALID_IMAGEFILETYPE2);
+	}
+	/**
+	 * test creating an image and deleting it
+	 */
+	public function testDeleteValidImage() {
+		//count the number of rows and save it for later
+		$numRows =$this->getConnection()->getRowCount("Image");
+
+		//create new Image and insert into mySQL
+		$image = new Image(null, $this->company->getCompanyId(),$this->VALID_IMAGEFILENAME, $this->VALID_IMAGEFILETYPE);
+		$image->insert($this->getPDO());
+
+		//delete the image from mySQL
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("image"));
 
 	}
+
 }
