@@ -2,7 +2,6 @@
 namespace Edu\Cnm\Mmalvar13\CrumbTrail\Test;
 
 use Edu\Cnm\CrumbTrail\{Image, Company};
-//why is company greyed out?
 
 //grab the project test parameters
 require_once("CrumbTrailTest.php");
@@ -55,7 +54,7 @@ class ImageTest extends CrumbTrailTest {
 		parent::setUp();
 
 		//create and insert a Company to own the test image
-		$this->company= new Company(null, "Terry's Tacos", "terrytacos@tacos.com", "12345", "2345", "Terry Jane", "345 Taco Street", "Albuquerque", "NM", "87654");//"We are a Taco truck description", "Tacos, Tortillas, Burritos" "5052345678","1");
+		$this->company= new Company(null, "Terry's Tacos", "terrytacos@tacos.com", "12345", "2345", "Terry Jane", "345 Taco Street", "Albuquerque", "NM", "87654", "We are a Taco truck description", "Tacos, Tortillas, Burritos", "5052345678","1");
 		$this->company->insert($this->getPDO());
 	}
 	/**
@@ -83,7 +82,7 @@ class ImageTest extends CrumbTrailTest {
 
 	public function testInsertInvalidImage() {
 		//create an image with a non null image id and it will fail
-		$image = new Image(CrumbTrailTest::INVALID_KEY, $this->company->getCompanyId(), $this->VALID_IMAGEFILENAME);
+		$image = new Image(CrumbTrailTest::INVALID_KEY, $this->company->getCompanyId(), $this->VALID_IMAGEFILENAME, $this->VALID_IMAGEFILETYPE);
 		$image->insert($this->getPDO());
 	}
 	/**
@@ -107,7 +106,7 @@ class ImageTest extends CrumbTrailTest {
 		$pdoImage = Image::getImageByImageId($this->getPDO(), $image->getImageId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("tweet"));
 		$this->assertEquals($pdoImage->getCompanyId(), $this->company->getCompanyId());
-		$this->assertEquals($pdoImage->getImageFileName(), $this->VALID_IMAGEFILETYPE2);
+		$this->assertEquals($pdoImage->getImageFileName(), $this->VALID_IMAGEFILENAME2);
 		$this->assertEquals($pdoImage->getImageFileType(), $this->VALID_IMAGEFILETYPE2);
 	}
 	/**
@@ -151,3 +150,4 @@ class ImageTest extends CrumbTrailTest {
 		$image->delete($this->getPDO());
 	}
 }
+
