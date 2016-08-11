@@ -466,6 +466,45 @@ class ProfileTest extends CrumbTrailTest {
 
 
 
+	/**
+	 * test getting all profiles
+	 */
+	public function testGetAllValidProfiles(){
+		//count the initial number of rows (0) and save it for later
+		$numRows = $this->getConnection()->getRowCount("profile");
+
+		//create a dummy profile
+		$profile = new Profile(null, $this->VALID_PROFILENAME1, $this->VALID_PROFILEEMAIL1, $this->VALID_PROFILEPHONE1, $this->VALID_PROFILEACCESSTOKEN1, $this->VALID_PROFILEACTIVATIONTOKEN1, $this->VALID_PROFILETYPE1, $this->VALID_PROFILEHASH1, $this->VALID_PROFILESALT1);
+
+		//insert it into SQL
+		$profile->insert($this->getPDO());
+
+		//now get the data from SQL and make sure it matches our expectations
+		$results = Profile::getAllProfiles($this->getPDO());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
+		//confirm we have just 1 profile in the database
+		$this->assertCount(1, $results);
+		//ensure there are only instances of the profile class in the namespace
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Mmalvar13\\CrumbTrail\\Profile", $results);
+
+		//grab results from the array and validate them
+		$pdoProfile = $results[0];
+		//check if the stuff in the database matches the stuff we put in
+		$this->assertEquals($pdoProfile->getProfileName(), $this->VALID_PROFILENAME1);
+		$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_PROFILEEMAIL1);
+		$this->assertEquals($pdoProfile->getProfilePhone(), $this->VALID_PROFILEPHONE1);
+		$this->assertEquals($pdoProfile->getProfileAccessToken(), $this->VALID_PROFILEACCESSTOKEN1);
+		$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_PROFILEACTIVATIONTOKEN1);
+		$this->assertEquals($pdoProfile->getProfileType(), $this->VALID_PROFILETYPE1);
+		$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_PROFILEHASH1);
+		$this->assertEquals($pdoProfile->getProfileSalt(), $this->VALID_PROFILESALT1);
+
+
+
+
+
+	}
+
 
 }
 
