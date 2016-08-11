@@ -160,7 +160,7 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 
 	/**
 	 * accessor method for event location
-	 * @return point value of event location //HOW DO I WRITE OUT THESE POINT DATA TYPES??
+	 * @return float value of event location //HOW DO I WRITE OUT THESE POINT DATA TYPES??
 	 **/
 	public function getEventLocation() {
 		return ($this->eventLocation);
@@ -434,30 +434,53 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 		}
 
 	/**
-	 *gets the active events
+	 *gets the ACTIVE EVENTS
 	 *@param \PDO $pdo PDO connection object
 	 *@param \DateTime $eventStartDate to search by
 	 *@param \DateTime $eventEndDate to search by
 	 *@return \SplFixedArray SplFixedArray of activeEvents found
 	 *@throws \PDOException when mySQL related errors occur
-	 *@throws \
+	 *@throws \InvalidArgumentException
 	 *@throws \TypeError when values are not the correct data type
 	 */
-	public static function getActiveEvents(\PDO $pdo, float $eventEnd, float $eventStart) {
-		//do i need to sanitize anything. i guess sanitize to make sure its active. idk if i need this neweventend is less than event start thing.
-		if($eventEnd <=0 || $eventStart <= 0){
-			throw()
-		}
-		($eventEnd <= $this->eventStart) {
-			throw(new \RangeException("Start time cannot be greater than end time"));
-		}
-		//create query template
-		$query = "SELECT eventId, eventLocation, eventTruckId FROM event WHERE eventStart <= :eventStart AND eventEnd >= :eventEnd";
-		$statement = $pdo->prepare($query);
+	public static function getEventbyEventEndandEventStart(\PDO $pdo, float $eventEnd, float $eventStart) {.
+//		if($eventStart >= NOW() || $eventEnd <= NOW()) {
+//			throw(new \RangeException("These events are not active. eventStart must be less than current time. eventEnd must be greater than current time."));
+//		}
 
-		//bind eventStart and eventEnd to placeholders in query
-		$parameters = ["eventStart" => NOW(), "eventEnd" => NOW()]; //IDK THISS COULD BE VERY WRONG.
-		$statement->execute($parameters);
+		if($eventEnd <= 0 || $eventStart <= 0) {
+			throw(new \InvalidArgumentException("event end and event start must be positive number"));
+		}
+//			//create query template
+//			$query = "SELECT eventId, eventEnd, eventLocation, eventStart, eventTruckId FROM event WHERE eventStart = :eventStart AND eventEnd = :eventEnd";
+//			$statement = $pdo->prepare($query);
+//
+//			//bind eventStart and eventEnd to placeholders in query
+//			$parameters = ["eventStart" => $eventStart, "eventEnd" => $eventEnd];
+//			$statement->execute($parameters);
+
+		$query = "SELECT eventId, eventTruckId, eventEnd, eventLocation, eventStart FROM event WHERE $eventStart <= NOW() AND $eventEnd > NOW()";
+
+		$statement = $pdo->prepare($query);
+		$statement->execute();
+
+			//build an array of events
+			$events = new \SplFixedArray(($statement->rowCount()));
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			while(($row = $statement->fetch()) !== false) {
+				try {
+					$event = new Event($row["eventId"], $row["eventTruckId"], $row["eventEnd"], $row["eventLocation"], $row["eventStart"]);
+					$events[$events->key()] = $event;
+					$events->next();
+				} catch(\Exception $exception) {
+					//if the row couldn't be converted, rethrow it
+					throw(new \PDOException($exception->getMessage(), 0, $exception));
+				}
+			}
+			return ($events);
+		}
+
+
 
 //		//possible other option
 ////create query template
@@ -467,20 +490,7 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 //		//bind eventStart and eventEnd to placeholders in query //or maybe we dont need to bind anything to query??
 //		$parameters = ["eventStart"=> : $eventStart, "eventEnd"=> $eventEnd];
 
-		//build an array of events
-		$events = new \SplFixedArray(($statement->rowCount()));
-		$statement->setFetchMode(\PDO::FETCH_ASSOC);
-		while(($row = $statement->fetch()) !== false) {
-			try {
-				$event = new Event($row["eventId"], $row["eventTruckId"], $row["eventEnd"], $row["eventLocation"], $row["eventStart"]);
-				$events[$events->key()] = $event;
-				$events->next();
-			} catch(\Exception $exception) {
-				//if the row couldn't be converted, rethrow it
-				throw(new \PDOException($exception->getMessage(), 0, $exception));
-			}
-		}
-		return ($events);
+
 	}
 
 
