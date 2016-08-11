@@ -346,6 +346,7 @@ class CompanyTest extends CrumbTrailTest {
 	public function testDeleteInvalidCompany() {
 		// Create a Company, and try to delete it, without actually inserting it.
 		$company = new Company(null, $this->VALID_COMPANYNAME, $this->VALID_COMPANYEMAIL, $this->VALID_COMPANYPERMIT, $this->VALID_COMPANYLICENSE, $this->VALID_COMPANYATTN, $this->VALID_COMPANYSTREET1, $this->VALID_COMPANYSTREET2, $this->VALID_COMPANYCITY, $this->VALID_COMPANYSTATE, $this->VALID_COMPANYZIP, $this->VALID_COMPANYDESCRIPTION, $this->VALID_COMPANYMENUTEXT, $this->VALID_COMPANYACTIVATIONTOKEN, $this->VALID_COMPANYAPPROVED, $this->profile->getProfileId());
+
 		$company->delete($this->getPDO());
 	}
 
