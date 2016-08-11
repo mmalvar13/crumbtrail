@@ -3,8 +3,8 @@
 
 namespace Edu\Cnm\Mmalvar13\CrumbTrail\Test;  /*LOOK INTO THIS FOR ACCURACY */
 
-use Edu\Cnm\CrumbTrail\Test\CrumbTrailTest;
-use Edu\Cnm\Mmalvar13\CrumbTrail\Test\{Profile};
+
+use Edu\Cnm\CrumbTrail\Test\{Profile};
 
 //grab the parameters for the test, go the the abstract test file
 require_once("CrumbTrailTest.php");
@@ -303,6 +303,170 @@ class ProfileTest extends CrumbTrailTest {
 		$this->assertEquals($numRows, $this->getConnection()->getRowCount("profile"));
 
 	}
+
+
+
+	/**
+	 * test deleting a profile that does NOT exist
+	 */
+	public function testDeleteInvalidProfile(){
+		//create a profile and never actually insert it. Then try to delete it when it hasn't been inserted
+		//why do we even need to create it then?
+
+		//create a dummy profile
+		$profile = new Profile(null, $this->VALID_PROFILENAME1, $this->VALID_PROFILEEMAIL1, $this->VALID_PROFILEPHONE1, $this->VALID_PROFILEACCESSTOKEN1, $this->VALID_PROFILEACTIVATIONTOKEN1, $this->VALID_PROFILETYPE1, $this->VALID_PROFILEHASH1, $this->VALID_PROFILESALT1);
+
+		//now delete without inserting
+		$profile->delete($this->getPDO());
+	}
+
+
+	/**
+	 * test getting a profile by the profile name
+	 */
+	public function testGetProfileByProfileName(){
+		//get number of initial rows (will be zero) and save it for later
+		$numRows = $this->getConnection()->getRowCount("profile");
+
+		//create a dummy profile
+		$profile = new Profile(null, $this->VALID_PROFILENAME1, $this->VALID_PROFILEEMAIL1, $this->VALID_PROFILEPHONE1, $this->VALID_PROFILEACCESSTOKEN1, $this->VALID_PROFILEACTIVATIONTOKEN1, $this->VALID_PROFILETYPE1, $this->VALID_PROFILEHASH1, $this->VALID_PROFILESALT1);
+
+		//insert the mock profile in SQL
+		$profile->insert($this->getPDO());
+
+		$results = Profile::getProfileByProfileName($this->getPDO(), $profile->getProfileName());
+
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
+
+		//confirm we have just 1 profile in the database
+		$this->assertCount(1, $results);
+
+		//ensure there are only instances of the profile class in the namespace
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Mmalvar13\\CrumbTrail\\Profile", $results);
+
+		//grab results from the array and validate them
+		$pdoProfile = $results[0];
+		//check if the stuff in the database matches the stuff we put in
+		$this->assertEquals($pdoProfile->getProfileName(), $this->VALID_PROFILENAME1);
+		$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_PROFILEEMAIL1);
+		$this->assertEquals($pdoProfile->getProfilePhone(), $this->VALID_PROFILEPHONE1);
+		$this->assertEquals($pdoProfile->getProfileAccessToken(), $this->VALID_PROFILEACCESSTOKEN1);
+		$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_PROFILEACTIVATIONTOKEN1);
+		$this->assertEquals($pdoProfile->getProfileType(), $this->VALID_PROFILETYPE1);
+		$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_PROFILEHASH1);
+		$this->assertEquals($pdoProfile->getProfileSalt(), $this->VALID_PROFILESALT1);
+	}
+
+
+	/**
+	 * test getting profile by a name that does not exist
+	 */
+	public function testGetInvalidProfileByProfileName(){
+		//grab a profile by searching for a name that doesn't exit
+		$profile = Profile::getProfileByProfileName($this->getPDO(), "A girl has no name....");
+		$this->assertCount(0,$profile);
+	}
+
+
+
+
+	/**
+	 * test getting a profile by the profile email
+	 */
+	public function testGetProfileByProfileEmail(){
+		//get number of initial rows (will be zero) and save it for later
+		$numRows = $this->getConnection()->getRowCount("profile");
+
+		//create a dummy profile
+		$profile = new Profile(null, $this->VALID_PROFILENAME1, $this->VALID_PROFILEEMAIL1, $this->VALID_PROFILEPHONE1, $this->VALID_PROFILEACCESSTOKEN1, $this->VALID_PROFILEACTIVATIONTOKEN1, $this->VALID_PROFILETYPE1, $this->VALID_PROFILEHASH1, $this->VALID_PROFILESALT1);
+
+		//insert the mock profile in SQL
+		$profile->insert($this->getPDO());
+
+		$results = Profile::getProfileByProfileEmail($this->getPDO(), $profile->getProfileEmail());
+
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
+
+		//confirm we have just 1 profile in the database
+		$this->assertCount(1, $results);
+
+		//ensure there are only instances of the profile class in the namespace
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Mmalvar13\\CrumbTrail\\Profile", $results);
+
+		//grab results from the array and validate them
+		$pdoProfile = $results[0];
+		//check if the stuff in the database matches the stuff we put in
+		$this->assertEquals($pdoProfile->getProfileName(), $this->VALID_PROFILENAME1);
+		$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_PROFILEEMAIL1);
+		$this->assertEquals($pdoProfile->getProfilePhone(), $this->VALID_PROFILEPHONE1);
+		$this->assertEquals($pdoProfile->getProfileAccessToken(), $this->VALID_PROFILEACCESSTOKEN1);
+		$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_PROFILEACTIVATIONTOKEN1);
+		$this->assertEquals($pdoProfile->getProfileType(), $this->VALID_PROFILETYPE1);
+		$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_PROFILEHASH1);
+		$this->assertEquals($pdoProfile->getProfileSalt(), $this->VALID_PROFILESALT1);
+	}
+
+
+	/**
+	 * test getting profile by a email that does not exist
+	 */
+	public function testGetInvalidProfileByProfileEmail(){
+		//grab a profile by searching for a name that doesn't exit
+		$profile = Profile::getProfileByProfileEmail($this->getPDO(), "A man needs an email....");
+		$this->assertCount(0,$profile);
+	}
+
+
+
+	/**
+	 * test getting a profile by the profile phone
+	 */
+	public function testGetProfileByProfilePhone(){
+		//get number of initial rows (will be zero) and save it for later
+		$numRows = $this->getConnection()->getRowCount("profile");
+
+		//create a dummy profile
+		$profile = new Profile(null, $this->VALID_PROFILENAME1, $this->VALID_PROFILEEMAIL1, $this->VALID_PROFILEPHONE1, $this->VALID_PROFILEACCESSTOKEN1, $this->VALID_PROFILEACTIVATIONTOKEN1, $this->VALID_PROFILETYPE1, $this->VALID_PROFILEHASH1, $this->VALID_PROFILESALT1);
+
+		//insert the mock profile in SQL
+		$profile->insert($this->getPDO());
+
+		$results = Profile::getProfileByProfilePhone($this->getPDO(), $profile->getProfilePhone());
+
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
+
+		//confirm we have just 1 profile in the database
+		$this->assertCount(1, $results);
+
+		//ensure there are only instances of the profile class in the namespace
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Mmalvar13\\CrumbTrail\\Profile", $results);
+
+		//grab results from the array and validate them
+		$pdoProfile = $results[0];
+		//check if the stuff in the database matches the stuff we put in
+		$this->assertEquals($pdoProfile->getProfileName(), $this->VALID_PROFILENAME1);
+		$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_PROFILEEMAIL1);
+		$this->assertEquals($pdoProfile->getProfilePhone(), $this->VALID_PROFILEPHONE1);
+		$this->assertEquals($pdoProfile->getProfileAccessToken(), $this->VALID_PROFILEACCESSTOKEN1);
+		$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_PROFILEACTIVATIONTOKEN1);
+		$this->assertEquals($pdoProfile->getProfileType(), $this->VALID_PROFILETYPE1);
+		$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_PROFILEHASH1);
+		$this->assertEquals($pdoProfile->getProfileSalt(), $this->VALID_PROFILESALT1);
+	}
+
+
+	/**
+	 * test getting profile by a name that does not exist
+	 */
+	public function testGetInvalidProfileByProfilePhone(){
+		//grab a profile by searching for a name that doesn't exit
+		$profile = Profile::getProfileByProfilePhone($this->getPDO(), "A girl has no name....");
+		$this->assertCount(0,$profile);
+	}
+
+
+
+
 }
 
 
