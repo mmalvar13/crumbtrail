@@ -172,7 +172,7 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 	 * @throws \\should i throw any exceptions here?
 	 **/
 
-	public function setEventLocation(){
+	public function setEventLocation(float $newEventLocation){
 		$this->eventLocation = $newEventLocation; //should i throw any exceptions for this?
 	}
 
@@ -451,7 +451,7 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 //		$query = "SELECT eventId, eventLocation, eventTruckId FROM event WHERE eventStart <= NOW() AND eventEnd >= NOW()";
 //		$statement=$pdo->prepare($query);
 //
-//		//bind eventStart and eventEnd to placeholders in query
+//		//bind eventStart and eventEnd to placeholders in query //or maybe we dont need to bind anything to query??
 //		$parameters = ["eventStart"=> : $eventStart, "eventEnd"=> $eventEnd];
 
 		//build an array of events
