@@ -111,7 +111,19 @@ class ImageTest extends CrumbTrailTest {
 		$this->assertEquals($pdoImage->getImageFileType(), $this->VALID_IMAGEFILETYPE2);
 	}
 	/**
-	 *
+	 * test creating an image and deleting it
 	 */
+	public function testDeleteValidImage() {
+		//count the number of rows and save it for later
+		$numRows =$this->getConnection()->getRowCount("Image");
+
+		//create new Image and insert into mySQL
+		$image = new Image(null, $this->company->getCompanyId(),$this->VALID_IMAGEFILENAME, $this->VALID_IMAGEFILETYPE);
+		$image->insert($this->getPDO());
+
+		//delete the image from mySQL
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("image"));
+
+	}
 
 }
