@@ -409,7 +409,7 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 			throw(new \RangeException("eventId and eventTruckId must be positive"));
 		}
 		//create query template
-		$query = "SELECT eventId, eventTruckId FROM event WHERE eventId = :eventId AND eventTruckId = :eventTruckId";
+		$query = "SELECT eventId, eventTruckId, eventEnd, eventLocation, eventStart FROM event WHERE eventId = :eventId AND eventTruckId = :eventTruckId";
 		$statement = $pdo->prepare($query);
 
 		//bind eventId and eventTruckId to the placeholder in the query
@@ -422,7 +422,7 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-				$event = new Event($row["eventId"], $row["eventTruckId"]);
+				$event = new Event($row["eventId"], $row["eventTruckId"], $row["eventEnd"], $row["eventLocation"], $row["eventStart"]);
 			}
 		}catch
 			(\Exception $exception){
@@ -443,7 +443,7 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 	 *@throws \InvalidArgumentException
 	 *@throws \TypeError when values are not the correct data type
 	 */
-	public static function getEventbyEventEndandEventStart(\PDO $pdo, float $eventEnd, float $eventStart) {.
+	public static function getEventbyEventEndandEventStart(\PDO $pdo, float $eventEnd, float $eventStart) {
 //		if($eventStart >= NOW() || $eventEnd <= NOW()) {
 //			throw(new \RangeException("These events are not active. eventStart must be less than current time. eventEnd must be greater than current time."));
 //		}
