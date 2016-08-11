@@ -1,8 +1,5 @@
 
 
-
-
-
 <phpunit>
 	<testsuites>
 		<testsuite name="CrumbTrailTest">

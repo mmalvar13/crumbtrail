@@ -27,7 +27,7 @@ abstract class CrumbTrailTest extends \PHPUnit_Extensions_Database_TestCase {
 	 * @see https://dev.mysql.com/doc/refman/5.6/en/integer-types.html mySQL Integer Types.
 	 * @var int INVALID_KEY
 	 **/
-	const INVALID_KEY = 4294967296;   												 // TODO Check this key value ???
+	const INVALID_KEY = 4294967296;
 
 	/**
 	 * PHPUnit database connection interface
