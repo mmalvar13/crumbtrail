@@ -89,4 +89,7 @@ class ImageTest extends CrumbTrailTest {
 	/**
 	 * test inserting an Image, editing it, and then updating it
 	 **/
+	public function  testUpdateValidImage() {
+
+	}
 }
