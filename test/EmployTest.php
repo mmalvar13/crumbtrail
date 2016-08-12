@@ -76,4 +76,23 @@ class Employ extends CrumbTrailTest{
 		$employ->insert($this->getPDO());
 	}
 
+	/**
+	 * test inserting an Employ, editing it, and then updating it
+	 *
+	 * //BUT YOU WOULDN'T BECAUSE IT IS JUST A COMPOSITE KEY
+	 * //SO IM NOT WRITING THIS TEST I GUESS
+	 **/
+
+	/**
+	 *test updating an Employ that already exists
+	 * @expectedException \PDOException
+	 * we wouldn't really do this right? but i will write it anyway
+	 **/
+	public function testUpdateInvalidEmploy(){
+		//create an Employ, try to update it without actually updating it and watch it fail
+		$employ = new Employ(null, $this->company->getCompanyId(), $this->profile->getProfileId());
+		$employ->update($this->getPDO());
+	}
+
+
 }
