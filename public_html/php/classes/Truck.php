@@ -243,5 +243,8 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 		}
 		return ($trucks);
 	}
+	/**
+	 *
+	 */
 
 }
