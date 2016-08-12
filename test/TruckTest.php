@@ -1,7 +1,7 @@
 <?php
 namespace Edu\Cnm\CrumbTrail\Test;
 
-use Edu\Cnm\CrumbTrail\ {Truck, Company};
+use Edu\Cnm\CrumbTrail\{Company, Truck};
 
 //grab the project test parameters
 require_once("CrumbTrailTest.php");
@@ -17,6 +17,9 @@ require_once(dirname(__DIR__) . "/public_html/php/classes/autoload.php");
  * @see Truck
  * @author Victoria Chacon <victoriousdesignco@gmail.com>
  **/
+
+
+
 class TruckTest extends CrumbTrailTest {
 	//setting up made up variables to test
 	/**
@@ -25,6 +28,10 @@ class TruckTest extends CrumbTrailTest {
 	 **/
 	protected $company = null;
 	protected $company2 = null;
+
+
+
+
 	/**
 	 * create dependent objects before running each test
 	 */
@@ -41,6 +48,9 @@ class TruckTest extends CrumbTrailTest {
 		$this->company2 = new Company(null, "Truckina's Crepes", "truckina@trucks.com", "45678", "4567", "Truckina McTruckerson", "456 Crepe Street", "Albuquerque", "NM", "45678", "We sell crepes", "crepes, ice cream, cakes", "505-123-4566", "1");
 		$this->company2->insert($this->getPDO());
 	}
+
+
+
 	/**
 	 * insert valid truck to verify that the actual mySQL data matches
 	 **/
