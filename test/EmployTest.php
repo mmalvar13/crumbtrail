@@ -155,7 +155,7 @@ class Employ extends CrumbTrailTest{
 	}
 
 	/**
-	 * test grabbing an Employ by the companyid
+	 * test grabbing an Employ by the employCompanyId
 	 **/
 	public function testGetValidEmployByEmployCompanyId(){
 		//count the number of rows and save it for later
@@ -176,6 +176,20 @@ class Employ extends CrumbTrailTest{
 		$this->assertEquals($pdoEmploy->getCompanyId(),$this->company->getCompanyId());
 		$this->assertEquals($pdoEmploy->getProfileId(), $this->profile->getProfileId());
 	}
+
+	/**
+	 * test grabbing an Employ by companyId that does not exist
+	 **/
+	public function testGetInvalidEmployByEmployCompanyId(){
+		//grab an Employ by searching for companyId that does not exist
+		$employ = Employ::getEmployByEmployCompanyId($this->getPDO(), "get outta pueblo");
+		$this->assertCount(0, $employ);
+	}
+
+	/**
+	 * test grabbing an Employ by employProfileId
+	 **/
+
 
 
 }

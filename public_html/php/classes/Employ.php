@@ -126,7 +126,7 @@ class Employ implements \JsonSerializable {
 		//$this->employId = intval($pdo->lastInsertId());
 
 		//anything special i write here for composite keys?? do i add this above in the state variables?
-		$this->employId=intval($pdo->lastInsertId());
+//		$this->employId=intval($pdo->lastInsertId());
 	}
 
 	/**
