@@ -5,7 +5,7 @@ namespace Edu\Cnm\CrumbTrail\Test;
 require_once("autoload.php");
 
 /**
- * Hi!  Welcome to the Company class.  Enjoy your stay!
+ * Hi!  Welcome to the Company class.   Enjoy your stay!
  * 
  * class Company for the Company entity in the crumbtrail application.
  * State variables, constructor, mutators, accessors, and PDO methods.
