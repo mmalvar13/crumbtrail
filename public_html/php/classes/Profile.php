@@ -1,7 +1,7 @@
 <?php
 
 namespace Edu\Cnm\CrumbTrail;  /*LOOK INTO THIS FOR ACCURACY */
-require_once("autoload.php");
+//require_once("autoload.php");
 
 /**
  * class Profile for entity profile in crumbtrail application
