@@ -219,7 +219,7 @@ public function getProfileId(){
 		//create a base case where this is a new profile and profileId is null with no SQL assigned ID yet!
 		// is this because setProofileId takes in one argument, which then gets assigned to $newProfileId???
 		//ASK ON THIS!!!!!
-		if($newProfileId===null){
+		if($newProfileId === null){
 			$this->profileId = null;
 			return;
 		}

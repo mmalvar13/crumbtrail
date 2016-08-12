@@ -828,7 +828,7 @@ class Company implements \JsonSerializable {
 
 
 	/**
-	 * Get company by companyMenuText, e.g. search for tacos.  Tacos!
+	 * Get company by companyMenuText, e.g. search for tacos.
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @param string $companyMenuText The companyMenuText we want to find.
@@ -876,6 +876,38 @@ class Company implements \JsonSerializable {
 			}
 		}
 		return($companies);
+	}
+
+
+	/**
+	 * Get all Companys (sp).  All of 'em.
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @return \SplFixedArray SplFixedArray of Companys (sp) found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getAllCompanys(\PDO $pdo) {
+		// create query template
+		$query = "SELECT companyId, companyName, companyEmail, companyPermit, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved, companyAccountCreatorId FROM company";
+
+		$statement = $pdo->prepare($query);
+		$statement->execute();
+
+		// Build an array of tweets.
+		$companys = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$company = new Company($row["companyId"], $row["companyName"], $row["companyEmail"], $row["companyPermit"], $row["companyLicense"], $row["companyAttn"], $row["companyStreet1"], $row["companyStreet2"], $row["companyCity"], $row["companyState"], $row["companyZip"], $row["companyDescription"], $row["companyMenuText"], $row["companyActivationToken"], $row["companyApproved"], $row["companyAccountCreatorId"]);
+				$companys[$companys->key()] = $company;
+				$companys->next();
+			} catch(\Exception $exception) {
+				// If the row couldn't be converted, rethrow it.
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($companys);
 	}
 
 

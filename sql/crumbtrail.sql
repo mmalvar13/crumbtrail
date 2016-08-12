@@ -57,7 +57,6 @@ CREATE TABLE company (
 
 	-- companyAccountCreatorId is a foreign key from profile
 	companyAccountCreatorId INT UNSIGNED NOT NULL,
-
 	-- index for foreign key companyAccountCreatorId
 	INDEX (companyAccountCreatorId),
 	-- declare foreign key for companyAccountCreatorId, reference profileId
