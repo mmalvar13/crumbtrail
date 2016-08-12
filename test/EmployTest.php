@@ -127,6 +127,7 @@ class Employ extends CrumbTrailTest{
 
 	/**
 	 * test inserting an Employ and regrabbing it from mySQL
+	 * wow idk, is this what i name the test? with both primary keys???
 	 **/
 	public function testGetValidEmployByEmployCompanyIdAndEmployProfileId(){
 		//count the number of rows and save it for later
@@ -138,10 +139,19 @@ class Employ extends CrumbTrailTest{
 
 		//grab the data from mySQL and enforce the fields match our expectations
 		$pdoEmploy = Employ:: getEmployByEmployCompanyId($this->getPDO(), $employ->getEmployCompanyId());
-		$pdoEmploy = Employ:: getEmployByEmployProfileId($this->getPDO(), $employ->getEmployProfileId());
+		$pdoEmploy = Employ:: getEmployByEmployProfileId($this->getPDO(), $employ->getEmployProfileId()); //should i combine these?
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("employ"));
 		$this->assertEquals($pdoEmploy->getCompanyId(), $this->company->getCompanyId());
 		$this->assertEquals($pdoEmploy->getProfileId(), $this->profile->getProfileId()); //idk getProfileId or getEmployProfileId??
+	}
+
+	/**
+	 * test grabbing an Employ that does not exist
+	 **/
+	public function testGetInvalidEmployByEmployCompanyIdAndEmployProfileId(){
+		//grab a profile id and company id that exceeds the maximum allowable profile and company id
+		$employ = Employ::getEmployByEmployCompanyId($this->getPDO(), CrumbTrailTest::INVALID_KEY); getEmployByEmployProfileId($this->getPDO(), CrumbTrailTest::INVALID_KEY);
+		$this->assertNull($employ);
 	}
 
 
