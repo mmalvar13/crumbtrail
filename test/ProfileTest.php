@@ -210,7 +210,7 @@ class ProfileTest extends CrumbTrailTest {
 		//create a profile with a non-null profileId and watch it fail. Uze the INVALID_KEY we defined inside the abstract class CrumbTrailTest
 		//here we are calling an object ($profile) based on the Profile class and feeding it initial values. BUT whereas normally we would define the primary key as NULL
 		//this time we are giving it a value (INVALID_KEY)
-		$profile = new Profile(CrumbTrailTest::INVALID_KEY, $this->VALID_PROFILENAME1, $this->VALID_PROFILEEMAIL1, $this->VALID_PROFILEPHONE1, $this->VALID_PROFILEACCESSTOKEN1, $this->VALID_PROFILEACTIVATIONTOKEN1, $this->VALID_PROFILEHASH1, $this->VALID_PROFILESALT1);
+		$profile = new Profile(CrumbTrailTest::INVALID_KEY, $this->VALID_PROFILENAME1, $this->VALID_PROFILEEMAIL1, $this->VALID_PROFILEPHONE1, $this->VALID_PROFILEACCESSTOKEN1, $this->VALID_PROFILEACTIVATIONTOKEN1, $this->VALID_PROFILETYPE1, $this->VALID_PROFILEHASH1, $this->VALID_PROFILESALT1);
 
 		//now insert it into SQL and hope it throws an error!
 		//this uses the insert PDO method we wrote back in our class, and all the capabilities it has

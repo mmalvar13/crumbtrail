@@ -44,14 +44,41 @@ abstract class CrumbTrailTest extends \PHPUnit_Extensions_Database_TestCase {
 
 		// add all the tables for the project here
 		// THESE TABLES *MUST* BE LISTED IN THE SAME ORDER THEY WERE CREATED!!!!
-		$dataset->addTable("profile");
+//		$dataset->addTable("profile");
+//		$dataset->addTable("company");
+//		$dataset->addTable("image");
+//		$dataset->addTable("truck");
+//		$dataset->addTable("event");
+//		$dataset->addTable("employ");
+
+
+		//configuration order that is how SQL creates the tables
 		$dataset->addTable("company");
-		$dataset->addTable("image");
-		$dataset->addTable("truck");
-		$dataset->addTable("event");
 		$dataset->addTable("employ");
+		$dataset->addTable("event");
+		$dataset->addTable("image");
+		$dataset->addTable("profile");
+		$dataset->addTable("truck");
 
 		return($dataset);
+	}
+
+	/**
+	 * sets up the database connection and provides it to PHPUnit
+	 *
+	 * @see <https://phpunit.de/manual/current/en/database.html#database.configuration-of-a-phpunit-database-testcase>
+	 * @return \PHPUnit_Extensions_Database_DB_IDatabaseConnection PHPUnit database connection interface
+	 **/
+	public final function getConnection() {
+		// if the connection hasn't been established, create it
+		if($this->connection === null) {
+			// connect to mySQL and provide the interface to PHPUnit
+			$config = readConfig("/etc/apache2/capstone-mysql/crumbtrail.ini");
+
+			$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/crumbtrail.ini");
+			$this->connection = $this->createDefaultDBConnection($pdo, $config["database"]);
+		}
+		return($this->connection);
 	}
 
 	/**
@@ -75,24 +102,6 @@ abstract class CrumbTrailTest extends \PHPUnit_Extensions_Database_TestCase {
 	 **/
 	public final function getTearDownOperation() {
 		return(\PHPUnit_Extensions_Database_Operation_Factory::DELETE_ALL());
-	}
-
-	/**
-	 * sets up the database connection and provides it to PHPUnit
-	 *
-	 * @see <https://phpunit.de/manual/current/en/database.html#database.configuration-of-a-phpunit-database-testcase>
-	 * @return \PHPUnit_Extensions_Database_DB_IDatabaseConnection PHPUnit database connection interface
-	 **/
-	public final function getConnection() {
-		// if the connection hasn't been established, create it
-		if($this->connection === null) {
-			// connect to mySQL and provide the interface to PHPUnit
-			$config = readConfig("/etc/apache2/capstone-mysql/crumbtrail.ini");
-
-			$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/crumbtrail.ini");
-			$this->connection = $this->createDefaultDBConnection($pdo, $config["database"]);
-		}
-		return($this->connection);
 	}
 
 	/**
