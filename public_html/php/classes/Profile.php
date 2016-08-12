@@ -303,6 +303,54 @@ public static function getProfileByProfileId(\PDO $pdo, int $profileId){
 		return($profile);
 	}
 
+
+
+	/**
+	 * gets all Profiles  **WHY IS Profile CAPITALIZED**
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @return \SplFixedArray SplFixedArray of Profiles found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public function getAllProfiles(\PDO $pdo){
+		//create query template
+		$query = "SELECT profileId, profileName, profileEmail, profilePhone, profileAccessToken, profileActivationToken, profileType, profileHash, profileSalt FROM profile";
+
+		//assume this $pdo object is created somewhere else, we just take it and use it here
+		//prepare does a bunch of security prep on the $query template, getting it ready for SQL
+		$statement = $pdo->prepare($query); //statement is assigned to the $pdo prepared object!! not the initial $pdo object
+		$statement->execute();
+
+		//build an array to put all the profiles into. What does the *new* keyword do??
+		$profiles = new \SplFixedArray($statement->rowCount());  //make an array fixed to the length of the row count found in statement, which has the complete list of profiles
+		$statement->setFetchMode(\PDO::FETCH_ASSOC); //still not exactly sure what this does
+
+		//find out what this while-loop is actually doing
+		while(($row = $statement->fetch()) !==false){
+			try{
+
+				//this is getting the value from each of these keys in the array called $row
+				$profile = new Profile($row["profileId"], $row["profileName"], $row["profileEmail"], $row["profilePhone"], $row["profileAccessToken"], $row["profileActivationToken"], $row["profileType"], $row["profileHash"], $row["profileSalt"]);
+
+				//now we are taking each profile and putting it into the array called $profiles which will collect all the profiles we have!
+				$profiles[$profiles->key()]=$profile; //inserts the first entry from the $profile array
+				$profiles->next();  //next increments the key in the fixed array $profiles
+				//profile array to enter!!
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($profiles);
+	}
+
+
+
+
+
+
+
 /**
  * accessor method for profileId
  * @return int|null value for profileId
@@ -376,8 +424,6 @@ public function getProfileId(){
 	}
 
 
-
-	/*--------------------------MUTATOR SECTION HERE------------------------------------------------*/
 
 	/**
 	 * mutator method for profileEmail
@@ -640,6 +686,12 @@ public function getProfileId(){
 		$this->profileHash = $newProfileHash;
 	}
 
+
+
+
+
+
+
 /**
  * inserts this profile into mySQL
  *
@@ -717,45 +769,7 @@ public function getProfileId(){
 		$statement->execute($parameters);
 }
 
-	/**
-	 * gets all Profiles  **WHY IS Profile CAPITALIZED**
-	 *
-	 * @param \PDO $pdo PDO connection object
-	 * @return \SplFixedArray SplFixedArray of Profiles found or null if not found
-	 * @throws \PDOException when mySQL related errors occur
-	 * @throws \TypeError when variables are not the correct data type
-	 **/
-	public function getAllProfiles(\PDO $pdo){
-		//create query template
-		$query = "SELECT profileId, profileName, profileEmail, profilePhone, profileAccessToken, profileActivationToken, profileType, profileHash, profileSalt FROM profile";
 
-		//assume this $pdo object is created somewhere else, we just take it and use it here
-		//prepare does a bunch of security prep on the $query template, getting it ready for SQL
-		$statement = $pdo->prepare($query); //statement is assigned to the $pdo prepared object!! not the initial $pdo object
-		$statement->execute();
-
-		//build an array to put all the profiles into. What does the *new* keyword do??
-		$profiles = new \SplFixedArray($statement->rowCount());  //make an array fixed to the length of the row count found in statement, which has the complete list of profiles
-		$statement->setFetchMode(\PDO::FETCH_ASSOC); //still not exactly sure what this does
-
-		//find out what this while-loop is actually doing
-		while(($row = $statement->fetch()) !==false){
-			try{
-
-				//this is getting the value from each of these keys in the array called $row
-				$profile = new Profile($row["profileId"], $row["profileName"], $row["profileEmail"], $row["profilePhone"], $row["profileAccessToken"], $row["profileActivationToken"], $row["profileType"], $row["profileHash"], $row["profileSalt"]);
-
-				//now we are taking each profile and putting it into the array called $profiles which will collect all the profiles we have!
-				$profiles[$profiles->key()]=$profile; //inserts the first entry from the $profile array
-				$profiles->next();  //next increments the key in the fixed array $profiles
-				//profile array to enter!!
-			} catch(\Exception $exception) {
-				// if the row couldn't be converted, rethrow it
-				throw(new \PDOException($exception->getMessage(), 0, $exception));
-			}
-		}
-		return($profiles);
-	}
 
 
 	/**
