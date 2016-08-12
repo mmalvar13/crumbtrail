@@ -142,7 +142,7 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 	 * @throws \RangeException if $newEventEnd is greater than the eventStart datetime
 	 **/
 	public function setEventEnd(\DateTime $newEventEnd) {//why is this greyed out? what data type do i put? IT SAYS NEWEVENTEND IS OVERWRITTEN IMMEDIATELY
-		if($newEventEnd = null) {
+		if($newEventEnd === null) {
 			throw(new \InvalidArgumentException("Must enter the time length of the event"));
 		} elseif($newEventEnd <= $this->eventStart) {
 			throw(new \RangeException("Start time cannot be greater than end time")); //is this correct??
@@ -434,7 +434,7 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 		}
 
 	/**
-	 *gets the ACTIVE EVENTS
+	 *get event by event end and event start: gets the ACTIVE EVENTS
 	 *@param \PDO $pdo PDO connection object
 	 *@param \DateTime $eventStart to search by
 	 *@param \DateTime $eventEnd to search by
@@ -444,22 +444,8 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 	 *@throws \TypeError when values are not the correct data type
 	 */
 	public static function getEventbyEventEndandEventStart(\PDO $pdo, \DateTime $eventEnd, \DateTime $eventStart) {
-//		if($eventStart >= NOW() || $eventEnd <= NOW()) {
-//			throw(new \RangeException("These events are not active. eventStart must be less than current time. eventEnd must be greater than current time."));
-//		}
 
-		if($eventEnd <= 0 || $eventStart <= 0) {
-			throw(new \InvalidArgumentException("event end and event start must be positive number"));
-		}
-//			//create query template
-//			$query = "SELECT eventId, eventEnd, eventLocation, eventStart, eventTruckId FROM event WHERE eventStart = :eventStart AND eventEnd = :eventEnd";
-//			$statement = $pdo->prepare($query);
-//
-//			//bind eventStart and eventEnd to placeholders in query
-//			$parameters = ["eventStart" => $eventStart, "eventEnd" => $eventEnd];
-//			$statement->execute($parameters);
-
-		$query = "SELECT eventId, eventTruckId, eventEnd, eventLocation, eventStart FROM event WHERE eventStart <= NOW() AND eventEnd > NOW()";
+		$query = "SELECT eventId, eventTruckId, eventEnd, eventLocation, eventStart FROM event WHERE eventStart <= NOW() AND eventEnd >= NOW()";
 
 		$statement = $pdo->prepare($query);
 		$statement->execute();
@@ -479,19 +465,6 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 			}
 			return ($events);
 		}
-
-
-
-//		//possible other option
-////create query template
-//		$query = "SELECT eventId, eventLocation, eventTruckId FROM event WHERE eventStart <= NOW() AND eventEnd >= NOW()";
-//		$statement=$pdo->prepare($query);
-//
-//		//bind eventStart and eventEnd to placeholders in query //or maybe we dont need to bind anything to query??
-//		$parameters = ["eventStart"=> : $eventStart, "eventEnd"=> $eventEnd];
-
-
-
 
 
 	/**

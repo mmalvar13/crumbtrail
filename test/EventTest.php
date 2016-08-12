@@ -1,14 +1,15 @@
 <?php
 namespace Edu\Cnm\Mmalvar13\CrumbTrail\Test;
 
-use Edu\Cnm\Crumbtrail\Test\CrumbTrailTest;
-use Edu\Cnm\mmalvar13\CrumbTrail\{Truck, Event}; //is this what i put here??
+use Edu\Cnm\CrumbTrail\{
+	Test\CrumbTrailTest, Truck, Event
+}; //is this what i put here??
 
 //grab the project test parameters
 require_once("CrumbTrailTest.php");
 
 //grab the class under scrutiny
-require_once(dirname(__DIR__) . "/php/classes/autoload.php");
+require_once(dirname(__DIR__) . "public_html/php/classes/autoload.php");
 
 /**
  * Full PHPUnit test for the Event class
@@ -37,7 +38,7 @@ class EventTest extends CrumbTrailTest{
 	 * timestamp of updated end of this event;
 	 *@var \DateTime $VALID_EVENTEND
 	 */
-	protected $VALID_EVENTEND2 = "event end two is passing sorry no humor, this is SERIOUS";
+	protected $VALID_EVENTEND2 = null;
 
 	/**
 	 * timestamp of the start of this Event; this starts as null and is assigned later
@@ -64,6 +65,7 @@ class EventTest extends CrumbTrailTest{
 
 		//calculate the date this event starts (just use the time the unit was setup
 		$this->VALID_EVENTSTART = new \DateTime();
+		//date time class has an add method.
 		//calculate the date this event ends?? do i?? i have no idea. what is this for??
 	}
 
@@ -153,6 +155,36 @@ class EventTest extends CrumbTrailTest{
 		$pdoEvent = Event:: getEventbyEventId($this->getPDO(), $event->getEventId());
 		$this->assertNull($pdoEvent);
 		$this->assertEquals($numRows, $this->getConnection()->getRowCount("event"));
+	}
+
+	/**
+	 * test deleting an Event that does not exist
+	 * @expectedException \PDOException
+	 **/
+	public function testDeleteInvalidEvent(){
+		//create an Event and try to delete it without actually inserting it
+		$event = new Event(null, $this->truck->getTruckId(), $this->VALID_EVENTEND, $this->VALID_EVENTLOCATION, $this->VALID_EVENTSTART);
+		//this is where you would insert it but you DONT because you're a noob!
+		$event->delete($this->getPDO());
+	}
+
+	/**
+	 * Test inserting an Event and regrabbing it from mySQL
+	 **/
+	public function testGetValidEventByEventId(){
+		//count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("event");
+		//create a new Event and insert it into mySQL
+		$event = new Event(null, $this->truck->getTruckId(), $this->VALID_EVENTEND, $this->VALID_EVENTLOCATION, $this->VALID_EVENTSTART);
+		$event->insert($this->getPDO());
+
+		//grab the data from mySQL and enforce the fields match our expectations
+		$pdoEvent = Event::getEventbyEventId($this->getPDO(), $event->getEventId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("event"));
+		$this->assertEquals($pdoEvent->getTruckId(),$this->truck->getTruckId());
+		$this->assertEquals($pdoEvent->getEventEnd(),$this->VALID_EVENTEND);
+		$this->assertEquals($pdoEvent->getEventLocation(), $this->VALID_EVENTLOCATION);
+		$this->assertEquals($pdoEvent->getEventStart(), $this->VALID_EVENTSTART);
 	}
 
 
