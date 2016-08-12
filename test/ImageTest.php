@@ -1,5 +1,5 @@
 <?php
-namespace Edu\Cnm\Mmalvar13\CrumbTrail\Test;
+namespace Edu\Cnm\CrumbTrail\Test;
 
 use Edu\Cnm\CrumbTrail\{Company, Image};
 
@@ -167,7 +167,7 @@ class ImageTest extends CrumbTrailTest {
 		$results = Image::getImageByImageFileName($this->getPDO(), $image->getImageFileName());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("image"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Mmalvar13\\CrumbTrail\\Image", $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\CrumbTrail\\Image", $results);
 
 		//grab the result from teh array and validate it
 		$pdoImage = $results[0];
@@ -200,7 +200,7 @@ class ImageTest extends CrumbTrailTest {
 		$results = Image::getAllImages($this->getPDO());
 		$this->assertEquals($numRows + 1, $this->getConnection()->gerRowCount("image"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Mmalvar13\\CrumbTrail\\Image", $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\CrumbTrail\\Image", $results);
 
 		//grab the result from the array and validate it
 		$pdoImage = $results[0];
