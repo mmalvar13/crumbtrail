@@ -4,7 +4,7 @@
 namespace Edu\Cnm\CrumbTrail\Test;  /*LOOK INTO THIS FOR ACCURACY */
 
 
-use Edu\Cnm\CrumbTrail\Test\{Profile};
+use Edu\Cnm\CrumbTrail\{Profile};
 
 //grab the parameters for the test, go the the abstract test file
 require_once("CrumbTrailTest.php");
