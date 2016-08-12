@@ -3,7 +3,7 @@
 <phpunit>
 	<testsuites>
 		<testsuite name="CrumbTrailTest">
-			<!-- <file>ProfileTest.php</file> -->
+			<file>ProfileTest.php</file>
 			<file>CompanyTest.php</file>
 			<!-- <file>EmployTest.php</file> -->
 			<!-- <file>EventTest.php</file> -->
