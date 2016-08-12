@@ -1,6 +1,6 @@
 <?php
 
-namespace Edu\Cnm\CrumbTrail;  /*LOOK INTO THIS FOR ACCURACY */
+namespace Edu\Cnm\Mmalvar13\CrumbTrail;  /*LOOK INTO THIS FOR ACCURACY */
 require_once("autoload.php");
 
 /**
@@ -584,7 +584,7 @@ public static function getProfileByProfileId(\PDO $pdo, int $profileId){
 
 	//now that we have selected the correct profile, we need to grab it from mySQL
 	try{
-		$profile = null;   //new varible $profile is what we will assign all the information in this profile to, and return to whatever called this method
+		$profile = null;   //new variable $profile is what we will assign all the information in this profile to, and return to whatever called this method
 		$statement->setFetchMode(\PDO::FETCH_ASSOC); //what is going on here? establishing the fetch mode for this method?
 		//$row is an empty array I think
 		$row = $statement->fetch(); //create new variable and assign it to $statement which is pointing to the value of fetch???
