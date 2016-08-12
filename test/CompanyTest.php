@@ -197,8 +197,15 @@ class CompanyTest extends CrumbTrailTest {
 		// run the default setUp() method first
 		parent::setUp();
 
-		// create and insert a Profile to own the test Company.
-		$this->profile = new Profile(null, "Bob Smith", "test@phpunit.de", "+12125551212", "0000000000000000000000000000000000000000000000000000000000004444", "00000000000000000000000000000022", "O", null, null);
+		// Create and insert a Profile to own the test Company.
+		// Generate dummy salt and hash values.
+		$password = "abc123";
+		$salt = bin2hex(random_bytes(16));
+		$hash = hash_pbkdf2("sha512", $password, $salt, 262144);
+
+		// Put dummy values into the Profile attributes.
+		$this->profile = new Profile(null, "Bob Smith", "test@phpunit.de", "+12125551212", "0000000000000000000000000000000000000000000000000000000000004444", "00000000000000000000000000000022", "O", "$salt", "$hash");
+		// Insert the dummy profile object into the database.
 		$this->profile->insert($this->getPDO());
 	}
 
@@ -316,7 +323,7 @@ class CompanyTest extends CrumbTrailTest {
 	}
 
 	/**
-	 * Test creating a Company and then deleting it
+	 * Test creating a Company and then deleting it.
 	 **/
 	public function testDeleteValidCompany() {
 		// Count the number of rows and save it for later.
@@ -352,7 +359,7 @@ class CompanyTest extends CrumbTrailTest {
 
 
 	/**
-	 * Test getting a Company by company name
+	 * Test getting a Company by company name.
 	 **/
 	public function testGetValidCompanyByCompanyName() {
 		// Count the number of rows and save it for later.
@@ -385,7 +392,7 @@ class CompanyTest extends CrumbTrailTest {
 	}
 
 	/**
-	 * Test getting all Companies.
+	 * Test getting all Companys (sp).  All of them!
 	 **/
 	public function testGetAllValidCompany() {
 		// Count the number of rows and save it for later.
@@ -397,6 +404,7 @@ class CompanyTest extends CrumbTrailTest {
 		$company->insert($this->getPDO());
 
 		// Get the data from mySQL, and check that fields match our expectations.
+		// Note that here plural Company = Companys (sp)
 		$results = Company::getAllCompanys($this->getPDO());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("company"));
 		$this->assertCount(1, $results);
