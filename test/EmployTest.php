@@ -216,7 +216,10 @@ class EmployTest extends CrumbTrailTest {
 		$this->assertCount(0, $employ);
 	}
 
-
+	/**
+	 * dont need to test for grabbing all employs because we already grab employByEmployProfileIdAndEMplotest grabbing all employs
+	 **/
+}
 
 
 }

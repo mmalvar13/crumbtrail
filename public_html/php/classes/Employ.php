@@ -226,7 +226,7 @@ class Employ implements \JsonSerializable {
 	}
 
 	/**
-	 * get employ by employCompanyId and employProfileId*
+	 * get employ by employCompanyId and employProfileId
 	 * @param \PDO $pdo PDO connection object
 	 * @param int $employCompanyId employCompanyId to search for
 	 * @param int $employProfileId employProfileId to search for
@@ -268,10 +268,45 @@ class Employ implements \JsonSerializable {
 		return $employ;
 	}
 
+
+
+	/**
+	 * added get all employs. may not need this
+	 *
+	 * @param \PDO $pdo connection object
+	 * @return \SplFixedArray SplFixedArray of Employs found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not correct data type
+	 **/
+
+	public static function getAllEmploys(\PDO $pdo){
+		//create query template
+		$query = "SELECT employCompanyId, employProfileId FROM employ";
+		$statement = $pdo->prepare($query);
+		$statement->execute();
+
+		//build an array of employs
+		$employs = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row=$statement->fetch()) !== false){
+			try{
+				$employ = new Employ($row["employCompanyId"], $row["employProfileId"]);
+				$employs[$employs->key()] = $employ;
+				$employs->next();
+			}catch(\Exception $exception){
+				//if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($employs);
+
+	}
+
 	/**
 	 * formats the state variables for JSON serialization
 	 *
 	 * @return array resulting in state variables  to serialize
+	 *
 	 **/
 	public function jsonSerialize() {
 		$fields = get_object_vars($this);
