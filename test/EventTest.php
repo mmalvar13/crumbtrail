@@ -209,7 +209,7 @@ class EventTest extends CrumbTrailTest{
 		$results = Event::getEventbyEventTruckId($this->getPDO(),$event->getEventTruckId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("event"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Mmalvar13\\CrumbTrail\\Event", $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\CrumbTrail\\Event", $results);
 
 		//grab the result from the array and validate it
 		$pdoEvent = $results[0];
@@ -244,7 +244,7 @@ class EventTest extends CrumbTrailTest{
 		$results = Event::getEventbyEventLocation($this->getPDO(),$event->getEventLocation());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("event"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Mmalvar13\\CrumbTrail\\Event", $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\CrumbTrail\\Event", $results);
 
 		//grab the result from the array and validate it
 		$pdoEvent = $results[0];
@@ -278,7 +278,7 @@ class EventTest extends CrumbTrailTest{
 		$results = Event::getEventbyEventIdAndEventTruckId($this->getPDO(), $event->getEventId(), $event->getEventTruckId()); //is this right? i put both event id and event truck id here.
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("event"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Mmalvar13\\CrumbTrail\\Event", $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\CrumbTrail\\Event", $results);
 
 		//grab the result from the array and validate it
 		$pdoEvent = $results[0];
@@ -311,7 +311,7 @@ class EventTest extends CrumbTrailTest{
 		$results = Event::getEventbyEventEndandEventStart($this->getPDO(), $event->getEventEnd(), $event->getEventStart());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("event"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Mmavlar13\\CrumbTrail\\Event", $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\CrumbTrail\\Event", $results);
 
 		//grab the result from the array and validate it
 		$pdoEvent = $results[0];
@@ -345,7 +345,7 @@ class EventTest extends CrumbTrailTest{
 		$results = Event::getAllEvents($this->getPDO());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("event"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Mmalvar13\\CrumbTrail\\Event", $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\CrumbTrail\\Event", $results);
 
 		//grab the result from the array and validate it
 		$pdoEvent = $results[0];
