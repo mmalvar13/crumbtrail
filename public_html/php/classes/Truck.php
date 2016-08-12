@@ -183,7 +183,37 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 		return($truck);
 	}
 	/**
+	 * gets truck by company
 	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param int, $truckCompanyId truck to search for
+	 * @return \SplFixedArray SplFixedArray of images found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are nor the correct data type
 	 */
-
+		public static function getTruckByTruckCompanyId(\PDO $pdo, int $truckCompanyId) {
+			//sanitize the description before searching?
+			if($truckCompanyId <=0) {
+				throw(new \PDOException("Truck Company Id is not positive"));
+			}
+		//query template
+		$query = "SELECT truckId, truckCompanyId FROM truck WHERE truckCompanyId= :truckCompanyId";
+		$statement = $pdo->prepare($query);
+		//bind the truck company Id to the placeholder template
+		$parameters = ["truckCompanyId" => $truckCompanyId];
+		$statement->execute($parameters);
+		//build an array of trucks
+		$trucks = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !==false) {
+			try {
+				$truck = new Truck($row["truckId"], $row["truckCompanyId"]);
+				$trucks[$trucks->key()] = $truck;
+			} catch(\Exception $exception) {
+				//if row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($trucks);
+		}
 }
