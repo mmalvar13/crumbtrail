@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Edu\Cnm\Mmalvar13\CrumbTrail\Test;  /*LOOK INTO THIS FOR ACCURACY */
+namespace Edu\Cnm\CrumbTrail\Test;  /*LOOK INTO THIS FOR ACCURACY */
 
 
 use Edu\Cnm\CrumbTrail\Test\{Profile};
@@ -345,7 +345,7 @@ class ProfileTest extends CrumbTrailTest {
 		$this->assertCount(1, $results);
 
 		//ensure there are only instances of the profile class in the namespace
-		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Mmalvar13\\CrumbTrail\\Profile", $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\CrumbTrail\\Profile", $results);
 
 		//grab results from the array and validate them
 		$pdoProfile = $results[0];
@@ -394,7 +394,7 @@ class ProfileTest extends CrumbTrailTest {
 		$this->assertCount(1, $results);
 
 		//ensure there are only instances of the profile class in the namespace
-		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Mmalvar13\\CrumbTrail\\Profile", $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\CrumbTrail\\Profile", $results);
 
 		//grab results from the array and validate them
 		$pdoProfile = $results[0];
@@ -442,7 +442,7 @@ class ProfileTest extends CrumbTrailTest {
 		$this->assertCount(1, $results);
 
 		//ensure there are only instances of the profile class in the namespace
-		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Mmalvar13\\CrumbTrail\\Profile", $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\CrumbTrail\\Profile", $results);
 
 		//grab results from the array and validate them
 		$pdoProfile = $results[0];
@@ -488,7 +488,7 @@ class ProfileTest extends CrumbTrailTest {
 		//confirm we have just 1 profile in the database
 		$this->assertCount(1, $results);
 		//ensure there are only instances of the profile class in the namespace
-		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Mmalvar13\\CrumbTrail\\Profile", $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\CrumbTrail\\Profile", $results);
 
 		//grab results from the array and validate them
 		$pdoProfile = $results[0];

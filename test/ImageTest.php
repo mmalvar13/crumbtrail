@@ -58,6 +58,8 @@ class ImageTest extends CrumbTrailTest {
 		$this->company= new Company(null, "Terry's Tacos", "terrytacos@tacos.com", "12345", "2345", "Terry Jane", "345 Taco Street", "Albuquerque", "NM", "87654", "We are a Taco truck description", "Tacos, Tortillas, Burritos", "5052345678","1");
 		$this->company->insert($this->getPDO());
 	}
+	//create and insert a Profile to own the test image
+		$this->profile= new Profile
 	/**
 	 * insert valid image and verify that the actual mySQL data matches
 	 **/ 
