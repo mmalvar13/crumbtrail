@@ -42,6 +42,17 @@ class TruckTest extends CrumbTrailTest {
 	 * insert valid truck to verify that the actual mySQL data matches
 	 **/
 	public function testInsertValidTruck() {
+		$numRows = $this->getConnection()->getRowCount("image");
+
+		//create new Truck and insert it into mySQL
+		$truck = new Truck(null, $this->company->getCompanyId);
+		$truck->insert($this->getPDO());
+
+		//grab the data from mySQL and enforce the fields to match our expectations
+		$pdoTruck = Truck::getTruckbyTruckId($this->getPDO(), $truck->getTruckId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("truck"));
+		$this->assertEquals($pdoTruck->getTruckId(), $this->company->getCompanyId());
+	}
 
 	}
 }
