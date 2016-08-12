@@ -368,7 +368,7 @@ class Image implements \JsonSerializable {
 	/**
 	 * formats the state variables for JSON serialization
 	 *
-	 * @return array rsulting state variavles to serialize
+	 * @return array resulting state variables to serialize
 	 **/
 	public function jsonSerialize() {
 		$fields = get_object_vars($this);
