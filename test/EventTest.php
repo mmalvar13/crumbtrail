@@ -1,9 +1,7 @@
 <?php
 namespace Edu\Cnm\Mmalvar13\CrumbTrail\Test;
 
-use Edu\Cnm\CrumbTrail\{
-	Test\CrumbTrailTest, Truck, Event
-}; //is this what i put here??
+use Edu\Cnm\CrumbTrail\Test\{Truck, Event}; //is this what i put here??
 
 //grab the project test parameters
 require_once("CrumbTrailTest.php");
@@ -333,7 +331,7 @@ class EventTest extends CrumbTrailTest{
 	}
 
 	/**
-	 * test grabbings all Events
+	 * test grabbing all Events
 	 **/
 	public function testGetAllValidEvents(){
 		//count the number of rows and save it for later
