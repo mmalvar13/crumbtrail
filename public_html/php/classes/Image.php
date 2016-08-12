@@ -196,7 +196,7 @@ class Image implements \JsonSerializable {
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
 	public function delete(\PDO $pdo) {
-		//don't delete and image that hasn't been inserted
+		//don't delete an image that hasn't been inserted
 		if($this->imageId === null) {
 			throw(new \PDOException("unable to delete an image that does not exist"));
 		}
