@@ -1,12 +1,13 @@
 <?php
-namespace Edu\Cnm\Crumbtrail; //probably wrong
-require_once("autoload.php"); //idk
+namespace Edu\Cnm\Crumbtrail;
+require_once("autoload.php");
 
 /**
  * Class Point
  * @package Edu\Cnm\Crumbtrail
  * welcome to the point class! this is for things! emjoy your stay!
  **/
+
 class Point implements \JsonSerializable {
 	/**
 	 * latitude for this point
