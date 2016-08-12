@@ -1,5 +1,5 @@
 <?php
-namespace Edu\Cnm\CrumbTrail; //idk
+namespace Edu\Cnm\Crumbtrail; //idk
 
 require_once("autoload.php");
 
