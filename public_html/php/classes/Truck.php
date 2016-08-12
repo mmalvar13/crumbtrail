@@ -86,12 +86,26 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 	}
 	//PDO section starts here
 	/**
-	 * inserts this image into mySQL
+	 * inserts this truck into mySQL
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @throws |\PDOException when mySQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
+		public function insert(\PDO $pdo) {
+			if($this->truckId !== null) {
+				throw(new \PDOException("Not a new Truck"));
+			}
+			//query template
+			$query = "INSERT INTO truck(truckCompanyId) VALUES(:truckCompanyId)";
+			$statement = $pdo->prepare($query);
+
+			$parameters = ["truckCompanyId" => $this->truckCompanyId];
+			$statement->execute($parameters);
+
+			//update the null truckId with what SQL just gave us
+			$this->truckId = intval($pdo->lastInsertId());
+		}
 
 
 }

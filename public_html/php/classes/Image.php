@@ -171,7 +171,7 @@ class Image implements \JsonSerializable {
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
 	public function insert(\PDO $pdo) {
-		//enforcer image id...essentially...don't put in an image that already exists.
+		//enforce image id...essentially...don't put in an image that already exists.
 		if($this->imageId !== null) {
 			throw(new \PDOException("Not a new image"));
 		}
