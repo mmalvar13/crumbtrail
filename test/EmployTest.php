@@ -125,5 +125,24 @@ class Employ extends CrumbTrailTest{
 		$employ->delete($this->getPDO());
 	}
 
+	/**
+	 * test inserting an Employ and regrabbing it from mySQL
+	 **/
+	public function testGetValidEmployByEmployCompanyIdAndEmployProfileId(){
+		//count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("employ");
+
+		//create a new Employ and insert into mySQL
+		$employ = new Employ(null, $this->company->getCompanyId(), $this->profile->getProfileId());
+		$employ->insert($this->getPDO());
+
+		//grab the data from mySQL and enforce the fields match our expectations
+		$pdoEmploy = Employ:: getEmployByEmployCompanyId($this->getPDO(), $employ->getEmployCompanyId());
+		$pdoEmploy = Employ:: getEmployByEmployProfileId($this->getPDO(), $employ->getEmployProfileId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("employ"));
+		$this->assertEquals($pdoEmploy->getCompanyId(), $this->company->getCompanyId());
+		$this->assertEquals($pdoEmploy->getProfileId(), $this->profile->getProfileId()); //idk getProfileId or getEmployProfileId??
+	}
+
 
 }
