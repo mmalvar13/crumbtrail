@@ -257,6 +257,15 @@ class EventTest extends CrumbTrailTest{
 	}
 
 	/**
+	 * test grabbing an Event by Event Location that does not exist
+	 **/
+	public function testGetInvalidEventByEventLocation(){
+		//grab an event by searching for event location that does not exist
+		$event = Event:: getEventbyEventLocation($this->getPDO(), "you can't sit with us!!");
+		$this->assertCount(0, $event);
+	}
+
+	/**
 	 * test grabbing an Event by Event Id and Event Truck Id
 	 **/
 	public function testGetValidEventByEventIdAndEventTruckId(){
