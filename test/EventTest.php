@@ -200,6 +200,31 @@ class EventTest extends CrumbTrailTest{
 //* do i do a test for get event by event truck id? it is a foreign key.
 //**/
 
+	/**
+	 * test grabbing an Event by Event Location
+	 */
+	public function testGetValidEventByEventLocation(){
+		//count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("event");
+
+		//create a new Event and insert into mySQL
+		$event = new Event(null, $this->truck->getTruckId(), $this->VALID_EVENTEND, $this->VALID_EVENTLOCATION, $this->VALID_EVENTSTART);
+		$event->insert($this->getPDO());
+
+		//grab the data from mySQL and enforce the fields match our expectations
+		$results = Event::getEventbyEventLocation($this->getPDO(),$event->getEventLocation());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("event"));
+		$this->assertCount(1, $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Mmalvar13\\CrumbTrail\\Event", $results);
+
+		//grab the result from the array and validate it
+		$pdoEvent = $results[0];
+		$this->assertEquals($pdoEvent->getTruckId(), $this->truck->getTruckId());
+		$this->assertEquals($pdoEvent->getEventEnd, $this->VALID_EVENTEND);
+		$this->assertEquals($pdoEvent->getEventLocation, $this->VALID_EVENTLOCATION);
+		$this->assertEquals($pdoEvent->getEventStart, $this->VALID_EVENTSTART);
+	}
+
 
 
 }
