@@ -154,5 +154,27 @@ class Employ extends CrumbTrailTest{
 		$this->assertNull($employ);
 	}
 
+	/**
+	 * test grabbing an Employ by the companyid
+	 **/
+	public function testGetValidEmployByEmployCompanyId(){
+		//count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("employ");
+
+		//create a new Employ and insert it into mySQL
+		$employ = new Employ(null, $this->company->getCompanyId(), $this->profile->>getProfileId());
+		$employ->insert($this->getPDO());
+
+		//grab the data from mySQL and enforce the fields match our expectations
+		$results = Employ::getEmployByEmployCompanyId($this->getPDO(), $employ->getEmployCompanyId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("employ"));
+		$this->assertCount(1, $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Mmalvar13\\Crumbtrail\\Employ", $results);
+
+		//grab the result from the array and validate it
+		$pdoEmploy = $results[0];
+		$this->assertEquals($pdoEmploy->getCompanyId(), );
+	}
+
 
 }
