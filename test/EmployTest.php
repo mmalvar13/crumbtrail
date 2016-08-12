@@ -218,8 +218,29 @@ class EmployTest extends CrumbTrailTest {
 
 	/**
 	 * dont need to test for grabbing all employs because we already grab employByEmployProfileIdAndEMplotest grabbing all employs
+	 * but idk...maybe we dont...im gonna make one anyway!!
+	 *
+	 * TEST GRABBING ALL EMPLOYS
 	 **/
-}
+	public function testGetAllValidEmploys(){
+		//count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("employ");
+
+		//create a new Employ and insert into mySQL
+		$employ = new Employ(null, $this->company->getCompanyId(), $this->profile->getProfileId());
+		$employ->insert($this->getPDO());
+
+		//grab the data from mySQL and enforce the fields match our expectations
+		$results = Employ::getAllEmploys($this->getPDO());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("employ"));
+		$this->assertCount(1, $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\CrumbTrail\\Test", $results);
+
+		//grab the result from the array and validate it
+		$pdoEmploy = $results[0];
+		$this->assertEquals($pdoEmploy->getCompanyId(), $this->company->getCompanyId());
+		$this->assertEquals($pdoEmploy->getProfileId(), $this->profile->getProfileId());
+	}
 
 
 }
