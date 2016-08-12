@@ -64,5 +64,19 @@ class TruckTest extends CrumbTrailTest {
 		$truck = new Truck(CrumbTrailTest::INVALID_KEY, $this->company->getCompanyId());
 		$truck->insert($this->getPDO());
 	}
+	/**
+	 * test inserting an Truck, editing it, and then updating it
+	 **/
+	public function testUpdateValidTruck() {
+		//count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("truck");
 
+		//create a new Truck and insert into mySQL
+		$truck = new Truck(null, $this->company->getCompanyId());
+		$truck->insert($this->getPDO());
+
+		//edit the Truck and update it in mySQL
+
+
+	}
 	}
