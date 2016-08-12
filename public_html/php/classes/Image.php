@@ -233,8 +233,8 @@ class Image implements \JsonSerializable {
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @param int $imageId image id to search for
-	 * @return Image|null Tweet found or null if not found
-	 * @throws \PDOException w hen mySQL related errors occur
+	 * @return Image|null Image found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
 	public static function getImageByImageId(\PDO $pdo, int $imageId) {

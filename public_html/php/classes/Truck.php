@@ -146,5 +146,44 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 			$parameters = ["truckCompanyId" => $this->truckCompanyId];
 			$statement->execute($parameters);
 		}
+	//getFooByBar
+	/**
+	 * gets truck by truck id
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param int $truckId truck id to search for
+	 * @return Truck|null Image found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getTruckByTruckId(\PDO $pdo, int $truckId) {
+		//sanitize the truckId before searching
+		if($truckId <=0) {
+			throw(new \PDOException("truck Id is not positive"));
+		}
+		//query template
+		$query = "SELECT truckId, truckCompanyId FROM truck WHERE truckId =:truckId";
+		$statement = $pdo->prepare($query);
+		//bind the truck id to the place holder im the template
+		$parameters = ["truckId" => $truckId];
+		$statement->execute($parameters);
+
+		//grab image from mySQL
+		try {
+			$truck =null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !==false) {
+				$truck = new Truck($row["truckId"], $row["truckCompanyId"]);
+			}
+		} catch(\Exception $exception) {
+			//if throw couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($truck);
+	}
+	/**
+	 *
+	 */
 
 }
