@@ -34,12 +34,13 @@ class TruckTest extends CrumbTrailTest {
 		parent::setUp();
 
 		//create and insert a company to own the test truck
-		$this->company= new Company(null, "Terry's Tacos", "terrytacos@tacos.com", "12345", "2345", "Terry Jane", "345 Taco Street", "Albuquerque", "NM", "87654", "We are a Taco truck description", "Tacos, Tortillas, Burritos", "5052345678","1");
+		$this->company = new Company(null, "Terry's Tacos", "terrytacos@tacos.com", "12345", "2345", "Terry Jane", "345 Taco Street", "Albuquerque", "NM", "87654", "We are a Taco truck description", "Tacos, Tortillas, Burritos", "5052345678", "1");
 		$this->company->insert($this->getPDO());
 
-	//create and insert a second company to buy the test truck (a truck moving to another company)
+		//create and insert a second company to buy the test truck (a truck moving to another company)
 		$this->company2 = new Company(null, "Truckina's Crepes", "truckina@trucks.com", "45678", "4567", "Truckina McTruckerson", "456 Crepe Street", "Albuquerque", "NM", "45678", "We sell crepes", "crepes, ice cream, cakes", "505-123-4566", "1");
 		$this->company2->insert($this->getPDO());
+	}
 	/**
 	 * insert valid truck to verify that the actual mySQL data matches
 	 **/
@@ -74,11 +75,9 @@ class TruckTest extends CrumbTrailTest {
 		$numRows = $this->getConnection()->getRowCount("truck");
 
 		//create a new Truck and insert into mySQL
-		$truck = new Truck(null, $this->company->getCompanyId());
+		$truck = new Truck(null, $this->company2->getCompanyId());
 		$truck->insert($this->getPDO());
 
 		//edit the Truck and update it in mySQL
-
-
-	}
+		}
 	}

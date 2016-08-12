@@ -59,6 +59,7 @@ class ImageTest extends CrumbTrailTest {
 		$this->company->insert($this->getPDO());
 	}
 	//create and insert a Profile to own the test image
+		$this->profile= new Profile
 	/**
 	 * insert valid image and verify that the actual mySQL data matches
 	 **/ 
