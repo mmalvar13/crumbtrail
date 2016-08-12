@@ -1,5 +1,5 @@
 <?php
-namespace Edu\Cnm\Mmalvar13\CrumbTrail\Test;
+namespace Edu\Cnm\CrumbTrail\Test;
 
 use Edu\Cnm\CrumbTrail\{Company, Profile};
 
