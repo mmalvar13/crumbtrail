@@ -108,8 +108,8 @@ class Employ extends CrumbTrailTest{
 		$employ->delete($this->getPDO());
 
 		//grab the data from mySQL and enforce the Employ does not exist
-		$pdoEmploy = Employ::getEmployByEmployCompanyIdAndEmployProfileId($this->getPDO(), $employ->getEmployCompanyId());
-		$pdoEmploy = Employ:: getEmploybyEmployProfileId($this->getPDO(), $employ->getEmployProfileId());
+		$pdoEmploy = Employ::getEmployByEmployCompanyIdAndEmployProfileId($this->getPDO(), $employ->getEmployCompanyIdAndProfileId());
+//		$pdoEmploy = Employ:: getEmploybyEmployProfileId($this->getPDO(), $employ->getEmployProfileId());
 		$this->assertNull($pdoEmploy);
 		$this->assertEquals($numRows, $this->getConnection()->getRowCount("employ"));
 	}
