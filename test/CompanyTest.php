@@ -428,6 +428,6 @@ class CompanyTest extends CrumbTrailTest {
 		$this->assertEquals($pdoCompany->getCompanyMenuText(), $this->VALID_COMPANYMENUTEXT());
 		$this->assertEquals($pdoCompany->getCompanyActivationToken(), $this->VALID_COMPANYACTIVATIONTOKEN());
 		$this->assertEquals($pdoCompany->getCompanyApproved(), $this->VALID_COMPANYAPPROVED());
-		$this->assertEquals($pdoProfile->getProfileId(), $this->profile->getProfileId());
+		$this->assertEquals($pdoCompany->getProfileId(), $this->profile->getProfileId());
 	}
 }
