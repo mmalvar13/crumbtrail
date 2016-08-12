@@ -115,5 +115,15 @@ class Employ extends CrumbTrailTest{
 		$this->assertEquals($numRows, $this->getConnection()->getRowCount("employ"));
 	}
 
+	/**
+	 * test deleting an Employ that does not exist
+	 * @expectedException \PDOException
+	 **/
+	public function testDeleteInvalidEmploy(){
+		//create an Employ and try to delete it without actually inserting it
+		$employ = new Employ(null, $this->company->getCompanyId(), $this->profile->getProfileId());
+		$employ->delete($this->getPDO());
+	}
+
 
 }
