@@ -171,7 +171,7 @@ class Image implements \JsonSerializable {
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
 	public function insert(\PDO $pdo) {
-		//enforcer image id...essentially...don't put in an image that already exists.
+		//enforce image id...essentially...don't put in an image that already exists.
 		if($this->imageId !== null) {
 			throw(new \PDOException("Not a new image"));
 		}
@@ -196,7 +196,7 @@ class Image implements \JsonSerializable {
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
 	public function delete(\PDO $pdo) {
-		//don't delete and image that hasn't been inserted
+		//don't delete an image that hasn't been inserted
 		if($this->imageId === null) {
 			throw(new \PDOException("unable to delete an image that does not exist"));
 		}
@@ -234,7 +234,7 @@ class Image implements \JsonSerializable {
 	 * @param \PDO $pdo PDO connection object
 	 * @param int $imageId image id to search for
 	 * @return Image|null Tweet found or null if not found
-	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \PDOException w hen mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
 	public static function getImageByImageId(\PDO $pdo, int $imageId) {
