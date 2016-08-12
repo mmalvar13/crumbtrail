@@ -79,7 +79,7 @@ class Employ extends CrumbTrailTest{
 	 * test inserting an Employ, editing it, and then updating it
 	 *
 	 * //BUT YOU WOULDN'T BECAUSE IT IS JUST A COMPOSITE KEY
-	 * //SHOULD I NOT WRITE THIS TEST I GUESS??
+	 * //SHOULD I NOT WRITE THIS TEST I GUESS?? idk maybe i will
 	 **/
 
 	/**
@@ -108,7 +108,7 @@ class Employ extends CrumbTrailTest{
 		$employ->delete($this->getPDO());
 
 		//grab the data from mySQL and enforce the Employ does not exist
-		$pdoEmploy = Employ::getEmployByEmployCompanyIdAndEmployProfileId($this->getPDO(), $employ->getEmployCompanyIdAndProfileId());
+		$pdoEmploy = Employ::getEmployByEmployCompanyIdAndEmployProfileId($this->getPDO(), $employ->getEmployCompanyIdAndEmployProfileId());
 //		$pdoEmploy = Employ:: getEmploybyEmployProfileId($this->getPDO(), $employ->getEmployProfileId());
 		$this->assertNull($pdoEmploy);
 		$this->assertEquals($numRows, $this->getConnection()->getRowCount("employ"));
@@ -137,8 +137,9 @@ class Employ extends CrumbTrailTest{
 		$employ->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields match our expectations
-		$pdoEmploy = Employ:: getEmployByEmployCompanyId($this->getPDO(), $employ->getEmployCompanyId());
-		$pdoEmploy = Employ:: getEmployByEmployProfileId($this->getPDO(), $employ->getEmployProfileId()); //should i combine these?
+		$pdoEmploy = Employ:: getEmploybyEmployCompanyIdAndEmployProfileId($this->getPDO(), $employ->getEmployCompanyIdAndEmployProfileId);
+//		$pdoEmploy = Employ:: getEmployByEmployCompanyId($this->getPDO(), $employ->getEmployCompanyId());
+//		$pdoEmploy = Employ:: getEmployByEmployProfileId($this->getPDO(), $employ->getEmployProfileId()); //should i combine these?
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("employ"));
 		$this->assertEquals($pdoEmploy->getCompanyId(), $this->company->getCompanyId());
 		$this->assertEquals($pdoEmploy->getProfileId(), $this->profile->getProfileId()); //idk getProfileId or getEmployProfileId??
@@ -149,7 +150,7 @@ class Employ extends CrumbTrailTest{
 	 **/
 	public function testGetInvalidEmployByEmployCompanyIdAndEmployProfileId(){
 		//grab a profile id and company id that exceeds the maximum allowable profile and company id
-		$employ = Employ::getEmployByEmployCompanyId($this->getPDO(), CrumbTrailTest::INVALID_KEY); getEmployByEmployProfileId($this->getPDO(), CrumbTrailTest::INVALID_KEY);
+		$employ = Employ::getEmployByEmployCompanyIdAndEmployProfileId($this->getPDO(), CrumbTrailTest::INVALID_KEY);
 		$this->assertNull($employ);
 	}
 
@@ -161,7 +162,7 @@ class Employ extends CrumbTrailTest{
 		$numRows = $this->getConnection()->getRowCount("employ");
 
 		//create a new Employ and insert it into mySQL
-		$employ = new Employ(null, $this->company->getCompanyId(), $this->profile->>getProfileId());
+		$employ = new Employ(null, $this->company->getCompanyId(), $this->profile->getProfileId());
 		$employ->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields match our expectations
