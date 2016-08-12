@@ -1,5 +1,5 @@
 <?php
-namespace Edu\Cnm\Mmalvar13\CrumbTrail\Test;
+namespace Edu\Cnm\CrumbTrail\Test;
 
 use Edu\Cnm\CrumbTrail\{
 	Company, Profile, Employ, Test\CrumbTrailTest
@@ -16,7 +16,7 @@ require_once(dirname(__DIR__) . "public_html/php/classes/autoload.php");
  *
  * This is a complete PHPUnit test of the Employ class. It is complete because All mySQL/PDO methods are tested for both invalid and valid inputs
  **/
-class Employ extends CrumbTrailTest{
+class EmployTest extends CrumbTrailTest {
 	/**
 	 * company that is employing this worker; this is a foreign key relation
 	 * @var Company company
@@ -32,7 +32,7 @@ class Employ extends CrumbTrailTest{
 	/**
 	 *create dependent objects before running each test
 	 **/
-	public final function setUp(){
+	public final function setUp() {
 		//run the default setUp() method first
 		parent::setUp();
 		//create and insert a Company and Profile to own the test Employ
@@ -49,7 +49,7 @@ class Employ extends CrumbTrailTest{
 	 * tst inserting a valid Employ and verify that the actual mySQL data matches
 	 * THIS IS WRONG probs
 	 **/
-	public function testInsertValidEmploy(){
+	public function testInsertValidEmploy() {
 		//count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("employ");
 
@@ -58,7 +58,7 @@ class Employ extends CrumbTrailTest{
 		$employ->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields match our expectations
-		$pdoEmploy = Employ::getEmploybyEmployCompanyIdandEmployProfileId($this->getPDO(), $employ->getEmloyCompanyIdAndEmployProfileId());
+		$pdoEmploy = Employ::getEmploybyEmployCompanyIdandEmployProfileId($this->getPDO(), $employ->getEmployCompanyId(), $employ->getEmployProfileId());
 
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("employ"));
 		$this->assertEquals($pdoEmploy->getCompanyId(), $this->company->getCompanyId());
@@ -69,7 +69,7 @@ class Employ extends CrumbTrailTest{
 	 * test inserting an Employ that already exists
 	 * @expectedException PDOException
 	 **/
-	public function testInsertInvalidEmploy(){
+	public function testInsertInvalidEmploy() {
 		//create an Employ with a non null composite key (employProfileId and employCompanyId) and watch it fail
 		$employ = new Employ(CrumbTrailTest::INVALID_KEY, $this->company->getCompanyId(), $this->profile->getProfileId());
 		$employ->insert($this->getPDO());
@@ -87,7 +87,7 @@ class Employ extends CrumbTrailTest{
 	 * @expectedException \PDOException
 	 * we wouldn't really do this right? but i will write it anyway. idk, maybe if we are adding multiple companies to a profile we would update it.
 	 **/
-	public function testUpdateInvalidEmploy(){
+	public function testUpdateInvalidEmploy() {
 		//create an Employ, try to update it without actually updating it and watch it fail
 		$employ = new Employ(null, $this->company->getCompanyId(), $this->profile->getProfileId());
 		$employ->update($this->getPDO());
@@ -96,7 +96,7 @@ class Employ extends CrumbTrailTest{
 	/**
 	 * test creating an Employ and then deleting it
 	 **/
-	public function testDeleteValidEmploy(){
+	public function testDeleteValidEmploy() {
 		//count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("employ");
 		//create a new Employ and insert into mySQL
@@ -118,7 +118,7 @@ class Employ extends CrumbTrailTest{
 	 * test deleting an Employ that does not exist
 	 * @expectedException \PDOException
 	 **/
-	public function testDeleteInvalidEmploy(){
+	public function testDeleteInvalidEmploy() {
 		//create an Employ and try to delete it without actually inserting it
 		$employ = new Employ(null, $this->company->getCompanyId(), $this->profile->getProfileId());
 		$employ->delete($this->getPDO());
@@ -128,7 +128,7 @@ class Employ extends CrumbTrailTest{
 	 * test inserting an Employ and regrabbing it from mySQL
 	 * wow idk, is this what i name the test? with both primary keys???
 	 **/
-	public function testGetValidEmployByEmployCompanyIdAndEmployProfileId(){
+	public function testGetValidEmployByEmployCompanyIdAndEmployProfileId() {
 		//count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("employ");
 
@@ -148,7 +148,7 @@ class Employ extends CrumbTrailTest{
 	/**
 	 * test grabbing an Employ that does not exist
 	 **/
-	public function testGetInvalidEmployByEmployCompanyIdAndEmployProfileId(){
+	public function testGetInvalidEmployByEmployCompanyIdAndEmployProfileId() {
 		//grab a profile id and company id that exceeds the maximum allowable profile and company id
 		$employ = Employ::getEmployByEmployCompanyIdAndEmployProfileId($this->getPDO(), CrumbTrailTest::INVALID_KEY);
 		$this->assertNull($employ);
@@ -157,7 +157,7 @@ class Employ extends CrumbTrailTest{
 	/**
 	 * test grabbing an Employ by the employCompanyId
 	 **/
-	public function testGetValidEmployByEmployCompanyId(){
+	public function testGetValidEmployByEmployCompanyId() {
 		//count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("employ");
 
@@ -173,14 +173,14 @@ class Employ extends CrumbTrailTest{
 
 		//grab the result from the array and validate it
 		$pdoEmploy = $results[0];
-		$this->assertEquals($pdoEmploy->getCompanyId(),$this->company->getCompanyId());
+		$this->assertEquals($pdoEmploy->getCompanyId(), $this->company->getCompanyId());
 		$this->assertEquals($pdoEmploy->getProfileId(), $this->profile->getProfileId());
 	}
 
 	/**
 	 * test grabbing an Employ by companyId that does not exist
 	 **/
-	public function testGetInvalidEmployByEmployCompanyId(){
+	public function testGetInvalidEmployByEmployCompanyId() {
 		//grab an Employ by searching for companyId that does not exist
 		$employ = Employ::getEmployByEmployCompanyId($this->getPDO(), "get outta pueblo");
 		$this->assertCount(0, $employ);
@@ -189,7 +189,12 @@ class Employ extends CrumbTrailTest{
 	/**
 	 * test grabbing an Employ by employProfileId
 	 **/
+	public function testGetValidEmployByEmployProfileId() {
+		//count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("employ");
 
+		//create a new Employ and insert it in
+	}
 
 
 }

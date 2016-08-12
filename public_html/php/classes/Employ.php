@@ -1,5 +1,5 @@
 <?php
-namespace Edu\Cnm\Crumbtrail; //idk
+namespace Edu\Cnm\CrumbTrail; //idk
 
 require_once("autoload.php");
 
@@ -236,6 +236,10 @@ class Employ implements \JsonSerializable {
 	 **/
 
 	public static function getEmployByEmployCompanyIdAndEmployProfileId(\PDO $pdo, int $employCompanyId, int $employProfileId) {
+		if($employCompanyId === null || $employProfileId === null) {
+			throw(new \PDOException("employCompanyId and employProfileId must exist"));
+		}
+
 		//sanitize the employeeCompanyId and the employeeProfileId by checking that they're positive
 		if($employCompanyId <= 0 || $employProfileId <= 0) {
 			throw(new \PDOException("employCompanyId and employProfileId must be positive"));
