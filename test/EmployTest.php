@@ -173,7 +173,8 @@ class Employ extends CrumbTrailTest{
 
 		//grab the result from the array and validate it
 		$pdoEmploy = $results[0];
-		$this->assertEquals($pdoEmploy->getCompanyId(), );
+		$this->assertEquals($pdoEmploy->getCompanyId(),$this->company->getCompanyId());
+		$this->assertEquals($pdoEmploy->getProfileId(), $this->profile->getProfileId());
 	}
 
 
