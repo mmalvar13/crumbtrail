@@ -176,7 +176,7 @@ class ImageTest extends CrumbTrailTest {
 	 * test grabbing an Image by content that does not exist
 	 **/
 	public function testGetInvalidImageByImageContent() {
-
+	//grab an image by searching for content that does not exist
 	}
 	/**
 	 * test grabbing all Images
