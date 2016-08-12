@@ -1,9 +1,7 @@
 <?php
 namespace Edu\Cnm\Mmalvar13\CrumbTrail\Test;
 
-use Edu\Cnm\CrumbTrail\{
-	Image, Company, Test\CrumbTrailTest
-};
+use Edu\Cnm\CrumbTrail\{Company, Image};
 
 //grab the project test parameters
 require_once("CrumbTrailTest.php");
@@ -55,11 +53,13 @@ class ImageTest extends CrumbTrailTest {
 		parent::setUp();
 
 		//create and insert a Company to own the test image
-		$this->company= new Company(null, "Terry's Tacos", "terrytacos@tacos.com", "12345", "2345", "Terry Jane", "345 Taco Street", "Albuquerque", "NM", "87654", "We are a Taco truck description", "Tacos, Tortillas, Burritos", "5052345678","1");
+		$this->company = new Company(null, "Terry's Tacos", "terrytacos@tacos.com", "12345", "2345", "Terry Jane", "345 Taco Street", "Albuquerque", "NM", "87654", "We are a Taco truck description", "Tacos, Tortillas, Burritos", "5052345678", "1");
 		$this->company->insert($this->getPDO());
+
+
+		//create and insert a Profile to own the test image
+		$this->profile = new Profile;
 	}
-	//create and insert a Profile to own the test image
-		$this->profile= new Profile
 	/**
 	 * insert valid image and verify that the actual mySQL data matches
 	 **/ 
