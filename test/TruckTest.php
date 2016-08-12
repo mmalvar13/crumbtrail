@@ -53,6 +53,16 @@ class TruckTest extends CrumbTrailTest {
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("truck"));
 		$this->assertEquals($pdoTruck->getTruckId(), $this->company->getCompanyId());
 	}
+	/**
+	 *test inserting a truck that already exists
+	 *
+	 * @expectedException \PDOException
+	 **/
+
+	public function testInsertInvalidTruck() {
+		//create a truck with a non null truck id. It will fail.
+		$truck = new Truck(CrumbTrailTest::INVALID_KEY, $this->company->getCompanyId());
+		$truck->insert($this->getPDO());
+	}
 
 	}
-}
