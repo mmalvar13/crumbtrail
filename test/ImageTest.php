@@ -178,13 +178,19 @@ class ImageTest extends CrumbTrailTest {
 	public function testGetInvalidImageByImageContent() {
 	//grab an image by searching for content that does not exist
 		//this is a test!! (keep getting thrown out of the database
+		$image = Image::getImageByImageContent($this->getPDO(), "You will find nothing");
+		$this->assertCount(0, $image);
+
 	}
 	/**
 	 * test grabbing all Images
 	 */
 	public function testGetAllValidImages() {
 		//count the number of rows and save it for later
-		$numRows = $this
+		$numRows = $this->getConnection()->getRowCount("image");
+
+		// create a new Image and insert to mySQL
+		$image = new Image()
 	}
 
 
