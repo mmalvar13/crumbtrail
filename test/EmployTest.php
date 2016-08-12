@@ -2,7 +2,7 @@
 namespace Edu\Cnm\CrumbTrail\Test;
 
 use Edu\Cnm\CrumbTrail\{
-	Company, Profile, Employ, Test\CrumbTrailTest
+	Profile, Company, Employ, Test\CrumbTrailTest
 };
 
 //grab the project test parameters
@@ -41,8 +41,7 @@ class EmployTest extends CrumbTrailTest {
 		$this->profile = new Profile(null, "@phpunit", "test@phpunit.de", "+12125551212");
 		$this->profile->insert($this->getPDO());
 
-		//calculate the date(just use the time the unit test was setup)
-		$this->VALID_EMPLOYDATE = new \DateTime(); //i just made this up. i dont know what to do with thiss oone.
+		//I didn't put a date here. is that ok?n  calculate the date(just use the time the unit test was setup
 	}
 
 	/**
@@ -82,16 +81,16 @@ class EmployTest extends CrumbTrailTest {
 	 * //SHOULD I NOT WRITE THIS TEST I GUESS?? idk maybe i will
 	 **/
 
-	/**
-	 *test updating an Employ that already exists
-	 * @expectedException \PDOException
-	 * we wouldn't really do this right? but i will write it anyway. idk, maybe if we are adding multiple companies to a profile we would update it.
-	 **/
-	public function testUpdateInvalidEmploy() {
-		//create an Employ, try to update it without actually updating it and watch it fail
-		$employ = new Employ(null, $this->company->getCompanyId(), $this->profile->getProfileId());
-		$employ->update($this->getPDO());
-	}
+//	/**
+//	 *test updating an Employ that already exists
+//	 * @expectedException \PDOException
+//	 * we wouldn't really do this right? but i will write it anyway. idk, maybe if we are adding multiple companies to a profile we would update it.
+//	 **/
+//	public function testUpdateInvalidEmploy() {
+//		//create an Employ, try to update it without actually updating it and watch it fail
+//		$employ = new Employ(null, $this->company->getCompanyId(), $this->profile->getProfileId());
+//		$employ->update($this->getPDO());
+//	}
 
 	/**
 	 * test creating an Employ and then deleting it
@@ -198,7 +197,7 @@ class EmployTest extends CrumbTrailTest {
 		//grab the data from myQL and enforce the fields match our expectations
 		$results = Employ::getEmployByEmployProfileId($this->getPDO(), $employ->getEmployProfileId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("employ"));
-		$this->assertCount($1, $results);
+		$this->assertCount(1, $results);
 		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\CrumbTrail\\Employ", $results);
 
 		//grab the result from the array and validate it
