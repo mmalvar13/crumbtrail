@@ -187,6 +187,19 @@ class EventTest extends CrumbTrailTest{
 		$this->assertEquals($pdoEvent->getEventStart(), $this->VALID_EVENTSTART);
 	}
 
+	/**
+	 * Test grabbing an Event that does not exist
+	 **/
+	public function testGetInvalidEventByEventId() {
+		//grab a truck id that exceeds the maximum allowable truck id
+		$event = Event::getEventByEventId($this->getPDO(), CrumbTrailTest::INVALID_KEY);
+		$this->assertNull($event);
+	}
+
+//**
+//* do i do a test for get event by event truck id? it is a foreign key.
+//**/
+
 
 
 }
