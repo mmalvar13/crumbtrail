@@ -56,7 +56,13 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 	 * @param int|null $newTruckId new value of truck id
 	 * @throws \RangeException if $newTruckId is negative
 	 */
-	public function setTruckId(int $newTruckId =null) {
+	public function setTruckId(int $newTruckId = null) {
+
+		if($newTruckId === null){
+			$this->truckId = null;
+			return;
+		}
+
 		if($newTruckId <= 0); {
 			throw (new \RangeException ("Truck Id is not positive"));
 		}
@@ -77,7 +83,7 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 	 * @param int|null $newTruckCompanyId new value of truck company Id
 	 * @throws \RangeException if $newTruckCompanyId is negative
 	 */
-	public function setTruckCompanyId(int $newTruckCompanyId =null) {
+	public function setTruckCompanyId(int $newTruckCompanyId = null) {
 		if($newTruckCompanyId <=0); {
 			throw (new \RangeException ("Truck Company Id is not positive"));
 		}
