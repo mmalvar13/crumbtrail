@@ -1,12 +1,14 @@
 <?php
 namespace Edu\Cnm\Mmalvar13\CrumbTrail\Test;
+
 use Edu\Cnm\CrumbTrail\{Company, Profile};
 
-// grab the project test parameters
+// Require the project test parameters.
 require_once("CrumbTrailTest.php");
 
-// grab the class under scrutiny
+// Require the class being tested.
 require_once(dirname(__DIR__) . "/public_html/php/classes/autoload.php");
+
 
 /**
  * Full PHPUnit test for the Company class
@@ -404,7 +406,7 @@ class CompanyTest extends CrumbTrailTest {
 		$company->insert($this->getPDO());
 
 		// Get the data from mySQL, and check that fields match our expectations.
-		// Note that here plural Company = Companys (sp)
+		// Note that (here) plural Company = Companys (sp)
 		$results = Company::getAllCompanys($this->getPDO());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("company"));
 		$this->assertCount(1, $results);
