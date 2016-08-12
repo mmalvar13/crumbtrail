@@ -1,7 +1,7 @@
 <?php
 namespace Edu\Cnm\CrumbTrail\Test;
 
-use Edu\Cnm\CrumbTrail\{Company, Profile};
+use Edu\Cnm\CrumbTrail\{Profile, Company};
 
 // Require the project test  parameters.
 require_once("CrumbTrailTest.php");
