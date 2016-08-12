@@ -47,7 +47,7 @@ class Employ extends CrumbTrailTest{
 
 	/**
 	 * tst inserting a valid Employ and verify that the actual mySQL data matches
-	 * THIS IS WRONG HELP MEEEEEE!
+	 * THIS IS WRONG probs
 	 **/
 	public function testInsertValidEmploy(){
 		//count the number of rows and save it for later
@@ -58,8 +58,7 @@ class Employ extends CrumbTrailTest{
 		$employ->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields match our expectations
-		$pdoEmploy = Employ::getEmploybyEmployCompanyId()->$this->company->getCompanyId(); //how do i write this for a composite key?
-		$pdoEmploy = Employ::getEmploybyEmployProfileId()->$this->profile->getProfileId();
+		$pdoEmploy = Employ::getEmploybyEmployCompanyIdandEmployProfileId($this->getPDO(), $employ->getEmloyCompanyIdAndEmployProfileId());
 
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("employ"));
 		$this->assertEquals($pdoEmploy->getCompanyId(), $this->company->getCompanyId());
@@ -80,13 +79,13 @@ class Employ extends CrumbTrailTest{
 	 * test inserting an Employ, editing it, and then updating it
 	 *
 	 * //BUT YOU WOULDN'T BECAUSE IT IS JUST A COMPOSITE KEY
-	 * //SO IM NOT WRITING THIS TEST I GUESS
+	 * //SHOULD I NOT WRITE THIS TEST I GUESS??
 	 **/
 
 	/**
 	 *test updating an Employ that already exists
 	 * @expectedException \PDOException
-	 * we wouldn't really do this right? but i will write it anyway
+	 * we wouldn't really do this right? but i will write it anyway. idk, maybe if we are adding multiple companies to a profile we would update it.
 	 **/
 	public function testUpdateInvalidEmploy(){
 		//create an Employ, try to update it without actually updating it and watch it fail
@@ -109,7 +108,7 @@ class Employ extends CrumbTrailTest{
 		$employ->delete($this->getPDO());
 
 		//grab the data from mySQL and enforce the Employ does not exist
-		$pdoEmploy = Employ::getEmploybyEmployCompanyId($this->getPDO(), $employ->getEmployCompanyId());
+		$pdoEmploy = Employ::getEmployByEmployCompanyIdAndEmployProfileId($this->getPDO(), $employ->getEmployCompanyId());
 		$pdoEmploy = Employ:: getEmploybyEmployProfileId($this->getPDO(), $employ->getEmployProfileId());
 		$this->assertNull($pdoEmploy);
 		$this->assertEquals($numRows, $this->getConnection()->getRowCount("employ"));

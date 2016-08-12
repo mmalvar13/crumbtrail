@@ -124,6 +124,9 @@ class Employ implements \JsonSerializable {
 		//in the twitter example i t says to update the null tweetId with what mySQL just gave us using $this->tweetId =intval($pdo->lastInsertId()). I don't have to add another line here right? because we are not creating a new whatever the equivelent of tweet is. idk. IDK OK?!!?!?
 		//you might need this, so that you grab the key assigned to the employ row we just inserted
 		//$this->employId = intval($pdo->lastInsertId());
+
+		//anything special i write here for composite keys?? do i add this above in the state variables?
+		$this->employId=intval($pdo->lastInsertId());
 	}
 
 	/**
@@ -155,7 +158,7 @@ class Employ implements \JsonSerializable {
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
-	public static function getEmploybyEmployCompanyId(\PDO $pdo, int $employCompanyId) {
+	public static function getEmployByEmployCompanyId(\PDO $pdo, int $employCompanyId) {
 		//sanitize the employCompanyId before searching by checking that it is a positive number
 		if($employCompanyId <= 0) {
 			throw(new \PDOException("employCompanyId is not positive"));
@@ -192,7 +195,7 @@ class Employ implements \JsonSerializable {
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
-	public static function getEmploybyEmployProfileId(\PDO $pdo, int $employProfileId) {
+	public static function getEmployByEmployProfileId(\PDO $pdo, int $employProfileId) {
 		//sanitize the employProfileId before searching by check that it is a positive number
 		if($employProfileId <= 0) {
 			throw(new \PDOException("employProfileId is not positive"));
@@ -232,7 +235,7 @@ class Employ implements \JsonSerializable {
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
 
-	public static function getEmploybyEmployCompanyIdandEmployProfileId(\PDO $pdo, int $employCompanyId, int $employProfileId) {
+	public static function getEmployByEmployCompanyIdAndEmployProfileId(\PDO $pdo, int $employCompanyId, int $employProfileId) {
 		//sanitize the employeeCompanyId and the employeeProfileId by checking that they're positive
 		if($employCompanyId <= 0 || $employProfileId <= 0) {
 			throw(new \PDOException("employCompanyId and employProfileId must be positive"));
