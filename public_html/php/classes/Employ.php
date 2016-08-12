@@ -122,6 +122,9 @@ class Employ implements \JsonSerializable {
 		$statement->execute($parameters);
 
 		//in the twitter example i t says to update the null tweetId with what mySQL just gave us using $this->tweetId =intval($pdo->lastInsertId()). I don't have to add another line here right? because we are not creating a new whatever the equivelent of tweet is. idk. IDK OK?!!?!?
+
+		//you might need this, so that you grab the key assigned to the employ row we just inserted
+		//$this->employId = intval($pdo->lastInsertId());
 	}
 
 	/**
