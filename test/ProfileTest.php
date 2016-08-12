@@ -147,12 +147,15 @@ class ProfileTest extends CrumbTrailTest {
 		//all I need to do is initialize the hash and salt needed for the profile
 
 		$password = "abc123";
-		//is there any issue with declaring the hash before the salt?
-		$this->VALID_PROFILESALT1 = bin2hex(random_bytes(16));
-		$this->VALID_PROFILESALT2 = bin2hex(random_bytes(16));
 
-		$this->VALID_PROFILEHASH1 = hash_pbkdf2("sha512", $password, $salt, 262144);
-		$this->VALID_PROFILEHASH2 = hash_pbkdf2("sha512", $password, $salt, 262144);
+		$salt = bin2hex(random_bytes(16));
+		$hash = hash_pbkdf2("sha512", $password, $salt, 262144);
+
+		$this->VALID_PROFILESALT1 = $salt;
+		$this->VALID_PROFILESALT2 = $salt;
+
+		$this->VALID_PROFILEHASH1 = $hash;
+		$this->VALID_PROFILEHASH2 = $hash;
 
 	}
 
