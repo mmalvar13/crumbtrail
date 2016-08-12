@@ -149,5 +149,44 @@ class ImageTest extends CrumbTrailTest {
 		$image = new Image(null, $this->company->getCompanyId(), $this->VALID_IMAGEFILENAME, $this->VALID_IMAGEFILETYPE);
 		$image->delete($this->getPDO());
 	}
+	/**
+	 * test grabbing an Image by image content
+	 **/
+	public function testGetValidImageByImageContent() {
+		//count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("image");
+
+		//create a new Image and insert it into mySQL
+		$image = new Image(null, $this->company->getCompanyId(), $this->VALID_IMAGEFILENAME, $this->VALID_IMAGEFILETYPE);
+		$image->insert($this->getPDO());
+
+		//grab the data from mySQL and enforce the fields match out expectations
+		$results = Image::getImageByImageFileName($this->getPDO(), $image->getImageFileName());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("image"));
+		$this->assertCount(1, $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Mmalvar13\\CrumbTrail\\Image", $results);
+
+		//grab the result from teh array and validate it
+		$pdoImage = $results[0];
+		$this->assertEquals($pdoImage->getCompanyId(), $this->company->getCompanyId());
+		$this->assertEquals($pdoImage->getImageFileName(), $this->VALID_IMAGEFILENAME);
+		$this->assertEquals($pdoImage->getImageFileType(), $this->VALID_IMAGEFILETYPE);
+	}
+	/**
+	 * test grabbing an Image by content that does not exist
+	 **/
+	public function testGetInvalidImageByImageContent() {
+	//grab an image by searching for content that does not exist
+		//this is a test!! (keep getting thrown out of the database
+	}
+	/**
+	 * test grabbing all Images
+	 */
+	public function testGetAllValidImages() {
+		//count the number of rows and save it for later
+		$numRows = $this
+	}
+
+
 }
 
