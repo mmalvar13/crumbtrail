@@ -216,4 +216,42 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 		}
 		return($trucks);
 		}
+	/** gets all trucks
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @return \SplFixedArray SplFixedArray of Trucks found or null if not found
+	 * @throws \PDOException when mySQL related error occur
+	 * @throws \TypeError when variables are nor the correct data type
+	 **/
+	public static function getAllTrucks(\PDO $pdo) {
+		//query template
+		$query = "SELECT truckId, truckCompanyId FROM truck";
+		$statement = $pdo->prepare($query);
+		$statement->execute();
+		//build an array of trucks
+		$trucks = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$truck = new Truck($row["truckId"], $row["truckCompanyId"]);
+				$trucks[$trucks->key()] = $truck;
+				$trucks->next();
+			} catch(\Exception $exception) {
+				//if row can't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return ($trucks);
+	}
+	/**
+	 *formats the state variables for JSON serialization
+	 *
+	 * @return array resulting state variables to serialize
+	 **/
+	public function jsonSerialize() {
+		$fields = get_object_vars($this);
+		//$fields[?no date needed here "tweetDate"] = $this->tweetDate->getTimestamp() 8 1000;
+		return($fields);
+	}
 }
+//The end of Truck Class

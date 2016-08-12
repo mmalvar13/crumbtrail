@@ -344,7 +344,7 @@ class Image implements \JsonSerializable {
 	 * @throws \PDOException when mySQL related error occur
 	 * @throws \TypeError when variables are nor the correct data type
 	 **/
-	Public static function getAllimages(\PDO $pdo) {
+	public static function getAllimages(\PDO $pdo) {
 		//query template
 		//Do I need to select all attributes? Should I exclude file type?
 		$query = "SELECT imageId, imageCompanyId, imageFileType, imageFileName FROM image";
