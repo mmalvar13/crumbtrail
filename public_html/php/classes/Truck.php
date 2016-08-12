@@ -254,3 +254,4 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 		return($fields);
 	}
 }
+//The end of Truck Class
