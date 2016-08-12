@@ -581,28 +581,34 @@ public function getProfileId(){
 	 * @throws \TypeError if $newProfileType is not a string
 	 */
 	public function setProfileType(string $newProfileType){
+
+		//make lower case
+		$newProfileType = strtolower($newProfileType);
 		//strip out any white space
 		$newProfileType = trim($newProfileType);
 		//sterilize string
 		$newProfileType = filter_var($newProfileType, FILTER_SANITIZE_STRING);
 
+		$types = ['a', 'o', 'e'];
+
 		//ensure input for $newProfileType is not empty
-		if(strlen($newProfileType)===0){
+		if(strlen($newProfileType)=== 0){
 			throw(new \RangeException("Please designate a profile type by entering a single letter: 'a'(admin), 'o'(owner), or 'e'(employee)"));
 		}
 
 		//ensure input for $newProfileType is valid
-		if(strlen($newProfileType)>1){
+		if(strlen($newProfileType) > 1){
 			throw(new \InvalidArgumentException("Invalid profile type. Please designate a profile type by entering a single letter: 'a'(admin), 'o'(owner), or 'e'(employee)"));
 		}
 
-		//make sure $newProfileType matches one of the required types (a,o,e)
-		if($newProfileType !== ('a'||'o'||'e')){
+
+		//check if $newProfileType
+		if(in_array($newProfileType, $types)){
+			//set profileType to $newProfileType and give it an assignment in SQL
+			$this->profileType = $newProfileType;
+		}else {
 			throw(new \InvalidArgumentException("Invalid profile type. Please designate a profile type by entering a single letter: 'a'(admin), 'o'(owner), or 'e'(employee)"));
 		}
-
-		//set profileType to $newProfileType and give it an assignment in SQL
-		$this->profileType = $newProfileType;
 	}
 
 
