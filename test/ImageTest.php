@@ -47,7 +47,6 @@ class ImageTest extends CrumbTrailTest {
 	 **/
 	protected $company = null;
 	/**
-	/**
 	 * create dependent objects before running each test
 	 **/
 	//run the default setUp() method first (creating a fake company to house the test image)

@@ -22,7 +22,26 @@ require_once(dirname(__DIR__) . "/public_html/php/classes/autoload.php");
 class TruckTest extends CrumbTrailTest {
 	//setting up made up variables to test
 	/**
-	 * content of the truck company id?
-	 * @var int $VALID_TRUCKCOMPANYID
+	 *Company that the Truck belongs to; this is a foreign key relationship
+	 * @var Company company
 	 **/
+	protected $company = null;
+	/**
+	 * create dependent objects before running each test
+	 */
+	//run the default setUp() method first (creating a face company to house the test truck)
+	public final function setUp() {
+		//run the default setUp() method first
+		parent::setUp();
+
+		//create and insert a company to own the test truck
+		$this->company= new Company(null, "Terry's Tacos", "terrytacos@tacos.com", "12345", "2345", "Terry Jane", "345 Taco Street", "Albuquerque", "NM", "87654", "We are a Taco truck description", "Tacos, Tortillas, Burritos", "5052345678","1");
+		$this->company->insert($this->getPDO());
+	}
+	/**
+	 * insert valid truck to verify that the actual mySQL data matches
+	 **/
+	public function testInsertValidTruck() {
+
+	}
 }
