@@ -376,7 +376,7 @@ class CompanyTest extends CrumbTrailTest {
 		$results = Company::getCompanyByCompanyName($this->getPDO(), $company->getCompanyName());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("company"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\MMalvar13\\CrumbTrail\\Company", $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\CrumbTrail\\Company", $results);
 
 		// Grab the result from the array and validate it.
 		$pdoCompany = $results[0];
@@ -411,7 +411,7 @@ class CompanyTest extends CrumbTrailTest {
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("company"));
 		$this->assertCount(1, $results);
 
-		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Mmalvar13\\CrumbTrail\\Company", $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\CrumbTrail\\Company", $results);
 
 		// Get the result from the array, and validate it.
 		$pdoCompany= $results[0];
