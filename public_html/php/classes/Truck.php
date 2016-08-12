@@ -1,7 +1,8 @@
 <?php
 
-//namespace
-//autoloader
+namespace Edu\Cnm\CrumbTrail;
+
+require_once("autoload.php");
 
 //begin Docblock
 /**
@@ -12,7 +13,7 @@
  * @author Victoria Chacon <victoriousdesignco@gmail.com>
  **/
 //begin class here
-class Truck {
+class Truck implements \JsonSerializable {
 	/**
 	 * id for this truck; this is the primary key
 	 * @var $truckId;
@@ -24,12 +25,12 @@ class Truck {
 	 */
 	private $truckCompanyId;
 
-//constructor goes here//
+//constructor will go here//
 	/**
 	 * Truck constructor.
 	 * @param int|null $newTruckId
 	 * @param int $newTruckCompanyId
-	 * @throws RangeException
+	 * @throws \RangeException
 	 */
 
 public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
@@ -59,6 +60,8 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 		if($newTruckId <= 0); {
 			throw (new \RangeException ("Truck Id is not positive"));
 		}
+		//convert and store
+		$this->truckId = $newTruckId;
 	}
 	/**
 	 * accessor for the truck company Id
@@ -78,6 +81,8 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 		if($newTruckCompanyId <=0); {
 			throw (new \RangeException ("Truck Company Id is not positive"));
 		}
+		//convert and store
+		$this->truckCompanyId = $newTruckCompanyId;
 	}
 
 }
