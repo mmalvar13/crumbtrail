@@ -225,6 +225,31 @@ class EventTest extends CrumbTrailTest{
 		$this->assertEquals($pdoEvent->getEventStart, $this->VALID_EVENTSTART);
 	}
 
+	/**
+	 * test grabbing an Event by Event Id and Event Truck Id
+	 **/
+	public function testGetValidEventByEventIdAndEventTruckId(){
+		//count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("event");
+
+		//create a new Event and insert into mySQL
+		$event = new Event(null, $this->truck->getTruckId(), $this->VALID_EVENTEND, $this->VALID_EVENTLOCATION, $this->VALID_EVENTSTART);
+		$event->insert($this->getPDO());
+
+		//grab the data from mySQL and enforce the fields match our expectations
+		$results = Event::getEventbyEventIdAndEventTruckId($this->getPDO(), $event->getEventId(), $event->getEventTruckId()); //is this right? i put both event id and event truck id here.
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("event"));
+		$this->assertCount(1, $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Mmalvar13\\CrumbTrail\\Event", $results);
+
+		//grab the result from the array and validate it
+		$pdoEvent = $results[0];
+		$this->assertEquals($pdoEvent->getTruckId(), $this->truck->getTruckId());
+		$this->assertEquals($pdoEvent->getEventEnd(), $this->VALID_EVENTEND);
+		$this->assertEquals($pdoEvent->getEventLocation(), $this->VALID_EVENTLOCATION);
+		$this->assertEquals($pdoEvent->getEventStart(), $this->VALID_EVENTSTART);
+	}
+
 
 
 }
