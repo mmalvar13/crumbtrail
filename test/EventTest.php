@@ -291,6 +291,15 @@ class EventTest extends CrumbTrailTest{
 	}
 
 	/**
+	 * Test grabbing an Event by and Event Id and Event Truck Id that don't exist
+	 **/
+	public function testGetInvalidEventByEventIdAndEventTruckId(){
+		//grab an event by searching for event id that does not exist
+		$event = Event::getEventByEventIdAndEventTruckId($this->getPDO(), "Run, Simba. Run Away! and..never..return.");
+		$this->assertCount(0, $event); //says parameter $eventTruckId is missing. do i separate these? or does this have to do with Truck class namespace problems?
+	}
+
+	/**
 	 * test grabbing an Event by EventEnd and EventStart
 	 **/
 	public function testGetValidEventByEventEndAndEventStart(){
@@ -312,6 +321,15 @@ class EventTest extends CrumbTrailTest{
 		$this->assertEquals($pdoEvent->getEventEnd(), $this->VALID_EVENTEND);
 		$this->assertEquals($pdoEvent->getEventLocation(), $this->VALID_EVENTLOCATION);
 		$this->assertEquals($pdoEvent->getEventStart(), $this->VALID_EVENTSTART);
+	}
+
+	/**
+	 * test grabbing an Event with an EventStart and EventEnd that do not exist
+	 **/
+	public function testGetInvalidEventByEventEndAndEventStart(){
+		//grab an event by searching for eventStart and eventEnd that do not exist
+		$event = Event::getEventbyEventEndandEventStart($this->getPDO(), "wagging finger"); //get an error that says missing $eventStart.
+		$this->assertCount(0, $event);
 	}
 
 
