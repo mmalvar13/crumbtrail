@@ -207,3 +207,4 @@ class ImageTest extends CrumbTrailTest {
 	}
 
 }
+//This is the end of the Image unit test//
