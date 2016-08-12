@@ -164,7 +164,7 @@ class ProfileTest extends CrumbTrailTest {
 	 * test inserting a valid profile and verify that what's in mySQL matches what was input
 	 */
 	public function testInsertValidProfile() {
-		// count the number of rows....being selected?.....being input? what number of rows?......and save them for later
+		// count the number of rows initially in the database (0)
 		$numRows = $this->getConnection()->getRowCount("profile");  // so..get connection to SQL, and get the count of rows for a particular profile??
 
 		//create a new profile and insert it into SQL
@@ -501,10 +501,6 @@ class ProfileTest extends CrumbTrailTest {
 		$this->assertEquals($pdoProfile->getProfileType(), $this->VALID_PROFILETYPE1);
 		$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_PROFILEHASH1);
 		$this->assertEquals($pdoProfile->getProfileSalt(), $this->VALID_PROFILESALT1);
-
-
-
-
 
 	}
 
