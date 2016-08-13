@@ -166,7 +166,7 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 			return;
 		}
 
-		if($newTruckId <= 0); {
+		if($newTruckId <= 0) {
 			throw (new \RangeException ("Truck Id is not positive"));
 		}
 		//convert and store
@@ -191,7 +191,7 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 	 * @throws \RangeException if $newTruckCompanyId is negative
 	 */
 	public function setTruckCompanyId(int $newTruckCompanyId = null) {
-		if($newTruckCompanyId <=0); {
+		if($newTruckCompanyId <=0) {
 			throw (new \RangeException ("Truck Company Id is not positive"));
 		}
 		//convert and store
