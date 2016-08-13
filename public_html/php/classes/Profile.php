@@ -162,7 +162,7 @@ public static function getProfileByProfileId(\PDO $pdo, int $profileId){
 			$profile = new Profile($row["profileId"], $row["profileName"], $row["profileEmail"], $row["profilePhone"], $row["profileAccessToken"], $row["profileActivationToken"], $row["profileType"], $row["profileHash"], $row["profileSalt"]);
 		}
 		//catch statement
-	} catch(\Exception $exception){
+	}catch(\Exception $exception){
 		// if the row couldnt be converted, re-throw it
 		throw(new \PDOException($exception->getMessage(), 0, $exception));
 	}
@@ -764,7 +764,7 @@ public function getProfileId(){
 		}
 
 		//create a query template ***ASK ABOUT THIS, WHAT PARTS OF PROFILE IS THIS ACTUALLY LETTING US UPDATE
-		$query = "UPDATE profile SET profileName = :profileName, profilePhone = :profilePhone, profileAccessToken = :profileAccessToken, profileActivationToken = :profileActivationToken, profileType = :profileType, profileHash = :profileHash, profileSalt = :profileSalt WHERE profileId = :profileId";
+		$query = "UPDATE profile SET profileName = :profileName, profilePhone = :profilePhone, profileEmail = :profileEmail, profileAccessToken = :profileAccessToken, profileActivationToken = :profileActivationToken, profileType = :profileType, profileHash = :profileHash, profileSalt = :profileSalt WHERE profileId = :profileId";
 		// prepare statement
 		$statement = $pdo->prepare($query);
 
