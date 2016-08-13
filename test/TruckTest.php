@@ -29,6 +29,10 @@ class TruckTest extends CrumbTrailTest {
 	 * @var Company company
 	 **/
 	protected $company = null;
+	/**
+	 *Company that the Truck is transferred to; this is a foreign key relationship
+	 * @var Company company2
+	 **/
 	protected $company2 = null;
 
 
@@ -43,7 +47,7 @@ class TruckTest extends CrumbTrailTest {
 		parent::setUp();
 
 		//create and insert a company to own the test truck
-		$this->company = new Company(null, "Terry's Tacos", "terrytacos@tacos.com", "12345", "2345", "Terry Jane", "345 Taco Street", "Albuquerque", "NM", "87654", "We are a Taco truck description", "Tacos, Tortillas, Burritos", "5052345678", "1");
+		$this->company = new Company(null, "Terry's Tacos", "terrytacos@tacos.com", "5052345678", "12345", "2345", "345 Taco Street", "Albuquerque", "NM", "87654", "We are a Taco truck description", "Tacos, Tortillas, Burritos", "1");
 		$this->company->insert($this->getPDO());
 
 		//create and insert a second company to buy the test truck (a truck moving to another company)
@@ -57,16 +61,16 @@ class TruckTest extends CrumbTrailTest {
 	 * insert valid truck to verify that the actual mySQL data matches
 	 **/
 	public function testInsertValidTruck() {
-		$numRows = $this->getConnection()->getRowCount("image");
+		$numRows = $this->getConnection()->getRowCount("truck");
 
 		//create new Truck and insert it into mySQL
-		$truck = new Truck(null, $this->company->getCompanyId);
+		$truck = new Truck(null, $this->company->getCompanyId());
 		$truck->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields to match our expectations
-		$pdoTruck = Truck::getTruckbyTruckId($this->getPDO(), $truck->getTruckId());
+		$pdoTruck = Truck::getTruckByTruckId($this->getPDO(), $truck->getTruckId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("truck"));
-		$this->assertEquals($pdoTruck->getTruckId(), $this->company->getCompanyId());
+		$this->assertEquals($pdoTruck->getCompanyId(), $this->company->getCompanyId());
 	}
 	/**
 	 *test inserting a truck that already exists

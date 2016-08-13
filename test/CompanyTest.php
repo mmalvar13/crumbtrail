@@ -140,12 +140,12 @@ class CompanyTest extends CrumbTrailTest {
 	 * zip of the Company
 	 * @var int $VALID_COMPANYZIP
 	 **/
-	protected $VALID_COMPANYZIP = "97405";
+	protected $VALID_COMPANYZIP = 97405;
 	/**
 	 * zip of the updated Company
 	 * @var int $VALID_COMPANYZIP2
 	 **/
-	protected $VALID_COMPANYZIP2 = "87048";
+	protected $VALID_COMPANYZIP2 = 87048;
 
 	/**
 	 * description of the Company
@@ -184,12 +184,12 @@ class CompanyTest extends CrumbTrailTest {
 	 * approved of the Company
 	 * @var int $VALID_COMPANYAPPROVED
 	 **/
-	protected $VALID_COMPANYAPPROVED = "0";
+	protected $VALID_COMPANYAPPROVED = 0;
 	/**
 	 * approved of the updated Company
 	 * @var int $VALID_COMPANYAPPROVED2
 	 **/
-	protected $VALID_COMPANYAPPROVED2 = "1";
+	protected $VALID_COMPANYAPPROVED2 = 1;
 
 	/**
 	 * The Profile of the person who created this account = companyAccountCreatorId,
