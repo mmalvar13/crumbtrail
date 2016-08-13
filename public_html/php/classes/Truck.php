@@ -105,6 +105,7 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 			try {
 				$truck = new Truck($row["truckId"], $row["truckCompanyId"]);
 				$trucks[$trucks->key()] = $truck;
+				$trucks->next();
 			} catch(\Exception $exception) {
 				//if row couldn't be converted, rethrow it
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
