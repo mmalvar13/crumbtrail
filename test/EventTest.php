@@ -7,7 +7,7 @@ use Edu\Cnm\CrumbTrail\Test\{Truck, Event}; //is this what i put here??
 require_once("CrumbTrailTest.php");
 
 //grab the class under scrutiny
-require_once(dirname(__DIR__) . "public_html/php/classes/autoload.php");
+require_once(dirname(__DIR__) . "/public_html/php/classes/autoload.php");
 
 /**
  * Full PHPUnit test for the Event class
