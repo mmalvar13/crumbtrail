@@ -534,7 +534,8 @@ class Company implements \JsonSerializable {
 		return ($this->companyZip);
 	}
 
-	/**  Mutator method (setter) for companyZip.
+	/**
+	 * Mutator method (setter) for companyZip.
 	 * @param int|null $newCompanyZip The new value of companyZip.
 	 * @throws \RangeException  if $newCompanyZip is not a positive.
 	 * @throws \TypeError if $newCompanyZip is not an integer.
