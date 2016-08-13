@@ -1,14 +1,14 @@
 <?php
-namespace Edu\Cnm\CrumbTrail; //this is probably not right.
+namespace Edu\Cnm\CrumbTrail;
 
-require_once("autoload.php"); //idk
+require_once("autoload.php");
 
 /**
- * What do I explain here? Welcome to the Event class!
+ * Welcome to the Event class! You are about to have a most splendid time.
  *
  **/
 class Event implements \JsonSerializable { //implement JsonSerializable??
-	use ValidateDate; //indeed
+	use ValidateDate;
 	/**
 	 * id for this event; this is the primary key
 	 * @var int $eventId
@@ -26,7 +26,7 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 	private $eventEnd;
 	/**
 	 * gps point location for this event
-	 * @var float $eventLocation //is this right??
+	 * @var float $eventLocation
 	 */
 	private $eventLocation;
 	/**
@@ -41,8 +41,8 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 	 *
 	 * @param int|null $newEventId id of this Event or null if new Event
 	 * @param int $newEventTruckId id of the Truck that is attending this Event
-	 * @param \DateTime|string $newEventEnd date and time Event is over //do i add "or null if set to current date and time"?
-	 * @param float $newEventLocation gps coordinates of Event //how do i write this? I added @geography again
+	 * @param \DateTime|string $newEventEnd date and time Event is over
+	 * @param float $newEventLocation gps coordinates of Event
 	 * @param \DateTime|string|null $newEventStart data and time Event starts or null if set to current date and time //i added null here since the date/time would not have been set yet. is this right?
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \RangeException if data values are out of bounds (e.g. Strings too long, negative integers)
@@ -141,11 +141,12 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 	 * @throws \InvalidArgumentException if $newEventEnd is null
 	 * @throws \RangeException if $newEventEnd is greater than the eventStart datetime
 	 **/
-	public function setEventEnd(\DateTime $newEventEnd) {//why is this greyed out? what data type do i put? IT SAYS NEWEVENTEND IS OVERWRITTEN IMMEDIATELY
+	public function setEventEnd(\DateTime $newEventEnd) {
 		if($newEventEnd === null) {
 			throw(new \InvalidArgumentException("Must enter the time length of the event"));
-		} elseif($newEventEnd <= $this->eventStart) {
-			throw(new \RangeException("Start time cannot be greater than end time")); //is this correct??
+		}
+		if($newEventEnd <= $this->eventStart) {
+			throw(new \RangeException("Start time cannot be greater than end time"));
 		}
 		try {
 			$newEventEnd = self::validateDateTime($newEventEnd);
@@ -160,7 +161,7 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 
 	/**
 	 * accessor method for event location
-	 * @return float value of event location //HOW DO I WRITE OUT THESE POINT DATA TYPES??
+	 * @return float value of event location
 	 **/
 	public function getEventLocation() {
 		return ($this->eventLocation);
