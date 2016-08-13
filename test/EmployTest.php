@@ -34,10 +34,14 @@ class EmployTest extends CrumbTrailTest {
 		//run the default setUp() method first
 		parent::setUp();
 		//create and insert a Company and Profile to own the test Employ
-		$this->company = new Company(null, "@phpunit", "test@phpunit.de", "+12125551212");
+		$this->company = new Company(null, "Terry's Tacos", "terrytacos@tacos.com", "12345" , "2345", "Terry Jane", "345 Taco Street", "Albuquerque", "NM", "87654", "We are a Taco truck description", "Tacos, Tortillas, Burritos", "5052345678", "1");
 		$this->company->insert($this->getPDO());
-		$this->profile = new Profile(null, "@phpunit", "test@phpunit.de", "+12125551212");
+		$this->profile = new Profile(null, "Loren", "lorenisthebest@gmail.com", "1505", "0000000000000000000000000000000000000000000000000000000000004444", "00000000000000000000000000000022","a", $salt, $hash );
 		$this->profile->insert($this->getPDO());
+
+		$password = "abc123";
+		$salt = bin2hex(random_bytes(16));
+		$hash = hash_pbkdf2("sha512", $password, $salt, 262144);
 
 		//I didn't put a date here. is that ok?n  calculate the date(just use the time the unit test was setup
 	}
