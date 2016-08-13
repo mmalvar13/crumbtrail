@@ -268,6 +268,7 @@ class ProfileTest extends CrumbTrailTest {
 
 	/**
 	 * test updating a profile that does not exist
+	 * @expectedException \PDOException
 	 */
 	public function testUpdateInvalidProfile(){
 		$profile = new Profile(null, $this->VALID_PROFILENAME1, $this->VALID_PROFILEEMAIL1, $this->VALID_PROFILEPHONE1, $this->VALID_PROFILEACCESSTOKEN1, $this->VALID_PROFILEACTIVATIONTOKEN1, $this->VALID_PROFILETYPE1, $this->VALID_PROFILEHASH1, $this->VALID_PROFILESALT1);
@@ -311,6 +312,7 @@ class ProfileTest extends CrumbTrailTest {
 
 	/**
 	 * test deleting a profile that does NOT exist
+	 * @expectedException \PDOException
 	 */
 	public function testDeleteInvalidProfile(){
 		//create a profile and never actually insert it. Then try to delete it when it hasn't been inserted
