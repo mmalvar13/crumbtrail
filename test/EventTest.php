@@ -58,7 +58,7 @@ class EventTest extends CrumbTrailTest{
 		//run the default setUp() method first
 		parent::setUp();
 		//create and insert a (truck or company?) to own the test event. I'm going to try truck.
-		$this->truck = new Truck(null, "1234567"); //do i need to customize any of this?
+		$this->truck = new Truck(null); //do i need to customize any of this?
 		$this->truck->insert($this->getPDO());
 
 		//calculate the date this event starts (just use the time the unit was setup
