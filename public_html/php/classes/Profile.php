@@ -337,12 +337,11 @@ public static function getProfileByProfileId(\PDO $pdo, int $profileId){
 		//find out what this while-loop is actually doing
 		while(($row = $statement->fetch()) !==false){
 			try{
-
 				//this is getting the value from each of these keys in the array called $row
 				$profile = new Profile($row["profileId"], $row["profileName"], $row["profileEmail"], $row["profilePhone"], $row["profileAccessToken"], $row["profileActivationToken"], $row["profileType"], $row["profileHash"], $row["profileSalt"]);
 
 				//now we are taking each profile and putting it into the array called $profiles which will collect all the profiles we have!
-				$profiles[$profiles->key()]=$profile; //inserts the first entry from the $profile array
+				$profiles[$profiles->key()]= $profile; //inserts the first entry from the $profile array
 				$profiles->next();  //next increments the key in the fixed array $profiles
 				//profile array to enter!!
 			} catch(\Exception $exception) {
@@ -568,7 +567,7 @@ public function getProfileId(){
 		}
 
 		//assign new activation token to $profileActivationToken and enter it in mySQL
-		$this->profileActivationTokenToken = $newProfileActivationToken;
+		$this->profileActivationToken = $newProfileActivationToken;
 	}
 
 	/**
