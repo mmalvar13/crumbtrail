@@ -48,4 +48,5 @@ class PointTest extends CrumbTrailTest {
 	// We can't use the methods involving the mySQL database, since the point data are not entered
 	// into the database.
 	// Test for distance between 2 points, both defined by latitude and longitude?    ?????
-
+}
+?>
