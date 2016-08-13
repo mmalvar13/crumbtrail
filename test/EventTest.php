@@ -1,7 +1,7 @@
 <?php
 namespace Edu\Cnm\CrumbTrail\Test;
 
-use Edu\Cnm\CrumbTrail\Test\{Truck, Event}; //is this what i put here??
+use Edu\Cnm\CrumbTrail\{Truck, Event}; //is this what i put here??
 
 //grab the project test parameters
 require_once("CrumbTrailTest.php");
