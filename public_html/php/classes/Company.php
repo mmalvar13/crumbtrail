@@ -540,7 +540,7 @@ class Company implements \JsonSerializable {
 	 * @throws \RangeException  if $newCompanyZip is not a positive.
 	 * @throws \TypeError if $newCompanyZip is not an integer.
 	 **/
-	public function setCompanyZip(int $newCompanyZip = null) {
+	public function setCompanyZip($newCompanyZip = null) {
 		// Base case, for a new company.
 		if($newCompanyZip === null) {
 			$this->companyZip = null;
