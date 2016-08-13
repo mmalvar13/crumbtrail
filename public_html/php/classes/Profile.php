@@ -764,7 +764,7 @@ public function getProfileId(){
 		}
 
 		//create a query template ***ASK ABOUT THIS, WHAT PARTS OF PROFILE IS THIS ACTUALLY LETTING US UPDATE
-		$query = "UPDATE profile SET profileName = :profileName, profilePhone = :profilePhone, profileEmail = :profileEmail, profileAccessToken = :profileAccessToken, profileActivationToken = :profileActivationToken, profileType = :profileType, profileHash = :profileHash, profileSalt = :profileSalt WHERE profileId = :profileId";
+		$query = "UPDATE profile SET profileName = :profileName, profileEmail = :profileEmail, profilePhone = :profilePhone, profileAccessToken = :profileAccessToken, profileActivationToken = :profileActivationToken, profileType = :profileType, profileHash = :profileHash, profileSalt = :profileSalt WHERE profileId = :profileId";
 		// prepare statement
 		$statement = $pdo->prepare($query);
 
