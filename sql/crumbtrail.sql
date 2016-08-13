@@ -25,7 +25,7 @@ CREATE TABLE profile (
 	profileType            CHAR(1) NOT NULL,
 
 	profileHash            CHAR(128)                   NOT NULL,
-	profileSalt            CHAR(64)                    NOT NULL,
+	profileSalt            CHAR(32)                    NOT NULL,
 
 	-- make sure of elements that must be unique
 	UNIQUE (profileEmail),

@@ -646,8 +646,8 @@ public function getProfileId(){
 		}
 
 		//**doesnt salt and hash need to be EXACTLY the designated length?? CHECK ON THIS!!**
-		if(strlen($newProfileSalt) !== 64){
-			throw(new \RangeException("Profile salt should be exactly 64 characters long"));
+		if(strlen($newProfileSalt) !== 32){
+			throw(new \RangeException("Profile salt should be exactly 32 characters long"));
 		}
 		//now assign $newProfileSalt to profileSalt and store in SQL
 		$this->profileSalt = $newProfileSalt;

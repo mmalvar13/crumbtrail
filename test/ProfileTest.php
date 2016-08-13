@@ -362,7 +362,7 @@ class ProfileTest extends CrumbTrailTest {
 
 
 	/**
-	 * test getting profile by a name that does not exist
+	 * test getting profile by a name that does not exist!
 	 */
 	public function testGetInvalidProfileByProfileName(){
 		//grab a profile by searching for a name that doesn't exit
