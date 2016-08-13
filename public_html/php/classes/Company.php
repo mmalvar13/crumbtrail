@@ -100,7 +100,7 @@ class Company implements \JsonSerializable {
 
 	/**
 	 * The activation token of this company, companyActivationToken.
-	 * @var int $companyActivationToken
+	 * @var string $companyActivationToken
 	 **/
 	private $companyActivationToken;
 
@@ -126,7 +126,7 @@ class Company implements \JsonSerializable {
 	 * @param string $newCompanyEmail string of the company email
 	 * @param string $newCompanyPhone string of the company phone number.
 	 * @param string $newCompanyPermit string of the company permit
-	 * @param int $newCompanyLicense int of the company name
+	 * @param string $newCompanyLicense int of the company name
 	 * @param string $newCompanyAttn string of the company attn
 	 * @param string $newCompanyStreet1 string of the company street1
 	 * @param string $newCompanyStreet2 string of the company street2
@@ -135,7 +135,7 @@ class Company implements \JsonSerializable {
 	 * @param int $newCompanyZip int of the company zip
 	 * @param string $newCompanyDescription string of the company description
 	 * @param string $newCompanyMenuText string of the company menu text
-	 * @param int $newCompanyActivationToken int of the company activation token
+	 * @param string $newCompanyActivationToken int of the company activation token
 	 * @param int $newCompanyApproved int of the whether the company has been approved by us; 0 = no, 1 = yes.
 	 * @param int $newCompanyAccountCreatorId int of the ProfileId of the creator of this company's account
 	 * @throws \InvalidArgumentException if data types are not valid.
@@ -148,7 +148,7 @@ class Company implements \JsonSerializable {
 										 string $newCompanyEmail,
 										 string $newCompanyPhone,
 										 string $newCompanyPermit,
-										 int $newCompanyLicense,
+										 string $newCompanyLicense,
 										 string $newCompanyAttn,
 										 string $newCompanyStreet1,
 										 string $newCompanyStreet2,
@@ -157,7 +157,7 @@ class Company implements \JsonSerializable {
 										 int $newCompanyZip,
 										 string $newCompanyDescription,
 										 string $newCompanyMenuText,
-										 int $newCompanyActivationToken,
+										 string $newCompanyActivationToken,
 										 int $newCompanyApproved,
 										 int $newCompanyAccountCreatorId) {
 		try {
@@ -259,7 +259,7 @@ class Company implements \JsonSerializable {
 
 	/**
 	 * Mutator method for companyEmail.
-	 * @param string , $newCompanyEmail  The new value of companyEmail.
+	 * @param string, $newCompanyEmail  The new value of companyEmail.
 	 * @throw \RangeException if $newCompanyEmail is empty or too long
 	 * @throw \InvalidArgumentException if $newCompanyEmail is not a string
 	 * @throw \TypeError if $newCompanyEmail is not a string
@@ -290,7 +290,7 @@ class Company implements \JsonSerializable {
 
 	/**
 	 * Mutator method for companyPhone.
-	 * @param string , $newCompanyPhone  The new value of companyPhone.
+	 * @param string, $newCompanyPhone  The new value of companyPhone.
 	 * @throw \RangeException if $newCompanyPhone is empty or too long
 	 * @throw \InvalidArgumentException if $newCompanyPhone is not a string
 	 * @throw \TypeError if $newCompanyPhone is not a string
@@ -343,7 +343,7 @@ class Company implements \JsonSerializable {
 	}
 
 	/**  Accessor method (getter) for companyLicense.
-	 * @return int $companyLicense  The value of companyLicense.
+	 * @return string $companyLicense  The value of companyLicense.
 	 **/
 	public function getCompanyLicense() {
 		return ($this->companyLicense);
@@ -619,14 +619,14 @@ class Company implements \JsonSerializable {
 
 
 	/**  Accessor method (getter) for companyActivationToken.
-	 * @return int $companyActivationToken  The value of companyActivationToken.
+	 * @return string $companyActivationToken  The value of companyActivationToken.
 	 **/
 	public function getCompanyActivationToken() {
 		return ($this->companyActivationToken);
 	}
 
 	/**  Mutator method (setter) for companyActivationToken.
-	 * @param int|null $newCompanyActivationToken The new value of companyActivationToken.
+	 * @param string $newCompanyActivationToken The new value of companyActivationToken.
 	 * @throws \RangeException  if #newcompanyActivationToken is not a positive.
 	 * @throws \TypeError if $newCompanyActivationToken is not an integer.
 	 **/
@@ -646,7 +646,7 @@ class Company implements \JsonSerializable {
 
 
 	/**  Accessor method (getter) for companyApproved.
-	 * @return int $companyApproval  The value of companyApproved.
+	 * @return int $companyApproved  The value of companyApproved.
 	 **/
 	public function getCompanyApproved() {
 		return ($this->companyApproved);
