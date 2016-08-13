@@ -126,7 +126,7 @@ class Company implements \JsonSerializable {
 	 * @param string $newCompanyEmail string of the company email
 	 * @param string $newCompanyPhone string of the company phone number.
 	 * @param string $newCompanyPermit string of the company permit
-	 * @param string $newCompanyLicense int of the company name
+	 * @param string $newCompanyLicense string of the company license
 	 * @param string $newCompanyAttn string of the company attn
 	 * @param string $newCompanyStreet1 string of the company street1
 	 * @param string $newCompanyStreet2 string of the company street2
@@ -135,7 +135,7 @@ class Company implements \JsonSerializable {
 	 * @param int $newCompanyZip int of the company zip
 	 * @param string $newCompanyDescription string of the company description
 	 * @param string $newCompanyMenuText string of the company menu text
-	 * @param string $newCompanyActivationToken int of the company activation token
+	 * @param string $newCompanyActivationToken string of the company activation token
 	 * @param int $newCompanyApproved int of the whether the company has been approved by us; 0 = no, 1 = yes.
 	 * @param int $newCompanyAccountCreatorId int of the ProfileId of the creator of this company's account
 	 * @throws \InvalidArgumentException if data types are not valid.
