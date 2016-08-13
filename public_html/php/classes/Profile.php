@@ -714,13 +714,13 @@ public function getProfileId(){
 		}
 
 		//create query template do NOT include profileId in this list because it's a new profile you're inserting (I THINK)
-		$query = "INSERT INTO profile(profileName, profileEmail, profilePhone, profileAccessToken, profileActivationToken, profileType, profileSalt, profileHash) VALUES(:profileName, :profileEmail, :profilePhone, :profileAccessToken, :profileActivationToken, :profileType, :profileSalt, :profileHash)";
+		$query = "INSERT INTO profile(profileName, profileEmail, profilePhone, profileAccessToken, profileActivationToken, profileType,  profileHash, profileSalt) VALUES(:profileName, :profileEmail, :profilePhone, :profileAccessToken, :profileActivationToken, :profileType, :profileHash, :profileSalt)";
 
 		//prepare is used as an extra means of security
 		$statement = $pdo->prepare($query);
 
 		//bind the member variables to the place holder slots in the template. putting these into an array
-		$parameters = ["profileName"=>$this->profileName, "profileEmail"=>$this->profileEmail, "profilePhone"=>$this->profilePhone, "profileAccessToken"=>$this->profileAccessToken, "profileActivationToken"=>$this->profileActivationToken, "profileType"=>$this->profileType, "profileSalt"=>$this->profileSalt, "profileHash"=>$this->profileHash];
+		$parameters = ["profileName"=>$this->profileName, "profileEmail"=>$this->profileEmail, "profilePhone"=>$this->profilePhone, "profileAccessToken"=>$this->profileAccessToken, "profileActivationToken"=>$this->profileActivationToken, "profileType"=>$this->profileType, "profileHash"=>$this->profileHash, "profileSalt"=>$this->profileSalt];
 
 		//execute the command held in $statement
 		$statement->execute($parameters);
@@ -770,7 +770,7 @@ public function getProfileId(){
 
 		//bind the variables to the template and execute the SQL command (is that correct?) Why is the primary key last in the array????
 		//should $parameters always have every every entry that's in the selected table??
-		$parameters = ["profileName"=>$this->profileName, "profileEmail"=>$this->profileEmail, "profilePhone"=>$this->profilePhone, "profileAccessToken"=>$this->profileAccessToken, "profileActivationToken"=>$this->profileActivationToken, "profileType"=>$this->profileType, "profileSalt"=>$this->profileSalt, "profileHash"=>$this->profileHash, "profileId"=>$this->profileId];
+		$parameters = ["profileName"=>$this->profileName, "profileEmail"=>$this->profileEmail, "profilePhone"=>$this->profilePhone, "profileAccessToken"=>$this->profileAccessToken, "profileActivationToken"=>$this->profileActivationToken, "profileType"=>$this->profileType,"profileHash"=>$this->profileHash, "profileSalt"=>$this->profileSalt, "profileId"=>$this->profileId];
 		//execute
 		$statement->execute($parameters);
 }
