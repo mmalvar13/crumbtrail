@@ -32,6 +32,12 @@ class Company implements \JsonSerializable {
 	private $companyEmail;
 
 	/**
+	 * The phone number of the food truck company, companyPhone.
+	 * @var string $companyPhone
+	 **/
+	private $companyPhone;
+
+	/**
 	 * The public health permit number for this company, companyPermit.
 	 * @var string $companyPermit
 	 **/
@@ -118,6 +124,7 @@ class Company implements \JsonSerializable {
 	 * @param int|null $newCompanyId id of this company or null if a new company
 	 * @param string $newCompanyName string of the company name
 	 * @param string $newCompanyEmail string of the company email
+	 * @param string $newCompanyPhone string of the company phone number.
 	 * @param string $newCompanyPermit string of the company permit
 	 * @param int $newCompanyLicense int of the company name
 	 * @param string $newCompanyAttn string of the company attn
@@ -139,6 +146,7 @@ class Company implements \JsonSerializable {
 	public function __construct(int $newCompanyId = null,
 										 string $newCompanyName,
 										 string $newCompanyEmail,
+										 string $newCompanyPhone,
 										 string $newCompanyPermit,
 										 int $newCompanyLicense,
 										 string $newCompanyAttn,
@@ -156,6 +164,7 @@ class Company implements \JsonSerializable {
 			$this->setCompanyId($newCompanyId);
 			$this->setCompanyName($newCompanyName);
 			$this->setCompanyEmail($newCompanyEmail);
+			$this->setCompanyPhone($newCompanyPhone);
 			$this->setCompanyPermit($newCompanyPermit);
 			$this->setCompanyLicense($newCompanyLicense);
 			$this->setCompanyAttn($newCompanyAttn);
@@ -270,6 +279,38 @@ class Company implements \JsonSerializable {
 		// Assign $newCompanyEmail to companyEmail, then store in SQL.
 		$this->companyEmail = $newCompanyEmail;
 	}
+
+
+	/**  Accessor method (getter) for companyPhone.
+	 * @return string $companyPhone  The value of companyPhone.
+	 **/
+	public function getCompanyPhone() {
+		return ($this->companyPhone);
+	}
+
+	/**
+	 * Mutator method for companyPhone.
+	 * @param string , $newCompanyPhone  The new value of companyPhone.
+	 * @throw \RangeException if $newCompanyPhone is empty or too long
+	 * @throw \InvalidArgumentException if $newCompanyPhone is not a string
+	 * @throw \TypeError if $newCompanyPhone is not a string
+	 */
+	public function setCompanyPhone(string $newCompanyPhone) {
+		// Strip out the white space on either end of the string.
+		$newCompanyPhone = trim($newCompanyPhone);
+		// Sanitize $newCompanyPhone.
+		$newCompanyPhone = filter_var($newCompanyPhone, FILTER_SANITIZE_STRING);
+		// If $newCompanyPhone is empty or too long, then throw an exception.
+		if(strlen($newCompanyPhone) === 0) {
+			throw(new \RangeException("Company Phone is too short."));
+		}
+		if(strlen($newCompanyPhone > 128)) {
+			throw(new \RangeException("Company Phone is too long."));
+		}
+		// Assign $newCompanyPhone to companyPhone, then store in SQL.
+		$this->companyPhone = $newCompanyPhone;
+	}
+
 
 	/**  Accessor method (getter) for companyPermit.
 	 * @return string $companyPermit  The value of companyPermit.

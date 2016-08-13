@@ -49,6 +49,17 @@ class CompanyTest extends CrumbTrailTest {
 	protected $VALID_COMPANYEMAIL2 = "bobnew@bobs.com";
 
 	/**
+	 * phone of the Company
+	 * @var string $VALID_COMPANYPHONE
+	 **/
+	protected $VALID_COMPANYPHONE = "5051234567";
+	/**
+	 * phone of the updated Company
+	 * @var string $VALID_COMPANYPHONE
+	 **/
+	protected $VALID_COMPANYPHONE = "5052345678";
+
+	/**
 	 * permit of the Company
 	 * @var string $VALID_COMPANYPERMIT
 	 **/

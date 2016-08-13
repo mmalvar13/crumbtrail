@@ -123,7 +123,7 @@ private $profileName;
 
 	}
 
-/*--------------------ACCESSOR SECTION HERE---------------------------*/
+/*--------------------Get Foo By Bar Section here---------------------------*/
 
 /**
  * gets profile by the profile ID
@@ -395,7 +395,7 @@ public function getProfileId(){
 	 * accessor method for profileName
 	 * @return string value for profileName
 	 */
-	public function getProfilename(){
+	public function getProfileName(){
 		return($this-> profileName);
 	}
 
