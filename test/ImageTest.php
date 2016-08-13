@@ -198,7 +198,7 @@ class ImageTest extends CrumbTrailTest {
 
 		//grab the data from mySQL and enforce the fields match our expectations
 		$results = Image::getAllImages($this->getPDO());
-		$this->assertEquals($numRows + 1, $this->getConnection()->gerRowCount("image"));
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("image"));
 		$this->assertCount(1, $results);
 		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\CrumbTrail\\Image", $results);
 

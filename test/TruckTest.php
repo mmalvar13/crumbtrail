@@ -1,7 +1,9 @@
 <?php
 namespace Edu\Cnm\CrumbTrail\Test;
 
-use Edu\Cnm\CrumbTrail\{Company, Truck};
+use Edu\Cnm\CrumbTrail\{
+	Company, Image, Truck
+};
 
 //grab the project test parameters
 require_once("CrumbTrailTest.php");
@@ -151,9 +153,41 @@ class TruckTest extends CrumbTrailTest {
 		$truck->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields match our expectations
-		$results = Truck::getTruckByTruckId($this->getPDO()), $truck->getTruckId();
+		$results = Truck::getTruckByTruckId($this->getPDO(), $truck->getTruckId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("truck"));
 		$this->assertCount(1, $results);
 		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\CrumbTrail\\Truck", $results);
+
+		//grab the result from the array and validate it
+		$pdoTruck = $results[0];
+		$this->assertEquals($pdoTruck->getCompanyId(), $this->company->getCompanyId());
 	}
+	/**
+	 * test grabbing a Truck by content that does not exist
+	 **/
+	public function testGetInvalidTruckByTruckContent() {
+		//grab an image by searching for contnet that does not exist?
+		$truck = Truck::getTruckByTruckId($this->getPDO(), "No truck information found");
+		$this->assertCount(0, $truck);
+	}
+	/**
+	 * test grabbing all trucks
+	 **/
+	public function testGetAllValidTrucks() {
+		//count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("truck");
+
+		//create a new Image and insert it into mySQL
+		$truck = new Truck(null, $this->company->getCompanyId());
+		$truck->insert($this->getPDO());
+		//grab the data from mySQL and eforce the fields match our expectations
+		$results = Truck::getAllTrucks($this->getPDO());
+		$this->assertEquals($numRows +1, $this->getConnection()->getRowCount("truck"));
+		$this->assertCount(1, $results);
+		$this->assertContainOnlyInstancesOf("Edu\\Cnm\\CrumbTrail\\Truck", $results);
+
+		//grab the result from the array and validate it
+		$pdoTruck = $results[0];
+		$this->assertEquals($pdoTruck->getCompanyId(), $this->company->getCompanyId());
+		}
 	}
