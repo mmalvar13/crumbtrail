@@ -29,6 +29,10 @@ class TruckTest extends CrumbTrailTest {
 	 * @var Company company
 	 **/
 	protected $company = null;
+	/**
+	 *Company that the Truck is transferred to; this is a foreign key relationship
+	 * @var Company company2
+	 **/
 	protected $company2 = null;
 
 
@@ -57,10 +61,10 @@ class TruckTest extends CrumbTrailTest {
 	 * insert valid truck to verify that the actual mySQL data matches
 	 **/
 	public function testInsertValidTruck() {
-		$numRows = $this->getConnection()->getRowCount("image");
+		$numRows = $this->getConnection()->getRowCount("truck");
 
 		//create new Truck and insert it into mySQL
-		$truck = new Truck(null, $this->company->getCompanyId);
+		$truck = new Truck(null, $this->company->getCompanyId());
 		$truck->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields to match our expectations
