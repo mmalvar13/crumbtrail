@@ -45,7 +45,7 @@ class Company implements \JsonSerializable {
 
 	/**
 	 * The business license number of the company, companyLicense.
-	 * @var int $companyLicense
+	 * @var string $companyLicense
 	 **/
 	private $companyLicense;
 
@@ -711,13 +711,13 @@ class Company implements \JsonSerializable {
 		}
 
 		// Create a query template.
-		$query = "INSERT INTO company(companyName, companyEmail, companyPermit, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved, companyAccountCreatorId) VALUES(:companyName, :companyEmail, :companyPermit, :companyLicense, :companyAttn, :companyStreet1, :companyStreet2, :companyCity, :companyState, :companyZip, :companyDescription, :companyMenuText, :companyActivationToken, :companyApproved, :companyAccountCreatorId)";
+		$query = "INSERT INTO company(companyName, companyEmail, companyPhone, companyPermit, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved, companyAccountCreatorId) VALUES(:companyName, :companyEmail, :companyPermit, :companyLicense, :companyAttn, :companyStreet1, :companyStreet2, :companyCity, :companyState, :companyZip, :companyDescription, :companyMenuText, :companyActivationToken, :companyApproved, :companyAccountCreatorId)";
 
 		// Prepare is used as an extra means of security.
 		$statement = $pdo->prepare($query);
 
 		// Bind the variables to the place holder slots in the template, then put into an array.
-		$companyparameters = ["companyName" => $this->companyName, "companyEmail" => $this->companyEmail, "companyPermit" => $this->companyPermit, "companyLicense" => $this->companyLicense, "companyAttn" => $this->companyAttn, "companyStreet1" => $this->companyStreet1, "companyStreet2" => $this->companyStreet2, "companyCity" => $this->companyCity, "companyState" => $this->companyState, "companyZip" => $this->companyZip, "companyDescription" => $this->companyDescription, "companyMenuText" => $this->companyMenuText, "companyActivationToken" => $this->companyActivationToken, "companyApproved" => $this->companyApproved, "companyAccountCreatorId" => $this->companyAccountCreatorId];
+		$companyparameters = ["companyName" => $this->companyName, "companyEmail" => $this->companyEmail, "companyPhone" => $this->companyPhone, "companyPermit" => $this->companyPermit, "companyLicense" => $this->companyLicense, "companyAttn" => $this->companyAttn, "companyStreet1" => $this->companyStreet1, "companyStreet2" => $this->companyStreet2, "companyCity" => $this->companyCity, "companyState" => $this->companyState, "companyZip" => $this->companyZip, "companyDescription" => $this->companyDescription, "companyMenuText" => $this->companyMenuText, "companyActivationToken" => $this->companyActivationToken, "companyApproved" => $this->companyApproved, "companyAccountCreatorId" => $this->companyAccountCreatorId];
 
 		//execute the command held in $statement
 		$statement->execute($companyparameters);
@@ -764,13 +764,13 @@ class Company implements \JsonSerializable {
 		}
 
 		// Create a query template.
-		$query = "UPDATE company SET companyName = :companyName, companyEmail = :companyEmail, companyPermit =:companyPermit, companyLicense = :companyLicense, companyAttn = :companyAttn, companyStreet1 = :companyStreet1, companyStreet2 = :companyStreet2, companyCity = :companyCity, companyState = :companyState, companyZip = :companyZip, companyDescription = :companyDescription, companyMenuText = :companyMenuText, companyActivationToken = :companyActivationToken, companyApproved = :companyApproved, companyAccountCreatorId = :companyAccountCreatorId WHERE companyId = :companyId";
+		$query = "UPDATE company SET companyName = :companyName, companyEmail = :companyEmail, companyPhone =:companyPhone, companyPermit =:companyPermit, companyLicense = :companyLicense, companyAttn = :companyAttn, companyStreet1 = :companyStreet1, companyStreet2 = :companyStreet2, companyCity = :companyCity, companyState = :companyState, companyZip = :companyZip, companyDescription = :companyDescription, companyMenuText = :companyMenuText, companyActivationToken = :companyActivationToken, companyApproved = :companyApproved, companyAccountCreatorId = :companyAccountCreatorId WHERE companyId = :companyId";
 
 		// Prepare this query.
 		$statement = $pdo->prepare($query);
 
 		// Bind the variables to the template.
-		$companyparameters = ["companyName" => $this->companyName, "companyEmail" => $this->companyEmail, "companyPermit" => $this->companyPermit, "companyLicense" => $this->companyLicense, "companyAttn" => $this->companyAttn, "companyStreet1" => $this->companyStreet1, "companyStreet2" => $this->companyStreet2, "companyCity" => $this->companyCity, "companyState" => $this->companyState, "companyZip" => $this->companyZip, "companyDescription" => $this->companyDescription, "companyMenuText" => $this->companyMenuText, "companyActivationToken" => $this->companyActivationToken, "companyApproved" => $this->companyApproved, "companyAccountCreatorId" => $this->companyAccountCreatorId];
+		$companyparameters = ["companyName" => $this->companyName, "companyEmail" => $this->companyEmail, "companyPhone" => $this->companyPhone, "companyPermit" => $this->companyPermit, "companyLicense" => $this->companyLicense, "companyAttn" => $this->companyAttn, "companyStreet1" => $this->companyStreet1, "companyStreet2" => $this->companyStreet2, "companyCity" => $this->companyCity, "companyState" => $this->companyState, "companyZip" => $this->companyZip, "companyDescription" => $this->companyDescription, "companyMenuText" => $this->companyMenuText, "companyActivationToken" => $this->companyActivationToken, "companyApproved" => $this->companyApproved, "companyAccountCreatorId" => $this->companyAccountCreatorId];
 
 		// Execute the mySQL statement.
 		$statement->execute($companyparameters);
@@ -793,7 +793,7 @@ class Company implements \JsonSerializable {
 		}
 
 		// Create the query template.
-		$query = "SELECT companyId, companyName, companyEmail, companyPermit, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved, companyAccountCreatorId FROM company WHERE companyId = :companyId";
+		$query = "SELECT companyId, companyName, companyEmail, companyPhone, companyPermit, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved, companyAccountCreatorId FROM company WHERE companyId = :companyId";
 
 		// Prepare the template.
 		$statement = $pdo->prepare($query);
@@ -811,7 +811,7 @@ class Company implements \JsonSerializable {
 			$row = $statement->fetch();
 
 			if($row !== false) {
-				$company = new Company($row["companyId"], $row["companyName"], $row["companyEmail"], $row["companyPermit"], $row["companyLicense"], $row["companyAttn"], $row["companyStreet1"], $row["companyStreet2"], $row["companyCity"], $row["companyState"], $row["companyZip"], $row["companyDescription"], $row["companyMenuText"], $row["companyActivationToken"], $row["companyApproved"], $row["companyAccountCreatorId"]);
+				$company = new Company($row["companyId"], $row["companyName"], $row["companyEmail"], $row["companyPhone"], $row["companyPermit"], $row["companyLicense"], $row["companyAttn"], $row["companyStreet1"], $row["companyStreet2"], $row["companyCity"], $row["companyState"], $row["companyZip"], $row["companyDescription"], $row["companyMenuText"], $row["companyActivationToken"], $row["companyApproved"], $row["companyAccountCreatorId"]);
 			}
 
 			// Catch exception.
@@ -839,7 +839,7 @@ class Company implements \JsonSerializable {
 		}
 
 		// Create the query template.
-		$query = "SELECT companyId, companyName, companyEmail, companyPermit, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved, companyAccountCreatorId FROM company WHERE companyAccountCreatorId = :companyAccountCreatorId";
+		$query = "SELECT companyId, companyName, companyEmail, companyPhone, companyPermit, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved, companyAccountCreatorId FROM company WHERE companyAccountCreatorId = :companyAccountCreatorId";
 
 		// Prepare the template.
 		$statement = $pdo->prepare($query);
@@ -857,7 +857,7 @@ class Company implements \JsonSerializable {
 			$row = $statement->fetch();
 
 			if($row !== false) {
-				$company = new Company($row["companyId"], $row["companyName"], $row["companyEmail"], $row["companyPermit"], $row["companyLicense"], $row["companyAttn"], $row["companyStreet1"], $row["companyStreet2"], $row["companyCity"], $row["companyState"], $row["companyZip"], $row["companyDescription"], $row["companyMenuText"], $row["companyActivationToken"], $row["companyApproved"], $row["companyAccountCreatorId"]);
+				$company = new Company($row["companyId"], $row["companyName"], $row["companyEmail"], $row["companyPhone"], $row["companyPermit"], $row["companyLicense"], $row["companyAttn"], $row["companyStreet1"], $row["companyStreet2"], $row["companyCity"], $row["companyState"], $row["companyZip"], $row["companyDescription"], $row["companyMenuText"], $row["companyActivationToken"], $row["companyApproved"], $row["companyAccountCreatorId"]);
 			}
 
 			// Catch exception.
@@ -887,7 +887,7 @@ class Company implements \JsonSerializable {
 		}
 
 		// Create the query template.
-		$query = "SELECT companyId, companyName, companyEmail, companyPermit, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved, companyAccountCreatorId FROM company WHERE companyMenuText LIKE :companyMenuText";
+		$query = "SELECT companyId, companyName, companyEmail, companyPhone, companyPermit, companyPhone, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved, companyAccountCreatorId FROM company WHERE companyMenuText LIKE :companyMenuText";
 
 		// Prepare the template.
 		$statement = $pdo->prepare($query);
@@ -909,7 +909,7 @@ class Company implements \JsonSerializable {
 		while(($row = $statement->fetch()) !== false) {
 			try {
 				// Run the constructor method.
-				$company = new Company($row["companyId"], $row["companyName"], $row["companyEmail"], $row["companyPermit"], $row["companyLicense"], $row["companyAttn"], $row["companyStreet1"], $row["companyStreet2"], $row["companyCity"], $row["companyState"], $row["companyZip"], $row["companyDescription"], $row["companyMenuText"], $row["companyActivationToken"], $row["companyApproved"], $row["companyAccountCreatorId"]);
+				$company = new Company($row["companyId"], $row["companyName"], $row["companyEmail"], $row["companyPhone"], $row["companyPermit"], $row["companyLicense"], $row["companyAttn"], $row["companyStreet1"], $row["companyStreet2"], $row["companyCity"], $row["companyState"], $row["companyZip"], $row["companyDescription"], $row["companyMenuText"], $row["companyActivationToken"], $row["companyApproved"], $row["companyAccountCreatorId"]);
 				$companies[$companies->key()] = $company;
 				$companies->next();
 			} catch(\Exception $exception) {
@@ -931,7 +931,7 @@ class Company implements \JsonSerializable {
 	 **/
 	public static function getAllCompanys(\PDO $pdo) {
 		// create query template
-		$query = "SELECT companyId, companyName, companyEmail, companyPermit, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved, companyAccountCreatorId FROM company";
+		$query = "SELECT companyId, companyName, companyEmail, companyPhone, companyPermit, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved, companyAccountCreatorId FROM company";
 
 		$statement = $pdo->prepare($query);
 		$statement->execute();
@@ -941,7 +941,7 @@ class Company implements \JsonSerializable {
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$company = new Company($row["companyId"], $row["companyName"], $row["companyEmail"], $row["companyPermit"], $row["companyLicense"], $row["companyAttn"], $row["companyStreet1"], $row["companyStreet2"], $row["companyCity"], $row["companyState"], $row["companyZip"], $row["companyDescription"], $row["companyMenuText"], $row["companyActivationToken"], $row["companyApproved"], $row["companyAccountCreatorId"]);
+				$company = new Company($row["companyId"], $row["companyName"], $row["companyEmail"], $row["companyPhone"], $row["companyPermit"], $row["companyLicense"], $row["companyAttn"], $row["companyStreet1"], $row["companyStreet2"], $row["companyCity"], $row["companyState"], $row["companyZip"], $row["companyDescription"], $row["companyMenuText"], $row["companyActivationToken"], $row["companyApproved"], $row["companyAccountCreatorId"]);
 				$companys[$companys->key()] = $company;
 				$companys->next();
 			} catch(\Exception $exception) {
