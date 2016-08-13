@@ -36,7 +36,8 @@ class EmployTest extends CrumbTrailTest {
 		//create and insert a Company and Profile to own the test Employ
 		$this->company = new Company(null, "Terry's Tacos", "terrytacos@tacos.com", "12345" , "2345", "Terry Jane", "345 Taco Street", "Albuquerque", "NM", "87654", "We are a Taco truck description", "Tacos, Tortillas, Burritos", "5052345678", "1");
 		$this->company->insert($this->getPDO());
-		$this->profile = new Profile(null, "Loren", "lorenisthebest@gmail.com", "1505", "0000000000000000000000000000000000000000000000000000000000004444", "00000000000000000000000000000022","a", $salt, $hash );
+
+		$this->profile = new Profile(null, "Loren", "lorenisthebest@gmail.com", "5057303164", "0000000000000000000000000000000000000000000000000000000000004444", "00000000000000000000000000000022","a", $salt, $hash);
 		$this->profile->insert($this->getPDO());
 
 		$password = "abc123";

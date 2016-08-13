@@ -75,6 +75,7 @@ class Employ implements \JsonSerializable {
 	}
 
 
+
 	/**
 	 * accessor method for employCompanyId
 	 * @return int $employCompanyId
