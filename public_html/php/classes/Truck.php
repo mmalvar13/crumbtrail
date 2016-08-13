@@ -190,7 +190,7 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 	 * @param int|null $newTruckCompanyId new value of truck company Id
 	 * @throws \RangeException if $newTruckCompanyId is negative
 	 */
-	public function setTruckCompanyId(int $newTruckCompanyId = null) {
+	public function setTruckCompanyId(int $newTruckCompanyId) {
 		if($newTruckCompanyId <=0) {
 			throw (new \RangeException ("Truck Company Id is not positive"));
 		}
@@ -211,7 +211,7 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 				throw(new \PDOException("Not a new Truck"));
 			}
 			//query template
-			$query = "INSERT INTO truck(truckCompanyId) VALUES(:truckCompanyId)";
+			$query = "INSERT INTO truck(truckCompanyId) VALUE(:truckCompanyId) ";
 			$statement = $pdo->prepare($query);
 
 			$parameters = ["truckCompanyId" => $this->truckCompanyId];

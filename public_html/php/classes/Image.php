@@ -29,7 +29,7 @@ class Image implements \JsonSerializable {
 	 **/
 	private $imageCompanyId;
 	/**
-	 * this is the id that will identify what type of image the company is using. JPG, PNG etc (will add filetypes later).
+	 * this is the id that will identify what type of image the company is using. JPG, Jpeg, PNG.
 	 * @var string $imageFileType ;
 	 */
 	private $imageFileType;
