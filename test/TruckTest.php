@@ -191,3 +191,4 @@ class TruckTest extends CrumbTrailTest {
 		$this->assertEquals($pdoTruck->getCompanyId(), $this->company->getCompanyId());
 		}
 	}
+	//This is the end of the Truck unit test, trial one//
