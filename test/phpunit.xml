@@ -8,7 +8,7 @@
 			<file>EmployTest.php</file>
 			<file>EventTest.php</file>
 			<file>ImageTest.php</file>
-			<file>PointTest.php</file>
+			<!-- <file>PointTest.php</file> -->
 			<file>TruckTest.php</file>
 			</testsuite>
 	</testsuites>
