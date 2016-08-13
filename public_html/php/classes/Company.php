@@ -173,7 +173,7 @@ class Company implements \JsonSerializable {
 			$this->setCompanyCity($newCompanyCity);
 			$this->setCompanyState($newCompanyState);
 			$this->setCompanyZip($newCompanyZip);
-			$this->setCompanyDescription($newCompanyId);
+			$this->setCompanyDescription($newCompanyDescription);
 			$this->setCompanyMenuText($newCompanyMenuText);
 			$this->setCompanyActivationToken($newCompanyActivationToken);
 			$this->setCompanyApproved($newCompanyApproved);
