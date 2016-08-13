@@ -130,7 +130,7 @@ class EventTest extends CrumbTrailTest{
 	 */
 	public function testUpdateInvalidEvent(){
 		//create an Event, try to update it without actually updating it and watch it fail
-		$event = new Event(null, $this->truck->getTruckId(), $this->VALIDEVENTEND, $this->VALID_EVENTLOCATION, $this->VALID_EVENTSTART);
+		$event = new Event(null, $this->truck->getTruckId(), $this->VALID_EVENTEND, $this->VALID_EVENTLOCATION, $this->VALID_EVENTSTART);
 		$event->update($this->getPDO());
 	}
 

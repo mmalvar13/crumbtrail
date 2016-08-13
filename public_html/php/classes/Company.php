@@ -335,7 +335,7 @@ class Company implements \JsonSerializable {
 		if(strlen($newCompanyPermit) === 0) {
 			throw(new \RangeException("Company Permit is too short."));
 		}
-		if(strlen($newCompanyPermit > 128)) {
+		if(strlen($newCompanyPermit) > 128) {
 			throw(new \RangeException("Company Permit is too long."));
 		}
 		// Assign $newCompanyPermit to companyPermit, then store in SQL.
@@ -365,7 +365,7 @@ class Company implements \JsonSerializable {
 		if(strlen($newCompanyLicense) === 0) {
 			throw(new \RangeException("Company License is too short."));
 		}
-		if(strlen($newCompanyLicense > 128)) {
+		if(strlen($newCompanyLicense) > 128) {
 			throw(new \RangeException("Company License is too long."));
 		}
 		// Assign $newCompanyLicense to companyLicense, then store in SQL.
@@ -395,7 +395,7 @@ class Company implements \JsonSerializable {
 		if(strlen($newCompanyAttn) === 0) {
 			throw(new \RangeException("company Attn is too short."));
 		}
-		if(strlen($newCompanyAttn > 128)) {
+		if(strlen($newCompanyAttn) > 128) {
 			throw(new \RangeException("company Attn is too long."));
 		}
 		// Assign $newCompanyAttn to companyAttn, then store in SQL.
@@ -426,7 +426,7 @@ class Company implements \JsonSerializable {
 		if(strlen($newCompanyStreet1) === 0) {
 			throw(new \RangeException("company Street1 is too short."));
 		}
-		if(strlen($newCompanyStreet1 > 128)) {
+		if(strlen($newCompanyStreet1) > 128) {
 			throw(new \RangeException("company Street1 is too long."));
 		}
 		// Assign $newCompanyStreet1 to companyStreet1, then store in SQL.
@@ -457,7 +457,7 @@ class Company implements \JsonSerializable {
 		if(strlen($newCompanyStreet2) === 0) {
 			throw(new \RangeException("company Street2 is too short."));
 		}
-		if(strlen($newCompanyStreet2 > 128)) {
+		if(strlen($newCompanyStreet2) > 128) {
 			throw(new \RangeException("company Street2 is too long."));
 		}
 		// Assign $newCompanyStreet2 to companyStreet2, then store in SQL.
@@ -488,7 +488,7 @@ class Company implements \JsonSerializable {
 		if(strlen($newCompanyCity) === 0) {
 			throw(new \RangeException("company City is too short."));
 		}
-		if(strlen($newCompanyCity > 128)) {
+		if(strlen($newCompanyCity) > 128) {
 			throw(new \RangeException("company City is too long."));
 		}
 		// Assign $newCompanyCity to companyCity, then store in SQL.
@@ -519,7 +519,7 @@ class Company implements \JsonSerializable {
 		if(strlen($newCompanyState) === 0) {
 			throw(new \RangeException("company State is too short."));
 		}
-		if(strlen($newCompanyState > 128)) {
+		if(strlen($newCompanyState) > 128) {
 			throw(new \RangeException("company State is too long."));
 		}
 		// Assign $newCompanyState to companyState, then store in SQL.
@@ -578,7 +578,7 @@ class Company implements \JsonSerializable {
 		if(strlen($newCompanyDescription) === 0) {
 			throw(new \RangeException("company Description is too short."));
 		}
-		if(strlen($newCompanyDescription > 128)) {
+		if(strlen($newCompanyDescription) > 128) {
 			throw(new \RangeException("company Description is too long."));
 		}
 		// Assign $newCompanyDescription to companyDescription, then store in SQL.
@@ -610,7 +610,7 @@ class Company implements \JsonSerializable {
 		if(strlen($newCompanyMenuText) === 0) {
 			throw(new \RangeException("company MenuText is too short."));
 		}
-		if(strlen($newCompanyMenuText > 128)) {
+		if(strlen($newCompanyMenuText) > 128) {
 			throw(new \RangeException("company MenuText is too long."));
 		}
 		// Assign $newCompanyMenuText to companyMenuText, then store in SQL.
