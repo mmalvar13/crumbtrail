@@ -92,7 +92,68 @@ class TruckTest extends CrumbTrailTest {
 		//MAYBE???
 		$truck->setTruckCompanyId($this->company2);
 		$truck->update($this->getPDO());
+		//grab the data from mySQL and enforce the fields match our expectations
+		//NOT SURE?
+		$pdoTruck = Truck::getTruckByTruckId($this->getPDO);
+		$truck->getTruckId();
+			$this->assertEquals($numRows + 1, $this->getConnection() ->getRowCount("truck"));
+			$this->assertEquals($pdoTruck->getCompanyId(), $this->company2->getCompanyId());
+	}
+	/**
+	 * test updating an truck that does not exist
+	 *
+	 * @expectedException \PDOException
+	 **/
+	public function testUpdateInValidTruck() {
+		//create a Truck, try to update it without actually updating it, watch it fail.
+		$truck = new Truck(null, $this->company->getCompanyId());
+		$truck->update($this->getPDO());
+	}
+	/**
+	 * test creating a truck and deleting it
+	 **/
+	public function testDeleteValidTruck() {
+		//count the number of rows and save it for later
+		$numRows =$this->getConnection()->getRowCount("truck");
 
+		//create new Truck and insert it into mySQL
+		$truck = new Truck(null, $this->company->getCompanyId());
+		$truck->insert($this->getPDO());
 
-		}
+		//delete the truck from mySQL
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("truck"));
+		$this->delete($this->getPDO());
+
+		//grab the data from mySQL and enforce that the Truck does not exist/
+		$pdoTruck = Truck::getTruckByTruckId($this->getPDO(),$truck->getTruckId());
+		$this->assertNull($pdoTruck);
+		$this->assertEquals($numRows, $this->getConnection()->getRowCount("truck"));
+	}
+	/**
+	 * test deleting and Truck that does not exist
+	 *
+	 * @expectedException \PDOException
+	 **/
+	public function testDeleteInvalidTruck() {
+		//create a Truck and try to delete withoug actually inserting it
+		$truck = new Truck(null, $this->company->getCompanyId());
+		$truck->delete($this->getPDO());
+	}
+	/**
+	 * test grabbing a Truck by truck content?
+	 */
+	public function testGetValidTruckByTruckContent() {
+		//count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("truck");
+
+		//create a new Truck and insert it into mySQL
+		$truck = new Truck(null, $this->company->getCompanyId());
+		$truck->insert($this->getPDO());
+
+		//grab the data from mySQL and enforce the fields match our expectations
+		$results = Truck::getTruckByTruckId($this->getPDO()), $truck->getTruckId();
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("truck"));
+		$this->assertCount(1, $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\CrumbTrail\\Truck", $results);
+	}
 	}
