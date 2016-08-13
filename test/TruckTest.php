@@ -89,5 +89,10 @@ class TruckTest extends CrumbTrailTest {
 		$truck->insert($this->getPDO());
 
 		//edit the Truck and update it in mySQL
+		//MAYBE???
+		$truck->setTruckCompanyId($this->company2);
+		$truck->update($this->getPDO());
+
+
 		}
 	}
