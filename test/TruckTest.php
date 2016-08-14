@@ -50,7 +50,7 @@ class TruckTest extends CrumbTrailTest {
 		$this->company->insert($this->getPDO());
 
 		//create and insert a second company to buy the test truck (a truck moving to another company)
-		$this->company2 = new Company(null, null, "Truckina's Crepes", "truckina@trucks.com", "5052345666","45678", "4567", "attn: MRS Crepe", "456 Crepe Street", "CrepeStreet2","Albuquerque", "NM", "45678", "We sell crepes", "crepes, ice cream, cakes", "34343409876543212345678998787654", 1);
+		$this->company2 = new Company(null, null, "Truckina's Crepes", "truckina@trucks.com", "5052345666","45678", "4567", "attn: MRS Crepe", "456 Crepe Street", "CrepeStreet2","Albuquerque", "NM", "45678", "We sell crepes", "crepes, ice cream, cakes", "34343409876543212345678998787654", 0);
 		$this->company2->insert($this->getPDO());
 	}
 
