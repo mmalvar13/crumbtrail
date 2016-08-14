@@ -62,7 +62,7 @@ CREATE TABLE company (
 	companyDescription VARCHAR(255),
 	companyMenuText VARCHAR(255),
 	companyActivationToken CHAR(32),
-	companyApproved INT NOT NULL
+	companyApproved INT NOT NULL,
 
 
 	-- index for foreign key companyAccountCreatorId
