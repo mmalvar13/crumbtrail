@@ -786,7 +786,7 @@ class Company implements \JsonSerializable {
 		// Bind the variables to the template.
 
 		//taking "companyAccountCreatorId" => $this->companyAccountCreatorId out of array for update
-		$parameters = ["companyAccountCreatorId" => $this->companyAccountCreatorId, "companyName" => $this->companyName, "companyEmail" => $this->companyEmail, "companyPhone" => $this->companyPhone, "companyPermit" => $this->companyPermit, "companyLicense" => $this->companyLicense, "companyAttn" => $this->companyAttn, "companyStreet1" => $this->companyStreet1, "companyStreet2" => $this->companyStreet2, "companyCity" => $this->companyCity, "companyState" => $this->companyState, "companyZip" => $this->companyZip, "companyDescription" => $this->companyDescription, "companyMenuText" => $this->companyMenuText, "companyActivationToken" => $this->companyActivationToken, "companyApproved" => $this->companyApproved];
+		$parameters = ["companyAccountCreatorId" => $this->companyAccountCreatorId, "companyName" => $this->companyName, "companyEmail" => $this->companyEmail, "companyPhone" => $this->companyPhone, "companyPermit" => $this->companyPermit, "companyLicense" => $this->companyLicense, "companyAttn" => $this->companyAttn, "companyStreet1" => $this->companyStreet1, "companyStreet2" => $this->companyStreet2, "companyCity" => $this->companyCity, "companyState" => $this->companyState, "companyZip" => $this->companyZip, "companyDescription" => $this->companyDescription, "companyMenuText" => $this->companyMenuText, "companyActivationToken" => $this->companyActivationToken, "companyApproved" => $this->companyApproved, "companyId" => $this->companyId];
 
 		// Execute the mySQL statement.
 		$statement->execute($parameters);
