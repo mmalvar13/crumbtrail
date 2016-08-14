@@ -44,21 +44,21 @@ abstract class CrumbTrailTest extends \PHPUnit_Extensions_Database_TestCase {
 
 		// add all the tables for the project here
 		// THESE TABLES *MUST* BE LISTED IN THE SAME ORDER THEY WERE CREATED!!!!
-//		$dataset->addTable("profile");
-//		$dataset->addTable("company");
-//		$dataset->addTable("image");
-//		$dataset->addTable("truck");
-//		$dataset->addTable("event");
-//		$dataset->addTable("employ");
+		$dataset->addTable("profile");
+		$dataset->addTable("company");
+		$dataset->addTable("image");
+		$dataset->addTable("truck");
+		$dataset->addTable("event");
+		$dataset->addTable("employ");
 
 
 		//configuration order that is how SQL creates the tables
-		$dataset->addTable("company");
-		$dataset->addTable("employ");
-		$dataset->addTable("event");
-		$dataset->addTable("image");
-		$dataset->addTable("profile");
-		$dataset->addTable("truck");
+//		$dataset->addTable("company");
+//		$dataset->addTable("employ");
+//		$dataset->addTable("event");
+//		$dataset->addTable("image");
+//		$dataset->addTable("profile");
+//		$dataset->addTable("truck");
 
 		return($dataset);
 	}
