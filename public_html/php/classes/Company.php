@@ -930,6 +930,7 @@ class Company implements \JsonSerializable {
 			try{
 				$company = new Company($row["companyId"], $row["companyAccountCreatorId"], $row["companyName"], $row["companyEmail"], $row["companyPhone"], $row["companyPermit"], $row["companyLicense"], $row["companyAttn"], $row["companyStreet1"], $row["companyStreet2"], $row["companyCity"], $row["companyState"], $row["companyZip"], $row["companyDescription"], $row["companyMenuText"], $row["companyActivationToken"], $row["companyApproved"]);
 
+				// TODO Check this block !!!
 				//What exactly is happening here ****
 				$companies[$companies->key()] = $company;
 				$companies->next();
