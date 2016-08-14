@@ -30,12 +30,12 @@ class CompanyTest extends CrumbTrailTest {
 	 * name of the Company
 	 * @var string $VALID_COMPANYNAME
 	 **/
-	protected $VALID_COMPANYNAME = "Bob's hamburgers";
+	protected $VALID_COMPANYNAME = "Good hamburgers";
 	/**
 	 * name of the updated Company
 	 * @var string $VALID_COMPANYNAME2
 	 **/
-	protected $VALID_COMPANYNAME2 = "Joe's tacos";
+	protected $VALID_COMPANYNAME2 = "Better tacos";
 
 	/**
 	 * email of the Company
