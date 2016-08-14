@@ -217,7 +217,7 @@ class CompanyTest extends CrumbTrailTest {
 		$hash = hash_pbkdf2("sha512", $password, $salt, 262144);
 
 		// Put dummy values into the Profile attributes.
-		$this->profile = new Profile(null, "Bob Smith", "test@phpunit.de", "+12125551212", "0000000000000000000000000000000000000000000000000000000000004444", "00000000000000000000000000000022", "O", $salt, $hash); 										// TODO  Are these salt and hash variables OK?
+		$this->profile = new Profile(null, "Bob Smith", "test@phpunit.de", "12125551212", "0000000000000000000000000000000000000000000000000000000000004444", "00000000000000000000000000000022", "o", $salt, $hash); 										// TODO  Are these salt and hash variables OK?
 		// Insert the dummy profile object into the database.
 		$this->profile->insert($this->getPDO());
 	}
