@@ -243,23 +243,23 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 			$statement->execute($parameters);
 		}
 
-	/**
-	 * updates the truck in mySQL
-	 * @param \PDO $pdo PDO connection object
-	 * @throws |PDOException when mySQL related errors occur
-	 * @throws \TypeError if $pdo is not a PDO connection object
-	 */
-		public function update(\PDO $pdo) {
-			//don't update an image that has already been inserted
-			if($this->truckId === null) {
-				throw(new \PDOException("unable to update a truck that does not exist "));
-			}
-			$query = "UPDATE truck SET truckCompanyId = :truckCompanyId WHERE truckId = :truckId";
-			$statement = $pdo->prepare($query);
-
-			$parameters = ["truckCompanyId" => $this->truckCompanyId];
-			$statement->execute($parameters);
-		}
+//	/**
+//	 * updates the truck in mySQL
+//	 * @param \PDO $pdo PDO connection object
+//	 * @throws |PDOException when mySQL related errors occur
+//	 * @throws \TypeError if $pdo is not a PDO connection object
+//	 */
+//		public function update(\PDO $pdo) {
+//			//don't update an image that has already been inserted
+//			if($this->truckId === null) {
+//				throw(new \PDOException("unable to update a truck that does not exist "));
+//			}
+//			$query = "UPDATE truck SET truckCompanyId = :truckCompanyId WHERE truckId = :truckId";
+//			$statement = $pdo->prepare($query);
+//
+//			$parameters = ["truckCompanyId" => $this->truckCompanyId];
+//			$statement->execute($parameters);
+//		}
 
 	/**
 	 *formats the state variables for JSON serialization
