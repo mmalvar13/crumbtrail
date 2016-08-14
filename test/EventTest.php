@@ -241,7 +241,7 @@ class EventTest extends CrumbTrailTest{
 		$event->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields match our expectations
-		$results = Event::getEventbyEventLocation($this->getPDO(),$event->getEventLocation());
+		$results = Event::getEventByEventLocation($this->getPDO(),$event->getEventLocation());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("event"));
 		$this->assertCount(1, $results);
 		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\CrumbTrail\\Event", $results);
@@ -249,9 +249,9 @@ class EventTest extends CrumbTrailTest{
 		//grab the result from the array and validate it
 		$pdoEvent = $results[0];
 		$this->assertEquals($pdoEvent->getTruckId(), $this->truck->getTruckId());
-		$this->assertEquals($pdoEvent->getEventEnd, $this->VALID_EVENTEND);
-		$this->assertEquals($pdoEvent->getEventLocation, $this->VALID_EVENTLOCATION);
-		$this->assertEquals($pdoEvent->getEventStart, $this->VALID_EVENTSTART);
+		$this->assertEquals($pdoEvent->getEventEnd(), $this->VALID_EVENTEND);
+		$this->assertEquals($pdoEvent->getEventLocation(), $this->VALID_EVENTLOCATION);
+		$this->assertEquals($pdoEvent->getEventStart(), $this->VALID_EVENTSTART);
 	}
 
 	/**
@@ -259,7 +259,7 @@ class EventTest extends CrumbTrailTest{
 	 **/
 	public function testGetInvalidEventByEventLocation(){
 		//grab an event by searching for event location that does not exist
-		$event = Event:: getEventbyEventLocation($this->getPDO(), "you can't sit with us!!");
+		$event = Event:: getEventByEventLocation($this->getPDO(), "you can't sit with us!!");
 		$this->assertCount(0, $event);
 	}
 
@@ -275,7 +275,7 @@ class EventTest extends CrumbTrailTest{
 		$event->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields match our expectations
-		$results = Event::getEventbyEventIdAndEventTruckId($this->getPDO(), $event->getEventId(), $event->getEventTruckId()); //is this right? i put both event id and event truck id here.
+		$results = Event::getEventByEventIdAndEventTruckId($this->getPDO(), $event->getEventId(), $event->getEventTruckId()); //is this right? i put both event id and event truck id here.
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("event"));
 		$this->assertCount(1, $results);
 		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\CrumbTrail\\Event", $results);
@@ -308,7 +308,7 @@ class EventTest extends CrumbTrailTest{
 		$event->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields match our expectations
-		$results = Event::getEventbyEventEndandEventStart($this->getPDO(), $event->getEventEnd(), $event->getEventStart());
+		$results = Event::getEventByEventEndAndEventStart($this->getPDO(), $event->getEventEnd(), $event->getEventStart());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("event"));
 		$this->assertCount(1, $results);
 		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\CrumbTrail\\Event", $results);
@@ -326,7 +326,7 @@ class EventTest extends CrumbTrailTest{
 	 **/
 	public function testGetInvalidEventByEventEndAndEventStart(){
 		//grab an event by searching for eventStart and eventEnd that do not exist
-		$event = Event::getEventbyEventEndandEventStart($this->getPDO(), "wagging finger"); //get an error that says missing $eventStart.
+		$event = Event::getEventByEventEndAndEventStart($this->getPDO(), "wagging finger"); //get an error that says missing $eventStart.
 		$this->assertCount(0, $event);
 	}
 
