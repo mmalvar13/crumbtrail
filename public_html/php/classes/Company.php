@@ -144,6 +144,7 @@ class Company implements \JsonSerializable {
 	 * @throws \Exception if some other exception occurs.
 	 */
 	public function __construct(int $newCompanyId = null,
+										int $newCompanyAccountCreatorId,
 										 string $newCompanyName,
 										 string $newCompanyEmail,
 										 string $newCompanyPhone,
@@ -158,10 +159,11 @@ class Company implements \JsonSerializable {
 										 string $newCompanyDescription,
 										 string $newCompanyMenuText,
 										 string $newCompanyActivationToken,
-										 int $newCompanyApproved,
-										 int $newCompanyAccountCreatorId) {
+										 int $newCompanyApproved
+										 ) {
 		try {
 			$this->setCompanyId($newCompanyId);
+			$this->setCompanyAccountCreatorId($newCompanyAccountCreatorId);
 			$this->setCompanyName($newCompanyName);
 			$this->setCompanyEmail($newCompanyEmail);
 			$this->setCompanyPhone($newCompanyPhone);
@@ -177,7 +179,7 @@ class Company implements \JsonSerializable {
 			$this->setCompanyMenuText($newCompanyMenuText);
 			$this->setCompanyActivationToken($newCompanyActivationToken);
 			$this->setCompanyApproved($newCompanyApproved);
-			$this->setCompanyAccountCreatorId($newCompanyAccountCreatorId);
+
 		} catch(\InvalidArgumentException $invalidArgument) {
 			// rethrow the exception to the caller
 			throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
