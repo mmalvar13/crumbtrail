@@ -775,7 +775,9 @@ class Company implements \JsonSerializable {
 		$statement = $pdo->prepare($query);
 
 		// Bind the variables to the template.
-		$parameters = ["companyAccountCreatorId" => $this->companyAccountCreatorId, "companyName" => $this->companyName, "companyEmail" => $this->companyEmail, "companyPhone" => $this->companyPhone, "companyPermit" => $this->companyPermit, "companyLicense" => $this->companyLicense, "companyAttn" => $this->companyAttn, "companyStreet1" => $this->companyStreet1, "companyStreet2" => $this->companyStreet2, "companyCity" => $this->companyCity, "companyState" => $this->companyState, "companyZip" => $this->companyZip, "companyDescription" => $this->companyDescription, "companyMenuText" => $this->companyMenuText, "companyActivationToken" => $this->companyActivationToken, "companyApproved" => $this->companyApproved];
+
+		//taking "companyAccountCreatorId" => $this->companyAccountCreatorId out of array for update
+		$parameters = ["companyName" => $this->companyName, "companyEmail" => $this->companyEmail, "companyPhone" => $this->companyPhone, "companyPermit" => $this->companyPermit, "companyLicense" => $this->companyLicense, "companyAttn" => $this->companyAttn, "companyStreet1" => $this->companyStreet1, "companyStreet2" => $this->companyStreet2, "companyCity" => $this->companyCity, "companyState" => $this->companyState, "companyZip" => $this->companyZip, "companyDescription" => $this->companyDescription, "companyMenuText" => $this->companyMenuText, "companyActivationToken" => $this->companyActivationToken, "companyApproved" => $this->companyApproved];
 
 		// Execute the mySQL statement.
 		$statement->execute($parameters);

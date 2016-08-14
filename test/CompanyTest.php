@@ -241,6 +241,7 @@ class CompanyTest extends CrumbTrailTest {
 		$pdoCompany = Company::getCompanyByCompanyId($this->getPDO(), $company->getCompanyId());
 
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("company"));
+
 		$this->assertEquals($pdoCompany->getCompanyAccountCreatorId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoCompany->getCompanyName(), $this->VALID_COMPANYNAME);
 		$this->assertEquals($pdoCompany->getCompanyEmail(), $this->VALID_COMPANYEMAIL);
