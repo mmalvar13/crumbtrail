@@ -214,9 +214,9 @@ class EventTest extends CrumbTrailTest{
 		//grab the result from the array and validate it
 		$pdoEvent = $results[0];
 		$this->assertEquals($pdoEvent->getTruckId(), $this->truck->getTruckId());
-		$this->assertEquals($pdoEvent->getEventEnd, $this->VALID_EVENTEND);
-		$this->assertEquals($pdoEvent->getEventLocation, $this->VALID_EVENTLOCATION);
-		$this->assertEquals($pdoEvent->getEventStart, $this->VALID_EVENTSTART);
+		$this->assertEquals($pdoEvent->getEventEnd(), $this->VALID_EVENTEND);
+		$this->assertEquals($pdoEvent->getEventLocation(), $this->VALID_EVENTLOCATION);
+		$this->assertEquals($pdoEvent->getEventStart(), $this->VALID_EVENTSTART);
 	}
 
 	/**

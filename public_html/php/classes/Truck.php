@@ -212,7 +212,7 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 				throw(new \PDOException("Not a new Truck"));
 			}
 			//query template
-			$query = "INSERT INTO truck(truckCompanyId) VALUES(:truckCompanyId) ";
+			$query = "INSERT INTO truck(truckCompanyId) VALUES(:truckCompanyId)";
 			$statement = $pdo->prepare($query);
 
 			$parameters = ["truckCompanyId" => $this->truckCompanyId];

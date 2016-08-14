@@ -5,8 +5,8 @@
 		<testsuite name="CrumbTrailTest">
 			<!--<file>ProfileTest.php</file>-->
 			<!--<file>CompanyTest.php</file>-->
-			<file>EmployTest.php</file>
-			<!--<file>EventTest.php</file>-->
+			<!--<file>EmployTest.php</file>-->
+			<file>EventTest.php</file>
 			<!--<file>ImageTest.php</file>-->
 			<!--<file>PointTest.php</file>-->
 			<!--<file>TruckTest.php</file>-->

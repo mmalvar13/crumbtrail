@@ -291,7 +291,7 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 	 * @throws \TypeError when variables are not the correct data type
 	 */
 
-	public static function getEventbyEventId(\PDO $pdo, int $eventId) {
+	public static function getEventByEventId(\PDO $pdo, int $eventId) {
 		//sanitize the eventId before searching by checking that it is a positive number
 		if($eventId <= 0) {
 			throw(new \PDOException("eventId is not positive"));
@@ -330,7 +330,7 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 	 * @throws \TypeError when variables are not the correct data type
 	 * @throws \RangeException when out of range //do i need to add this here? the example didn't.
 	 **/
-	public static function getEventbyEventTruckId(\PDO $pdo, int $eventTruckId) {
+	public static function getEventByEventTruckId(\PDO $pdo, int $eventTruckId) {
 		//sanitize the truck id before searching by making sure it is positive
 		if($eventTruckId <= 0) {
 			throw(new \RangeException("event truck id must be positive"));
@@ -367,7 +367,7 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
-	public static function getEventbyEventLocation(\PDO $pdo, float $eventLocation) {
+	public static function getEventByEventLocation(\PDO $pdo, float $eventLocation) {
 		if($eventLocation < [-90, -180] || $eventLocation > [90, 180]) { //is this how i write the coordinates??
 			throw(new \RangeException("this coordinate is not within the allowed range"));
 		}
@@ -404,7 +404,7 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when values are not the correct data type
 	 **/
-	public static function getEventbyEventIdandEventTruckId(\PDO $pdo, int $eventId, int $eventTruckId) {
+	public static function getEventByEventIdAndEventTruckId(\PDO $pdo, int $eventId, int $eventTruckId) {
 		//sanitize the ids before searching by checking that they are positive
 		if($eventId <= 0 || $eventTruckId <= 0) {
 			throw(new \RangeException("eventId and eventTruckId must be positive"));
@@ -444,7 +444,7 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 	 *@throws \InvalidArgumentException
 	 *@throws \TypeError when values are not the correct data type
 	 */
-	public static function getEventbyEventEndandEventStart(\PDO $pdo, \DateTime $eventEnd, \DateTime $eventStart) {
+	public static function getEventByEventEndAndEventStart(\PDO $pdo, \DateTime $eventEnd, \DateTime $eventStart) {
 
 		$query = "SELECT eventId, eventTruckId, eventEnd, eventLocation, eventStart FROM event WHERE eventStart <= NOW() AND eventEnd >= NOW()";
 
