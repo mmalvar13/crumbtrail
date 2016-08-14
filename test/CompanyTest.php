@@ -11,7 +11,7 @@ require_once(dirname(__DIR__) . "/public_html/php/classes/autoload.php");
 
 
 /**
- * Full PHPUnit test for the Company class
+ * Full PHPUnit test for the Company Class
  *
  * This is a complete PHPUnit test of the Company class.
  * It is complete because *ALL* mySQL/PDO enabled methods
@@ -240,31 +240,31 @@ class CompanyTest extends CrumbTrailTest {
 		// Grab the data from mySQL and enforce the fields match our expectations
 		$pdoCompany = Company::getCompanyByCompanyId($this->getPDO(), $company->getCompanyId());
 
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("company"));
-
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("$company"));
 		$this->assertEquals($pdoCompany->getProfileId(), $this->profile->getProfileId());
-		$this->assertEquals($pdoCompany->getCompanyName(), $this->company->getCompanyName());
-		$this->assertEquals($pdoCompany->getCompanyEmail(), $this->company->getCompanyEmail());
-		$this->assertEquals($pdoCompany->getCompanyPhone(), $this->company->getCompanyPhone());
-		$this->assertEquals($pdoCompany->getCompanyPermit(), $this->company->getCompanyPermit());
-		$this->assertEquals($pdoCompany->getCompanyLicense(), $this->company->getCompanyLicense());
-		$this->assertEquals($pdoCompany->getCompanyAttn(), $this->company->getCompanyAttn());
-		$this->assertEquals($pdoCompany->getCompanyStreet1(), $this->company->getCompanyStreet1());
-		$this->assertEquals($pdoCompany->getCompanyStreet2(), $this->company->getCompanyStreet2());
-		$this->assertEquals($pdoCompany->getCompanyCity(), $this->company->getCompanyCity());
-		$this->assertEquals($pdoCompany->getCompanyState(), $this->company->getCompanyState());
-		$this->assertEquals($pdoCompany->getCompanyZip(), $this->company->getCompanyZip());
-		$this->assertEquals($pdoCompany->getCompanyDescription(), $this->company->getCompanyDescription());
-		$this->assertEquals($pdoCompany->getCompanyMenuText(), $this->company->getCompanyMenuText());
-		$this->assertEquals($pdoCompany->getCompanyActivationToken(), $this->company->getCompanyActivationToken());
-		$this->assertEquals($pdoCompany->getCompanyApproved(), $this->company->getCompanyApproved());
+		$this->assertEquals($pdoCompany->getCompanyName(), $this->VALID_COMPANYNAME2);
+		$this->assertEquals($pdoCompany->getCompanyEmail(), $this->VALID_COMPANYEMAIL2());
+		$this->assertEquals($pdoCompany->getCompanyPhone(), $this->VALID_COMPANYPHONE2());
+		$this->assertEquals($pdoCompany->getCompanyPermit(), $this->VALID_COMPANYPERMIT2());
+		$this->assertEquals($pdoCompany->getCompanyLicense(), $this->VALID_COMPANYLICENSE2());
+		$this->assertEquals($pdoCompany->getCompanyAttn(), $this->VALID_COMPANYATTN2());
+		$this->assertEquals($pdoCompany->getCompanyStreet1(), $this->VALID_COMPANYSTREET12());
+		$this->assertEquals($pdoCompany->getCompanyStreet2(), $this->VALID_COMPANYSTREET22());
+		$this->assertEquals($pdoCompany->getCompanyCity(), $this->VALID_COMPANYCITY2());
+		$this->assertEquals($pdoCompany->getCompanyState(), $this->VALID_COMPANYSTATE2());
+		$this->assertEquals($pdoCompany->getCompanyZip(), $this->VALID_COMPANYZIP2());
+		$this->assertEquals($pdoCompany->getCompanyDescription(), $this->VALID_COMPANYDESCRIPTION2());
+		$this->assertEquals($pdoCompany->getCompanyMenuText(), $this->VALID_COMPANYMENUTEXT2());
+		$this->assertEquals($pdoCompany->getCompanyActivationToken(), $this->VALID_COMPANYACTIVATIONTOKEN2());
+		$this->assertEquals($pdoCompany->getCompanyApproved(), $this->VALID_COMPANYAPPROVED2());
 	}
+
 
 	/**
 	 * Test inserting a Company that already exists.
 	 * Create a Company with a non-null company id and watch it fail.
 	 * The INVALID_KEY is too large to be a valid mySQL id.
-	 * @expectedException PDOException
+	 * @expectedException \PDOException
 	 **/
 	public function testInsertInvalidCompany() {
 		$company = new Company(CrumbTrailTest::INVALID_KEY, $this->profile->getProfileId(), $this->VALID_COMPANYNAME, $this->VALID_COMPANYEMAIL, $this->VALID_COMPANYPHONE, $this->VALID_COMPANYPERMIT, $this->VALID_COMPANYLICENSE, $this->VALID_COMPANYATTN, $this->VALID_COMPANYSTREET1, $this->VALID_COMPANYSTREET2, $this->VALID_COMPANYCITY, $this->VALID_COMPANYSTATE, $this->VALID_COMPANYZIP, $this->VALID_COMPANYDESCRIPTION, $this->VALID_COMPANYMENUTEXT, $this->VALID_COMPANYACTIVATIONTOKEN, $this->VALID_COMPANYAPPROVED);
