@@ -725,7 +725,7 @@ class Company implements \JsonSerializable {
 		}
 
 		// Create a query template.
-		$query = "INSERT INTO company(companyAccountCreatorId, companyName, companyEmail, companyPhone, companyPermit, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved, ) VALUES(:companyAccountCreatorId, :companyName, :companyEmail, :companyPhone, :companyPermit, :companyLicense, :companyAttn, :companyStreet1, :companyStreet2, :companyCity, :companyState, :companyZip, :companyDescription, :companyMenuText, :companyActivationToken, :companyApproved,)";
+		$query = "INSERT INTO company(companyAccountCreatorId, companyName, companyEmail, companyPhone, companyPermit, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved) VALUES(:companyAccountCreatorId, :companyName, :companyEmail, :companyPhone, :companyPermit, :companyLicense, :companyAttn, :companyStreet1, :companyStreet2, :companyCity, :companyState, :companyZip, :companyDescription, :companyMenuText, :companyActivationToken, :companyApproved)";
 
 		// Prepare is used as an extra means of security.
 		$statement = $pdo->prepare($query);
