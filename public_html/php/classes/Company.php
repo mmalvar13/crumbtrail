@@ -155,7 +155,7 @@ class Company implements \JsonSerializable {
 										 string $newCompanyStreet2,
 										 string $newCompanyCity,
 										 string $newCompanyState,
-										 int $newCompanyZip,
+										 string $newCompanyZip,
 										 string $newCompanyDescription,
 										 string $newCompanyMenuText,
 										 string $newCompanyActivationToken,
@@ -306,7 +306,7 @@ class Company implements \JsonSerializable {
 		if(strlen($newCompanyPhone) === 0) {
 			throw(new \RangeException("Company Phone is too short."));
 		}
-		if(strlen($newCompanyPhone) > 128) {
+		if(strlen($newCompanyPhone) > 32) {
 			throw(new \RangeException("Company Phone is too long."));
 		}
 		// Assign $newCompanyPhone to companyPhone, then store in SQL.
@@ -337,7 +337,8 @@ class Company implements \JsonSerializable {
 		if(strlen($newCompanyPermit) === 0) {
 			throw(new \RangeException("Company Permit is too short."));
 		}
-		if(strlen($newCompanyPermit) > 128) {
+		//should be 32 not 128
+		if(strlen($newCompanyPermit) > 32) {
 			throw(new \RangeException("Company Permit is too long."));
 		}
 		// Assign $newCompanyPermit to companyPermit, then store in SQL.
@@ -367,7 +368,8 @@ class Company implements \JsonSerializable {
 		if(strlen($newCompanyLicense) === 0) {
 			throw(new \RangeException("Company License is too short."));
 		}
-		if(strlen($newCompanyLicense) > 128) {
+
+		if(strlen($newCompanyLicense) > 32) {
 			throw(new \RangeException("Company License is too long."));
 		}
 		// Assign $newCompanyLicense to companyLicense, then store in SQL.
@@ -455,7 +457,7 @@ class Company implements \JsonSerializable {
 		$newCompanyStreet2 = trim($newCompanyStreet2);
 		// Sanitize $newCompanyStreet2.
 		$newCompanyStreet2 = filter_var($newCompanyStreet2, FILTER_SANITIZE_STRING);
-		// If $newcompanyPermit is empty or too long, then throw an exception.
+		// If $newCompanyStreet2 is empty or too long, then throw an exception.
 		if(strlen($newCompanyStreet2) === 0) {
 			throw(new \RangeException("company Street2 is too short."));
 		}
@@ -486,7 +488,7 @@ class Company implements \JsonSerializable {
 		$newCompanyCity = trim($newCompanyCity);
 		// Sanitize $newCompanyCity.
 		$newCompanyCity = filter_var($newCompanyCity, FILTER_SANITIZE_STRING);
-		// If $newCompanyPermit is empty or too long, then throw an exception.
+		// If $newCompanyCity is empty or too long, then throw an exception.
 		if(strlen($newCompanyCity) === 0) {
 			throw(new \RangeException("company City is too short."));
 		}
@@ -517,7 +519,7 @@ class Company implements \JsonSerializable {
 		$newCompanyState = trim($newCompanyState);
 		// Sanitize $newCompanyState.
 		$newCompanyState = filter_var($newCompanyState, FILTER_SANITIZE_STRING);
-		// If $newCompanyPermit is empty or too long, then throw an exception.
+		// If $newCompanyState is empty or too long, then throw an exception.
 		if(strlen($newCompanyState) === 0) {
 			throw(new \RangeException("company State is too short."));
 		}
@@ -536,23 +538,35 @@ class Company implements \JsonSerializable {
 		return ($this->companyZip);
 	}
 
+
+
 	/**
-	 * Mutator method (setter) for companyZip.
-	 * @param int|null $newCompanyZip The new value of companyZip.
-	 * @throws \RangeException  if $newCompanyZip is not a positive.
-	 * @throws \TypeError if $newCompanyZip is not an integer.
-	 **/
-	public function setCompanyZip($newCompanyZip = null) {
-		// Base case, for a new company.
-		if($newCompanyZip === null) {
-			$this->companyZip = null;
-			return;
+	 * Mutator method for companyZip.
+	 * @param string , $newCompanyZip  The new value of companyZip.
+	 * @throw \RangeException if $newCompanyZip is empty or too long
+	 * @throw \InvalidArgumentException if $newCompanyZip is not a string
+	 * @throw \TypeError if $newCompanyZip is not a string
+	 * @author LB
+	 */
+	public function setCompanyZip(string $newCompanyZip) {
+		// Strip out the white space on either end of the string.
+		$newCompanyZip = trim($newCompanyZip);
+		// Sanitize $newCompanyState.
+		$newCompanyZip = filter_var($newCompanyZip, FILTER_SANITIZE_STRING);
+		// If $newCompanyState is empty or too long, then throw an exception.
+
+		//turn zip into an INT to ensure its positive and not 0's
+		$zipInt = (int)$newCompanyZip;
+		if($zipInt <= 0){
+			throw(new \RangeException("The zip code must be positive"));
 		}
-		// Is $newCompanyZip positive?  If not, then throw an exception.
-		if($newCompanyZip <= 0) {
-			throw(new \RangeException("The company Zip is not positive."));
+		if(strlen($newCompanyZip) < 5) {
+			throw(new \RangeException("company zip is too short."));
 		}
-		// Assign $newCompanyZip to companyZip, then store in SQL.
+		if(strlen($newCompanyZip) > 10) {
+			throw(new \RangeException("company zip is too long."));
+		}
+		// Assign $newCompanyState to companyState, then store in SQL.
 		$this->companyZip = $newCompanyZip;
 	}
 

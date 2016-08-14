@@ -56,7 +56,7 @@ CREATE TABLE company (
 	companyStreet2 VARCHAR(128),
 	companyCity VARCHAR(128) NOT NULL,
 	companyState CHAR(2) NOT NULL,
-	companyZip INT UNSIGNED NOT NULL,
+	companyZip VARCHAR(10) NOT NULL,,
 	companyDescription VARCHAR(255),
 	companyMenuText TEXT,
 	companyActivationToken CHAR(32),

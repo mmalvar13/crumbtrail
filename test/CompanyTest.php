@@ -140,12 +140,12 @@ class CompanyTest extends CrumbTrailTest {
 	 * zip of the Company
 	 * @var int $VALID_COMPANYZIP
 	 **/
-	protected $VALID_COMPANYZIP = 97405;
+	protected $VALID_COMPANYZIP = "97405";
 	/**
 	 * zip of the updated Company
 	 * @var int $VALID_COMPANYZIP2
 	 **/
-	protected $VALID_COMPANYZIP2 = 87048;
+	protected $VALID_COMPANYZIP2 = "87048";
 
 	/**
 	 * description of the Company
