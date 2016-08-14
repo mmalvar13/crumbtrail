@@ -110,7 +110,7 @@ class TruckTest extends CrumbTrailTest {
 	 *
 	 * @expectedException \PDOException
 	 **/
-	public function testUpdateInValidTruck() {
+	public function testUpdateInvalidTruck() {
 		//create a Truck, try to update it without actually updating it, watch it fail.
 		$truck = new Truck(null, $this->company->getCompanyId());
 		$truck->update($this->getPDO());
@@ -169,6 +169,7 @@ class TruckTest extends CrumbTrailTest {
 	}
 	/**
 	 * test grabbing a Truck by content that does not exist
+	 * @expectedException \PDOException
 	 **/
 	public function testGetInvalidTruckByTruckContent() {
 		//grab an image by searching for content that does not exist?
