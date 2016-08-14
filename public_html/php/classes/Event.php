@@ -276,7 +276,7 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 		//bind the member variables to the place holders in the template
 //		$formattedDate = $this->eventId->format("Y-m-d H:i:s"); do I add this like this?
 
-		$parameters = ["eventTruckid" => $this->eventTruckId, "eventEnd" => $this->eventEnd, "eventLocation" => $this->eventLocation, "eventStart" => $this->eventStart, "eventId" => $this->eventId]; //do i assign start/end to formatted date?? do i add eventId here?
+		$parameters = ["eventTruckId" => $this->eventTruckId, "eventEnd" => $this->eventEnd, "eventLocation" => $this->eventLocation, "eventStart" => $this->eventStart, "eventId" => $this->eventId]; //do i assign start/end to formatted date?? do i add eventId here?
 
 		$statement->execute($parameters);
 	}
