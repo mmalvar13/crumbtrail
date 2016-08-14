@@ -423,7 +423,7 @@ class CompanyTest extends CrumbTrailTest {
 	}
 
 	/**
-	 * Test getting all Companys (sp).  All of them!
+	 * Test getting all Companies (sp).  All of them!
 	 **/
 	public function testGetAllValidCompany() {
 		// Count the number of rows and save it for later.
@@ -435,7 +435,7 @@ class CompanyTest extends CrumbTrailTest {
 		$company->insert($this->getPDO());
 
 		// Get the data from mySQL, and check that fields match our expectations.
-		// Note that (here) plural Company = Companys (sp)
+		// Note that (here) plural Company = Companies (sp)
 		$results = Company::getAllCompanys($this->getPDO());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("company"));
 		$this->assertCount(1, $results);
@@ -445,7 +445,7 @@ class CompanyTest extends CrumbTrailTest {
 		// Get the result from the array, and validate it.
 		$pdoCompany = $results[0];
 		$this->assertEquals($pdoCompany->getProfileId(), $this->profile->getProfileId());
-		$this->assertEquals($pdoCompany->getCompanyName(), $this->VALID_COMPANYNAME2);
+		$this->assertEquals($pdoCompany->getCompanyName(), $this->VALID_COMPANYNAME);
 		$this->assertEquals($pdoCompany->getCompanyEmail(), $this->VALID_COMPANYEMAIL);
 		$this->assertEquals($pdoCompany->getCompanyPhone(), $this->VALID_COMPANYPHONE);
 		$this->assertEquals($pdoCompany->getCompanyPermit(), $this->VALID_COMPANYPERMIT);
