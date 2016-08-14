@@ -210,7 +210,7 @@ class CompanyTest extends CrumbTrailTest {
 		// run the default setUp() method first
 		parent::setUp();
 
-		// Create and insert a Profile to own the test Company.
+		// Create and insert a profile to own the test Company.
 		// Generate dummy salt and hash values.
 		$password = "abc123";
 		$salt = bin2hex(random_bytes(16));
