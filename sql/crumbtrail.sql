@@ -46,6 +46,8 @@ CREATE TABLE profile (
 
 CREATE TABLE company (
 	companyId INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	-- companyAccountCreatorId is a foreign key from profile
+	companyAccountCreatorId INT UNSIGNED NOT NULL,
 	companyName VARCHAR(128) NOT NULL,
 	companyEmail VARCHAR(128) NOT NULL,
 	companyPhone VARCHAR(32) NOT NULL,
@@ -62,8 +64,7 @@ CREATE TABLE company (
 	companyActivationToken CHAR(32),
 	companyApproved BOOL NOT NULL,
 
-	-- companyAccountCreatorId is a foreign key from profile
-	companyAccountCreatorId INT UNSIGNED NOT NULL,
+
 	-- index for foreign key companyAccountCreatorId
 	INDEX (companyAccountCreatorId),
 	-- declare foreign key for companyAccountCreatorId, reference profileId
@@ -74,6 +75,18 @@ CREATE TABLE company (
 	UNIQUE(companyLicense),
 	PRIMARY KEY(companyId)
 );
+
+
+CREATE TABLE employ(
+	employCompanyId INT UNSIGNED NOT NULL,
+	employProfileId INT UNSIGNED NOT NULL,
+	INDEX(employCompanyId),
+	INDEX(employProfileId),
+	FOREIGN KEY(employCompanyId) REFERENCES company(companyId),
+	FOREIGN KEY(employProfileId) REFERENCES profile(profileId),
+	PRIMARY KEY(employCompanyId, employProfileId)
+);
+
 
 CREATE TABLE image (
 	imageId        INT UNSIGNED AUTO_INCREMENT NOT NULL,
@@ -106,12 +119,3 @@ CREATE TABLE event(
 	PRIMARY KEY(eventId)
 );
 
-CREATE TABLE employ(
-	employCompanyId INT UNSIGNED NOT NULL,
-	employProfileId INT UNSIGNED NOT NULL,
-	INDEX(employCompanyId),
-	INDEX(employProfileId),
-	FOREIGN KEY(employCompanyId) REFERENCES company(companyId),
-	FOREIGN KEY(employProfileId) REFERENCES profile(profileId),
-	PRIMARY KEY(employCompanyId, employProfileId)
-);
