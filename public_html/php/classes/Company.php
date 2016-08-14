@@ -196,6 +196,231 @@ class Company implements \JsonSerializable {
 		}
 	}
 
+	/**
+	 * Get company by the companyId.
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param int $companyId The company id we want to find.
+	 * @return company|null  Returns the company found, or null if not found.
+	 * @throws \PDOException  When mySQL related errors occur.
+	 * @throws \TypeError  When variables are not the correct data type.
+	 */
+	public static function getCompanyByCompanyId(\PDO $pdo, int $companyId) {
+		// Sanitize the ID before searching for it.
+		if($companyId <= 0) {
+			throw(new \PDOException("The company ID is negative or zero"));
+		}
+
+		// Create the query template.
+		$query = "SELECT companyId, companyAccountCreatorId, companyId, companyName, companyEmail, companyPhone, companyPermit, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved FROM company WHERE companyId = :companyId";
+
+		// Prepare the template.
+		$statement = $pdo->prepare($query);
+
+		// Bind the companyId to the placeholder in the template.
+		$parameters = ["companyId" => $companyId];
+
+		// Execute the SQL statement
+		$statement->execute($parameters);
+
+		// Now that we have selected the correct company, we need to get it from mySQL.
+		try {
+			$company = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+
+			if($row !== false) {
+				$company = new Company($row["companyId"], $row["companyAccountCreatorId"], $row["companyName"], $row["companyEmail"], $row["companyPhone"], $row["companyPermit"], $row["companyLicense"], $row["companyAttn"], $row["companyStreet1"], $row["companyStreet2"], $row["companyCity"], $row["companyState"], $row["companyZip"], $row["companyDescription"], $row["companyMenuText"], $row["companyActivationToken"], $row["companyApproved"]);
+			}
+
+			// Catch exception.
+		} catch(\Exception $exception) {
+			// If the row could not be converted, then re-throw it.
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($company);
+	}
+
+	/**
+	 * Get company by the companyAccountCreatorId.
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param int $companyAccountCreatorId  The company account creator we want to find.
+	 * @return company|null  Returns the company found, or null if not found.
+	 * @throws \PDOException  When mySQL related errors occur.
+	 * @throws \TypeError  When variables are not the correct data type.
+	 */
+	public static function getCompanyByCompanyAccountCreatorId(\PDO $pdo, int $companyAccountCreatorId) {
+		// Sanitize the ID before searching for it.
+		if($companyAccountCreatorId <= 0) {
+			throw(new \PDOException("The companyAccountCreator is negative or zero"));
+		}
+
+		// Create the query template.
+		$query = "SELECT companyId, companyAccountCreatorId, companyName, companyEmail, companyPhone, companyPermit, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved FROM company WHERE companyAccountCreatorId = :companyAccountCreatorId";
+
+		// Prepare the template.
+		$statement = $pdo->prepare($query);
+
+		// Bind the companyAccountCreatorId to the placeholder in the template.
+		$parameters = ["companyAccountCreatorId" => $companyAccountCreatorId];
+
+		// Execute the SQL statement
+		$statement->execute($parameters);
+
+		// Now that we have selected the correct company, we need to get it from mySQL.
+		try {
+			$company = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+
+			if($row !== false) {
+				$company = new Company($row["companyId"], $row["companyAccountCreatorId"], $row["companyName"], $row["companyEmail"], $row["companyPhone"], $row["companyPermit"], $row["companyLicense"], $row["companyAttn"], $row["companyStreet1"], $row["companyStreet2"], $row["companyCity"], $row["companyState"], $row["companyZip"], $row["companyDescription"], $row["companyMenuText"], $row["companyActivationToken"], $row["companyApproved"]);
+			}
+
+			// Catch exception.
+		} catch(\Exception $exception) {
+			// If the row could not be converted, then re-throw it.
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($company);
+	}
+
+	/**
+	 * gets company by the company name
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $companyName used as the company name to search for
+	 * @return \SplFixedArray SplFixedArray of companies found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 * @author LB
+	 */
+	public static function getCompanyByCompanyName(\PDO $pdo, string $companyName){
+		//sanitize the ID before searching for it
+		$companyName = trim($companyName);
+		$companyName = filter_var($companyName, FILTER_SANITIZE_STRING);
+
+		if(empty($companyName) === true){
+			throw(new \PDOException("The company name is empty"));
+		}
+
+		if(strlen($companyName)>128){
+			throw(new \PDOException("The company name entered is too long"));
+		}
+
+		//create query template
+		$query = "SELECT companyId, companyAccountCreatorId, companyName, companyEmail, companyPhone, companyPermit, companyPhone, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved FROM company WHERE companyName LIKE :companyName";
+
+		//prepare template
+		$statement = $pdo->prepare($query);
+
+		//bind the profileId to the placeholder in the template
+		$companyName = "%$companyName%";
+		$parameters = ["companyName"=>$companyName];
+		//execute the SQL statement
+		$statement->execute($parameters);
+
+		//build an array of profiles
+		$companies = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+
+		while(($row = $statement->fetch()) !== false){
+			try{
+				$company = new Company($row["companyId"], $row["companyAccountCreatorId"], $row["companyName"], $row["companyEmail"], $row["companyPhone"], $row["companyPermit"], $row["companyLicense"], $row["companyAttn"], $row["companyStreet1"], $row["companyStreet2"], $row["companyCity"], $row["companyState"], $row["companyZip"], $row["companyDescription"], $row["companyMenuText"], $row["companyActivationToken"], $row["companyApproved"]);
+
+				// TODO Check this block !!!
+				//What exactly is happening here ****
+				$companies[$companies->key()] = $company;
+				$companies->next();
+			}catch(\Exception $exception){
+				//if the row couldn't be converted, rethrow it (the error?)
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($companies);
+	}
+
+	/**
+	 * Get company by companyMenuText, e.g. search for tacos.
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $companyMenuText The companyMenuText we want to find.
+	 * @return \SplFixedArray  Returns the company found, or null if not found.
+	 * @throws \PDOException  When mySQL related errors occur.
+	 * @throws \TypeError  When variables are not the correct data type.
+	 */
+	public static function getCompanyByCompanyMenuText(\PDO $pdo, string $companyMenuText) {
+		// Sanitize the search string before searching for it.
+		$companyMenuText = trim($companyMenuText);
+		$companyMenuText = filter_var($companyMenuText, FILTER_SANITIZE_STRING);
+		if(empty($companyMenuText) === true) {
+			throw(new \PDOException("The company Menu Text content is invalid"));
+		}
+
+		// Create the query template.
+		$query = "SELECT companyId, companyAccountCreatorId, companyName, companyEmail, companyPhone, companyPermit, companyPhone, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved FROM company WHERE companyMenuText LIKE :companyMenuText";
+
+		// Prepare the template.
+		$statement = $pdo->prepare($query);
+
+		// The %companyMenuText% is similar to (LIKE) the search string that was entered.
+		$companyMenuText = "%$companyMenuText%";
+
+		// Bind the companyMenuText to the placeholder in the template.
+		$parameters = ["companyMenuText" => $companyMenuText];
+
+		// Execute the SQL statement
+		$statement->execute($parameters);
+
+		// Build an array of companies that match the search string = the $companies array.
+		$companies = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+
+		// Now that we have selected the correct company, we need to get it from mySQL.
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				// Run the constructor method.
+				$company = new Company($row["companyId"], $row["companyAccountCreatorId"], $row["companyName"], $row["companyEmail"], $row["companyPhone"], $row["companyPermit"], $row["companyLicense"], $row["companyAttn"], $row["companyStreet1"], $row["companyStreet2"], $row["companyCity"], $row["companyState"], $row["companyZip"], $row["companyDescription"], $row["companyMenuText"], $row["companyActivationToken"], $row["companyApproved"]);
+				$companies[$companies->key()] = $company;
+				$companies->next();
+			} catch(\Exception $exception) {
+				// If the row could not be converted, then re-throw it.
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($companies);
+	}
+
+	/**
+	 * Get all Companys (sp).  All of 'em.
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @return \SplFixedArray SplFixedArray of Companys (sp) found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getAllCompanys(\PDO $pdo) {
+		// create query template
+		$query = "SELECT companyId, companyAccountCreatorId, companyName, companyEmail, companyPhone, companyPermit, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved FROM company";
+
+		$statement = $pdo->prepare($query);
+		$statement->execute();
+
+		// Build an array of tweets.
+		$companys = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$company = new Company($row["companyId"], $row["companyAccountCreatorId"], $row["companyName"], $row["companyEmail"], $row["companyPhone"], $row["companyPermit"], $row["companyLicense"], $row["companyAttn"], $row["companyStreet1"], $row["companyStreet2"], $row["companyCity"], $row["companyState"], $row["companyZip"], $row["companyDescription"], $row["companyMenuText"], $row["companyActivationToken"], $row["companyApproved"]);
+				$companys[$companys->key()] = $company;
+				$companys->next();
+			} catch(\Exception $exception) {
+				// If the row couldn't be converted, rethrow it.
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($companys);
+	}
 
 	/**  Accessor method (getter) for companyId.
 	 * @return int $companyId  The value of companyId.
@@ -283,7 +508,6 @@ class Company implements \JsonSerializable {
 		$this->companyEmail = $newCompanyEmail;
 	}
 
-
 	/**  Accessor method (getter) for companyPhone.
 	 * @return string $companyPhone  The value of companyPhone.
 	 **/
@@ -313,7 +537,6 @@ class Company implements \JsonSerializable {
 		// Assign $newCompanyPhone to companyPhone, then store in SQL.
 		$this->companyPhone = $newCompanyPhone;
 	}
-
 
 	/**  Accessor method (getter) for companyPermit.
 	 * @return string $companyPermit  The value of companyPermit.
@@ -407,7 +630,6 @@ class Company implements \JsonSerializable {
 		$this->companyAttn = $newCompanyAttn;
 	}
 
-
 	/**  Accessor method (getter) for companyStreet1.
 	 * @return string $companyStreet1  The value of companyStreet1.
 	 **/
@@ -437,7 +659,6 @@ class Company implements \JsonSerializable {
 		// Assign $newCompanyStreet1 to companyStreet1, then store in SQL.
 		$this->companyStreet1 = $newCompanyStreet1;
 	}
-
 
 	/**  Accessor method (getter) for companyStreet2.
 	 * @return string $companyStreet2  The value of companyStreet2.
@@ -469,7 +690,6 @@ class Company implements \JsonSerializable {
 		$this->companyStreet2 = $newCompanyStreet2;
 	}
 
-
 	/**  Accessor method (getter) for companyCity.
 	 * @return string $companyCity  The value of companyCity.
 	 **/
@@ -499,7 +719,6 @@ class Company implements \JsonSerializable {
 		// Assign $newCompanyCity to companyCity, then store in SQL.
 		$this->companyCity = $newCompanyCity;
 	}
-
 
 	/**  Accessor method (getter) for companyState.
 	 * @return string $companyState  The value of companyState
@@ -531,15 +750,12 @@ class Company implements \JsonSerializable {
 		$this->companyState = $newCompanyState;
 	}
 
-
 	/**  Accessor method (getter) for companyZip.
 	 * @return int $companyZip  The value of companyZip.
 	 **/
 	public function getCompanyZip() {
 		return ($this->companyZip);
 	}
-
-
 
 	/**
 	 * Mutator method for companyZip.
@@ -567,7 +783,6 @@ class Company implements \JsonSerializable {
 		// Assign $newCompanyState to companyState, then store in SQL.
 		$this->companyZip = $newCompanyZip;
 	}
-
 
 	/**  Accessor method (getter) for companyDescription.
 	 * @return string $companyDescription  The value of companyDescription.
@@ -599,14 +814,15 @@ class Company implements \JsonSerializable {
 		$this->companyDescription = $newCompanyDescription;
 	}
 
-
-
 	/**  Accessor method (getter) for companyMenuText.
 	 * @return string $companyMenuText  The value of companyMenuText.
 	 **/
 	public function getCompanyMenuText() {
 		return ($this->companyMenuText);
 	}
+
+
+// TODO Here is the weird foreign key, for the account creator:
 
 	/**
 	 * Mutator method for companyMenuText.
@@ -630,7 +846,6 @@ class Company implements \JsonSerializable {
 		// Assign $newCompanyMenuText to companyMenuText, then store in SQL.
 		$this->companyMenuText = $newCompanyMenuText;
 	}
-
 
 	/**  Accessor method (getter) for companyActivationToken.
 	 * @return string $companyActivationToken  The value of companyActivationToken.
@@ -658,7 +873,6 @@ class Company implements \JsonSerializable {
 		$this->companyActivationToken = $newCompanyActivationToken;
 	}
 
-
 	/**  Accessor method (getter) for companyApproved.
 	 * @return int $companyApproved  The value of companyApproved.
 	 **/
@@ -685,9 +899,6 @@ class Company implements \JsonSerializable {
 		// Assign $newCompanyApproved to companyApproved, then store in SQL.
 		$this->companyApproved = $newCompanyApproved;
 	}
-
-
-// TODO Here is the weird foreign key, for the account creator:
 
 	/**  Accessor method (getter) for companyAccountCreatorId.
 	 * @return int $companyAccountCreatorId  The value of companyAccountCreatorId.
@@ -741,7 +952,6 @@ class Company implements \JsonSerializable {
 		$this->companyId = intval($pdo->lastInsertId());
 	}
 
-
 	/**
 	 * DELETE this company from the mySQL database.
 	 *
@@ -763,7 +973,6 @@ class Company implements \JsonSerializable {
 		$parameters = ["companyId" => $this->companyId];
 		$statement->execute($parameters);
 	}
-
 
 	/**
 	 * UPDATE this company in mySQL.
@@ -792,241 +1001,6 @@ class Company implements \JsonSerializable {
 		// Execute the mySQL statement.
 		$statement->execute($parameters);
 	}
-
-
-	/**
-	 * Get company by the companyId.
-	 *
-	 * @param \PDO $pdo PDO connection object
-	 * @param int $companyId The company id we want to find.
-	 * @return company|null  Returns the company found, or null if not found.
-	 * @throws \PDOException  When mySQL related errors occur.
-	 * @throws \TypeError  When variables are not the correct data type.
-	 */
-	public static function getCompanyByCompanyId(\PDO $pdo, int $companyId) {
-		// Sanitize the ID before searching for it.
-		if($companyId <= 0) {
-			throw(new \PDOException("The company ID is negative or zero"));
-		}
-
-		// Create the query template.
-		$query = "SELECT companyId, companyAccountCreatorId, companyId, companyName, companyEmail, companyPhone, companyPermit, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved FROM company WHERE companyId = :companyId";
-
-		// Prepare the template.
-		$statement = $pdo->prepare($query);
-
-		// Bind the companyId to the placeholder in the template.
-		$parameters = ["companyId" => $companyId];
-
-		// Execute the SQL statement
-		$statement->execute($parameters);
-
-		// Now that we have selected the correct company, we need to get it from mySQL.
-		try {
-			$company = null;
-			$statement->setFetchMode(\PDO::FETCH_ASSOC);
-			$row = $statement->fetch();
-
-			if($row !== false) {
-				$company = new Company($row["companyId"], $row["companyAccountCreatorId"], $row["companyName"], $row["companyEmail"], $row["companyPhone"], $row["companyPermit"], $row["companyLicense"], $row["companyAttn"], $row["companyStreet1"], $row["companyStreet2"], $row["companyCity"], $row["companyState"], $row["companyZip"], $row["companyDescription"], $row["companyMenuText"], $row["companyActivationToken"], $row["companyApproved"]);
-			}
-
-			// Catch exception.
-		} catch(\Exception $exception) {
-			// If the row could not be converted, then re-throw it.
-			throw(new \PDOException($exception->getMessage(), 0, $exception));
-		}
-		return($company);
-	}
-
-
-	/**
-	 * Get company by the companyAccountCreatorId.
-	 *
-	 * @param \PDO $pdo PDO connection object
-	 * @param int $companyAccountCreatorId  The company account creator we want to find.
-	 * @return company|null  Returns the company found, or null if not found.
-	 * @throws \PDOException  When mySQL related errors occur.
-	 * @throws \TypeError  When variables are not the correct data type.
-	 */
-	public static function getCompanyByCompanyAccountCreatorId(\PDO $pdo, int $companyAccountCreatorId) {
-		// Sanitize the ID before searching for it.
-		if($companyAccountCreatorId <= 0) {
-			throw(new \PDOException("The companyAccountCreator is negative or zero"));
-		}
-
-		// Create the query template.
-		$query = "SELECT companyId, companyAccountCreatorId, companyName, companyEmail, companyPhone, companyPermit, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved FROM company WHERE companyAccountCreatorId = :companyAccountCreatorId";
-
-		// Prepare the template.
-		$statement = $pdo->prepare($query);
-
-		// Bind the companyAccountCreatorId to the placeholder in the template.
-		$parameters = ["companyAccountCreatorId" => $companyAccountCreatorId];
-
-		// Execute the SQL statement
-		$statement->execute($parameters);
-
-		// Now that we have selected the correct company, we need to get it from mySQL.
-		try {
-			$company = null;
-			$statement->setFetchMode(\PDO::FETCH_ASSOC);
-			$row = $statement->fetch();
-
-			if($row !== false) {
-				$company = new Company($row["companyId"], $row["companyAccountCreatorId"], $row["companyName"], $row["companyEmail"], $row["companyPhone"], $row["companyPermit"], $row["companyLicense"], $row["companyAttn"], $row["companyStreet1"], $row["companyStreet2"], $row["companyCity"], $row["companyState"], $row["companyZip"], $row["companyDescription"], $row["companyMenuText"], $row["companyActivationToken"], $row["companyApproved"]);
-			}
-
-			// Catch exception.
-		} catch(\Exception $exception) {
-			// If the row could not be converted, then re-throw it.
-			throw(new \PDOException($exception->getMessage(), 0, $exception));
-		}
-		return($company);
-	}
-
-
-
-
-
-	/**
-	 * gets company by the company name
-	 * @param \PDO $pdo PDO connection object
-	 * @param string $companyName used as the company name to search for
-	 * @return \SplFixedArray SplFixedArray of companies found
-	 * @throws \PDOException when mySQL related errors occur
-	 * @throws \TypeError when variables are not the correct data type
-	 * @author LB
-	 */
-	public static function getCompanyByCompanyName(\PDO $pdo, string $companyName){
-		//sanitize the ID before searching for it
-		$companyName = trim($companyName);
-		$companyName = filter_var($companyName, FILTER_SANITIZE_STRING);
-
-		if(empty($companyName) === true){
-			throw(new \PDOException("The company name is empty"));
-		}
-
-		if(strlen($companyName)>128){
-			throw(new \PDOException("The company name entered is too long"));
-		}
-
-		//create query template
-		$query = "SELECT companyId, companyAccountCreatorId, companyName, companyEmail, companyPhone, companyPermit, companyPhone, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved FROM company WHERE companyName LIKE :companyName";
-
-		//prepare template
-		$statement = $pdo->prepare($query);
-
-		//bind the profileId to the placeholder in the template
-		$companyName = "%$companyName%";
-		$parameters = ["companyName"=>$companyName];
-		//execute the SQL statement
-		$statement->execute($parameters);
-
-		//build an array of profiles
-		$companies = new \SplFixedArray($statement->rowCount());
-		$statement->setFetchMode(\PDO::FETCH_ASSOC);
-
-		while(($row = $statement->fetch()) !== false){
-			try{
-				$company = new Company($row["companyId"], $row["companyAccountCreatorId"], $row["companyName"], $row["companyEmail"], $row["companyPhone"], $row["companyPermit"], $row["companyLicense"], $row["companyAttn"], $row["companyStreet1"], $row["companyStreet2"], $row["companyCity"], $row["companyState"], $row["companyZip"], $row["companyDescription"], $row["companyMenuText"], $row["companyActivationToken"], $row["companyApproved"]);
-
-				// TODO Check this block !!!
-				//What exactly is happening here ****
-				$companies[$companies->key()] = $company;
-				$companies->next();
-			}catch(\Exception $exception){
-				//if the row couldn't be converted, rethrow it (the error?)
-				throw(new \PDOException($exception->getMessage(), 0, $exception));
-			}
-		}
-		return($companies);
-	}
-
-
-	/**
-	 * Get company by companyMenuText, e.g. search for tacos.
-	 *
-	 * @param \PDO $pdo PDO connection object
-	 * @param string $companyMenuText The companyMenuText we want to find.
-	 * @return \SplFixedArray  Returns the company found, or null if not found.
-	 * @throws \PDOException  When mySQL related errors occur.
-	 * @throws \TypeError  When variables are not the correct data type.
-	 */
-	public static function getCompanyByCompanyMenuText(\PDO $pdo, string $companyMenuText) {
-		// Sanitize the search string before searching for it.
-		$companyMenuText = trim($companyMenuText);
-		$companyMenuText = filter_var($companyMenuText, FILTER_SANITIZE_STRING);
-		if(empty($companyMenuText) === true) {
-			throw(new \PDOException("The company Menu Text content is invalid"));
-		}
-
-		// Create the query template.
-		$query = "SELECT companyId, companyAccountCreatorId, companyName, companyEmail, companyPhone, companyPermit, companyPhone, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved FROM company WHERE companyMenuText LIKE :companyMenuText";
-
-		// Prepare the template.
-		$statement = $pdo->prepare($query);
-
-		// The %companyMenuText% is similar to (LIKE) the search string that was entered.
-		$companyMenuText = "%$companyMenuText%";
-
-		// Bind the companyMenuText to the placeholder in the template.
-		$parameters = ["companyMenuText" => $companyMenuText];
-
-		// Execute the SQL statement
-		$statement->execute($parameters);
-
-		// Build an array of companies that match the search string = the $companies array.
-		$companies = new \SplFixedArray($statement->rowCount());
-		$statement->setFetchMode(\PDO::FETCH_ASSOC);
-
-		// Now that we have selected the correct company, we need to get it from mySQL.
-		while(($row = $statement->fetch()) !== false) {
-			try {
-				// Run the constructor method.
-				$company = new Company($row["companyId"], $row["companyAccountCreatorId"], $row["companyName"], $row["companyEmail"], $row["companyPhone"], $row["companyPermit"], $row["companyLicense"], $row["companyAttn"], $row["companyStreet1"], $row["companyStreet2"], $row["companyCity"], $row["companyState"], $row["companyZip"], $row["companyDescription"], $row["companyMenuText"], $row["companyActivationToken"], $row["companyApproved"]);
-				$companies[$companies->key()] = $company;
-				$companies->next();
-			} catch(\Exception $exception) {
-				// If the row could not be converted, then re-throw it.
-				throw(new \PDOException($exception->getMessage(), 0, $exception));
-			}
-		}
-		return($companies);
-	}
-
-
-	/**
-	 * Get all Companys (sp).  All of 'em.
-	 *
-	 * @param \PDO $pdo PDO connection object
-	 * @return \SplFixedArray SplFixedArray of Companys (sp) found or null if not found
-	 * @throws \PDOException when mySQL related errors occur
-	 * @throws \TypeError when variables are not the correct data type
-	 **/
-	public static function getAllCompanys(\PDO $pdo) {
-		// create query template
-		$query = "SELECT companyId, companyAccountCreatorId, companyName, companyEmail, companyPhone, companyPermit, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved FROM company";
-
-		$statement = $pdo->prepare($query);
-		$statement->execute();
-
-		// Build an array of tweets.
-		$companys = new \SplFixedArray($statement->rowCount());
-		$statement->setFetchMode(\PDO::FETCH_ASSOC);
-		while(($row = $statement->fetch()) !== false) {
-			try {
-				$company = new Company($row["companyId"], $row["companyAccountCreatorId"], $row["companyName"], $row["companyEmail"], $row["companyPhone"], $row["companyPermit"], $row["companyLicense"], $row["companyAttn"], $row["companyStreet1"], $row["companyStreet2"], $row["companyCity"], $row["companyState"], $row["companyZip"], $row["companyDescription"], $row["companyMenuText"], $row["companyActivationToken"], $row["companyApproved"]);
-				$companys[$companys->key()] = $company;
-				$companys->next();
-			} catch(\Exception $exception) {
-				// If the row couldn't be converted, rethrow it.
-				throw(new \PDOException($exception->getMessage(), 0, $exception));
-			}
-		}
-		return($companys);
-	}
-
 
 	/**
 	 * Formats the state variables for JSON serialization.

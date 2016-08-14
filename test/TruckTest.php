@@ -46,11 +46,11 @@ class TruckTest extends CrumbTrailTest {
 		parent::setUp();
 
 		//create and insert a company to own the test truck
-		$this->company = new Company(null, 578123, "Terry's Tacos", "terrytacos@tacos.com", "5052345678", "12345", "2345", "attn: MR Taco", "345 Taco Street", "Taco Street 2", "Albuquerque", "NM", 87654, "We are a Taco truck description", "Tacos, Tortillas, Burritos", 84848409878765432123456789099999, 1);
+		$this->company = new Company(null, null, "Terry's Tacos", "terrytacos@tacos.com", "5052345678", "12345", "2345", "attn: MR Taco", "345 Taco Street", "Taco Street 2", "Albuquerque", "NM", "87654", "We are a Taco truck description", "Tacos, Tortillas, Burritos", "84848409878765432123456789099999", 1);
 		$this->company->insert($this->getPDO());
 
 		//create and insert a second company to buy the test truck (a truck moving to another company)
-		$this->company2 = new Company(null, 578234, "Truckina's Crepes", "truckina@trucks.com", "5052345666","45678", "4567", "attn: MRS Crepe", "456 Crepe Street", "CrepeStreet2","Albuquerque", "NM", 45678, "We sell crepes", "crepes, ice cream, cakes", 34343409876543212345678998787654, 1);
+		$this->company2 = new Company(null, null, "Truckina's Crepes", "truckina@trucks.com", "5052345666","45678", "4567", "attn: MRS Crepe", "456 Crepe Street", "CrepeStreet2","Albuquerque", "NM", "45678", "We sell crepes", "crepes, ice cream, cakes", "34343409876543212345678998787654", 1);
 		$this->company2->insert($this->getPDO());
 	}
 
