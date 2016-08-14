@@ -31,6 +31,8 @@ class Truck implements \JsonSerializable {
 	 * @param int|null $newTruckId
 	 * @param int $newTruckCompanyId
 	 * @throws \RangeException
+	 * @throws \TypeError
+	 * @throws \exception
 	 */
 
 public function __construct(int $newTruckId =null, int $newTruckCompanyId) {

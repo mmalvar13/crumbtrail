@@ -2,7 +2,7 @@
 namespace Edu\Cnm\CrumbTrail\Test;
 
 use Edu\Cnm\CrumbTrail\{
-	Company, Profile, Truck
+	Company, Truck
 };
 
 //grab the project test parameters
