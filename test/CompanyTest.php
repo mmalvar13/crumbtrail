@@ -267,7 +267,7 @@ class CompanyTest extends CrumbTrailTest {
 	 * @expectedException PDOException
 	 **/
 	public function testInsertInvalidCompany() {
-		$company = new Company(CrumbTrailTest::INVALID_KEY, $this->VALID_COMPANYNAME, $this->VALID_COMPANYEMAIL, $this->VALID_COMPANYPHONE, $this->VALID_COMPANYPERMIT, $this->VALID_COMPANYLICENSE, $this->VALID_COMPANYATTN, $this->VALID_COMPANYSTREET1, $this->VALID_COMPANYSTREET2, $this->VALID_COMPANYCITY, $this->VALID_COMPANYSTATE, $this->VALID_COMPANYZIP, $this->VALID_COMPANYDESCRIPTION, $this->VALID_COMPANYMENUTEXT, $this->VALID_COMPANYACTIVATIONTOKEN, $this->VALID_COMPANYAPPROVED, $this->profile->getProfileId());
+		$company = new Company(CrumbTrailTest::INVALID_KEY, $this->profile->getProfileId(), $this->VALID_COMPANYNAME, $this->VALID_COMPANYEMAIL, $this->VALID_COMPANYPHONE, $this->VALID_COMPANYPERMIT, $this->VALID_COMPANYLICENSE, $this->VALID_COMPANYATTN, $this->VALID_COMPANYSTREET1, $this->VALID_COMPANYSTREET2, $this->VALID_COMPANYCITY, $this->VALID_COMPANYSTATE, $this->VALID_COMPANYZIP, $this->VALID_COMPANYDESCRIPTION, $this->VALID_COMPANYMENUTEXT, $this->VALID_COMPANYACTIVATIONTOKEN, $this->VALID_COMPANYAPPROVED);
 
 		$company>insert($this->getPDO());
 	}
@@ -281,7 +281,7 @@ class CompanyTest extends CrumbTrailTest {
 		$numRows = $this->getConnection()->getRowCount("company");
 
 		// Create a new Company and insert to into mySQL.
-		$company = new Company(null, $this->VALID_COMPANYNAME, $this->VALID_COMPANYEMAIL, $this->VALID_COMPANYPHONE, $this->VALID_COMPANYPERMIT, $this->VALID_COMPANYLICENSE, $this->VALID_COMPANYATTN, $this->VALID_COMPANYSTREET1, $this->VALID_COMPANYSTREET2, $this->VALID_COMPANYCITY, $this->VALID_COMPANYSTATE, $this->VALID_COMPANYZIP, $this->VALID_COMPANYDESCRIPTION, $this->VALID_COMPANYMENUTEXT, $this->VALID_COMPANYACTIVATIONTOKEN, $this->VALID_COMPANYAPPROVED, $this->profile->getProfileId());
+		$company = new Company(null, $this->profile->getProfileId(), $this->VALID_COMPANYNAME, $this->VALID_COMPANYEMAIL, $this->VALID_COMPANYPHONE, $this->VALID_COMPANYPERMIT, $this->VALID_COMPANYLICENSE, $this->VALID_COMPANYATTN, $this->VALID_COMPANYSTREET1, $this->VALID_COMPANYSTREET2, $this->VALID_COMPANYCITY, $this->VALID_COMPANYSTATE, $this->VALID_COMPANYZIP, $this->VALID_COMPANYDESCRIPTION, $this->VALID_COMPANYMENUTEXT, $this->VALID_COMPANYACTIVATIONTOKEN, $this->VALID_COMPANYAPPROVED);
 
 		$company->insert($this->getPDO());
 
@@ -308,7 +308,7 @@ class CompanyTest extends CrumbTrailTest {
 		$pdoCompany = Company::getCompanyByCompanyId($this->getPDO(), $company->getCompanyId());
 
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("$company"));
-
+		$this->assertEquals($pdoCompany->getProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoCompany->getCompanyName(), $this->VALID_COMPANYNAME2);
 		$this->assertEquals($pdoCompany->getCompanyEmail(), $this->VALID_COMPANYEMAIL2());
 		$this->assertEquals($pdoCompany->getCompanyPhone(), $this->VALID_COMPANYPHONE2());
@@ -333,7 +333,7 @@ class CompanyTest extends CrumbTrailTest {
 	 * @expectedException PDOException
 	 **/
 	public function testUpdateInvalidCompany() {
-		$company = new Company(null, $this->VALID_COMPANYNAME, $this->VALID_COMPANYEMAIL, $this->VALID_COMPANYPHONE, $this->VALID_COMPANYPERMIT, $this->VALID_COMPANYLICENSE, $this->VALID_COMPANYATTN, $this->VALID_COMPANYSTREET1, $this->VALID_COMPANYSTREET2, $this->VALID_COMPANYCITY, $this->VALID_COMPANYSTATE, $this->VALID_COMPANYZIP, $this->VALID_COMPANYDESCRIPTION, $this->VALID_COMPANYMENUTEXT, $this->VALID_COMPANYACTIVATIONTOKEN, $this->VALID_COMPANYAPPROVED, $this->profile->getProfileId());
+		$company = new Company(null,  $this->profile->getProfileId(), $this->VALID_COMPANYNAME, $this->VALID_COMPANYEMAIL, $this->VALID_COMPANYPHONE, $this->VALID_COMPANYPERMIT, $this->VALID_COMPANYLICENSE, $this->VALID_COMPANYATTN, $this->VALID_COMPANYSTREET1, $this->VALID_COMPANYSTREET2, $this->VALID_COMPANYCITY, $this->VALID_COMPANYSTATE, $this->VALID_COMPANYZIP, $this->VALID_COMPANYDESCRIPTION, $this->VALID_COMPANYMENUTEXT, $this->VALID_COMPANYACTIVATIONTOKEN, $this->VALID_COMPANYAPPROVED);
 
 		$company->update($this->getPDO());
 	}
@@ -346,7 +346,7 @@ class CompanyTest extends CrumbTrailTest {
 		$numRows = $this->getConnection()->getRowCount("company");
 
 		// Create a new Company and insert to into mySQL.
-		$company = new Company(null, $this->VALID_COMPANYNAME, $this->VALID_COMPANYEMAIL, $this->VALID_COMPANYPHONE, $this->VALID_COMPANYPERMIT, $this->VALID_COMPANYLICENSE, $this->VALID_COMPANYATTN, $this->VALID_COMPANYSTREET1, $this->VALID_COMPANYSTREET2, $this->VALID_COMPANYCITY, $this->VALID_COMPANYSTATE, $this->VALID_COMPANYZIP, $this->VALID_COMPANYDESCRIPTION, $this->VALID_COMPANYMENUTEXT, $this->VALID_COMPANYACTIVATIONTOKEN, $this->VALID_COMPANYAPPROVED, $this->profile->getProfileId());
+		$company = new Company(null,  $this->profile->getProfileId(), $this->VALID_COMPANYNAME, $this->VALID_COMPANYEMAIL, $this->VALID_COMPANYPHONE, $this->VALID_COMPANYPERMIT, $this->VALID_COMPANYLICENSE, $this->VALID_COMPANYATTN, $this->VALID_COMPANYSTREET1, $this->VALID_COMPANYSTREET2, $this->VALID_COMPANYCITY, $this->VALID_COMPANYSTATE, $this->VALID_COMPANYZIP, $this->VALID_COMPANYDESCRIPTION, $this->VALID_COMPANYMENUTEXT, $this->VALID_COMPANYACTIVATIONTOKEN, $this->VALID_COMPANYAPPROVED);
 
 		$company->insert($this->getPDO());
 
@@ -364,11 +364,11 @@ class CompanyTest extends CrumbTrailTest {
 	/**
 	 * Test deleting a Company that does not exist.
 	 *
-	 * @expectedException PDOException
+	 * @expectedException \PDOException
 	 **/
 	public function testDeleteInvalidCompany() {
 		// Create a Company, and try to delete it, without actually inserting it.
-		$company = new Company(null, $this->VALID_COMPANYNAME, $this->VALID_COMPANYEMAIL, $this->VALID_COMPANYPHONE, $this->VALID_COMPANYPERMIT, $this->VALID_COMPANYLICENSE, $this->VALID_COMPANYATTN, $this->VALID_COMPANYSTREET1, $this->VALID_COMPANYSTREET2, $this->VALID_COMPANYCITY, $this->VALID_COMPANYSTATE, $this->VALID_COMPANYZIP, $this->VALID_COMPANYDESCRIPTION, $this->VALID_COMPANYMENUTEXT, $this->VALID_COMPANYACTIVATIONTOKEN, $this->VALID_COMPANYAPPROVED, $this->profile->getProfileId());
+		$company = new Company(null, $this->profile->getProfileId(), $this->VALID_COMPANYNAME, $this->VALID_COMPANYEMAIL, $this->VALID_COMPANYPHONE, $this->VALID_COMPANYPERMIT, $this->VALID_COMPANYLICENSE, $this->VALID_COMPANYATTN, $this->VALID_COMPANYSTREET1, $this->VALID_COMPANYSTREET2, $this->VALID_COMPANYCITY, $this->VALID_COMPANYSTATE, $this->VALID_COMPANYZIP, $this->VALID_COMPANYDESCRIPTION, $this->VALID_COMPANYMENUTEXT, $this->VALID_COMPANYACTIVATIONTOKEN, $this->VALID_COMPANYAPPROVED);
 
 		$company->delete($this->getPDO());
 	}
@@ -382,7 +382,7 @@ class CompanyTest extends CrumbTrailTest {
 		$numRows = $this->getConnection()->getRowCount("company");
 
 		// Create a new Company and insert to into mySQL.
-		$company = new Company(null, $this->VALID_COMPANYNAME, $this->VALID_COMPANYEMAIL, $this->VALID_COMPANYPHONE, $this->VALID_COMPANYPERMIT, $this->VALID_COMPANYLICENSE, $this->VALID_COMPANYATTN, $this->VALID_COMPANYSTREET1, $this->VALID_COMPANYSTREET2, $this->VALID_COMPANYCITY, $this->VALID_COMPANYSTATE, $this->VALID_COMPANYZIP, $this->VALID_COMPANYDESCRIPTION, $this->VALID_COMPANYMENUTEXT, $this->VALID_COMPANYACTIVATIONTOKEN, $this->VALID_COMPANYAPPROVED, $this->profile->getProfileId());
+		$company = new Company(null, $this->profile->getProfileId(), $this->VALID_COMPANYNAME, $this->VALID_COMPANYEMAIL, $this->VALID_COMPANYPHONE, $this->VALID_COMPANYPERMIT, $this->VALID_COMPANYLICENSE, $this->VALID_COMPANYATTN, $this->VALID_COMPANYSTREET1, $this->VALID_COMPANYSTREET2, $this->VALID_COMPANYCITY, $this->VALID_COMPANYSTATE, $this->VALID_COMPANYZIP, $this->VALID_COMPANYDESCRIPTION, $this->VALID_COMPANYMENUTEXT, $this->VALID_COMPANYACTIVATIONTOKEN, $this->VALID_COMPANYAPPROVED);
 
 		$company->insert($this->getPDO());
 
@@ -395,11 +395,26 @@ class CompanyTest extends CrumbTrailTest {
 		// Grab the result from the array and validate it.
 		$pdoCompany = $results[0];
 		$this->assertEquals($pdoCompany->getProfileId(), $this->profile->getProfileId());
-		$this->assertEquals($pdoCompany->getCompanyName(), $this->VALID_COMPANYNAME);
+		$this->assertEquals($pdoCompany->getCompanyName(), $this->VALID_COMPANYNAME2);
+		$this->assertEquals($pdoCompany->getCompanyEmail(), $this->VALID_COMPANYEMAIL2());
+		$this->assertEquals($pdoCompany->getCompanyPhone(), $this->VALID_COMPANYPHONE2());
+		$this->assertEquals($pdoCompany->getCompanyPermit(), $this->VALID_COMPANYPERMIT2());
+		$this->assertEquals($pdoCompany->getCompanyLicense(), $this->VALID_COMPANYLICENSE2());
+		$this->assertEquals($pdoCompany->getCompanyAttn(), $this->VALID_COMPANYATTN2());
+		$this->assertEquals($pdoCompany->getCompanyStreet1(), $this->VALID_COMPANYSTREET12());
+		$this->assertEquals($pdoCompany->getCompanyStreet2(), $this->VALID_COMPANYSTREET22());
+		$this->assertEquals($pdoCompany->getCompanyCity(), $this->VALID_COMPANYCITY2());
+		$this->assertEquals($pdoCompany->getCompanyState(), $this->VALID_COMPANYSTATE2());
+		$this->assertEquals($pdoCompany->getCompanyZip(), $this->VALID_COMPANYZIP2());
+		$this->assertEquals($pdoCompany->getCompanyDescription(), $this->VALID_COMPANYDESCRIPTION2());
+		$this->assertEquals($pdoCompany->getCompanyMenuText(), $this->VALID_COMPANYMENUTEXT2());
+		$this->assertEquals($pdoCompany->getCompanyActivationToken(), $this->VALID_COMPANYACTIVATIONTOKEN2());
+		$this->assertEquals($pdoCompany->getCompanyApproved(), $this->VALID_COMPANYAPPROVED2());
 	}
 
 	/**
 	 * Test getting a Company by content that does not exist
+	 * @expectedException \PDOException
 	 **/
 	public function testGetInvalidCompanyByCompanyName() {
 		// Grab a company by searching for a company name that does not exist.
@@ -415,7 +430,7 @@ class CompanyTest extends CrumbTrailTest {
 		$numRows = $this->getConnection()->getRowCount("company");
 
 		// Create a new Company and insert to into mySQL.
-		$company = new Company(null, $this->VALID_COMPANYNAME, $this->VALID_COMPANYEMAIL, $this->VALID_COMPANYPHONE, $this->VALID_COMPANYPERMIT, $this->VALID_COMPANYLICENSE, $this->VALID_COMPANYATTN, $this->VALID_COMPANYSTREET1, $this->VALID_COMPANYSTREET2, $this->VALID_COMPANYCITY, $this->VALID_COMPANYSTATE, $this->VALID_COMPANYZIP, $this->VALID_COMPANYDESCRIPTION, $this->VALID_COMPANYMENUTEXT, $this->VALID_COMPANYACTIVATIONTOKEN, $this->VALID_COMPANYAPPROVED, $this->profile->getProfileId());
+		$company = new Company(null, $this->profile->getProfileId(), $this->VALID_COMPANYNAME, $this->VALID_COMPANYEMAIL, $this->VALID_COMPANYPHONE, $this->VALID_COMPANYPERMIT, $this->VALID_COMPANYLICENSE, $this->VALID_COMPANYATTN, $this->VALID_COMPANYSTREET1, $this->VALID_COMPANYSTREET2, $this->VALID_COMPANYCITY, $this->VALID_COMPANYSTATE, $this->VALID_COMPANYZIP, $this->VALID_COMPANYDESCRIPTION, $this->VALID_COMPANYMENUTEXT, $this->VALID_COMPANYACTIVATIONTOKEN, $this->VALID_COMPANYAPPROVED);
 
 		$company->insert($this->getPDO());
 
@@ -428,21 +443,22 @@ class CompanyTest extends CrumbTrailTest {
 		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\CrumbTrail\\Company", $results);
 
 		// Get the result from the array, and validate it.
-		$pdoCompany= $results[0];
-		$this->assertEquals($pdoCompany->getCompanyEmail(), $this->VALID_COMPANYEMAIL());
-		$this->assertEquals($pdoCompany->getCompanyPhone(), $this->VALID_COMPANYPHONE());
-		$this->assertEquals($pdoCompany->getCompanyPermit(), $this->VALID_COMPANYPERMIT());
-		$this->assertEquals($pdoCompany->getCompanyLicense(), $this->VALID_COMPANYLICENSE());
-		$this->assertEquals($pdoCompany->getCompanyAttn(), $this->VALID_COMPANYATTN());
-		$this->assertEquals($pdoCompany->getCompanyStreet1(), $this->VALID_COMPANYSTREET1());
-		$this->assertEquals($pdoCompany->getCompanyStreet2(), $this->VALID_COMPANYSTREET2());
-		$this->assertEquals($pdoCompany->getCompanyCity(), $this->VALID_COMPANYCITY());
-		$this->assertEquals($pdoCompany->getCompanyState(), $this->VALID_COMPANYSTATE());
-		$this->assertEquals($pdoCompany->getCompanyZip(), $this->VALID_COMPANYZIP());
-		$this->assertEquals($pdoCompany->getCompanyDescription(), $this->VALID_COMPANYDESCRIPTION());
-		$this->assertEquals($pdoCompany->getCompanyMenuText(), $this->VALID_COMPANYMENUTEXT());
-		$this->assertEquals($pdoCompany->getCompanyActivationToken(), $this->VALID_COMPANYACTIVATIONTOKEN());
-		$this->assertEquals($pdoCompany->getCompanyApproved(), $this->VALID_COMPANYAPPROVED());
+		$pdoCompany = $results[0];
 		$this->assertEquals($pdoCompany->getProfileId(), $this->profile->getProfileId());
+		$this->assertEquals($pdoCompany->getCompanyName(), $this->VALID_COMPANYNAME2);
+		$this->assertEquals($pdoCompany->getCompanyEmail(), $this->VALID_COMPANYEMAIL2());
+		$this->assertEquals($pdoCompany->getCompanyPhone(), $this->VALID_COMPANYPHONE2());
+		$this->assertEquals($pdoCompany->getCompanyPermit(), $this->VALID_COMPANYPERMIT2());
+		$this->assertEquals($pdoCompany->getCompanyLicense(), $this->VALID_COMPANYLICENSE2());
+		$this->assertEquals($pdoCompany->getCompanyAttn(), $this->VALID_COMPANYATTN2());
+		$this->assertEquals($pdoCompany->getCompanyStreet1(), $this->VALID_COMPANYSTREET12());
+		$this->assertEquals($pdoCompany->getCompanyStreet2(), $this->VALID_COMPANYSTREET22());
+		$this->assertEquals($pdoCompany->getCompanyCity(), $this->VALID_COMPANYCITY2());
+		$this->assertEquals($pdoCompany->getCompanyState(), $this->VALID_COMPANYSTATE2());
+		$this->assertEquals($pdoCompany->getCompanyZip(), $this->VALID_COMPANYZIP2());
+		$this->assertEquals($pdoCompany->getCompanyDescription(), $this->VALID_COMPANYDESCRIPTION2());
+		$this->assertEquals($pdoCompany->getCompanyMenuText(), $this->VALID_COMPANYMENUTEXT2());
+		$this->assertEquals($pdoCompany->getCompanyActivationToken(), $this->VALID_COMPANYACTIVATIONTOKEN2());
+		$this->assertEquals($pdoCompany->getCompanyApproved(), $this->VALID_COMPANYAPPROVED2());
 	}
 }
