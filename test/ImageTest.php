@@ -1,7 +1,7 @@
 <?php
 namespace Edu\Cnm\CrumbTrail\Test;
 
-use Edu\Cnm\CrumbTrail\{Company, Image};
+use Edu\Cnm\CrumbTrail\{Company, Profile, Image};
 
 //grab the project test parameters
 require_once("CrumbTrailTest.php");
@@ -58,7 +58,7 @@ class ImageTest extends CrumbTrailTest {
 
 
 		//create and insert a Profile to own the test image
-		$this->profile = new Profile;
+		$this->profile = new Profile(null, "Loren", "lorenisthebest@gmail.com", "5057303164", "0000000000000000000000000000000000000000000000000000000000004444", "00000000000000000000000000000022","a", $salt, $hash);
 	}
 	/**
 	 * insert valid image and verify that the actual mySQL data matches
