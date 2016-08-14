@@ -217,7 +217,7 @@ class CompanyTest extends CrumbTrailTest {
 		$hash = hash_pbkdf2("sha512", $password, $salt, 262144);
 
 		// Put dummy values into the Profile attributes.
-		$this->profile = new Profile(null, "Bob Smith", "test@phpunit.de", "12125551212", "0000000000000000000000000000000000000000000000000000000000004444", "00000000000000000000000000000022", "o", $hash, $salt);
+		$this->profile = new Profile(null, "Bob", "test@phpunit.de", "12125551212", "0000000000000000000000000000000000000000000000000000000000004444", "00000000000000000000000000000022", "o", $hash, $salt);
 		// Insert the dummy profile object into the database.
 		$this->profile->insert($this->getPDO());
 	}
@@ -263,8 +263,8 @@ class CompanyTest extends CrumbTrailTest {
 	/**
 	 * Test inserting a Company that already exists.
 	 * Create a Company with a non-null company id and watch it fail.
-	 * The INVALID_KEY is too large to be a valid mySQL id.
 	 * @expectedException \PDOException
+	 * @expectedException \TypeError if $pdo is not a PDO connection object
 	 **/
 	public function testInsertInvalidCompany() {
 		$company = new Company(CrumbTrailTest::INVALID_KEY, $this->profile->getProfileId(), $this->VALID_COMPANYNAME, $this->VALID_COMPANYEMAIL, $this->VALID_COMPANYPHONE, $this->VALID_COMPANYPERMIT, $this->VALID_COMPANYLICENSE, $this->VALID_COMPANYATTN, $this->VALID_COMPANYSTREET1, $this->VALID_COMPANYSTREET2, $this->VALID_COMPANYCITY, $this->VALID_COMPANYSTATE, $this->VALID_COMPANYZIP, $this->VALID_COMPANYDESCRIPTION, $this->VALID_COMPANYMENUTEXT, $this->VALID_COMPANYACTIVATIONTOKEN, $this->VALID_COMPANYAPPROVED);

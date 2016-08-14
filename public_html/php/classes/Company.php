@@ -874,6 +874,63 @@ class Company implements \JsonSerializable {
 	}
 
 
+
+
+
+	/**
+	 * gets company by the company name
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $companyName used as the company name to search for
+	 * @return \SplFixedArray SplFixedArray of companies found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 * @author LB
+	 */
+	public static function getCompanyByCompanyName(\PDO $pdo, string $companyName){
+		//sanitize the ID before searching for it
+		$companyName = trim($companyName);
+		$companyName = filter_var($companyName, FILTER_SANITIZE_STRING);
+
+		if(empty($companyName) === true){
+			throw(new \PDOException("The company name is empty"));
+		}
+
+		if(strlen($companyName)>128){
+			throw(new \PDOException("The company name entered is too long"));
+		}
+
+		//create query template
+		$query = "SELECT companyId, companyAccountCreatorId, companyName, companyEmail, companyPhone, companyPermit, companyPhone, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved FROM company WHERE companyName LIKE :companyName";
+
+		//prepare template
+		$statement = $pdo->prepare($query);
+
+		//bind the profileId to the placeholder in the template
+		$companyName = "%$companyName%";
+		$parameters = ["companyName"=>$companyName];
+		//execute the SQL statement
+		$statement->execute($parameters);
+
+		//build an array of profiles
+		$companies = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+
+		while(($row = $statement->fetch()) !== false){
+			try{
+				$company = new Company($row["companyId"], $row["companyAccountCreatorId"], $row["companyName"], $row["companyEmail"], $row["companyPhone"], $row["companyPermit"], $row["companyLicense"], $row["companyAttn"], $row["companyStreet1"], $row["companyStreet2"], $row["companyCity"], $row["companyState"], $row["companyZip"], $row["companyDescription"], $row["companyMenuText"], $row["companyActivationToken"], $row["companyApproved"]);
+
+				//What exactly is happening here ****
+				$companies[$companies->key()] = $company;
+				$companies->next();
+			}catch(\Exception $exception){
+				//if the row couldn't be converted, rethrow it (the error?)
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($companies);
+	}
+
+
 	/**
 	 * Get company by companyMenuText, e.g. search for tacos.
 	 *
