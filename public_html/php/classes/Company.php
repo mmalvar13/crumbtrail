@@ -159,7 +159,7 @@ class Company implements \JsonSerializable {
 										 string $newCompanyDescription,
 										 string $newCompanyMenuText,
 										 string $newCompanyActivationToken,
-										 int $newCompanyApproved
+										 int $newCompanyApproved = 0
 										 ) {
 		try {
 			$this->setCompanyId($newCompanyId);
@@ -669,12 +669,12 @@ class Company implements \JsonSerializable {
 	 * @param int|null $newCompanyApproved The new value of companyApproved.
 	 * @throws \RangeException  if #newcompanyApproved is not 0 or 1.
 	 **/
-	public function setCompanyApproved($newCompanyApproved) {
-		// Base case, for a new company.
-		if($newCompanyApproved === null) {
-			$this->companyApproved = null;
-			return;
+	public function setCompanyApproved( int $newCompanyApproved) {
+
+		if($newCompanyApproved === null){
+			throw(new \InvalidArgumentException("Company approval must be set to either 0 or 1"));
 		}
+
 		// Is $newCompanyApproved 0 or 1?  If not, then throw an exception.
 		$arry = [0,1];
 		if(!in_array($newCompanyApproved, $arry, true)){
