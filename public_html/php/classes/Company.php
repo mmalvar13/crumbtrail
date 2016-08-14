@@ -686,6 +686,8 @@ class Company implements \JsonSerializable {
 	}
 
 
+// TODO Here is the weird foreign key, for the account creator:
+
 	/**  Accessor method (getter) for companyAccountCreatorId.
 	 * @return int $companyAccountCreatorId  The value of companyAccountCreatorId.
 	 **/
@@ -723,13 +725,13 @@ class Company implements \JsonSerializable {
 		}
 
 		// Create a query template.
-		$query = "INSERT INTO company(companyAccountCreatorId, companyName, companyEmail, companyPhone, companyPermit, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved) VALUES(:companyAccountCreatorId, :companyName, :companyEmail, :companyPhone, :companyPermit, :companyLicense, :companyAttn, :companyStreet1, :companyStreet2, :companyCity, :companyState, :companyZip, :companyDescription, :companyMenuText, :companyActivationToken, :companyApproved)";
+		$query = "INSERT INTO company(companyName, companyEmail, companyPhone, companyPermit, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved, companyAccountCreatorId) VALUES(:companyName, :companyEmail, :companyPhone, :companyPermit, :companyLicense, :companyAttn, :companyStreet1, :companyStreet2, :companyCity, :companyState, :companyZip, :companyDescription, :companyMenuText, :companyActivationToken, :companyApproved, :companyAccountCreatorId)";
 
 		// Prepare is used as an extra means of security.
 		$statement = $pdo->prepare($query);
 
 		// Bind the variables to the place holder slots in the template, then put into an array.
-		$parameters = ["companyAccountCreatorId" => $this->companyAccountCreatorId, "companyName" => $this->companyName, "companyEmail" => $this->companyEmail, "companyPhone" => $this->companyPhone, "companyPermit" => $this->companyPermit, "companyLicense" => $this->companyLicense, "companyAttn" => $this->companyAttn, "companyStreet1" => $this->companyStreet1, "companyStreet2" => $this->companyStreet2, "companyCity" => $this->companyCity, "companyState" => $this->companyState, "companyZip" => $this->companyZip, "companyDescription" => $this->companyDescription, "companyMenuText" => $this->companyMenuText, "companyActivationToken" => $this->companyActivationToken, "companyApproved" => $this->companyApproved];
+		$parameters = ["companyName" => $this->companyName, "companyEmail" => $this->companyEmail, "companyPhone" => $this->companyPhone, "companyPermit" => $this->companyPermit, "companyLicense" => $this->companyLicense, "companyAttn" => $this->companyAttn, "companyStreet1" => $this->companyStreet1, "companyStreet2" => $this->companyStreet2, "companyCity" => $this->companyCity, "companyState" => $this->companyState, "companyZip" => $this->companyZip, "companyDescription" => $this->companyDescription, "companyMenuText" => $this->companyMenuText, "companyActivationToken" => $this->companyActivationToken, "companyApproved" => $this->companyApproved, "companyAccountCreatorId" => $this->companyAccountCreatorId];
 
 		//execute the command held in $statement
 		$statement->execute($parameters);
