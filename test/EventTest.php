@@ -79,7 +79,7 @@ class EventTest extends CrumbTrailTest{
 		$event->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields match our expectations
-		$pdoEvent = Event::getEventbyEventId($this->getPDO(), $event->getEventId());
+		$pdoEvent = Event::getEventByEventId($this->getPDO(), $event->getEventId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("event"));
 		$this->assertEquals($pdoEvent->getTruckId(),$this->truck->getTruckId());
 		$this->assertEquals($pdoEvent->getEventEnd(),$this->VALID_EVENTEND);
@@ -89,7 +89,7 @@ class EventTest extends CrumbTrailTest{
 
 	/**
 	 * test inserting an Event that already exists
-	 * @expectedException PDOException
+	 * @expectedException \PDOException
 	 **/
 	public function testInsertInvalidEvent(){
 		//create an Event with a non null event id and watch it fail
@@ -115,7 +115,7 @@ class EventTest extends CrumbTrailTest{
 		$event->update($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields match our expectations
-		$pdoEvent = Event::getEventbyEventId($this->getPDO(), $event->getEventId());
+		$pdoEvent = Event::getEventByEventId($this->getPDO(), $event->getEventId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("event"));
 		$this->assertEquals($pdoEvent->getTruckId(), $this->truck->getTruckId());
 		$this->assertEquals($pdoEvent->getEventEnd(), $this->VALID_EVENTEND2);
@@ -150,7 +150,7 @@ class EventTest extends CrumbTrailTest{
 		$event->delete($this->getPDO());
 
 		//grab the data from mySQL and enforce the Event does not exist
-		$pdoEvent = Event:: getEventbyEventId($this->getPDO(), $event->getEventId());
+		$pdoEvent = Event:: getEventByEventId($this->getPDO(), $event->getEventId());
 		$this->assertNull($pdoEvent);
 		$this->assertEquals($numRows, $this->getConnection()->getRowCount("event"));
 	}
@@ -177,7 +177,7 @@ class EventTest extends CrumbTrailTest{
 		$event->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields match our expectations
-		$pdoEvent = Event::getEventbyEventId($this->getPDO(), $event->getEventId());
+		$pdoEvent = Event::getEventByEventId($this->getPDO(), $event->getEventId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("event"));
 		$this->assertEquals($pdoEvent->getTruckId(),$this->truck->getTruckId());
 		$this->assertEquals($pdoEvent->getEventEnd(),$this->VALID_EVENTEND);
@@ -206,7 +206,7 @@ class EventTest extends CrumbTrailTest{
 		$event->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields match our expectations
-		$results = Event::getEventbyEventTruckId($this->getPDO(),$event->getEventTruckId());
+		$results = Event::getEventByEventTruckId($this->getPDO(),$event->getEventTruckId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("event"));
 		$this->assertCount(1, $results);
 		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\CrumbTrail\\Event", $results);
