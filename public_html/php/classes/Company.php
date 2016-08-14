@@ -663,9 +663,12 @@ class Company implements \JsonSerializable {
 			return;
 		}
 		// Is $newCompanyApproved 0 or 1?  If not, then throw an exception.
-		if($newCompanyApproved !== 0 || $newCompanyApproved !== 1) {
+		if($newCompanyApproved === 0 || $newCompanyApproved === 1) {
+			continue;
+		} else {
 			throw(new \RangeException("The company Approved is not either 0 or 1."));
 		}
+
 		// Assign $newCompanyApproved to companyApproved, then store in SQL.
 		$this->companyApproved = $newCompanyApproved;
 	}
