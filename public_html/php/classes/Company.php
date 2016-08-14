@@ -555,11 +555,8 @@ class Company implements \JsonSerializable {
 		$newCompanyZip = filter_var($newCompanyZip, FILTER_SANITIZE_STRING);
 		// If $newCompanyState is empty or too long, then throw an exception.
 
-		//turn zip into an INT to ensure its positive and not 0's
-		$zipInt = (int)$newCompanyZip;
-		if($zipInt <= 0){
-			throw(new \RangeException("The zip code must be positive"));
-		}
+
+
 		if(strlen($newCompanyZip) < 5) {
 			throw(new \RangeException("company zip is too short."));
 		}
