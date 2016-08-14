@@ -90,7 +90,7 @@ class TruckTest extends CrumbTrailTest {
 		$numRows = $this->getConnection()->getRowCount("truck");
 
 		//create a new Truck and insert into mySQL
-		$truck = new Truck(null, $this->company2->getCompanyId());
+		$truck = new Truck(null, $this->company->getCompanyId());
 		$truck->insert($this->getPDO());
 
 		//edit the Truck and update it in mySQL
@@ -144,6 +144,7 @@ class TruckTest extends CrumbTrailTest {
 		$truck = new Truck(null, $this->company->getCompanyId());
 		$truck->delete($this->getPDO());
 	}
+
 	/**
 	 * test grabbing a Truck by truck content?
 	 */
@@ -183,7 +184,7 @@ class TruckTest extends CrumbTrailTest {
 		//create a new Image and insert it into mySQL
 		$truck = new Truck(null, $this->company->getCompanyId());
 		$truck->insert($this->getPDO());
-		//grab the data from mySQL and eforce the fields match our expectations
+		//grab the data from mySQL and enforce the fields match our expectations
 		$results = Truck::getAllTrucks($this->getPDO());
 		$this->assertEquals($numRows +1, $this->getConnection()->getRowCount("truck"));
 		$this->assertCount(1, $results);
