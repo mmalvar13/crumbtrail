@@ -34,11 +34,7 @@ class TruckTest extends CrumbTrailTest {
 	 * @var Company company2
 	 **/
 	protected $company2 = null;
-	/**
-	 *Company that the Truck is transferred to; this is a foreign key relationship
-	 * @var Profile profile
-	 **/
-	protected $profile = null;
+
 
 
 	/**
@@ -56,8 +52,6 @@ class TruckTest extends CrumbTrailTest {
 		//create and insert a second company to buy the test truck (a truck moving to another company)
 		$this->company2 = new Company(null, "Truckina's Crepes", "truckina@trucks.com", "5052345666","45678", "4567", "attn: MRS Crepe", "Truckina McTruckerson", "456 Crepe Street", "CrepeStreet2","Albuquerque", "NM", 45678, "We sell crepes", "crepes, ice cream, cakes", 34343409876543212345678998787654, 1, 578234);
 		$this->company2->insert($this->getPDO());
-
-		$this->profile = new Profile(null, "Loren", "lorenisthebest@gmail.com", "5057303164", "0000000000000000000000000000000000000000000000000000000000004444", "00000000000000000000000000000022","a", $salt, $hash);
 	}
 
 
