@@ -11,7 +11,7 @@ require_once(dirname(__DIR__) . "/public_html/php/classes/autoload.php");
 
 
 /**
- * Full PHPUnit test for the Company class
+ * Full PHPUnit test for the Company Class
  *
  * This is a complete PHPUnit test of the Company class.
  * It is complete because *ALL* mySQL/PDO enabled methods
