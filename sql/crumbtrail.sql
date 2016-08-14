@@ -7,10 +7,10 @@
 # DROP TABLE IF EXISTS profile;
 # DROP TABLE IF EXISTS truck;
 
-DROP TABLE IF EXISTS employ;
 DROP TABLE IF EXISTS event;
-DROP TABLE IF EXISTS truck;
 DROP TABLE IF EXISTS image;
+DROP TABLE IF EXISTS truck;
+DROP TABLE IF EXISTS employ;
 DROP TABLE IF EXISTS company;
 DROP TABLE IF EXISTS profile;
 
@@ -56,7 +56,7 @@ CREATE TABLE company (
 	companyStreet2 VARCHAR(128),
 	companyCity VARCHAR(128) NOT NULL,
 	companyState CHAR(2) NOT NULL,
-	companyZip VARCHAR(10) NOT NULL,,
+	companyZip VARCHAR(10) NOT NULL,
 	companyDescription VARCHAR(255),
 	companyMenuText TEXT,
 	companyActivationToken CHAR(32),
