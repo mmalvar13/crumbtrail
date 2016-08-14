@@ -18,7 +18,7 @@ require_once(dirname(__DIR__) . "/public_html/php/classes/autoload.php");
  * are tested for both invalid and valid inputs.
  *
  * @see Company
- * @author Kevin Lee Kirk
+ * @author Kevin Lee Kirk, with a lot of help from Victoria Chacon, Monica Alvarez, and Loren Baca.
  *
  **/
 

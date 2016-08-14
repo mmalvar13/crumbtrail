@@ -687,20 +687,15 @@ class Company implements \JsonSerializable {
 	 * @throws \RangeException  if #newcompanyAccountCreatorId is not a positive.
 	 * @throws \TypeError if $newCompanyAccountCreatorId is not an integer.
 	 **/
-	public function setCompanyAccountCreatorId($newCompanyAccountCreatorId = null) {
-		// Base case, for a new company.
-		if($newCompanyAccountCreatorId === null) {
-			$this->companyAccountCreatorId = null;
-			return;
-		}
-		// Is $newCompanyAccountCreatorId positive?  If not, then throw an exception.
-		if($newCompanyAccountCreatorId <= 0) {
-			throw(new \RangeException("The company AccountCreatorId is not positive."));
-		}
-		// Assign $newCompanyAccountCreatorId to companyAccountCreatorId, then store in SQL.
-		$this->companyAccountCreatorId = $newCompanyAccountCreatorId;
-	}
 
+	public function setCompanyAccountCreatorId(int $newCompanyAccountCreatorId){
+		//this is a reference to profileId, verify that it is positive
+		if($newCompanyAccountCreatorId <= 0){
+			throw(new \RangeException("companyAccountCreatorId is not positive"));
+		}
+
+		//covert and store the companyAccountCreatorId
+		$this->companyAccountCreatorId = $newCompanyAccountCreatorId;
 
 	/**
 	 * INSERT this company object into mySQL.
