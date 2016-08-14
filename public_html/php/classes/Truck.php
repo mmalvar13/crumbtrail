@@ -79,7 +79,7 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 	}
 
 	/**
-	 * gets truck by company ID
+	 * gets truck by company Id
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @param int, $truckCompanyId truck to search for
@@ -93,7 +93,7 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 				throw(new \PDOException("Truck Company Id is not positive"));
 			}
 		//query template
-		$query = "SELECT truckId, truckCompanyId FROM truck WHERE truckCompanyId= :truckCompanyId";
+		$query = "SELECT truckCompanyId FROM truck WHERE truckCompanyId= :truckCompanyId";
 		$statement = $pdo->prepare($query);
 		//bind the truck company Id to the placeholder template
 		$parameters = ["truckCompanyId" => $truckCompanyId];
