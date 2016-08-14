@@ -241,7 +241,7 @@ class CompanyTest extends CrumbTrailTest {
 		$pdoCompany = Company::getCompanyByCompanyId($this->getPDO(), $company->getCompanyId());
 
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("company"));
-		$this->assertEquals($pdoCompany->getProfileId(), $this->profile->getProfileId());
+		$this->assertEquals($pdoCompany->getCompanyAccountCreatorId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoCompany->getCompanyName(), $this->VALID_COMPANYNAME);
 		$this->assertEquals($pdoCompany->getCompanyEmail(), $this->VALID_COMPANYEMAIL);
 		$this->assertEquals($pdoCompany->getCompanyPhone(), $this->VALID_COMPANYPHONE);
@@ -308,7 +308,7 @@ class CompanyTest extends CrumbTrailTest {
 		$pdoCompany = Company::getCompanyByCompanyId($this->getPDO(), $company->getCompanyId());
 
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("company"));
-		$this->assertEquals($pdoCompany->getProfileId(), $this->profile->getProfileId());
+		$this->assertEquals($pdoCompany->getCompanyAccountCreatorId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoCompany->getCompanyName(), $this->VALID_COMPANYNAME2);
 		$this->assertEquals($pdoCompany->getCompanyEmail(), $this->VALID_COMPANYEMAIL2);
 		$this->assertEquals($pdoCompany->getCompanyPhone(), $this->VALID_COMPANYPHONE2);
@@ -330,7 +330,7 @@ class CompanyTest extends CrumbTrailTest {
 	 * Test updating a Company that does not exist.
 	 *
 	 * Create a Company, try to update it (without actually updating it), and watch it fail.
-	 * @expectedException PDOException
+	 * @expectedException \PDOException
 	 **/
 	public function testUpdateInvalidCompany() {
 		$company = new Company(null,  $this->profile->getProfileId(), $this->VALID_COMPANYNAME, $this->VALID_COMPANYEMAIL, $this->VALID_COMPANYPHONE, $this->VALID_COMPANYPERMIT, $this->VALID_COMPANYLICENSE, $this->VALID_COMPANYATTN, $this->VALID_COMPANYSTREET1, $this->VALID_COMPANYSTREET2, $this->VALID_COMPANYCITY, $this->VALID_COMPANYSTATE, $this->VALID_COMPANYZIP, $this->VALID_COMPANYDESCRIPTION, $this->VALID_COMPANYMENUTEXT, $this->VALID_COMPANYACTIVATIONTOKEN, $this->VALID_COMPANYAPPROVED);
@@ -394,7 +394,11 @@ class CompanyTest extends CrumbTrailTest {
 
 		// Grab the result from the array and validate it.
 		$pdoCompany = $results[0];
-		$this->assertEquals($pdoCompany->getProfileId(), $this->profile->getProfileId());
+
+		//changing this line from getProfileId() to getCompanyAccountCreatorId() ~LB
+		$this->assertEquals($pdoCompany->getCompanyAccountCreatorId(), $this->profile->getProfileId());
+
+
 		$this->assertEquals($pdoCompany->getCompanyName(), $this->VALID_COMPANYNAME);
 		$this->assertEquals($pdoCompany->getCompanyEmail(), $this->VALID_COMPANYEMAIL);
 		$this->assertEquals($pdoCompany->getCompanyPhone(), $this->VALID_COMPANYPHONE);
@@ -444,7 +448,11 @@ class CompanyTest extends CrumbTrailTest {
 
 		// Get the result from the array, and validate it.
 		$pdoCompany = $results[0];
-		$this->assertEquals($pdoCompany->getProfileId(), $this->profile->getProfileId());
+
+		//changing this line from getProfileId() to getCompanyAccountCreatorId() ~LB
+		$this->assertEquals($pdoCompany->getCompanyAccountCreatorId(), $this->profile->getProfileId());
+
+
 		$this->assertEquals($pdoCompany->getCompanyName(), $this->VALID_COMPANYNAME);
 		$this->assertEquals($pdoCompany->getCompanyEmail(), $this->VALID_COMPANYEMAIL);
 		$this->assertEquals($pdoCompany->getCompanyPhone(), $this->VALID_COMPANYPHONE);
