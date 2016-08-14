@@ -240,7 +240,7 @@ class CompanyTest extends CrumbTrailTest {
 		// Grab the data from mySQL and enforce the fields match our expectations
 		$pdoCompany = Company::getCompanyByCompanyId($this->getPDO(), $company->getCompanyId());
 
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("$company"));
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("company"));
 		$this->assertEquals($pdoCompany->getProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoCompany->getCompanyName(), $this->VALID_COMPANYNAME);
 		$this->assertEquals($pdoCompany->getCompanyEmail(), $this->VALID_COMPANYEMAIL);

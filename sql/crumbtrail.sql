@@ -1,11 +1,18 @@
 -- drop tables in reverse order to start fresh every time
 
-DROP TABLE IF EXISTS company;
+# DROP TABLE IF EXISTS company;
+# DROP TABLE IF EXISTS employ;
+# DROP TABLE IF EXISTS event;
+# DROP TABLE IF EXISTS image;
+# DROP TABLE IF EXISTS profile;
+# DROP TABLE IF EXISTS truck;
+
 DROP TABLE IF EXISTS employ;
 DROP TABLE IF EXISTS event;
-DROP TABLE IF EXISTS image;
-DROP TABLE IF EXISTS profile;
 DROP TABLE IF EXISTS truck;
+DROP TABLE IF EXISTS image;
+DROP TABLE IF EXISTS company;
+DROP TABLE IF EXISTS profile;
 
 
 CREATE TABLE profile (
