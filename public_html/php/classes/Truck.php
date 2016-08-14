@@ -41,6 +41,10 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 	$this->setTruckCompanyId($newTruckCompanyId);
 	} catch (\RangeException $range) {
 		throw(new \RangeException ($range->getMessage(), 0, $range));
+	}catch (\TypeError $typeError) {
+		throw(new \TypeError($typeError->getMessage(), 0, $typeError ));
+	} catch (\Exception $exception) {
+		throw (new \Exception($exception->getMessage(), 0, $exception));
 	}
 }
 
