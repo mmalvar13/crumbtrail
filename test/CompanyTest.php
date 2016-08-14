@@ -233,7 +233,7 @@ class CompanyTest extends CrumbTrailTest {
 		$numRows = $this->getConnection()->getRowCount("company");
 
 		// Create a new Company and insert to into mySQL.
-		$company = new Company(null, $this->VALID_COMPANYNAME, $this->VALID_COMPANYEMAIL, $this->VALID_COMPANYPHONE, $this->VALID_COMPANYPERMIT, $this->VALID_COMPANYLICENSE, $this->VALID_COMPANYATTN, $this->VALID_COMPANYSTREET1, $this->VALID_COMPANYSTREET2, $this->VALID_COMPANYCITY, $this->VALID_COMPANYSTATE, $this->VALID_COMPANYZIP, $this->VALID_COMPANYDESCRIPTION, $this->VALID_COMPANYMENUTEXT, $this->VALID_COMPANYACTIVATIONTOKEN, $this->VALID_COMPANYAPPROVED, $this->profile->getProfileId());
+		$company = new Company(null, $this->profile->getProfileId(), $this->VALID_COMPANYNAME, $this->VALID_COMPANYEMAIL, $this->VALID_COMPANYPHONE, $this->VALID_COMPANYPERMIT, $this->VALID_COMPANYLICENSE, $this->VALID_COMPANYATTN, $this->VALID_COMPANYSTREET1, $this->VALID_COMPANYSTREET2, $this->VALID_COMPANYCITY, $this->VALID_COMPANYSTATE, $this->VALID_COMPANYZIP, $this->VALID_COMPANYDESCRIPTION, $this->VALID_COMPANYMENUTEXT, $this->VALID_COMPANYACTIVATIONTOKEN, $this->VALID_COMPANYAPPROVED);
 
 		$company->insert($this->getPDO());
 
@@ -242,7 +242,7 @@ class CompanyTest extends CrumbTrailTest {
 
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("company"));
 
-		$this->assertEquals($pdoCompany->getCompanyId(), $this->company->getCompanyId());
+		$this->assertEquals($pdoCompany->getProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoCompany->getCompanyName(), $this->company->getCompanyName());
 		$this->assertEquals($pdoCompany->getCompanyEmail(), $this->company->getCompanyEmail());
 		$this->assertEquals($pdoCompany->getCompanyPhone(), $this->company->getCompanyPhone());
