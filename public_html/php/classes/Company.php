@@ -160,6 +160,7 @@ class Company implements \JsonSerializable {
 										 string $newCompanyMenuText,
 										 string $newCompanyActivationToken,
 										 int $newCompanyApproved = 0
+	// TODO Is the above the correct way to initialize the Approval to 0
 										 ) {
 		try {
 			$this->setCompanyId($newCompanyId);
