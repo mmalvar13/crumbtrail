@@ -60,7 +60,7 @@ CREATE TABLE company (
 	companyState CHAR(2) NOT NULL,
 	companyZip VARCHAR(10) NOT NULL,
 	companyDescription VARCHAR(255),
-	companyMenuText TEXT,
+	companyMenuText VARCHAR(255),
 	companyActivationToken CHAR(32),
 	companyApproved INT NOT NULL,
 
