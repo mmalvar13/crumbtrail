@@ -643,7 +643,7 @@ class Company implements \JsonSerializable {
 	 * @throws \RangeException  if #newcompanyActivationToken is not a positive.
 	 * @throws \TypeError if $newCompanyActivationToken is not an integer.
 	 **/
-	public function setCompanyActivationToken($newCompanyActivationToken = null) {
+	public function setCompanyActivationToken($newCompanyActivationToken) {
 		// Base case, for a new company.
 		if($newCompanyActivationToken === null) {
 			$this->companyActivationToken = null;
@@ -669,7 +669,7 @@ class Company implements \JsonSerializable {
 	 * @param int|null $newCompanyApproved The new value of companyApproved.
 	 * @throws \RangeException  if #newcompanyApproved is not 0 or 1.
 	 **/
-	public function setCompanyApproved($newCompanyApproved = null) {
+	public function setCompanyApproved($newCompanyApproved) {
 		// Base case, for a new company.
 		if($newCompanyApproved === null) {
 			$this->companyApproved = null;
