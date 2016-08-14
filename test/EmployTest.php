@@ -152,7 +152,7 @@ class EmployTest extends CrumbTrailTest {
 	 **/
 	public function testGetInvalidEmployByEmployCompanyIdAndEmployProfileId() {
 		//grab a profile id and company id that exceeds the maximum allowable profile and company id
-		$employ = Employ::getEmployByEmployCompanyIdAndEmployProfileId($this->getPDO(), CrumbTrailTest::INVALID_KEY);
+		$employ = Employ::getEmployByEmployCompanyIdAndEmployProfileId($this->getPDO(), CrumbTrailTest::INVALID_KEY, CrumbTrailTest::INVALID_KEY);
 		$this->assertNull($employ);
 	}
 
