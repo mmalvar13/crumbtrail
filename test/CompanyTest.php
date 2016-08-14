@@ -210,14 +210,14 @@ class CompanyTest extends CrumbTrailTest {
 		// run the default setUp() method first
 		parent::setUp();
 
-		// Create and insert a Profile to own the test Company.
+		// Create and insert a profile to own the test Company.
 		// Generate dummy salt and hash values.
 		$password = "abc123";
 		$salt = bin2hex(random_bytes(16));
 		$hash = hash_pbkdf2("sha512", $password, $salt, 262144);
 
 		// Put dummy values into the Profile attributes.
-		$this->profile = new Profile(null, "Bob Smith", "test@phpunit.de", "12125551212", "0000000000000000000000000000000000000000000000000000000000004444", "00000000000000000000000000000022", "o", $salt, $hash); 										// TODO  Are these salt and hash variables OK?
+		$this->profile = new Profile(null, "Bob Smith", "test@phpunit.de", "12125551212", "0000000000000000000000000000000000000000000000000000000000004444", "00000000000000000000000000000022", "o", $hash, $salt);
 		// Insert the dummy profile object into the database.
 		$this->profile->insert($this->getPDO());
 	}
