@@ -414,7 +414,7 @@ class CompanyTest extends CrumbTrailTest {
 
 	/**
 	 * Test getting a Company by content that does not exist
-	 * @expectedException \PDOException
+	 *
 	 **/
 	public function testGetInvalidCompanyByCompanyName() {
 		// Grab a company by searching for a company name that does not exist.
