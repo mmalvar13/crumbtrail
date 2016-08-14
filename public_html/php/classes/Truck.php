@@ -231,7 +231,7 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 	 **/
 		public function delete(\PDO $pdo) {
 			//don't delete a truck that hasn't been inserted
-			if($this->truckId == null) {
+			if($this->truckId === null) {
 				throw(new \PDOException("unable to delete a truck that does not exist"));
 			}
 			//query template
@@ -251,7 +251,7 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 	 */
 		public function update(\PDO $pdo) {
 			//don't update an image that has already been inserted
-			if($this->truckId == null) {
+			if($this->truckId === null) {
 				throw(new \PDOException("unable to update a truck that does not exist "));
 			}
 			$query = "UPDATE truck SET truckCompanyId = :truckCompanyId WHERE truckId = :truckId";
