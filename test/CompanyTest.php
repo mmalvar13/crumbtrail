@@ -307,7 +307,7 @@ class CompanyTest extends CrumbTrailTest {
 		// Grab the data from mySQL and check that the fields match our (updated) expectations.
 		$pdoCompany = Company::getCompanyByCompanyId($this->getPDO(), $company->getCompanyId());
 
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("$company"));
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("company"));
 		$this->assertEquals($pdoCompany->getProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoCompany->getCompanyName(), $this->VALID_COMPANYNAME2);
 		$this->assertEquals($pdoCompany->getCompanyEmail(), $this->VALID_COMPANYEMAIL2);
@@ -446,19 +446,19 @@ class CompanyTest extends CrumbTrailTest {
 		$pdoCompany = $results[0];
 		$this->assertEquals($pdoCompany->getProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoCompany->getCompanyName(), $this->VALID_COMPANYNAME2);
-		$this->assertEquals($pdoCompany->getCompanyEmail(), $this->VALID_COMPANYEMAIL2());
-		$this->assertEquals($pdoCompany->getCompanyPhone(), $this->VALID_COMPANYPHONE2());
-		$this->assertEquals($pdoCompany->getCompanyPermit(), $this->VALID_COMPANYPERMIT2());
-		$this->assertEquals($pdoCompany->getCompanyLicense(), $this->VALID_COMPANYLICENSE2());
-		$this->assertEquals($pdoCompany->getCompanyAttn(), $this->VALID_COMPANYATTN2());
-		$this->assertEquals($pdoCompany->getCompanyStreet1(), $this->VALID_COMPANYSTREET12());
-		$this->assertEquals($pdoCompany->getCompanyStreet2(), $this->VALID_COMPANYSTREET22());
-		$this->assertEquals($pdoCompany->getCompanyCity(), $this->VALID_COMPANYCITY2());
-		$this->assertEquals($pdoCompany->getCompanyState(), $this->VALID_COMPANYSTATE2());
-		$this->assertEquals($pdoCompany->getCompanyZip(), $this->VALID_COMPANYZIP2());
-		$this->assertEquals($pdoCompany->getCompanyDescription(), $this->VALID_COMPANYDESCRIPTION2());
-		$this->assertEquals($pdoCompany->getCompanyMenuText(), $this->VALID_COMPANYMENUTEXT2());
-		$this->assertEquals($pdoCompany->getCompanyActivationToken(), $this->VALID_COMPANYACTIVATIONTOKEN2());
-		$this->assertEquals($pdoCompany->getCompanyApproved(), $this->VALID_COMPANYAPPROVED2());
+		$this->assertEquals($pdoCompany->getCompanyEmail(), $this->VALID_COMPANYEMAIL);
+		$this->assertEquals($pdoCompany->getCompanyPhone(), $this->VALID_COMPANYPHONE);
+		$this->assertEquals($pdoCompany->getCompanyPermit(), $this->VALID_COMPANYPERMIT);
+		$this->assertEquals($pdoCompany->getCompanyLicense(), $this->VALID_COMPANYLICENSE);
+		$this->assertEquals($pdoCompany->getCompanyAttn(), $this->VALID_COMPANYATTN);
+		$this->assertEquals($pdoCompany->getCompanyStreet1(), $this->VALID_COMPANYSTREET1);
+		$this->assertEquals($pdoCompany->getCompanyStreet2(), $this->VALID_COMPANYSTREET2);
+		$this->assertEquals($pdoCompany->getCompanyCity(), $this->VALID_COMPANYCITY);
+		$this->assertEquals($pdoCompany->getCompanyState(), $this->VALID_COMPANYSTATE);
+		$this->assertEquals($pdoCompany->getCompanyZip(), $this->VALID_COMPANYZIP);
+		$this->assertEquals($pdoCompany->getCompanyDescription(), $this->VALID_COMPANYDESCRIPTION);
+		$this->assertEquals($pdoCompany->getCompanyMenuText(), $this->VALID_COMPANYMENUTEXT);
+		$this->assertEquals($pdoCompany->getCompanyActivationToken(), $this->VALID_COMPANYACTIVATIONTOKEN);
+		$this->assertEquals($pdoCompany->getCompanyApproved(), $this->VALID_COMPANYAPPROVED);
 	}
 }
