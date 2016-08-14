@@ -222,26 +222,26 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 			$this->truckId = intval($pdo->lastInsertId());
 		}
 
-	/**
-	 * deletes the truck from mySQL
-	 *
-	 * @param \PDO $pdo PDO connection object
-	 * @throws |\PDOException when mySQL related errors occur
-	 * @throws \TypeError if $pdo is not a PDO connection object
-	 **/
-		public function delete(\PDO $pdo) {
-			//don't delete a truck that hasn't been inserted
-			if($this->truckId === null) {
-				throw(new \PDOException("unable to delete a truck that does not exist"));
-			}
-			//query template
-			$query = "DELETE FROM truck WHERE truckId = :truckId";
-			$statement = $pdo->prepare($query);
-
-			//bind the member variable to the place holder in the template
-			$parameters = ["truckId" => $this->truckId];
-			$statement->execute($parameters);
-		}
+//	/**
+//	 * deletes the truck from mySQL
+//	 *
+//	 * @param \PDO $pdo PDO connection object
+//	 * @throws |\PDOException when mySQL related errors occur
+//	 * @throws \TypeError if $pdo is not a PDO connection object
+//	 **/
+//		public function delete(\PDO $pdo) {
+//			//don't delete a truck that hasn't been inserted
+//			if($this->truckId === null) {
+//				throw(new \PDOException("unable to delete a truck that does not exist"));
+//			}
+//			//query template
+//			$query = "DELETE FROM truck WHERE truckId = :truckId";
+//			$statement = $pdo->prepare($query);
+//
+//			//bind the member variable to the place holder in the template
+//			$parameters = ["truckId" => $this->truckId];
+//			$statement->execute($parameters);
+//		}
 
 //	/**
 //	 * updates the truck in mySQL
