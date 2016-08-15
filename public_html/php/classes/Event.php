@@ -192,7 +192,7 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 	 * @throws \InvalidArgumentException
 	 * @throws \Exception if $newEventStart is not null
 	 **/
-	public function setEventStart($newEventStart = null) {
+	public function setEventStart(\DateTime $newEventStart = null) {
 		//if the date is null, use the current date and time
 		if($newEventStart === null) {
 			$this->eventStart = new \DateTime(); //store the eventStart date and time
