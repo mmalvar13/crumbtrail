@@ -46,15 +46,10 @@ class EmployTest extends CrumbTrailTest {
 
 		$this->company = new Company(null, $pdoProfile->getProfileId(), "Terry's Tacos", "terrytacos@tacos.com", "5052345678", "12345", "2345", "attn: MR taco", "345 Taco Street", "taco street 2", "Albuquerque", "NM", "87654", "We are a Taco truck description", "Tacos, Tortillas, Burritos","848484", 0);
 		$this->company->insert($this->getPDO());
-
-
-
-		//I didn't put a date here. is that ok?n  calculate the date(just use the time the unit test was setup
 	}
 
 	/**
 	 * test inserting a valid Employ and verify that the actual mySQL data matches
-	 * THIS IS WRONG probs
 	 **/
 	public function testInsertValidEmploy() {
 		//count the number of rows and save it for later
@@ -68,9 +63,6 @@ class EmployTest extends CrumbTrailTest {
 		$pdoEmploy = Employ::getEmployByEmployCompanyIdAndEmployProfileId($this->getPDO(), $employ->getEmployProfileId(),$employ->getEmployCompanyId());
 
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("employ"));
-//		$this->assertEquals($pdoEmploy->getEmployProfileId(), $this->profile->getProfileId());
-//		$this->assertEquals($pdoEmploy->getEmployCompanyId(), $this->company->getCompanyId());
-		 //are these $pdoEmploy->getEmployProfileId or just getProfileId????
 	}
 
 	/**
@@ -80,7 +72,6 @@ class EmployTest extends CrumbTrailTest {
 	public function testInsertInvalidEmploy() {
 		//create an Employ with a null composite key (employProfileId and employCompanyId) and watch it fail
 		$employ = new Employ($this->profile->getProfileId(), $this->company->getCompanyId());
-		//CrumbTrailTest::INVALID_KEY,$this->company->getCompanyId(), $this->profile->getProfileId());
 		$employ->insert($this->getPDO());
 	}
 
@@ -118,7 +109,6 @@ class EmployTest extends CrumbTrailTest {
 
 		//grab the data from mySQL and enforce the Employ does not exist
 		$pdoEmploy = Employ::getEmployByEmployCompanyIdAndEmployProfileId($this->getPDO(), $employ->getEmployCompanyId(), $employ->getEmployProfileId());
-//		$pdoEmploy = Employ:: getEmploybyEmployProfileId($this->getPDO(), $employ->getEmployProfileId());
 		$this->assertNull($pdoEmploy);
 		$this->assertEquals($numRows, $this->getConnection()->getRowCount("employ"));
 	}
@@ -135,7 +125,6 @@ class EmployTest extends CrumbTrailTest {
 
 	/**
 	 * test inserting an Employ and regrabbing it from mySQL
-	 * wow idk, is this what i name the test? with both primary keys???
 	 **/
 	public function testGetValidEmployByEmployCompanyIdAndEmployProfileId() {
 		//count the number of rows and save it for later
@@ -146,11 +135,9 @@ class EmployTest extends CrumbTrailTest {
 		$employ->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields match our expectations
+		//Do i need this next line? there are no other fields to match.
 		$pdoEmploy = Employ:: getEmployByEmployCompanyIdAndEmployProfileId($this->getPDO(), $employ->getEmployProfileId(), $employ->getEmployCompanyId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("employ"));
-//		$this->assertEquals($pdoEmploy->getEmployProfileId(), $this->profile->getProfileId());
-//		$this->assertEquals($pdoEmploy->getEmployCompanyId(), $this->company->getCompanyId());
-		 //idk getProfileId or getEmployProfileId??
 	}
 
 	/**
@@ -181,8 +168,8 @@ class EmployTest extends CrumbTrailTest {
 
 		//grab the result from the array and validate it
 		$pdoEmploy = $results[0];
-//		$this->assertEquals($pdoEmploy->getEmployProfileId(), $this->profile->getProfileId());
-//		$this->assertEquals($pdoEmploy->getEmployCompanyId(), $this->company->getCompanyId());
+		$this->assertEquals($pdoEmploy->getEmployProfileId(), $this->profile->getProfileId());
+		$this->assertEquals($pdoEmploy->getEmployCompanyId(), $this->company->getCompanyId());
 	}
 
 	/**

@@ -146,16 +146,16 @@ class Employ implements \JsonSerializable {
 	 **/
 	public function delete(\PDO $pdo) {
 		//enforce that the employProfileId and employCompanyId are not null (i.e. don't delete a composite key that does not exist)
-		if($this->employCompanyId === null || $this->employProfileId === null) {
+		if($this->employProfileId === null || $this->employCompanyId === null) {
 			throw(new \PDOException("cannot delete a composite key that does not exist"));
 		}
 		//create query template
-		$query = "DELETE FROM employ WHERE employCompanyId = :employCompanyId AND employProfileId = :employProfileId"; //is this correct? would we ever need to use this IRL??? composite keys should never die! right?
+		$query = "DELETE FROM employ WHERE employProfileId = :employProfileId AND employCompanyId = :employCompanyId"; //is this correct? would we ever need to use this IRL??? composite keys should never die! right?
 
 		$statement = $pdo->prepare($query);
 
 		//bind the member variables to the place holder in the template
-		$parameters = ["employCompanyId" => $this->employCompanyId, "employProfileId" => $this->employProfileId];
+		$parameters = ["employProfileId" => $this->employProfileId, "employCompanyId" => $this->employCompanyId];
 		$statement->execute($parameters);
 	}
 
@@ -173,7 +173,7 @@ class Employ implements \JsonSerializable {
 			throw(new \PDOException("employCompanyId is not positive"));
 		}
 		//create query template
-		$query = "SELECT employCompanyId, employProfileId FROM employ WHERE employCompanyId = :employCompanyId";
+		$query = "SELECT employProfileId, employCompanyId FROM employ WHERE employCompanyId = :employCompanyId";
 		$statement = $pdo->prepare($query);
 
 		//bind the employCompanyId to the place holder in the  template
@@ -185,7 +185,7 @@ class Employ implements \JsonSerializable {
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$employ = new Employ($row["employCompanyId"], $row["employProfileId"]);
+				$employ = new Employ($row["employProfileId"],$row["employCompanyId"]);
 				$employs[$employs->key()] = $employ;
 				$employs->next();
 			} catch(\Exception $exception) {
@@ -211,7 +211,7 @@ class Employ implements \JsonSerializable {
 		}
 
 		//create query template
-		$query = "SELECT employCompanyId, employProfileId FROM employ WHERE employProfileId = :employProfileId";
+		$query = "SELECT employProfileId, employCompanyId FROM employ WHERE employProfileId = :employProfileId";
 		$statement = $pdo->prepare($query);
 
 		//bind employProfileId to the placeholder in the template
@@ -223,7 +223,7 @@ class Employ implements \JsonSerializable {
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$employ = new Employ($row["employCompanyId"], $row["employProfileId"]);
+				$employ = new Employ($row["employProfileId"],$row["employCompanyId"]);
 				$employs[$employs->key()] = $employ;
 				$employs->next();
 			} catch(\Exception $exception) {
@@ -245,21 +245,21 @@ class Employ implements \JsonSerializable {
 	 **/
 
 	public static function getEmployByEmployCompanyIdAndEmployProfileId(\PDO $pdo, int $employCompanyId, int $employProfileId) {
-		if($employCompanyId === null || $employProfileId === null) {
+		if($employProfileId === null || $employCompanyId === null) {
 			throw(new \PDOException("employCompanyId and employProfileId must exist"));
 		}
 
 		//sanitize the employeeCompanyId and the employeeProfileId by checking that they're positive
-		if($employCompanyId <= 0 || $employProfileId <= 0) {
+		if($employProfileId <= 0 || $employCompanyId <= 0) {
 			throw(new \PDOException("employCompanyId and employProfileId must be positive"));
 		}
 
 		//create query template
-		$query = "SELECT employCompanyId, employProfileId FROM employ WHERE employCompanyId = :employCompanyId AND employProfileId = :employProfileId";
+		$query = "SELECT employProfileId, employCompanyId FROM employ WHERE employProfileId = :employProfileId AND employCompanyId = :employCompanyId";
 		$statement = $pdo->prepare($query);
 
 		//bind employCompanyId and employProfileId to the placeholder in the template
-		$parameters = ["employCompanyId" => $employCompanyId, "employProfileId" => $employProfileId];
+		$parameters = ["employProfileId" => $employProfileId, "employCompanyId" => $employCompanyId];
 		$statement->execute($parameters);
 
 		//grab the employ from mySQL
@@ -268,7 +268,7 @@ class Employ implements \JsonSerializable {
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-				$employ = new Employ($row["employCompanyId"], $row["employProfileId"]);
+				$employ = new Employ($row["employProfileId"], $row["employCompanyId"]);
 			}
 		} catch(\Exception $exception) {
 			//if the row couldn't be converted, rethrow it
