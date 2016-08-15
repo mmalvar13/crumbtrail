@@ -6,6 +6,7 @@ namespace Edu\Cnm\CrumbTrail\Test;
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
 
+
 /**
  * Abstract class containing universal and project specific mySQL parameters
  *
