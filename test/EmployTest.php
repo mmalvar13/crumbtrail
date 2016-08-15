@@ -136,8 +136,10 @@ class EmployTest extends CrumbTrailTest {
 
 		//grab the data from mySQL and enforce the fields match our expectations
 		//Do i need this next line? there are no other fields to match.
-//		$pdoEmploy = Employ:: getEmployByEmployCompanyIdAndEmployProfileId($this->getPDO(), $employ->getEmployProfileId(), $employ->getEmployCompanyId());
-//		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("employ"));
+		$pdoEmploy = Employ:: getEmployByEmployCompanyIdAndEmployProfileId($this->getPDO(), $employ->getEmployProfileId(), $employ->getEmployCompanyId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("employ"));
+		$this->assertEquals($pdoEmploy->getProfileId(), $this->profile->getProfileId());
+		$this->assertEquals($pdoEmploy->getCompanyId(), $this->company->getCompanyId());
 	}
 
 	/**
