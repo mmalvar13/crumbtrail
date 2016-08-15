@@ -64,20 +64,9 @@ class EventTest extends CrumbTrailTest{
 		parent::setUp();
 
 		//create a insert for a dummy company so we have a foreign key to profile
-		//THIS WAS 100% MONICA'S IDEA. LOREN IS JUST A KEYBOARD AUTOMATON
-		$password = "abc123";
-		$salt = bin2hex(random_bytes(16));
-		$hash = hash_pbkdf2("sha512", $password, $salt, 262144);
-
-		//create and insert a (truck or company?) to own the test event. I'm going to try truck.
-		$this->profile = new Profile(null, "Bob", "test@phpunit.de", "12125551212", "0000000000000000000000000000000000000000000000000000000000004444", "00000000000000000000000000000022", "o", $hash, $salt);
-		// Insert the dummy profile object into the database.
-		$this->profile->insert($this->getPDO());
-		$pdoProfile = Profile::getProfileByProfileId($this->getPDO(), $this->profile->getProfileId());
-
 
 		//create and insert a Company to own the test Employ
-		$this->company = new Company(null, $pdoProfile->getProfileId(), "Terry's Tacos", "terrytacos@tacos.com", "5052345678", "12345", "2345", "attn: MR taco", "345 Taco Street", "taco street 2", "Albuquerque", "NM", "87654", "We are a Taco truck description", "Tacos, Tortillas, Burritos","848484", 0);
+		$this->company = new Company(null, 12345, "Terry's Tacos", "terrytacos@tacos.com", "5052345678", "12345", "2345", "attn: MR taco", "345 Taco Street", "taco street 2", "Albuquerque", "NM", "87654", "We are a Taco truck description", "Tacos, Tortillas, Burritos","848484", 0);
 		$this->company->insert($this->getPDO());
 
 		$pdoCompany = Company::getCompanyByCompanyId($this->getPDO(), $this->company->getCompanyId());
