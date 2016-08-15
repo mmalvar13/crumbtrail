@@ -1,4 +1,8 @@
 <?php
+// might have to re-format the boolean companyApproval
+
+
+
 namespace Edu\Cnm\CrumbTrail\Test;
 
 use Edu\Cnm\CrumbTrail\{Profile, Company};
