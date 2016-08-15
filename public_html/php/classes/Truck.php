@@ -96,7 +96,7 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @param int, $truckCompanyId truck to search for
-	 * @return \SplFixedArray SplFixedArray of images found
+	 * @return \SplFixedArray SplFixedArray of trucks found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are nor the correct data type
 	 */
