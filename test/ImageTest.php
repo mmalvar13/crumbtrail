@@ -44,6 +44,8 @@ class ImageTest extends CrumbTrailTest {
 	 * @var Company company
 	 **/
 	protected $company = null;
+
+	protected $profile = null;
 	/**
 	 * create dependent objects before running each test
 	 **/
@@ -52,8 +54,21 @@ class ImageTest extends CrumbTrailTest {
 		//run the default setUp() method first
 		parent::setUp();
 
+		//--------------------------Dummy Profile------------------------------------------
+	//Dummy profile to feed a foreign key into the dummy company we created
+		$password = "abc123";
+		$salt = bin2hex(random_bytes(16));
+		$hash = hash_pbkdf2("sha512", $password, $salt, 262144);
+
+		$this->profile = new Profile(null, "Loren", "lorenisthebest@gmail.com", "5057303164", "0000000000000000000000000000000000000000000000000000000000004444", "00000000000000000000000000000022","a", $hash, $salt);
+		$this->profile->insert($this->getPDO());
+
+		$pdoProfile = Profile::getProfileByProfileId($this->getPDO(), $this->profile->getProfileId());
+
+
+		//---------------------------------Dummy companies---------------------------------------------
 		//create and insert a company to own the test image
-		$this->company = new Company(null, 578123, "Terry's Tacos", "terrytacos@tacos.com", "5052345678", "12345", "2345", "attn: MR Taco", "345 Taco Street", "Taco Street 2", "Albuquerque", "NM", 87654, "We are a Taco truck description", "Tacos, Tortillas, Burritos", 84848409878765432123456789099999, 1);
+		$this->company = new Company(null, $pdoProfile->getProfileId(), "Terry's Tacos", "terrytacos@tacos.com", "5052345678", "12345", "2345", "attn: MR Taco", "345 Taco Street", "Taco Street 2", "Albuquerque", "NM", 87654, "We are a Taco truck description", "Tacos, Tortillas, Burritos", 84848409878765432123456789099999, 1);
 		$this->company->insert($this->getPDO());
 
 
