@@ -180,8 +180,8 @@ class EmployTest extends CrumbTrailTest {
 
 		//grab the result from the array and validate it
 		$pdoEmploy = $results[0];
-		$this->assertEquals($pdoEmploy->getCompanyId(), $this->company->getCompanyId());
-		$this->assertEquals($pdoEmploy->getProfileId(), $this->profile->getProfileId());
+		$this->assertEquals($pdoEmploy->getEmployProfileId(), $this->profile->getProfileId());
+		$this->assertEquals($pdoEmploy->getEmployCompanyId(), $this->company->getCompanyId());
 	}
 
 	/**
@@ -189,7 +189,7 @@ class EmployTest extends CrumbTrailTest {
 	 **/
 	public function testGetInvalidEmployByEmployCompanyId() {
 		//grab an Employ by searching for companyId that does not exist
-		$employ = Employ::getEmployByEmployCompanyId($this->getPDO(), "get outta pueblo");
+		$employ = Employ::getEmployByEmployCompanyId($this->getPDO(),CrumbTrailTest::INVALID_KEY);
 		$this->assertCount(0, $employ);
 	}
 
@@ -212,8 +212,8 @@ class EmployTest extends CrumbTrailTest {
 
 		//grab the result from the array and validate it
 		$pdoEmploy = $results[0];
-		$this->assertEquals($pdoEmploy->getProfileId(), $this->profile->getProfileId());
-		$this->assertEquals($pdoEmploy->getCompanyId(), $this->company->getCompanyId());
+		$this->assertEquals($pdoEmploy->getEmployProfileId(), $this->profile->getProfileId());
+		$this->assertEquals($pdoEmploy->getEmployCompanyId(), $this->company->getCompanyId());
 
 	}
 
@@ -248,8 +248,9 @@ class EmployTest extends CrumbTrailTest {
 
 		//grab the result from the array and validate it
 		$pdoEmploy = $results[0];
-		$this->assertEquals($pdoEmploy->getCompanyId(), $this->company->getCompanyId());
-		$this->assertEquals($pdoEmploy->getProfileId(), $this->profile->getProfileId());
+		$this->assertEquals($pdoEmploy->getEmployProfileId(), $this->profile->getProfileId());
+		$this->assertEquals($pdoEmploy->getEmployCompanyId(), $this->company->getCompanyId());
+
 	}
 
 
