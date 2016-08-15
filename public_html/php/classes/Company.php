@@ -437,6 +437,7 @@ class Company implements \JsonSerializable {
 	 * @throws \RangeException  if $newCompanyId is not a positive.
 	 * @throws \TypeError if $newCompanyId is not an integer.
 	 **/
+	//on insert and update for the bool, might need to reformat before going into SQL
 	public function setCompanyId(int $newCompanyId = null) {
 		// Base case, for a new company.
 		if($newCompanyId === null) {
