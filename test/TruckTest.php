@@ -35,9 +35,9 @@ class TruckTest extends CrumbTrailTest {
 	protected $company2 = null;
 
 	protected $profile = null;
-	protected $profile2 = null;
+//	protected $profile2 = null;
 
-	protected
+
 
 
 
@@ -56,11 +56,11 @@ class TruckTest extends CrumbTrailTest {
 		$hash = hash_pbkdf2("sha512", $password, $salt, 262144);
 
 		// Put dummy values into the Profile attributes.
-		$profile = new Profile(null, "Bob", "test@phpunit.de", "12125551212", "0000000000000000000000000000000000000000000000000000000000004444", "00000000000000000000000000000022", "o", $hash, $salt);
+		$this->profile = new Profile(null, "Bob", "test@phpunit.de", "12125551212", "0000000000000000000000000000000000000000000000000000000000004444", "00000000000000000000000000000022", "o", $hash, $salt);
 		// Insert the dummy profile object into the database.
-		$profile->insert($this->getPDO());
+		$this->profile->insert($this->getPDO());
 
-		$pdoProfile = Profile::getProfileByProfileId($this->getPDO(), $profile->getProfileId());
+		$pdoProfile = Profile::getProfileByProfileId($this->getPDO(), $this->profile->getProfileId());
 
 		//create and insert a company to own the test truck
 		$this->company = new Company(null, $pdoProfile->getProfileId(), "Terry's Tacos", "terrytacos@tacos.com", "5052345678", "12345", "2345", "attn: MR Taco", "345 Taco Street", "Taco Street 2", "Albuquerque", "NM", "87654", "We are a Taco truck description", "Tacos, Tortillas, Burritos", "84848409878765432123456789099999", 1);
