@@ -88,7 +88,7 @@ class EventTest extends CrumbTrailTest{
 
 		//calculate the date this event starts (just use the time the unit was setup
 		$date = new \DateTime('2000-01-01');
-		$date->add(new \DateInterval('TP4H'));
+		$date->add(new \DateInterval('P4H'));
 		$this->VALID_EVENTSTART = new \DateTime();
 		$this->VALID_EVENTEND = new \DateTime();
 //datetimeadd
