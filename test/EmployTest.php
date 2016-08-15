@@ -1,7 +1,7 @@
 <?php
 namespace Edu\Cnm\CrumbTrail\Test;
 
-use Edu\Cnm\CrumbTrail\{Profile, Company, Employ};
+use Edu\Cnm\CrumbTrail\{Company, Profile, Employ};
 
 //grab the project test parameters
 require_once("CrumbTrailTest.php");
@@ -56,11 +56,11 @@ class EmployTest extends CrumbTrailTest {
 		$numRows = $this->getConnection()->getRowCount("employ");
 
 		//create a new Employ and insert it into mySQL
-		$employ = new Employ($this->profile->getProfileId(),$this->company->getCompanyId());
+		$employ = new Employ($this->company->getCompanyId(), $this->profile->getProfileId());
 		$employ->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields match our expectations
-		$pdoEmploy = Employ::getEmployByEmployCompanyIdAndEmployProfileId($this->getPDO(), $employ->getEmployProfileId(),$employ->getEmployCompanyId());
+		$pdoEmploy = Employ::getEmployByEmployCompanyIdAndEmployProfileId($this->getPDO(), $employ->getEmployCompanyId(), $employ->getEmployProfileId());
 
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("employ"));
 	}
@@ -71,7 +71,7 @@ class EmployTest extends CrumbTrailTest {
 	 **/
 	public function testInsertInvalidEmploy() {
 		//create an Employ with a null composite key (employProfileId and employCompanyId) and watch it fail
-		$employ = new Employ($this->profile->getProfileId(), $this->company->getCompanyId());
+		$employ = new Employ($this->company->getCompanyId(), $this->profile->getProfileId());
 		$employ->insert($this->getPDO());
 	}
 
@@ -100,7 +100,7 @@ class EmployTest extends CrumbTrailTest {
 		//count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("employ");
 		//create a new Employ and insert into mySQL
-		$employ = new Employ($this->profile->getProfileId(),$this->company->getCompanyId());
+		$employ = new Employ($this->company->getCompanyId(), $this->profile->getProfileId());
 		$employ->insert($this->getPDO());
 
 		//delete the Employ from mySQL
@@ -131,15 +131,16 @@ class EmployTest extends CrumbTrailTest {
 		$numRows = $this->getConnection()->getRowCount("employ");
 
 		//create a new Employ and insert into mySQL
-		$employ = new Employ($this->profile->getProfileId(),$this->company->getCompanyId());
+		$employ = new Employ($this->company->getCompanyId(), $this->profile->getProfileId());
 		$employ->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields match our expectations
 		//Do i need this next line? there are no other fields to match.
-		$pdoEmploy = Employ:: getEmployByEmployCompanyIdAndEmployProfileId($this->getPDO(), $employ->getEmployProfileId(), $employ->getEmployCompanyId());
+		$pdoEmploy = Employ::getEmployByEmployCompanyIdAndEmployProfileId($this->getPDO(), $employ->getEmployCompanyId(), $employ->getEmployProfileId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("employ"));
-		$this->assertEquals($pdoEmploy->getProfileId(), $this->profile->getProfileId());
-		$this->assertEquals($pdoEmploy->getCompanyId(), $this->company->getCompanyId());
+		$this->assertEquals($pdoEmploy->getEmployCompanyId(), $this->company->getCompanyId());
+		$this->assertEquals($pdoEmploy->getEmployProfileId(), $this->profile->getProfileId());
+
 	}
 
 	/**
@@ -159,7 +160,7 @@ class EmployTest extends CrumbTrailTest {
 		$numRows = $this->getConnection()->getRowCount("employ");
 
 		//create a new Employ and insert it into mySQL
-		$employ = new Employ($this->profile->getProfileId(), $this->company->getCompanyId());
+		$employ = new Employ($this->company->getCompanyId(), $this->profile->getProfileId());
 		$employ->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields match our expectations
@@ -170,8 +171,9 @@ class EmployTest extends CrumbTrailTest {
 
 		//grab the result from the array and validate it
 		$pdoEmploy = $results[0];
-		$this->assertEquals($pdoEmploy->getEmployProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoEmploy->getEmployCompanyId(), $this->company->getCompanyId());
+		$this->assertEquals($pdoEmploy->getEmployProfileId(), $this->profile->getProfileId());
+
 	}
 
 	/**
@@ -191,7 +193,7 @@ class EmployTest extends CrumbTrailTest {
 		$numRows = $this->getConnection()->getRowCount("employ");
 
 		//create a new Employ and insert it into mySQL
-		$employ = new Employ($this->profile->getProfileId(), $this->company->getCompanyId());
+		$employ = new Employ($this->company->getCompanyId(), $this->profile->getProfileId());
 		$employ->insert($this->getPDO());
 
 		//grab the data from myQL and enforce the fields match our expectations
@@ -202,8 +204,9 @@ class EmployTest extends CrumbTrailTest {
 
 		//grab the result from the array and validate it
 		$pdoEmploy = $results[0];
-//		$this->assertEquals($pdoEmploy->getEmployProfileId(), $this->profile->getProfileId());
-//		$this->assertEquals($pdoEmploy->getEmployCompanyId(), $this->company->getCompanyId());
+		//$this->assertEquals($pdoEmploy->getEmployCompanyId(), $this->company->getCompanyId());
+		//$this->assertEquals($pdoEmploy->getEmployProfileId(), $this->profile->getProfileId());
+
 
 	}
 
@@ -227,7 +230,7 @@ class EmployTest extends CrumbTrailTest {
 		$numRows = $this->getConnection()->getRowCount("employ");
 
 		//create a new Employ and insert into mySQL
-		$employ = new Employ($this->profile->getProfileId(), $this->company->getCompanyId());
+		$employ = new Employ($this->company->getCompanyId(), $this->profile->getProfileId());
 		$employ->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields match our expectations
@@ -238,8 +241,9 @@ class EmployTest extends CrumbTrailTest {
 
 		//grab the result from the array and validate it
 		$pdoEmploy = $results[0];
-		$this->assertEquals($pdoEmploy->getEmployProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoEmploy->getEmployCompanyId(), $this->company->getCompanyId());
+		$this->assertEquals($pdoEmploy->getEmployProfileId(), $this->profile->getProfileId());
+
 
 	}
 
