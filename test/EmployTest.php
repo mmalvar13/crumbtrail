@@ -126,7 +126,7 @@ class EmployTest extends CrumbTrailTest {
 	 **/
 	public function testDeleteInvalidEmploy() {
 		//create an Employ and try to delete it without actually inserting it
-		$employ = new Employ(null, $this->company->getCompanyId(), $this->profile->getProfileId());
+		$employ = new Employ($this->company->getCompanyId(), $this->profile->getProfileId());
 		$employ->delete($this->getPDO());
 	}
 
