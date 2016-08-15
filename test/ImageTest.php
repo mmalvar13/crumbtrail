@@ -147,7 +147,7 @@ class ImageTest extends CrumbTrailTest {
 	 */
 	public function testDeleteValidImage() {
 		//count the number of rows and save it for later
-		$numRows =$this->getConnection()->getRowCount("image");
+		$numRows = $this->getConnection()->getRowCount("image");
 
 		//create new Image and insert into mySQL
 		$image = new Image(null, $this->company->getCompanyId(),$this->VALID_IMAGEFILETYPE, $this->VALID_IMAGEFILENAME);
@@ -155,7 +155,7 @@ class ImageTest extends CrumbTrailTest {
 
 		//delete the image from mySQL
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("image"));
-		$this->delete($this->getPDO());
+		$image->delete($this->getPDO());
 
 		//grab the data from mySQL and enforce that the Image does not exist.
 		$pdoImage = Image::getImageByImageId($this->getPDO(), $image->getImageId());
