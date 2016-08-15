@@ -3,84 +3,66 @@ namespace Edu\Cnm\CrumbTrail\Test;
 
 use Edu\Cnm\CrumbTrail\{Point};
 
-// Require the project test parameters.
-require_once("CrumbTrailTest.php");
-
-// Require the class being tested.
-require_once(dirname(__DIR__) . "/public_html/php/classes/autoload.php");
-
 /**
  * PHPUnit test for the Point class
  *
+ * Dylan: Since this class is isolated from mySQL, there's no need for the parent class nor autoloader.
+ *
  @see Point
  @author Kevin Lee Kirk
- *
  */
 
-class PointTest extends CrumbTrailTest {
+class PointTest extends PHPUnit_Framework_TestCase {
 
-	// Set the protected parameter values.
-
+	// Set the protected parameter values: create a valid point.
 	/**
-	 * latitude for this point
+	 * Latitude for this point.
 	 * @var float $pointLatitude
 	 */
 	protected $VALID_POINTLATITUDE = 37.123456;
-
 	/**
-	 * updated latitude for this point
-	 * @var float $pointLatitude
-	 */
-	protected $VALID_POINTLATITUDE2 = 37.234567;
-
-	/**
-	 * longitude for this point
+	 * Longitude for this point.
 	 * @var float $pointLongitude
 	 */
 	protected $VALID_POINTLONGITUDE = -77.123456;
 
+
 	/**
-	 * updated longitude for this point
-	 * @var float $pointLongitude
+	 * Create a point and assert the accessor methods return the correct values.
+	 * Use the four argument version of assertEquals() to make sure float values are about equal.
+	 * This is because 2.17117 should be the same as 2.171169999999999999999983.
+	 *
+	 * PHP documentation: So never trust floating number results to the last digit,
+	 * and do not compare floating point numbers directly for equality.
 	 */
-	protected $VALID_POINTLONGITUDE2 = -77.234567;
-
-
-
-// snippet from Dylan:
-// <?php
-
-// since this class is isolated from mySQL, there's no need for the parent class nor autoloader
-
-class PointTest extends PHPUnit_Framework_TestCase {
-
 	public function testValidPoint() {
-//		// create a point and assert the accessor methods return the correct values
-//		// use the four argument version of assertEquals() to make sure float values
-		// this is because 2.17117 should be the same as 2.171169999999999999999983
 
-$point = new Point($this->VALID_POINTLATITUDE, $this->VALID_POINTLONGITUDE);
+		 $point = new Point($this->VALID_POINTLATITUDE, $this->VALID_POINTLONGITUDE);
 
-		$this->assertEquals($pdoProfile ??? ->getPointLatitude(), $this->VALID_POINTLATITUDE);
-		$this->assertEquals($pdoProfile ??? ->getPointLongitude(), $this->VALID_POINTLONGITUDE);
+		$expectedLatitude = $VALID_POINTLATITUDE;
+		assertEquals(float $expectedLatitude, float $this->VALID_POINTLATITUDE[string $message = 'Expected latitude not equal to actual latitude, within 0.000001', float $delta = 0.000001]);
 
-//		}
+		$expectedLongitude = $VALID_POINTLONGITUDE;
+		assertEquals(float $expectedLongitude, float $this->VALID_POINTLONGITUDE[string $message = 'Expected longitude not equal to actual longitude, within 0.000001', float $delta = 0.000001]);
+	}
 
 
 	public function testInvalidPoint() {
-//		// try to create a point out of range and expect an exception
-			// i.e. if latitude > 90 or < -90,  longitude > 180 or < -180, then throw an exception
+		// Create a point that is out of range, and expect an exception to be thrown.
+		//	If latitude > 90 or < -90,  longitude > 180 or < -180, then throw an exception
 
-//		}
+		$point = new Point($this->VALID_POINTLATITUDE, $this->VALID_POINTLONGITUDE);
 
+		if ($this->pointLatitude > 180)
+			throw()
 
+		if ($this->pointLatitude < -180)
 
-}
+		if ($this->pointLatitude > 90)
 
+		if ($this->pointLatitude < -90)
 
-
-
-
+	}
 }
 
 
