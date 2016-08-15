@@ -184,7 +184,7 @@ class TruckTest extends CrumbTrailTest {
 		$results = Truck::getAllTrucks($this->getPDO());
 		$this->assertEquals($numRows +1, $this->getConnection()->getRowCount("truck"));
 		$this->assertCount(1, $results);
-		$this->assertContainOnlyInstancesOf("Edu\\Cnm\\CrumbTrail\\Truck", $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\CrumbTrail\\Truck", $results);
 
 		//grab the result from the array and validate it
 		$pdoTruck = $results[0];
