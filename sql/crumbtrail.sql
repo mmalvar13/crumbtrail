@@ -78,13 +78,13 @@ CREATE TABLE company (
 
 
 CREATE TABLE employ(
-	employCompanyId INT UNSIGNED NOT NULL,
 	employProfileId INT UNSIGNED NOT NULL,
-	INDEX(employCompanyId),
+	employCompanyId INT UNSIGNED NOT NULL,
 	INDEX(employProfileId),
-	FOREIGN KEY(employCompanyId) REFERENCES company(companyId),
+	INDEX(employCompanyId),
 	FOREIGN KEY(employProfileId) REFERENCES profile(profileId),
-	PRIMARY KEY(employCompanyId, employProfileId)
+	FOREIGN KEY(employCompanyId) REFERENCES company(companyId),
+	PRIMARY KEY(employProfileId, employCompanyId)
 );
 
 
