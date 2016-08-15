@@ -47,7 +47,7 @@ class Image implements \JsonSerializable {
 	 * @param string $newImageFileType
 	 * @param string $newImageFileName
 	 * @throws \RangeException
-	 * @throws \InvalidArgumentException
+	 * @throws \InvalidArgumentException if the image is not a JPG, Jpeg, or PNG
 	 * @throws \PDOException
 	 */
 	public function __construct(int $newImageId = null, int $newImageCompanyId, string $newImageFileType, string $newImageFileName) {
