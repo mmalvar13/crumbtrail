@@ -56,10 +56,10 @@ class PointTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testInvalidPoint() {
 
-		$invalidLatitude = float 181;
+		$invalidLatitude = 181;
 		// $floatInvalidLatitude = floatval($invalidLatitude);
 
-		$invalidLongitude = float 91;
+		$invalidLongitude = 91;
 		// $floatInvalidLongitude = floatval($invalidLongitude);
 
 		$point = new Point($this->$invalidLatitude, $this->$invalidLongitude);
