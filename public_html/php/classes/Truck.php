@@ -27,8 +27,8 @@ class Truck implements \JsonSerializable {
 
 //constructor will go here//
 	/**
-	 * Truck constructor.
-	 * @param int|null $newTruckId
+	 * Truck constructor
+	 * @param int|null $newTruckId id of the truck or null if new truck
 	 * @param int $newTruckCompanyId
 	 * @throws \RangeException
 	 * @throws \TypeError
@@ -53,7 +53,7 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @param int $truckId truck id to search for
-	 * @return Truck|null Image found or null if not found
+	 * @return truck|null Truck found or null if not found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
@@ -64,19 +64,26 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 		}
 		//query template
 		$query = "SELECT truckId, truckCompanyId FROM truck WHERE truckId =:truckId";
+
+		//prepare template
 		$statement = $pdo->prepare($query);
+
 		//bind the truck id to the place holder im the template
 		$parameters = ["truckId" => $truckId];
+
+		//Execute statement
 		$statement->execute($parameters);
 
-		//grab image from mySQL
+		//grab truck from mySQL
 		try {
-			$truck =null;
+			$truck = null;
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
+
 			if($row !==false) {
 				$truck = new Truck($row["truckId"], $row["truckCompanyId"]);
 			}
+
 		} catch(\Exception $exception) {
 			//if throw couldn't be converted, rethrow it
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
@@ -85,7 +92,7 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 	}
 
 	/**
-	 * gets truck by company Id
+	 * gets truck by truckCompany Id
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @param int, $truckCompanyId truck to search for
@@ -161,7 +168,7 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 	//insert method here
 
 	/**
-	 * mutator method for truck id
+	 * mutator method for truckId
 	 *
 	 * @param int|null $newTruckId new value of truck id
 	 * @throws \RangeException if $newTruckId is negative
@@ -170,7 +177,7 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 	 **/
 	public function setTruckId(int $newTruckId = null) {
 
-		if($newTruckId === null){
+		if($newTruckId === null) {
 			$this->truckId = null;
 			return;
 		}
