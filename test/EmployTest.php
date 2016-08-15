@@ -73,7 +73,7 @@ class EmployTest extends CrumbTrailTest {
 
 	/**
 	 * test inserting an Employ that already exists
-	 * @expectedException PDOException
+	 * @expectedException /PDOException
 	 **/
 	public function testInsertInvalidEmploy() {
 		//create an Employ with a non null composite key (employProfileId and employCompanyId) and watch it fail
@@ -90,7 +90,7 @@ class EmployTest extends CrumbTrailTest {
 
 //	/**
 //	 *test updating an Employ that already exists
-//	 * @expectedException PDOException
+//	 * @expectedException /PDOException
 //	 * we wouldn't really do this right? but i will write it anyway. idk, maybe if we are adding multiple companies to a profile we would update it.
 //	 **/
 //	public function testUpdateInvalidEmploy() {
@@ -122,7 +122,7 @@ class EmployTest extends CrumbTrailTest {
 
 	/**
 	 * test deleting an Employ that does not exist
-	 * @expectedException PDOException
+	 * @expectedException /PDOException
 	 **/
 	public function testDeleteInvalidEmploy() {
 		//create an Employ and try to delete it without actually inserting it
