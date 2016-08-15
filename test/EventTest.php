@@ -191,7 +191,7 @@ class EventTest extends CrumbTrailTest{
 	public function testDeleteInvalidEvent(){
 		//create an Event and try to delete it without actually inserting it
 		$event = new Event(null, $this->truck->getTruckId(), $this->VALID_EVENTEND, $this->VALID_EVENTLOCATION, $this->VALID_EVENTSTART);
-		//this is where you would insert it but you DONT because you're a noob!
+		//this is where you would insert it but you DONT because you're a noob! <-- lol
 		$event->delete($this->getPDO());
 	}
 
