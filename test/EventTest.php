@@ -253,7 +253,7 @@ class EventTest extends CrumbTrailTest{
 	 **/
 	public function testGetInvalidEventByEventTruckId(){
 		//grab an event by searching for content that does not exist
-		$event = Event::getEventByEventTruckId($this->getPDO(), "sorry, but you're the worst. :(");
+		$event = Event::getEventByEventTruckId($this->getPDO(), CrumbTrailTest::INVALID_KEY);
 		$this->assertCount(0, $event);
 	}
 
