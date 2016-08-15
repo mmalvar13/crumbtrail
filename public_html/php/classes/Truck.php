@@ -207,7 +207,7 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 	//getFooByBar
 
 	/**
-	 * inserts this truck into mySQL
+	 * insert this truck into mySQL
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @throws \PDOException when mySQL related errors occur
