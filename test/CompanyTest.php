@@ -182,14 +182,14 @@ class CompanyTest extends CrumbTrailTest {
 
 	/**
 	 * approved of the Company
-	 * @var int $VALID_COMPANYAPPROVED
+	 * @var bool $VALID_COMPANYAPPROVED
 	 **/
-	protected $VALID_COMPANYAPPROVED = 0;
+	protected $VALID_COMPANYAPPROVED = null;
 	/**
 	 * approved of the updated Company
-	 * @var int $VALID_COMPANYAPPROVED2
+	 * @var bool $VALID_COMPANYAPPROVED2
 	 **/
-	protected $VALID_COMPANYAPPROVED2 = 1;
+	protected $VALID_COMPANYAPPROVED2 = true;
 
 	/**
 	 * The Profile of the person who created this account = companyAccountCreatorId,

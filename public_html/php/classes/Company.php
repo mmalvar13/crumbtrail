@@ -106,8 +106,9 @@ class Company implements \JsonSerializable {
 
 	/**
 	 * If this company's registration has been approved by us,
-	 * then companyApproved = 1, else 0.
-	 * @var int $companyApproved
+	 * then companyApproved = true, else false,
+	 * default = null
+	 * @var bool $companyApproved
 	 **/
 	private $companyApproved;
 
