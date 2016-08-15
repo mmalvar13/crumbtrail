@@ -159,8 +159,10 @@ class Company implements \JsonSerializable {
 										 string $newCompanyDescription,
 										 string $newCompanyMenuText,
 										 string $newCompanyActivationToken,
-										 int $newCompanyApproved = 0
-	// TODO Is the above the correct way to initialize the Approval to 0
+										 bool $newCompanyApproved = null
+	// TODO Is the above the correct way to initialize the Approval to 0.   change to boolean null=placeholder true false, sql now tinyint
+		// setter allow nulls, to allow for the base case
+		//
 										 ) {
 		try {
 			$this->setCompanyId($newCompanyId);
@@ -874,26 +876,19 @@ class Company implements \JsonSerializable {
 	}
 
 	/**  Accessor method (getter) for companyApproved.
-	 * @return int $companyApproved  The value of companyApproved.
+	 * @return bool $companyApproved  The value of companyApproved.
 	 **/
 	public function getCompanyApproved() {
 		return ($this->companyApproved);
 	}
 
 	/**  Mutator method (setter) for companyApproved.
-	 * @param int|null $newCompanyApproved The new value of companyApproved.
-	 * @throws \RangeException  if #newcompanyApproved is not 0 or 1.
+	 * @param bool $newCompanyApproved The new value of companyApproved.
 	 **/
-	public function setCompanyApproved( int $newCompanyApproved) {
-
-		if($newCompanyApproved === null){
-			throw(new \InvalidArgumentException("Company approval must be set to either 0 or 1"));
-		}
-
-		// Is $newCompanyApproved 0 or 1?  If not, then throw an exception.
-		$arry = [0,1];
-		if(!in_array($newCompanyApproved, $arry, true)){
-			throw(new \InvalidArgumentException("Please enter either '0' or '1' "));
+	public function setCompanyApproved( bool $newCompanyApproved = null) {
+		if ($newCompanyApproved === null) {
+			$this->companyApproved = null;
+			return;
 		}
 
 		// Assign $newCompanyApproved to companyApproved, then store in SQL.

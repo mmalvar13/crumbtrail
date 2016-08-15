@@ -9,7 +9,6 @@ require_once("CrumbTrailTest.php");
 // Require the class being tested.
 require_once(dirname(__DIR__) . "/public_html/php/classes/autoload.php");
 
-
 /**
  * PHPUnit test for the Point class
  *
@@ -34,7 +33,6 @@ class PointTest extends CrumbTrailTest {
 	 */
 	protected $VALID_POINTLATITUDE2 = 37.234567;
 
-
 	/**
 	 * longitude for this point
 	 * @var float $pointLongitude
@@ -54,16 +52,26 @@ class PointTest extends CrumbTrailTest {
 
 // since this class is isolated from mySQL, there's no need for the parent class nor autoloader
 
-// class PointTest extends PHPUnit_Framework_TestCase {
-//	public function testValidPoint() {
+class PointTest extends PHPUnit_Framework_TestCase {
+
+	public function testValidPoint() {
 //		// create a point and assert the accessor methods return the correct values
 //		// use the four argument version of assertEquals() to make sure float values
-	// this is because 2.17117 should be the same as 2.171169999999999999999983
-//	}
+		// this is because 2.17117 should be the same as 2.171169999999999999999983
 
-//	public function testInvalidPoint() {
+$point = new Point($this->VALID_POINTLATITUDE, $this->VALID_POINTLONGITUDE);
+
+		$this->assertEquals($pdoProfile ??? ->getPointLatitude(), $this->VALID_POINTLATITUDE);
+		$this->assertEquals($pdoProfile ??? ->getPointLongitude(), $this->VALID_POINTLONGITUDE);
+
+//		}
+
+
+	public function testInvalidPoint() {
 //		// try to create a point out of range and expect an exception
-//	}
+			// i.e. if latitude > 90 or < -90,  longitude > 180 or < -180, then throw an exception
+
+//		}
 
 
 
