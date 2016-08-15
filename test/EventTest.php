@@ -53,7 +53,7 @@ class EventTest extends CrumbTrailTest{
 	 * point location of the location of this Event
 	 * @var float $VALID_EVENTLOCATION
 	 **/
-	protected $VALID_EVENTLOCATION = null;
+	protected $VALID_EVENTLOCATION = 24; //i had this null first.
 
 	/**
 	 * create dependent objects before running each test
