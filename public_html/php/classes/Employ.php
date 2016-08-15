@@ -156,7 +156,7 @@ class Employ implements \JsonSerializable {
 		$statement = $pdo->prepare($query);
 
 		//bind the member variables to the place holder in the template
-		$parameters = ["employCompayId" => $this->employCompanyId, "employProfileId" => $this->employProfileId];
+		$parameters = ["employCompanyId" => $this->employCompanyId, "employProfileId" => $this->employProfileId];
 		$statement->execute($parameters);
 	}
 
