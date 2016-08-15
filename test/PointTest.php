@@ -36,7 +36,7 @@ class PointTest extends \PHPUnit_Framework_TestCase {
 	 * This is because 2.17117 should be the same as 2.171169999999999999999983.
 	 *
 	 * Never trust floating number results to the last digit,
-	 * and do not compare floating point numbers directly for equality.
+	 * and do not compare floating point numbers  directly for equality.
 	 */
 	public function testValidPoint() {
 
