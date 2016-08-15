@@ -47,25 +47,34 @@ class PointTest extends PHPUnit_Framework_TestCase {
 	}
 
 
+	/**
+	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers).
+
+
+
+
+	 */
+
 	public function testInvalidPoint() {
 		// Create a point that is out of range, and expect an exception to be thrown.
-		//	If latitude > 90 or < -90,  longitude > 180 or < -180, then throw an exception
 
-		$point = new Point($this->VALID_POINTLATITUDE, $this->VALID_POINTLONGITUDE);
+		$invalidLatitude = 181;
+		$invalidLongitude = 91;
+		$point = new Point($this->$invalidLatitude, $this->$invalidLongitude);
 
-		if ($this->pointLatitude > 180)
-			throw()
+		try {
+			$this->setPointLatitude($newCompanyId);
 
-		if ($this->pointLatitude < -180)
+			} catch(\RangeException $range) {
 
-		if ($this->pointLatitude > 90)
-
-		if ($this->pointLatitude < -90)
-
-	}
-}
+			throw(new \RangeException($range->getMessage(), 0, $range));
+			}
 
 
+		* @param int $newCompanyApproved int of the whether the company has been approved by us; 0 = no, 1 = yes.
+	 * @param int $newCompanyAccountCreatorId int of the ProfileId of the creator of this company's account
+	 * @throws \InvalidArgumentException if data types are not valid.
+	 
 
 
 
