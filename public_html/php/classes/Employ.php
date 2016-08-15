@@ -133,7 +133,7 @@ class Employ implements \JsonSerializable {
 	/**
 	 * delete this employ into mySQL.
 	 * @param \PDO $pdo PDO connection object
-	 * @throws |\PDOException when mySQL related errors occur
+	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
 	public function delete(\PDO $pdo) {
