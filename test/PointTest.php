@@ -13,7 +13,7 @@ use Edu\Cnm\CrumbTrail\{Point};
  *
  @see Point
  @author Kevin Lee Kirk and Loren Baca
- */
+ **/
 
 class PointTest extends \PHPUnit_Framework_TestCase {
 
@@ -22,25 +22,25 @@ class PointTest extends \PHPUnit_Framework_TestCase {
 	/**
 	 * Latitude for a valid point.
 	 * @var float $VALID_POINTLATITUDE
-	 */
+	 **/
 	protected $VALID_POINTLATITUDE = 37.123456;
 
 	/**
 	 * Latitude for this invalid point.
 	 * @var float $INVALID_POINTLATITUDE
-	 */
+	 **/
 	protected $INVALID_POINTLATITUDE = 91.000000;
 
 	/**
 	 * Longitude for a valid point.
 	 * @var float $VALID_POINTLONGITUDE
-	 */
+	 **/
 	protected $VALID_POINTLONGITUDE = -77.123456;
 
 	/**
 	 * Longitude for this invalid point.
 	 * @var float $INVALID_POINTLONGITUDE
-	 */
+	 **/
 	protected $INVALID_POINTLONGITUDE = -181.000000;
 
 
@@ -51,7 +51,7 @@ class PointTest extends \PHPUnit_Framework_TestCase {
 	 *
 	 * Never trust floating number results to the last digit,
 	 * and do not compare floating point numbers  directly for equality.
-	 */
+	 **/
 	public function testValidPoint() {
 
 		$point = new Point($this->VALID_POINTLATITUDE, $this->VALID_POINTLONGITUDE);
@@ -63,13 +63,13 @@ class PointTest extends \PHPUnit_Framework_TestCase {
 
 
 	/**
-	 * Create a point  that is out of range, and expect an exception to be thrown.
+	 * Create a point that is out of range, and expect an exception to be thrown.
 	 * We expect an exception because the data values are out of bounds,
 	 * (e.g., latitude > 90 or < -90, or  longitude > 180 or < -180).
 	 *
 	 *  @expectedException \RangeException if lat and long are bad.
 	 *
-	 */
+	 **/
 	public function testInvalidPoint() {
 
 		$point = new Point($this->INVALID_POINTLATITUDE, $this->INVALID_POINTLONGITUDE);
