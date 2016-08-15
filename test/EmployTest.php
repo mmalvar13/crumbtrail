@@ -33,8 +33,8 @@ class EmployTest extends CrumbTrailTest {
 	public final function setUp() {
 		//run the default setUp() method first --beep
 		parent::setUp();
-		//create and insert a Company and Profile to own the test Employ
 
+		//create and insert a Profile to own the test Employ
 		$password = "abc123";
 		$salt = bin2hex(random_bytes(16));
 		$hash = hash_pbkdf2("sha512", $password, $salt, 262144);
@@ -44,6 +44,7 @@ class EmployTest extends CrumbTrailTest {
 
 		$pdoProfile = Profile::getProfileByProfileId($this->getPDO(), $this->profile->getProfileId());
 
+		//create and insert a Company to own the test Employ
 		$this->company = new Company(null, $pdoProfile->getProfileId(), "Terry's Tacos", "terrytacos@tacos.com", "5052345678", "12345", "2345", "attn: MR taco", "345 Taco Street", "taco street 2", "Albuquerque", "NM", "87654", "We are a Taco truck description", "Tacos, Tortillas, Burritos","848484", 0);
 		$this->company->insert($this->getPDO());
 	}
@@ -63,6 +64,8 @@ class EmployTest extends CrumbTrailTest {
 		$pdoEmploy = Employ::getEmployByEmployCompanyIdAndEmployProfileId($this->getPDO(), $employ->getEmployCompanyId(), $employ->getEmployProfileId());
 
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("employ"));
+		$this->assertEquals($pdoEmploy->getEmployCompanyId(), $this->company->getCompanyId());
+		$this->assertEquals($pdoEmploy->getEmployProfileId(), $this->profile->getProfileId());
 	}
 
 	/**
@@ -205,8 +208,6 @@ class EmployTest extends CrumbTrailTest {
 	}
 
 	/**
-	 * dont need to test for grabbing all employs because we already grab employByEmployProfileIdAndEMplotest grabbing all employs
-	 * but idk...maybe we dont...im gonna make one anyway!!
 	 *
 	 * TEST GRABBING ALL EMPLOYS
 	 **/
