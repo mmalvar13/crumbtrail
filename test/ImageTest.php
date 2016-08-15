@@ -44,7 +44,10 @@ class ImageTest extends CrumbTrailTest {
 	 * @var Company company
 	 **/
 	protected $company = null;
-
+	/**
+	 * Profile that the Image belongs to; this is a foreign key relationship
+	 * @var Profile profile
+	 **/
 	protected $profile = null;
 	/**
 	 * create dependent objects before running each test
@@ -60,20 +63,16 @@ class ImageTest extends CrumbTrailTest {
 		$salt = bin2hex(random_bytes(16));
 		$hash = hash_pbkdf2("sha512", $password, $salt, 262144);
 
-		$this->profile = new Profile(null, "Loren", "lorenisthebest@gmail.com", "5057303164", "0000000000000000000000000000000000000000000000000000000000004444", "00000000000000000000000000000022","a", $hash, $salt);
+
+		//create and insert a Profile to own the test image
+		$this->profile = new Profile(null, "Victoria C", "victorious-design.com", "5057303164", "0000000000000000000000000000000000000000000000000000000000004444","00000000000000000000000000000022", "a", $hash , $salt);
 		$this->profile->insert($this->getPDO());
-
 		$pdoProfile = Profile::getProfileByProfileId($this->getPDO(), $this->profile->getProfileId());
-
 
 		//---------------------------------Dummy companies-----------------------------------------
 		//create and insert a company to own the test image
 		$this->company = new Company(null, $pdoProfile->getProfileId(), "Terry's Tacos", "terrytacos@tacos.com", "5052345678", "12345", "2345", "attn: MR Taco", "345 Taco Street", "Taco Street 2", "Albuquerque", "NM", 87654, "We are a Taco truck description", "Tacos, Tortillas, Burritos", "848484", 1);
 		$this->company->insert($this->getPDO());
-
-
-		//create and insert a Profile to own the test image
-		$this->profile = new Profile(null, "Victoria C", "victorious-design.com", "5057303164", "0000000000000000000000000000000000000000000000000000000000004444", "a",$hash , $salt);
 	}
 	/**
 	 * insert valid image and verify that the actual mySQL data matches
@@ -100,7 +99,7 @@ class ImageTest extends CrumbTrailTest {
 
 	public function testInsertInvalidImage() {
 		//create an image with a non null image id and it will fail
-		$image = new Image(CrumbTrailTest::INVALID_KEY, $this->company->getCompanyId(), $this->VALID_IMAGEFILENAME, $this->VALID_IMAGEFILETYPE);
+		$image = new Image(CrumbTrailTest::INVALID_KEY, $this->company->getImageCompanyId(), $this->VALID_IMAGEFILETYPE, $this->VALID_IMAGEFILENAME);
 		$image->insert($this->getPDO());
 	}
 	/**
@@ -111,12 +110,12 @@ class ImageTest extends CrumbTrailTest {
 		$numRows = $this->getConnection()->getRowCount("image");
 
 		// create a new Image and insert into mySQL
-		$image = new Image(null, $this->company->getCompanyId(),$this->VALID_IMAGEFILENAME, $this->VALID_IMAGEFILETYPE);
+		$image = new Image(null, $this->company->getCompanyId(),$this->VALID_IMAGEFILETYPE, $this->VALID_IMAGEFILENAME);
 		$image->insert($this->getPDO());
 
 		//edit the Image and update it in mySQL
-		$image->setImageFileName($this->VALID_IMAGEFILENAME2);
-		$image->setImageFileType($this->VALID_IMAGEFILETYPE2);
+		$image->setImageFileName($this->VALID_IMAGEFILETYPE2);
+		$image->setImageFileType($this->VALID_IMAGEFILENAME2);
 		// now set this up to update
 		$image->update($this->getPDO());
 
@@ -134,7 +133,7 @@ class ImageTest extends CrumbTrailTest {
 	 **/
 	public function testUpdateInvalidImage() {
 		// create an Image, try to update it without actually updating it, watch if fail.
-		$image = new Image(null, $this->company->getCompanyId(), $this->VALID_IMAGEFILENAME,$this->VALID_IMAGEFILETYPE);
+		$image = new Image(null, $this->company->getCompanyId(), $this->VALID_IMAGEFILETYPE,$this->VALID_IMAGEFILENAME);
 		$image->update($this->getPDO());
 	}
 	/**
@@ -145,7 +144,7 @@ class ImageTest extends CrumbTrailTest {
 		$numRows =$this->getConnection()->getRowCount("Image");
 
 		//create new Image and insert into mySQL
-		$image = new Image(null, $this->company->getCompanyId(),$this->VALID_IMAGEFILENAME, $this->VALID_IMAGEFILETYPE);
+		$image = new Image(null, $this->company->getCompanyId(),$this->VALID_IMAGEFILETYPE, $this->VALID_IMAGEFILENAME);
 		$image->insert($this->getPDO());
 
 		//delete the image from mySQL
@@ -164,7 +163,7 @@ class ImageTest extends CrumbTrailTest {
 	 **/
 	public function testDeleteInvalidImage() {
 		//create an Image and try to delete it without actually inserting it
-		$image = new Image(null, $this->company->getCompanyId(), $this->VALID_IMAGEFILENAME, $this->VALID_IMAGEFILETYPE);
+		$image = new Image(null, $this->company->getCompanyId(), $this->VALID_IMAGEFILETYPE, $this->VALID_IMAGEFILENAME);
 		$image->delete($this->getPDO());
 	}
 	/**
@@ -175,7 +174,7 @@ class ImageTest extends CrumbTrailTest {
 		$numRows = $this->getConnection()->getRowCount("image");
 
 		//create a new Image and insert it into mySQL
-		$image = new Image(null, $this->company->getCompanyId(), $this->VALID_IMAGEFILENAME, $this->VALID_IMAGEFILETYPE);
+		$image = new Image(null, $this->company->getCompanyId(), $this->VALID_IMAGEFILETYPE, $this->VALID_IMAGEFILENAME);
 		$image->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields match out expectations
@@ -208,7 +207,7 @@ class ImageTest extends CrumbTrailTest {
 		$numRows = $this->getConnection()->getRowCount("image");
 
 		// create a new Image and insert to mySQL
-		$image = new Image(null, $this->company->getCompanyId(), $this->VALID_IMAGEFILENAME, $this->VALID_IMAGEFILETYPE);
+		$image = new Image(null, $this->company->getCompanyId(), $this->VALID_IMAGEFILETYPE, $this->VALID_IMAGEFILENAME);
 		$image->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields match our expectations

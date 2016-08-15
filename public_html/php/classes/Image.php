@@ -48,6 +48,7 @@ class Image implements \JsonSerializable {
 	 * @param string $newImageFileName
 	 * @throws \RangeException
 	 * @throws \InvalidArgumentException
+	 * @throws \PDOException
 	 */
 	public function __construct(int $newImageId = null, int $newImageCompanyId, string $newImageFileType, string $newImageFileName) {
 		try {
@@ -64,6 +65,148 @@ class Image implements \JsonSerializable {
 
 	}
 	//adding in the accessor method for image.php
+
+	/**
+	 * gets image by image id
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param int $imageId image id to search for
+	 * @return Image|null Image found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getImageByImageId(\PDO $pdo, int $imageId) {
+		//sanitize the imageId before searching
+		if($imageId <=0) {
+			throw(new \PDOException("Image Id is not positive"));
+		}
+		//query template
+		$query = "SELECT imageId, imageCompanyId, imageFileType, imageFileName FROM image WHERE imageId =:imageId";
+		$statement = $pdo->prepare($query);
+		//bind the image id to the place holder in the template
+		$parameters = ["imageId" => $imageId];
+		$statement->execute($parameters);
+
+		//grab image from mySQL
+		try {
+			$image =null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$image = new Image($row["imageId"], $row["imageCompanyId"], $row["imageFileType"], $row["imageFileName"]);
+			}
+		} catch(\Exception $exception) {
+			//if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($image);
+	}
+
+	/**
+	 * gets image by company??
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param int, $imageCompanyId image to search for
+	 * @return \SplFixedArray SplFixedArray of images found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are nor the correct data type
+	 **/
+	public static function getImageByImageCompanyId(\PDO $pdo, int $imageCompanyId) {
+		//sanitize the description? before searching
+		if($imageCompanyId <=0) {
+			throw(new \PDOException("Image Company Id is not positive"));
+		}
+		//query template
+		$query ="SELECT imageId, imageCompanyId, imageFileType, imageFileName FROM image WHERE imageCompanyId= :imageCompanyId";
+		$statement = $pdo->prepare($query);
+		//bind the image company Id to the placeholder template
+		$parameters = ["imageCompanyId" => $imageCompanyId];
+		$statement->execute($parameters);
+		//build an array of images
+		//getting a single image, do i need a fixed array?
+		$images = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !==false) {
+			try {
+				$image = new Image($row["imageId"], $row["imageCompanyId"], $row["imageFileType"], $row["imageFileName"]);
+				$images[$images->key()] = $image;
+				$images->next();
+			} catch(\Exception $exception) {
+				//if row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(),0, $exception));
+			}
+		}
+		return($images);
+	}
+
+	/**
+	 *gets images by image file name
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $imageFileName image file name to search for
+	 * @return \SplFixedArray SplFixedArray of Images found
+	 * @throws \PDOException whe mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getImageByImageFileName(\PDO $pdo, string $imageFileName) {
+		//sanitize the description before searching
+		$imageFileName = trim($imageFileName);
+		$imageFileName = filter_var($imageFileName, FILTER_SANITIZE_STRING);
+		if(empty($imageFileName) === true) {
+			throw(new \PDOException("image file name is invalid"));
+		}
+		//query template
+		$query = "SELECT imageId, imageCompanyId, imageFileType, imageFileName FROM image WHERE imageFileName LIKE :imageFileName";
+		$statement = $pdo->prepare($query);
+		//bind the image file name to the place holder in the template
+		$imageFileName = "%imageFileName%";
+		$parameters = ["imageFileName" => $imageFileName];
+		$statement->execute($parameters);
+		//array of images?
+		$imageFileName = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$image = new Image($row["imageId"], $row["imageCompanyId"], $row["imageFileType"], ["imageFileName"]);
+				$images[$image->key()] =$image;
+				$images->next();
+			} catch(\Exception $exception) {
+				//if the row can't be converted,rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($images);
+	}
+
+	/** gets all images
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @return \SplFixedArray SplFixedArray of Images found or null if not found
+	 * @throws \PDOException when mySQL related error occur
+	 * @throws \TypeError when variables are nor the correct data type
+	 **/
+	public static function getAllimages(\PDO $pdo) {
+		//query template
+		//Do I need to select all attributes? Should I exclude file type?
+		$query = "SELECT imageId, imageCompanyId, imageFileType, imageFileName FROM image";
+		$statement = $pdo->prepare($query);
+		$statement->execute();
+		//build an array of images
+		$images = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$image = new Image($row["imageId"], ["imageCompanyId"], ["imageFileType"], ["imageFileName"]);
+				$images[$images->key()] =$image;
+				$images->next();
+			} catch(\Exception $exception) {
+				//if row can't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return ($images);
+	}
+
 	/**
 	 * accessor method for image id
 	 *
@@ -113,6 +256,8 @@ class Image implements \JsonSerializable {
 		//convert and store
 		$this->imageCompanyId = $newImageCompanyId;
 	}
+	// start the PDO section here
+	//insert method here
 
 	/** accessor method for image file type
 	 *
@@ -121,6 +266,8 @@ class Image implements \JsonSerializable {
 	public function getImageFileType() {
 		return $this->imageFileType;
 	}
+
+	//delete method here
 
 	/**
 	 * mutator for image file type
@@ -138,6 +285,7 @@ class Image implements \JsonSerializable {
 		//convert and store
 		$this->imageFileType = $newImageFileType;
 	}
+	//update method here
 
 	/**
 	 * accessor for the image file name
@@ -147,6 +295,8 @@ class Image implements \JsonSerializable {
 	public function getImageFileName() {
 		return $this->imageFileName;
 	}
+	//getFooByBar
+	//need this explained?
 
 	/**
 	 * mutator for image file name
@@ -161,8 +311,7 @@ class Image implements \JsonSerializable {
 		//convert and store
 		$this->imageFileName = $newImageFileName;
 	}
-	// start the PDO section here
-	//insert method here
+
 	/**
 	 * inserts this image into mySQL
 	 *
@@ -182,12 +331,11 @@ class Image implements \JsonSerializable {
 
 		$parameters = ["imageCompanyId" => $this->imageCompanyId, "imageFileType" => $this ->imageFileType, "imageFileName" => $this->imageFileName];
 		$statement->execute($parameters);
-		
+
 		//update the null imageId with what SQL just gave us
 		$this->imageId = intval($pdo->lastInsertId());
 	}
 
-	//delete method here
 	/**
 	 * deletes this image from mySQL
 	 *
@@ -208,7 +356,7 @@ class Image implements \JsonSerializable {
 		$parameters = ["imageId" =>$this->imageId];
 		$statement->execute($parameters);
 	}
-	//update method here
+
 	/**
 	 *updates the image in mySQL
 	 * @param \PDO $pdo PDO connection object
@@ -222,149 +370,11 @@ class Image implements \JsonSerializable {
 		}
 		$query = "UPDATE image SET imageCompanyId = :imageCompanyId, imageFileType = :imageFileType, imageFileName =:imageFileName WHERE imageId = :imageId ";
 		$statement = $pdo->prepare($query);
-		
+
 		$parameters = ["imageCompanyId" => $this->imageCompanyId, "imageFileType" =>$this->imageFileType, "imageFileName" =>$this->imageFileName];
 		$statement->execute($parameters);
 	}
-	//getFooByBar
-	//need this explained?
-	/**
-	 * gets image by image id
-	 *
-	 * @param \PDO $pdo PDO connection object
-	 * @param int $imageId image id to search for
-	 * @return Image|null Image found or null if not found
-	 * @throws \PDOException when mySQL related errors occur
-	 * @throws \TypeError when variables are not the correct data type
-	 **/
-	public static function getImageByImageId(\PDO $pdo, int $imageId) {
-		//sanitize the imageId before searching
-		if($imageId <=0) {
-			throw(new \PDOException("Image Id is not positive"));
-		}
-		//query template
-		$query = "SELECT imageId, imageCompanyId, imageFileType, imageFileName FROM image WHERE imageId =:imageId";
-		$statement = $pdo->prepare($query);
-		//bind the image id to the place holder in the template
-		$parameters = ["imageId" => $imageId];
-		$statement->execute($parameters);
-		
-		//grab image from mySQL
-		try {
-			$image =null;
-			$statement->setFetchMode(\PDO::FETCH_ASSOC);
-			$row = $statement->fetch();
-			if($row !== false) {
-				$image = new Image($row["imageId"], $row["imageCompanyId"], $row["imageFileType"], $row["imageFileName"]);
-			}
-		} catch(\Exception $exception) {
-			//if the row couldn't be converted, rethrow it
-			throw(new \PDOException($exception->getMessage(), 0, $exception));
-		}
-		return($image);
-	}
-	/**
-	 * gets image by company??
-	 *
-	 * @param \PDO $pdo PDO connection object
-	 * @param int, $imageCompanyId image to search for
-	 * @return \SplFixedArray SplFixedArray of images found
-	 * @throws \PDOException when mySQL related errors occur
-	 * @throws \TypeError when variables are nor the correct data type
-	 **/
-	public static function getImageByImageCompanyId(\PDO $pdo, int $imageCompanyId) {
-		//sanitize the description? before searching
-		if($imageCompanyId <=0) {
-			throw(new \PDOException("Image Company Id is not positive"));
-		}
-		//query template
-		$query ="SELECT imageId, imageCompanyId, imageFileType, imageFileName FROM image WHERE imageCompanyId= :imageCompanyId";
-		$statement = $pdo->prepare($query);
-		//bind the image company Id to the placeholder template
-		$parameters = ["imageCompanyId" => $imageCompanyId];
-		$statement->execute($parameters);
-		//build an array of images
-		//getting a single image, do i need a fixed array?
-		$images = new \SplFixedArray($statement->rowCount());
-		$statement->setFetchMode(\PDO::FETCH_ASSOC);
-		while(($row = $statement->fetch()) !==false) {
-			try {
-				$image = new Image($row["imageId"], $row["imageCompanyId"], $row["imageFileType"], $row["imageFileName"]);
-				$images[$images->key()] = $image;
-				$images->next();
-			} catch(\Exception $exception) {
-				//if row couldn't be converted, rethrow it
-				throw(new \PDOException($exception->getMessage(),0, $exception));
-			}
-		}
-		return($images);
-	}
-	/**
-	 *gets images by image file name
-	 * 
-	 * @param \PDO $pdo PDO connection object
-	 * @param string $imageFileName image file name to search for
-	 * @return \SplFixedArray SplFixedArray of Images found
-	 * @throws \PDOException whe mySQL related errors occur
-	 * @throws \TypeError when variables are not the correct data type
-	 **/
-	public static function getImageByImageFileName(\PDO $pdo, string $imageFileName) {
-		//sanitize the description before searching
-		$imageFileName = trim($imageFileName);
-		$imageFileName = filter_var($imageFileName, FILTER_SANITIZE_STRING);
-		if(empty($imageFileName) === true) {
-			throw(new \PDOException("image file name is invalid"));
-		}
-		//query template
-		$query = "SELECT imageId, imageCompanyId, imageFileType, imageFileName FROM image WHERE imageFileName LIKE :imageFileName";
-		$statement = $pdo->prepare($query);
-		//bind the image file name to the place holder in the template
-		$imageFileName = "%imageFileName%";
-		$parameters = ["imageFileName" => $imageFileName];
-		$statement->execute($parameters);
-		//array of images?
-		$imageFileName = new \SplFixedArray($statement->rowCount());
-		$statement->setFetchMode(\PDO::FETCH_ASSOC);
-		while(($row = $statement->fetch()) !== false) {
-			try {
-				$image = new Image($row["imageId"], $row["imageCompanyId"], $row["imageFileType"], ["imageFileName"]);
-				$images[$image->key()] =$image;
-				$images->next();
-			} catch(\Exception $exception) {
-				//if the row can't be converted,rethrow it
-				throw(new \PDOException($exception->getMessage(), 0, $exception));
-			}
-		}
-		return($images);
-	}
-	/** gets all images
-	 *
-	 * @param \PDO $pdo PDO connection object
-	 * @return \SplFixedArray SplFixedArray of Images found or null if not found
-	 * @throws \PDOException when mySQL related error occur
-	 * @throws \TypeError when variables are nor the correct data type
-	 **/
-	public static function getAllimages(\PDO $pdo) {
-		//query template
-		//Do I need to select all attributes? Should I exclude file type?
-		$query = "SELECT imageId, imageCompanyId, imageFileType, imageFileName FROM image";
-		$statement = $pdo->prepare($query);
-		$statement->execute();
-		//build an array of images
-		$images = new \SplFixedArray($statement->rowCount());
-		$statement->setFetchMode(\PDO::FETCH_ASSOC);
-		while(($row = $statement->fetch()) !== false) {
-			try {
-				$image = new Image($row["imageId"], ["imageCompanyId"], ["imageFileType"], ["imageFileName"]);
-				$images[$images->key()] =$image;
-				$images->next();
-			} catch(\Exception $exception) {
-				//if row can't be converted, rethrow it
-				throw(new \PDOException($exception->getMessage(), 0, $exception));
-			}
-		}
-		return ($images);
-	}
+
 	/**
 	 * formats the state variables for JSON serialization
 	 *
