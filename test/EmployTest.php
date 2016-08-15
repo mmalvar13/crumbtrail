@@ -34,16 +34,16 @@ class EmployTest extends CrumbTrailTest {
 		//run the default setUp() method first
 		parent::setUp();
 		//create and insert a Company and Profile to own the test Employ
-		$this->company = new Company(null, 534, "Terry's Tacos", "terrytacos@tacos.com", "5052345678", "12345", "2345", "attn: MR taco", "345 Taco Street", "taco street 2", "Albuquerque", "NM", "87654", "We are a Taco truck description", "Tacos, Tortillas, Burritos","848484", 0);
-		$this->company->insert($this->getPDO());
 
 		$password = "abc123";
 		$salt = bin2hex(random_bytes(16));
 		$hash = hash_pbkdf2("sha512", $password, $salt, 262144);
 
-		$this->profile = new Profile(null, "Loren", "lorenisthebest@gmail.com", "5057303164", "0000000000000000000000000000000000000000000000000000000000004444", "00000000000000000000000000000022","a", $salt, $hash);
+		$this->profile = new Profile(null, "Loren", "lorenisthebest@gmail.com", "5057303164", "0000000000000000000000000000000000000000000000000000000000004444", "00000000000000000000000000000022","a", $hash, $salt);
 		$this->profile->insert($this->getPDO());
 
+		$this->company = new Company(null, 534, "Terry's Tacos", "terrytacos@tacos.com", "5052345678", "12345", "2345", "attn: MR taco", "345 Taco Street", "taco street 2", "Albuquerque", "NM", "87654", "We are a Taco truck description", "Tacos, Tortillas, Burritos","848484", 0);
+		$this->company->insert($this->getPDO());
 
 
 		//I didn't put a date here. is that ok?n  calculate the date(just use the time the unit test was setup
