@@ -84,7 +84,7 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 				$truck = new Truck($row["truckId"], $row["truckCompanyId"]);
 			}
 
-		} catch(\Exception $exception) {
+		}catch(\Exception $exception) {
 			//if throw couldn't be converted, rethrow it
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
@@ -272,7 +272,7 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 			$query = "UPDATE truck SET truckCompanyId = :truckCompanyId WHERE truckId = :truckId";
 			$statement = $pdo->prepare($query);
 
-			$parameters = ["truckCompanyId"=>$this->truckCompanyId, "truckId"=>$this->truckId];
+			$parameters = ["truckCompanyId" => $this->truckCompanyId, "truckId" => $this->truckId];
 			$statement->execute($parameters);
 		}
 

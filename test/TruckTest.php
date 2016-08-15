@@ -67,7 +67,7 @@ class TruckTest extends CrumbTrailTest {
 		$this->profile2 = new Profile(null, "john", "john@gmail.com", "12125555567", "0000000000000000000000000000000000000000000000000000000000005555", "00000000000000000000000000000088", "e", $hash, $salt);
 		// Insert the dummy profile object into the database.
 		$this->profile2->insert($this->getPDO());
-		$pdoProfile2 = Profile::getProfileByProfileId($this->getPDO(), $this->profile->getProfileId());
+		$pdoProfile2 = Profile::getProfileByProfileId($this->getPDO(), $this->profile2->getProfileId());
 
 		//create and insert a company to own the test truck
 		//---------------------company1------------------------------------------------
@@ -126,7 +126,7 @@ class TruckTest extends CrumbTrailTest {
 		//grab the data from mySQL and enforce the fields match our expectations
 		//NOT SURE?
 		$pdoTruck = Truck::getTruckByTruckId($this->getPDO(),
-//		$truck->getTruckId());
+
 		$this->assertEquals($numRows + 1, $this->getConnection() ->getRowCount("truck")));
 		$this->assertEquals($pdoTruck->getTruckCompanyId(), $this->company2->getCompanyId());
 	}
