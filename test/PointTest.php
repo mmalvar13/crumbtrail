@@ -4,7 +4,7 @@ namespace Edu\Cnm\CrumbTrail\Test;
 use Edu\Cnm\CrumbTrail\{Point};
 
 // TODO Is the line below needed?
-require_once ("PHPUnit_Framework_TestCase.php");
+// require_once ("PHPUnit_Framework_TestCase.php");
 
 /**
  * PHPUnit test for the Point class
@@ -56,12 +56,12 @@ class PointTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testInvalidPoint() {
 
-		$invalidLatitude = 181;
-		$floatInvalidLatitude = floatval($invalidLatitude);
+		$invalidLatitude = float 181;
+		// $floatInvalidLatitude = floatval($invalidLatitude);
 
-		$invalidLongitude = 91;
-		$floatInvalidLongitude = floatval($invalidLongitude);
+		$invalidLongitude = float 91;
+		// $floatInvalidLongitude = floatval($invalidLongitude);
 
-		$point = new Point($this->$floatInvalidLatitude, $this->$floatInvalidLongitude);
+		$point = new Point($this->$invalidLatitude, $this->$invalidLongitude);
 	}
 }
