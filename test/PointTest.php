@@ -3,8 +3,6 @@ namespace Edu\Cnm\CrumbTrail\Test;
 
 use Edu\Cnm\CrumbTrail\{Point};
 
-require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
-
 // TODO Is the line below needed?
 require_once ("PHPUnit_Framework_TestCase.php");
 
@@ -44,9 +42,9 @@ class PointTest extends \PHPUnit_Framework_TestCase {
 
 		$point = new Point($this->VALID_POINTLATITUDE, $this->VALID_POINTLONGITUDE);
 
-		$this->assertEquals($VALID_POINTLATITUDE, $this->VALID_POINTLATITUDE, $message = 'Expected latitude not equal to actual latitude, within 0.000001', $delta = 0.000001);
+		assertEquals($VALID_POINTLATITUDE, $this->VALID_POINTLATITUDE, $message = 'Expected latitude not equal to actual latitude, within 0.000001', $delta = 0.000001);
 
-		$this->assertEquals($VALID_POINTLONGITUDE, $this->VALID_POINTLONGITUDE, $message = 'Expected longitude not equal to actual longitude, within 0.000001', $delta = 0.000001);
+		assertEquals($VALID_POINTLONGITUDE, $this->VALID_POINTLONGITUDE, $message = 'Expected longitude not equal to actual longitude, within 0.000001', $delta = 0.000001);
 	}
 
 
