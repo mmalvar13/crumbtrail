@@ -25,6 +25,7 @@ class Employ implements \JsonSerializable {
 	 * Employ class constructor.
 	 * @param int $newEmployProfileId id of employProfile
 	 * @param int $newEmployCompanyId id of employCompany
+	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \RangeException if id is not positive
 	 * @throws \TypeError if data types violate type hints
 	 * @throws \Exception if any other exception occurs
