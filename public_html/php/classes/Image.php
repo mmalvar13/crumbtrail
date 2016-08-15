@@ -280,7 +280,7 @@ class Image implements \JsonSerializable {
 		$validFileType = ["image/jpeg", "image/jpg", "image/png"];
 		$newImageFileType = strtolower($newImageFileType);
 		if(in_array($newImageFileType, $validFileType) === false) {
-			throw(new \InvalidArgumentException("This is not the proper image type. Please insert jpeg, or png"));
+			throw(new \PDOException("This is not the proper image type. Please insert jpeg, or png"));
 		}
 		//convert and store
 		$this->imageFileType = $newImageFileType;
