@@ -272,7 +272,7 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 			$query = "UPDATE truck SET truckCompanyId = :truckCompanyId WHERE truckId = :truckId";
 			$statement = $pdo->prepare($query);
 
-			$parameters = ["truckCompanyId"=>$this->truckCompanyId];
+			$parameters = ["truckCompanyId"=>$this->truckCompanyId, "truckId"=>$this->truckId];
 			$statement->execute($parameters);
 		}
 
