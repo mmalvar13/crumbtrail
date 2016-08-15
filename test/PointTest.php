@@ -3,6 +3,8 @@ namespace Edu\Cnm\CrumbTrail\Test;
 
 use Edu\Cnm\CrumbTrail\{Point};
 
+require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
+
 // TODO Is the line below needed?
 require_once ("PHPUnit_Framework_TestCase.php");
 
@@ -15,7 +17,7 @@ require_once ("PHPUnit_Framework_TestCase.php");
  @author Kevin Lee Kirk
  */
 
-class PointTest extends PHPUnit_Framework_TestCase {
+class PointTest extends \PHPUnit_Framework_TestCase {
 
 	// Set the protected parameter values: create a valid point.
 	/**
