@@ -77,7 +77,8 @@ class EmployTest extends CrumbTrailTest {
 	 **/
 	public function testInsertInvalidEmploy() {
 		//create an Employ with a non null composite key (employProfileId and employCompanyId) and watch it fail
-		$employ = new Employ(CrumbTrailTest::INVALID_KEY, $this->company->getCompanyId(), $this->profile->getProfileId());
+		$employ = new Employ(CrumbTrailTest::INVALID_KEY, CrumbTrailTest::INVALID_KEY);
+		//$this->company->getCompanyId(), $this->profile->getProfileId()); testing this.
 		$employ->insert($this->getPDO());
 	}
 
