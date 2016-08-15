@@ -34,14 +34,14 @@ class EventTest extends CrumbTrailTest{
 	 *timestamp of the end of this Event; this one does not start all null...right? or does it stsart at null for the sake of the test??
 	 * @var \DateTime $VALID_EVENTEND
 	 **/
-	protected $VALID_EVENTEND = "1999-08-23 16:34:24";
+	protected $VALID_EVENTEND = null;
 
 	/**
 	 * DO WE NEED THIS???
 	 * timestamp of updated end of this event;
 	 *@var \DateTime $VALID_EVENTEND
 	 */
-	protected $VALID_EVENTEND2 = "2016-08-15 13:26:34";
+	protected $VALID_EVENTEND2 = null;
 
 	/**
 	 * timestamp of the start of this Event; this starts as null and is assigned later
@@ -69,6 +69,7 @@ class EventTest extends CrumbTrailTest{
 		$salt = bin2hex(random_bytes(16));
 		$hash = hash_pbkdf2("sha512", $password, $salt, 262144);
 
+
 		$this->profile = new Profile(null, "Loren", "lorenisthebest@gmail.com", "5057303164", "0000000000000000000000000000000000000000000000000000000000004444", "00000000000000000000000000000022","a", $hash, $salt);
 		$this->profile->insert($this->getPDO());
 
@@ -86,8 +87,11 @@ class EventTest extends CrumbTrailTest{
 		$this->truck->insert($this->getPDO());
 
 		//calculate the date this event starts (just use the time the unit was setup
-//		$this->VALID_EVENTSTART = new \DateTime();
-
+		$date = new \DateTime('2000-01-01');
+		$date->add(new \DateInterval('TP4H'));
+		$this->VALID_EVENTSTART = new \DateTime();
+		$this->VALID_EVENTEND = new \DateTime();
+//datetimeadd
 		//date time class has an add method.
 		//calculate the date this event ends?? do i?? i have no idea. what is this for??
 	}
