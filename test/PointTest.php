@@ -53,8 +53,12 @@ class PointTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testInvalidPoint() {
 
-		$invalidLatitude = float 181;
-		$invalidLongitude = float 91;
-		$point = new Point(float $this->$invalidLatitude, float $this->$invalidLongitude);
+		$invalidLatitude = 181;
+		$floatInvalidLatitude = floatval($invalidLatitude);
+
+		$invalidLongitude = 91;
+		$floatInvalidLongitude = floatval($invalidLongitude);
+
+		$point = new Point($this->$floatInvalidLatitude, $this->$floatInvalidLongitude);
 	}
 }
