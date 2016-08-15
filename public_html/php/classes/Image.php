@@ -273,8 +273,9 @@ class Image implements \JsonSerializable {
 	 * mutator for image file type
 	 *
 	 * @param string $newImageFileType new value of image file type
-	 * @throw \InvalidArgumentException if $newImageFileType is not a string
-	 * @throw \RangeException if $newImageFileType > 10 characters
+	 * @throws \InvalidArgumentException if $newImageFileType is not a string
+	 * @throws \RangeException if $newImageFileType > 10 characters
+	 * @throws \PDOException
 	 */
 	public function setImageFileType(string $newImageFileType) {
 		$validFileType = ["image/jpeg", "image/jpg", "image/png"];
