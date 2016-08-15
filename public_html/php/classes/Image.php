@@ -163,7 +163,7 @@ class Image implements \JsonSerializable {
 		$parameters = ["imageFileName" => $imageFileName];
 		$statement->execute($parameters);
 		//array of images?
-		$imageFileName = new \SplFixedArray($statement->rowCount());
+		$images = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
