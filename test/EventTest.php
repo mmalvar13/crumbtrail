@@ -100,7 +100,7 @@ class EventTest extends CrumbTrailTest{
 		$numRows = $this->getConnection()->getRowCount("event");
 
 		//create a new Event and insert into mySQL
-		$event = new Event(null, $this->truck->getTruckId(), $this->VALID_EVENTEND, $this->VALID_EVENTLOCATION,$this->VALID_EVENTSTART); //getTruckId or getEventTruckId??
+		$event = new Event(null, null, $this->truck->getTruckId(), $this->VALID_EVENTEND, $this->VALID_EVENTLOCATION,$this->VALID_EVENTSTART); //getTruckId or getEventTruckId??
 		$event->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields match our expectations
