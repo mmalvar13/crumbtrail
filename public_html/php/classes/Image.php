@@ -372,7 +372,7 @@ class Image implements \JsonSerializable {
 		$query = "UPDATE image SET imageCompanyId = :imageCompanyId, imageFileType = :imageFileType, imageFileName =:imageFileName WHERE imageId = :imageId ";
 		$statement = $pdo->prepare($query);
 
-		$parameters = ["imageCompanyId" => $this->imageCompanyId, "imageFileType" =>$this->imageFileType, "imageFileName" =>$this->imageFileName];
+		$parameters = ["imageCompanyId" => $this->imageCompanyId, "imageFileType" =>$this->imageFileType, "imageFileName" =>$this->imageFileName, "imageId"=>$this->imageId];
 		$statement->execute($parameters);
 	}
 
