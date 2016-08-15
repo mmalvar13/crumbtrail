@@ -284,7 +284,7 @@ class Image implements \JsonSerializable {
 			throw(new \PDOException("This is not the proper image type. Please insert jpeg, or png"));
 		}
 		//convert and store
-		$this->imageFileType = $newImageFileType;
+		$this->$validFileType = $newImageFileType;
 	}
 	//update method here
 
