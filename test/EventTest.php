@@ -1,7 +1,7 @@
 <?php
 namespace Edu\Cnm\CrumbTrail\Test;
 
-use Edu\Cnm\CrumbTrail\{Company, Profile, Truck, Event}; //is this what i put here??
+use Edu\Cnm\CrumbTrail\{Company, Point, Profile, Truck, Event}; //is this what i put here??
 
 //grab the project test parameters
 require_once("CrumbTrailTest.php");
@@ -51,9 +51,9 @@ class EventTest extends CrumbTrailTest{
 
 	/**
 	 * point location of the location of this Event
-	 * @var float $VALID_EVENTLOCATION
+	 * @var Point $VALID_EVENTLOCATION
 	 **/
-	protected $VALID_EVENTLOCATION = 24; //i had this null first.
+	protected $VALID_EVENTLOCATION = null; //i had this null first-IT WAS RIIIIGHTT!!lol
 
 	/**
 	 * create dependent objects before running each test
@@ -87,10 +87,13 @@ class EventTest extends CrumbTrailTest{
 		$this->truck->insert($this->getPDO());
 
 		//calculate the date this event starts (just use the time the unit was setup
-		$date = new \DateTime('2000-01-01');
-		$date->add(new \DateInterval('P10D'));
+//		$date = new \DateTime('2000-01-01');
+//		$date->add(new \DateInterval('P1H'));
 		$this->VALID_EVENTSTART = new \DateTime();
-		$this->VALID_EVENTEND = new \DateTime();
+		$this->VALID_EVENTEND = clone $this->VALID_EVENTSTART;
+		$this->VALID_EVENTEND->add(new \DateInterval('PT1H'));
+
+		$this->VALID_EVENTLOCATION = new Point (31.8643553, -112.857099);
 //datetimeadd
 		//date time class has an add method.
 		//calculate the date this event ends?? do i?? i have no idea. what is this for??
