@@ -124,11 +124,11 @@ class TruckTest extends CrumbTrailTest {
 		$truck->setTruckCompanyId($this->company2->getCompanyId());
 		$truck->update($this->getPDO());
 		//grab the data from mySQL and enforce the fields match our expectations
-		//NOT SURE?
-		$pdoTruck = Truck::getTruckByTruckId($this->getPDO(),
 
-		$this->assertEquals($numRows + 1, $this->getConnection() ->getRowCount("truck")));
-		$this->assertEquals($pdoTruck->getTruckCompanyId(), $this->company2->getCompanyId());
+		$pdoTruck = Truck::getTruckByTruckId($this->getPDO(), $truck->getTruckId());
+
+		$this->assertEquals($numRows + 1, $this->getConnection() ->getRowCount("truck"));
+		$this->assertEquals($pdoTruck->getTruckCompanyId(), $this->company2->getCompanyId()); //change back to company 2
 	}
 	/**
 	 * test updating an truck that does not exist
