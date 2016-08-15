@@ -48,6 +48,7 @@ class EmployTest extends CrumbTrailTest {
 		$this->company->insert($this->getPDO());
 
 
+
 		//I didn't put a date here. is that ok?n  calculate the date(just use the time the unit test was setup
 	}
 
@@ -78,7 +79,7 @@ class EmployTest extends CrumbTrailTest {
 	 **/
 	public function testInsertInvalidEmploy() {
 		//create an Employ with a null composite key (employProfileId and employCompanyId) and watch it fail
-		$employ = new Employ(null, null);
+		$employ = new Employ(CrumbTrailTest::INVALID_KEY, CrumbTrailTest::INVALID_KEY);
 		//CrumbTrailTest::INVALID_KEY,$this->company->getCompanyId(), $this->profile->getProfileId());
 		$employ->insert($this->getPDO());
 	}
