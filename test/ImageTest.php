@@ -23,12 +23,12 @@ class ImageTest extends CrumbTrailTest {
 	 * content of the image file type
 	 * @var string $VALID_IMAGEFILETYPE
 	 **/
-	protected $VALID_IMAGEFILETYPE = ".jpg";
+	protected $VALID_IMAGEFILETYPE = "image/jpg";
 	/**
 	 * content of the updated image file type?
 	 * @var string $VALID_IMAGEFILETYPE
 	 **/
-	protected $VALID_IMAGEFILETYPE2 = ".jpeg";
+	protected $VALID_IMAGEFILETYPE2 = "image/jpeg";
 	/**
 	 * content of the image file name
 	 * @var string $VALID_FILENAME
@@ -81,7 +81,8 @@ class ImageTest extends CrumbTrailTest {
 		$numRows = $this->getConnection()->getRowCount("image")
 
 		//create a new Image and insert it into mySQL
-		//$image = new Image(null, $this->company->getCompanyId(), $this->VALID_IMAGEFILETYPE, $this->VALID_IMAGEFILENAME);
+		//$image = new Image(null, $this->company->getCompanyId(), $this->VALID_IMAGEFILETYPE, //$this->VALID_IMAGEFILENAME);
+
 		/$image = new Image(null, $this->company->getCompanyId(), $this->VALID_IMAGEFILETYPE, $this->VALID_IMAGEFILENAME);
 		$image->insert($this->getPDO());//
 
