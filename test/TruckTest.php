@@ -183,15 +183,15 @@ class TruckTest extends CrumbTrailTest {
 		$pdoTruck = $results[0];
 		$this->assertEquals($pdoTruck->getCompanyId(), $this->company->getCompanyId());
 	}
-	/**
-	 * test grabbing a Truck by content that does not exist
-	 * @expectedException \PDOException
-	 **/
-	public function testGetInvalidTruckByTruckContent() {
-		//grab an image by searching for content that does not exist?
-		$truck = Truck::getTruckByTruckId($this->getPDO(), "No truck information found");
-		$this->assertCount(0, $truck);
-	}
+//	/**
+//	 * test grabbing a Truck by content that does not exist
+//	 * @expectedException \PDOException
+//	 **/
+//	public function testGetInvalidTruckByTruckContent() {
+//		//grab an image by searching for content that does not exist?
+//		$truck = Truck::getTruckByTruckId($this->getPDO(), "No truck information found");
+//		$this->assertCount(0, $truck);
+//	}
 	/**
 	 * test grabbing all trucks
 	 **/
