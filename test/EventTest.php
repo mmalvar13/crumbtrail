@@ -86,7 +86,8 @@ class EventTest extends CrumbTrailTest{
 		$this->truck->insert($this->getPDO());
 
 		//calculate the date this event starts (just use the time the unit was setup
-		$this->VALID_EVENTSTART = new \DateTime();
+//		$this->VALID_EVENTSTART = new \DateTime();
+
 		//date time class has an add method.
 		//calculate the date this event ends?? do i?? i have no idea. what is this for??
 	}
