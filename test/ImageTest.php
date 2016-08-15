@@ -25,7 +25,7 @@ class ImageTest extends CrumbTrailTest {
 	 **/
 	protected $VALID_IMAGEFILETYPE = ".jpg";
 	/**
-	 * content of the updated image?
+	 * content of the updated image file type?
 	 * @var string $VALID_IMAGEFILETYPE
 	 **/
 	protected $VALID_IMAGEFILETYPE2 = ".jpeg";
@@ -78,11 +78,12 @@ class ImageTest extends CrumbTrailTest {
 	 * insert valid image and verify that the actual mySQL data matches*
 	 **/ 
 	public function testInsertValidImage() {
-		$numRows = $this->getConnection()->getRowCount("image");
+		$numRows = $this->getConnection()->getRowCount("image")
 
 		//create a new Image and insert it into mySQL
-		$image = new Image(null, $this->company->getCompanyId(), $this->VALID_IMAGEFILETYPE, $this->VALID_IMAGEFILENAME);
-		$image->insert($this->getPDO());
+		//$image = new Image(null, $this->company->getCompanyId(), $this->VALID_IMAGEFILETYPE, $this->VALID_IMAGEFILENAME);
+		/$image = new Image(null, $this->company->getCompanyId(), $this->VALID_IMAGEFILETYPE, $this->VALID_IMAGEFILENAME);
+		$image->insert($this->getPDO());//
 
 		//grab the data from mySQL and enforce the fields to match our expectations
 		$pdoImage = Image::getImageByImageId($this->getPDO(), $image->getImageId());
