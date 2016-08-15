@@ -60,7 +60,7 @@ class EmployTest extends CrumbTrailTest {
 		$numRows = $this->getConnection()->getRowCount("employ");
 
 		//create a new Employ and insert it into mySQL
-		$employ = new Employ($this->company->getCompanyId(), $this->profile->getProfileId());
+		$employ = new Employ($this->profile->getProfileId(),$this->company->getCompanyId());
 		$employ->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields match our expectations
