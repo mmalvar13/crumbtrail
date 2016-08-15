@@ -61,12 +61,16 @@ class Employ implements \JsonSerializable {
 	/**
 	 * mutator method for employProfileId
 	 * @param int $newEmployProfileId new value of employProfileId
+	 * @throws \InvalidArgumentException if $newEmployProfileId is null
 	 * @throws \RangeException if $newEmployProfileId is not positive
 	 * @throws \TypeError if $newEmployProfileId is not an integer
 	 * @throws \Exception if any other exception occurs
 	 **/
 	public function setEmployProfileId(int $newEmployProfileId) {
 		//verify that the profile id is positive
+		if($newEmployProfileId === null){
+			throw(new \InvalidArgumentException("employProfileId cannot be null"));
+		}
 		if($newEmployProfileId <= 0) {
 			throw(new \RangeException("employ profile id is not positive"));
 		}
@@ -92,6 +96,9 @@ class Employ implements \JsonSerializable {
 	 * @throws \Exception if any other exception occurs
 	 **/
 	public function setEmployCompanyId(int $newEmployCompanyId) {
+		if($newEmployCompanyId === null){
+			throw(new \InvalidArgumentException("employCompanyId cannot be null"));
+		}
 		if($newEmployCompanyId <= 0) {
 			throw(new \RangeException("employ company id is not positive"));
 		}
