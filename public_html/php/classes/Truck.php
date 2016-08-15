@@ -210,7 +210,7 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 	 * inserts this truck into mySQL
 	 *
 	 * @param \PDO $pdo PDO connection object
-	 * @throws |\PDOException when mySQL related errors occur
+	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
 		public function insert(\PDO $pdo) {
@@ -232,7 +232,7 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 	 * deletes the truck from mySQL
 	 *
 	 * @param \PDO $pdo PDO connection object
-	 * @throws |\PDOException when mySQL related errors occur
+	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
 		public function delete(\PDO $pdo) {
