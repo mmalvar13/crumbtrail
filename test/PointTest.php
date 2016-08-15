@@ -70,7 +70,7 @@ class PointTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testInvalidPoint() {
 
-		$point = new Point($this->$INVALID_POINTLATITUDE, $this->$INVALID_POINTLONGITUDE);
+		$point = new Point($this->INVALID_POINTLATITUDE, $this->INVALID_POINTLONGITUDE);
 
 	}
 }
