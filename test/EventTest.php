@@ -357,7 +357,7 @@ class EventTest extends CrumbTrailTest{
 	 **/
 	public function testGetInvalidEventByEventEndAndEventStart(){
 		//grab an event by searching for eventStart and eventEnd that do not exist
-		$event = Event::getEventByEventEndAndEventStart($this->getPDO(), CrumbTrailTest::INVALID_KEY, CrumbTrailTest::INVALID_KEY); //these should be date times. what do i do?
+		$event = Event::getEventByEventEndAndEventStart($this->getPDO(),CrumbTrailTest::INVALID_KEY, CrumbTrailTest::INVALID_KEY); //these should be date times. what do i do?
 		$this->assertCount(0, $event);
 	}
 
