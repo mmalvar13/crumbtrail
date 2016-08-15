@@ -73,7 +73,7 @@ class EmployTest extends CrumbTrailTest {
 
 	/**
 	 * test inserting an Employ that already exists
-	 * @expectedException PDOException
+	 * @expectedException \PDOException
 	 **/
 	public function testInsertInvalidEmploy() {
 		//create an Employ with a non null composite key (employProfileId and employCompanyId) and watch it fail
