@@ -68,7 +68,7 @@ class ImageTest extends CrumbTrailTest {
 
 		//---------------------------------Dummy companies-----------------------------------------
 		//create and insert a company to own the test image
-		$this->company = new Company(null, $pdoProfile->getProfileId(), "Terry's Tacos", "terrytacos@tacos.com", "5052345678", "12345", "2345", "attn: MR Taco", "345 Taco Street", "Taco Street 2", "Albuquerque", "NM", 87654, "We are a Taco truck description", "Tacos, Tortillas, Burritos", 84848409878765432123456789099999, 1);
+		$this->company = new Company(null, $pdoProfile->getProfileId(), "Terry's Tacos", "terrytacos@tacos.com", "5052345678", "12345", "2345", "attn: MR Taco", "345 Taco Street", "Taco Street 2", "Albuquerque", "NM", 87654, "We are a Taco truck description", "Tacos, Tortillas, Burritos", "848484", 1);
 		$this->company->insert($this->getPDO());
 
 
