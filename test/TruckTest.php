@@ -1,8 +1,7 @@
 <?php
 namespace Edu\Cnm\CrumbTrail\Test;
 
-use Edu\Cnm\CrumbTrail\{
-	Company, Truck
+use Edu\Cnm\CrumbTrail\{Profile, Company, Truck
 };
 
 //grab the project test parameters
@@ -35,6 +34,11 @@ class TruckTest extends CrumbTrailTest {
 	 **/
 	protected $company2 = null;
 
+	protected $profile = null;
+	protected $profile2 = null;
+
+	protected
+
 
 
 	/**
@@ -45,13 +49,25 @@ class TruckTest extends CrumbTrailTest {
 		//run the default setUp() method first
 		parent::setUp();
 
+		//create a insert for a dummy company so we have a foreign key to profile
+		//THIS WAS 100% MONICA'S IDEA. LOREN IS JUST A KEYBOARD AUTOMATON
+		$password = "abc123";
+		$salt = bin2hex(random_bytes(16));
+		$hash = hash_pbkdf2("sha512", $password, $salt, 262144);
+
+		// Put dummy values into the Profile attributes.
+		$profile = new Profile(null, "Bob", "test@phpunit.de", "12125551212", "0000000000000000000000000000000000000000000000000000000000004444", "00000000000000000000000000000022", "o", $hash, $salt);
+		// Insert the dummy profile object into the database.
+		$profile->insert($this->getPDO());
+
+		$pdoProfile = Profile::getProfileByProfileId($this->getPDO(), $profile->getProfileId());
 
 		//create and insert a company to own the test truck
-		$this->company = new Company(null, $this->company->getCompanyAccountCreatorId(), "Terry's Tacos", "terrytacos@tacos.com", "5052345678", "12345", "2345", "attn: MR Taco", "345 Taco Street", "Taco Street 2", "Albuquerque", "NM", "87654", "We are a Taco truck description", "Tacos, Tortillas, Burritos", "84848409878765432123456789099999", 1);
+		$this->company = new Company(null, $pdoProfile->getProfileId(), "Terry's Tacos", "terrytacos@tacos.com", "5052345678", "12345", "2345", "attn: MR Taco", "345 Taco Street", "Taco Street 2", "Albuquerque", "NM", "87654", "We are a Taco truck description", "Tacos, Tortillas, Burritos", "84848409878765432123456789099999", 1);
 		$this->company->insert($this->getPDO());
 
 		//create and insert a second company to buy the test truck (a truck moving to another company)
-		$this->company2 = new Company(null, $this->company->getCompanyAccountCreatorId(), "Truckina's Crepes", "truckina@trucks.com", "5052345666","45678", "4567", "attn: MRS Crepe", "456 Crepe Street", "CrepeStreet2","Albuquerque", "NM", "45678", "We sell crepes", "crepes, ice cream, cakes", "34343409876543212345678998787654", 0);
+		$this->company2 = new Company(null,$pdoProfile->getProfileId(), "Truckina's Crepes", "truckina@trucks.com", "5052345666","45678", "4567", "attn: MRS Crepe", "456 Crepe Street", "CrepeStreet2","Albuquerque", "NM", "45678", "We sell crepes", "crepes, ice cream, cakes", "34343409876543212345678998787654", 0);
 		$this->company2->insert($this->getPDO());
 	}
 
