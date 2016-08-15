@@ -81,7 +81,7 @@ class ImageTest extends CrumbTrailTest {
 		$numRows = $this->getConnection()->getRowCount("image");
 
 		//create a new Image and insert it into mySQL
-		$image = new Image(null, $this->company->getCompanyId, $this->VALID_IMAGEFILENAME, $this->VALID_IMAGEFILETYPE);
+		$image = new Image(null, $this->company->getCompanyId(), $this->VALID_IMAGEFILENAME, $this->VALID_IMAGEFILETYPE);
 		$image->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields to match our expectations
@@ -95,11 +95,13 @@ class ImageTest extends CrumbTrailTest {
 	 * test inserting an Image that already exists
 	 *
 	 * @expectedException \PDOException
+	 * @throws \RangeException
+	 * @throws \InvalidArgumentException
 	 **/
 
 	public function testInsertInvalidImage() {
 		//create an image with a non null image id and it will fail
-		$image = new Image(CrumbTrailTest::INVALID_KEY, $this->company->getImageCompanyId(), $this->VALID_IMAGEFILETYPE, $this->VALID_IMAGEFILENAME);
+		$image = new Image(CrumbTrailTest::INVALID_KEY, $this->company->getCompanyId(), $this->VALID_IMAGEFILETYPE, $this->VALID_IMAGEFILENAME);
 		$image->insert($this->getPDO());
 	}
 	/**
@@ -122,7 +124,7 @@ class ImageTest extends CrumbTrailTest {
 		//grab the data from mySQL and enforce the fields match our expectations
 		$pdoImage = Image::getImageByImageId($this->getPDO(), $image->getImageId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("tweet"));
-		$this->assertEquals($pdoImage->getCompanyId(), $this->company->getCompanyId());
+		$this->assertEquals($pdoImage->getImageCompanyId(), $this->company->getCompanyId());
 		$this->assertEquals($pdoImage->getImageFileName(), $this->VALID_IMAGEFILENAME2);
 		$this->assertEquals($pdoImage->getImageFileType(), $this->VALID_IMAGEFILETYPE2);
 	}
@@ -130,6 +132,8 @@ class ImageTest extends CrumbTrailTest {
 	 * test updating and image that does not exist
 	 *
 	 * @expectedException \PDOException
+	 * @throws \RangeException
+	 * @throws \InvalidArgumentException
 	 **/
 	public function testUpdateInvalidImage() {
 		// create an Image, try to update it without actually updating it, watch if fail.
@@ -160,6 +164,8 @@ class ImageTest extends CrumbTrailTest {
 	 * test deleting an Image that does not exist
 	 *
 	 * @expectedException \PDOException
+	 * @throws \RangeException
+	 * @throws \InvalidArgumentException
 	 **/
 	public function testDeleteInvalidImage() {
 		//create an Image and try to delete it without actually inserting it
