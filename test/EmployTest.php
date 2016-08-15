@@ -31,7 +31,7 @@ class EmployTest extends CrumbTrailTest {
 	 *create dependent objects before running each test
 	 **/
 	public final function setUp() {
-		//run the default setUp() method first
+		//run the default setUp() method first --beep
 		parent::setUp();
 		//create and insert a Company and Profile to own the test Employ
 
