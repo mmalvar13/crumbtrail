@@ -83,7 +83,7 @@ class ImageTest extends CrumbTrailTest {
 		//create a new Image and insert it into mySQL
 		//$image = new Image(null, $this->company->getCompanyId(), $this->VALID_IMAGEFILETYPE, //$this->VALID_IMAGEFILENAME);
 
-		/$image = new Image(null, $this->company->getCompanyId(), $this->VALID_IMAGEFILETYPE, $this->VALID_IMAGEFILENAME);
+		$image = new Image(null, $this->company->getCompanyId(), $this->VALID_IMAGEFILETYPE, $this->VALID_IMAGEFILENAME);
 		$image->insert($this->getPDO());//
 
 		//grab the data from mySQL and enforce the fields to match our expectations
