@@ -39,11 +39,9 @@ class PointTest extends PHPUnit_Framework_TestCase {
 
 		$point = new Point($this->VALID_POINTLATITUDE, $this->VALID_POINTLONGITUDE);
 
-		$expectedLatitude = $VALID_POINTLATITUDE;
-		assertEquals(float $expectedLatitude, float $this->VALID_POINTLATITUDE[string $message = 'Expected latitude not equal to actual latitude, within 0.000001', float $delta = 0.000001]);
+		assertEquals($VALID_POINTLATITUDE, $this->VALID_POINTLATITUDE[$message = 'Expected latitude not equal to actual latitude, within 0.000001', $delta = 0.000001]);
 
-		$expectedLongitude = $VALID_POINTLONGITUDE;
-		assertEquals(float $expectedLongitude, float $this->VALID_POINTLONGITUDE[string $message = 'Expected longitude not equal to actual longitude, within 0.000001', float $delta = 0.000001]);
+		assertEquals($VALID_POINTLONGITUDE, $this->VALID_POINTLONGITUDE[$message = 'Expected longitude not equal to actual longitude, within 0.000001', $delta = 0.000001]);
 	}
 
 
