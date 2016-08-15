@@ -118,8 +118,8 @@ class ImageTest extends CrumbTrailTest {
 		$image->insert($this->getPDO());
 
 		//edit the Image and update it in mySQL
-		$image->setImageFileName($this->VALID_IMAGEFILETYPE2);
-		$image->setImageFileType($this->VALID_IMAGEFILENAME2);
+		$image->setImageFileType($this->VALID_IMAGEFILETYPE2);
+		$image->setImageFileName($this->VALID_IMAGEFILENAME2);
 		// now set this up to update
 		$image->update($this->getPDO());
 
