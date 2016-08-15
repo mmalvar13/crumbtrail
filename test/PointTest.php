@@ -12,7 +12,7 @@ require_once ("PHPUnit_Framework_TestCase.php");
  * Since this class is isolated from mySQL, there's no need for the parent class nor autoloader.
  *
  @see Point
- @author Kevin Lee Kirk
+ @author Kevin Lee Kirk and Loren Baca
  */
 
 class PointTest extends \PHPUnit_Framework_TestCase {
