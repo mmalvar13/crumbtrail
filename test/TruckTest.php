@@ -188,7 +188,7 @@ class TruckTest extends CrumbTrailTest {
 
 		//grab the result from the array and validate it
 		$pdoTruck = $results[0];
-		$this->assertEquals($pdoTruck->getCompanyId(), $this->company->getCompanyId());
+		$this->assertEquals($pdoTruck->getTruckCompanyId(), $this->company->getCompanyId());
 		}
 	}
 	//This is the end of the Truck unit test, trial two//
