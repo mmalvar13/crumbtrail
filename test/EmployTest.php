@@ -75,23 +75,8 @@ class EmployTest extends CrumbTrailTest {
 		$employ->insert($this->getPDO());
 	}
 
-	/**
-	 * test inserting an Employ, editing it, and then updating it
-	 *
-	 * //BUT YOU WOULDN'T BECAUSE IT IS JUST A COMPOSITE KEY
-	 * //SHOULD I NOT WRITE THIS TEST I GUESS?? idk maybe i will
-	 **/
+/*-----------------Don't need an update test because we don't update foreign keys in this weak entity*--------------/
 
-//	/**
-//	 *test updating an Employ that already exists
-//	 * @expectedException /PDOException
-//	 * we wouldn't really do this right? but i will write it anyway. idk, maybe if we are adding multiple companies to a profile we would update it.
-//	 **/
-//	public function testUpdateInvalidEmploy() {
-//		//create an Employ, try to update it without actually updating it and watch it fail
-//		$employ = new Employ(null, $this->company->getCompanyId(), $this->profile->getProfileId());
-//		$employ->update($this->getPDO());
-//	}
 
 	/**
 	 * test creating an Employ and then deleting it
@@ -204,8 +189,8 @@ class EmployTest extends CrumbTrailTest {
 
 		//grab the result from the array and validate it
 		$pdoEmploy = $results[0];
-		//$this->assertEquals($pdoEmploy->getEmployCompanyId(), $this->company->getCompanyId());
-		//$this->assertEquals($pdoEmploy->getEmployProfileId(), $this->profile->getProfileId());
+		$this->assertEquals($pdoEmploy->getEmployCompanyId(), $this->company->getCompanyId());
+		$this->assertEquals($pdoEmploy->getEmployProfileId(), $this->profile->getProfileId());
 
 
 	}
