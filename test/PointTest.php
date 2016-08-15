@@ -4,7 +4,7 @@ namespace Edu\Cnm\CrumbTrail\Test;
 use Edu\Cnm\CrumbTrail\{Point};
 
 // TODO Is the line below needed?
-require_once ('PHPUnit/Framework/TestCase.php');
+// require_once ('PHPUnit/Framework/TestCase.php');
 
 /**
  * PHPUnit test for the Point class
