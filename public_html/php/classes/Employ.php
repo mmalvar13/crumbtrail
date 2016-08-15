@@ -290,7 +290,7 @@ class Employ implements \JsonSerializable {
 
 	public static function getAllEmploys(\PDO $pdo){
 		//create query template
-		$query = "SELECT employCompanyId, employProfileId FROM employ";
+		$query = "SELECT employProfileId, employCompanyId FROM employ";
 		$statement = $pdo->prepare($query);
 		$statement->execute();
 
@@ -299,7 +299,7 @@ class Employ implements \JsonSerializable {
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row=$statement->fetch()) !== false){
 			try{
-				$employ = new Employ($row["employCompanyId"], $row["employProfileId"]);
+				$employ = new Employ($row["employProfileId"], $row["employCompanyId"]);
 				$employs[$employs->key()] = $employ;
 				$employs->next();
 			}catch(\Exception $exception){
