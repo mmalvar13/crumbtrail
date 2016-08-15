@@ -34,14 +34,14 @@ class EventTest extends CrumbTrailTest{
 	 *timestamp of the end of this Event; this one does not start all null...right? or does it stsart at null for the sake of the test??
 	 * @var \DateTime $VALID_EVENTEND
 	 **/
-	protected $VALID_EVENTEND = null;
+	protected $VALID_EVENTEND = "1999-08-23 16:34:24";
 
 	/**
 	 * DO WE NEED THIS???
 	 * timestamp of updated end of this event;
 	 *@var \DateTime $VALID_EVENTEND
 	 */
-	protected $VALID_EVENTEND2 = null;
+	protected $VALID_EVENTEND2 = "2016-08-15 13:26:34";
 
 	/**
 	 * timestamp of the start of this Event; this starts as null and is assigned later
