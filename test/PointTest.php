@@ -63,7 +63,7 @@ class PointTest extends \PHPUnit_Framework_TestCase {
 
 
 	/**
-	 * Create a point that is out of range, and expect an exception to be thrown.
+	 * Create a point  that is out of range, and expect an exception to be thrown.
 	 * We expect an exception because the data values are out of bounds,
 	 * (e.g., latitude > 90 or < -90, or  longitude > 180 or < -180).
 	 *
