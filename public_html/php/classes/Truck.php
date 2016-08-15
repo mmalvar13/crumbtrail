@@ -165,7 +165,9 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 	 *
 	 * @param int|null $newTruckId new value of truck id
 	 * @throws \RangeException if $newTruckId is negative
-	 */
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are nor the correct data type
+	 **/
 	public function setTruckId(int $newTruckId = null) {
 
 		if($newTruckId === null){
