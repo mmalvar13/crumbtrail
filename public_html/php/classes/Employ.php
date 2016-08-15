@@ -297,7 +297,7 @@ class Employ implements \JsonSerializable {
 		//build an array of employs
 		$employs = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
-		while(($row=$statement->fetch()) !== false){
+		while(($row = $statement->fetch()) !== false){
 			try{
 				$employ = new Employ($row["employProfileId"], $row["employCompanyId"]);
 				$employs[$employs->key()] = $employ;

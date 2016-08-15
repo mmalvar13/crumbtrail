@@ -243,7 +243,7 @@ class EmployTest extends CrumbTrailTest {
 		$results = Employ::getAllEmploys($this->getPDO());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("employ"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\CrumbTrail\\Test", $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\CrumbTrail\\Employ", $results);
 
 		//grab the result from the array and validate it
 		$pdoEmploy = $results[0];
