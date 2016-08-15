@@ -153,7 +153,7 @@ class TruckTest extends CrumbTrailTest {
 
 		//delete the truck from mySQL
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("truck"));
-		$this->delete($this->getPDO());
+		$truck->delete($this->getPDO());
 
 		//grab the data from mySQL and enforce that the Truck does not exist/
 		$pdoTruck = Truck::getTruckByTruckId($this->getPDO(),$truck->getTruckId());
