@@ -17,17 +17,31 @@ use Edu\Cnm\CrumbTrail\{Point};
 
 class PointTest extends \PHPUnit_Framework_TestCase {
 
-	// Set the protected parameter values: create a valid point.
+	// Set the protected parameter values: create a valid point AND an invalid point?!.
+
 	/**
-	 * Latitude for this point.
+	 * Latitude for a valid point.
 	 * @var float $pointLatitude
 	 */
 	protected $VALID_POINTLATITUDE = 37.123456;
+
 	/**
-	 * Longitude for this point.
+	 * Latitude for this invalid point.
+	 * @var float $invalidPointLatitude
+	 */
+	protected $INVALID_POINTLATITUDE = 91.000000;
+
+	/**
+	 * Longitude for a valid point.
 	 * @var float $pointLongitude
 	 */
 	protected $VALID_POINTLONGITUDE = -77.123456;
+
+	/**
+	 * Longitude for this invalid point.
+	 * @var float $invalidPointLongitude
+	 */
+	protected $INVALID_POINTLONGITUDE = -181.000000;
 
 
 	/**
@@ -56,12 +70,6 @@ class PointTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testInvalidPoint() {
 
-		$invalidLatitude = 92;
-		// $floatInvalidLatitude = floatval($invalidLatitude);
-
-		$invalidLongitude = 182;
-		// $floatInvalidLongitude = floatval($invalidLongitude);
-
-		$point = new Point($this->$invalidLatitude, $this->$invalidLongitude);
+		$point = new Point($this->$INVALID_POINTLATITUDE, $this->$INVALID_POINTLONGITUDE);
 	}
 }
