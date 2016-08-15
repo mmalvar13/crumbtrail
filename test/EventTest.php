@@ -1,7 +1,7 @@
 <?php
 namespace Edu\Cnm\CrumbTrail\Test;
 
-use Edu\Cnm\CrumbTrail\{Truck, Event}; //is this what i put here??
+use Edu\Cnm\CrumbTrail\{Company, Profile, Truck, Event}; //is this what i put here??
 
 //grab the project test parameters
 require_once("CrumbTrailTest.php");
@@ -18,6 +18,11 @@ require_once(dirname(__DIR__) . "/public_html/php/classes/autoload.php");
  **/
 
 class EventTest extends CrumbTrailTest{
+	//adding this to test dummy profile
+	protected $company = null;
+
+	//adding this to test
+	protected $profile = null;
 	/**
 	 * Truck that is attending this Event; this is a foreign key relation
 	 * @var Truck truck //this is referring to the truck class
@@ -57,9 +62,28 @@ class EventTest extends CrumbTrailTest{
 		//this is mega wrong, i can feel it.
 		//run the default setUp() method first
 		parent::setUp();
-		//create and insert a (truck or company?) to own the test event. I'm going to try truck.
 
-		$this->truck = new Truck(null, 12345678); //do i need to customize any of this?
+		//create a insert for a dummy company so we have a foreign key to profile
+		//THIS WAS 100% MONICA'S IDEA. LOREN IS JUST A KEYBOARD AUTOMATON
+		$password = "abc123";
+		$salt = bin2hex(random_bytes(16));
+		$hash = hash_pbkdf2("sha512", $password, $salt, 262144);
+
+		//create and insert a (truck or company?) to own the test event. I'm going to try truck.
+		$this->profile = new Profile(null, "Bob", "test@phpunit.de", "12125551212", "0000000000000000000000000000000000000000000000000000000000004444", "00000000000000000000000000000022", "o", $hash, $salt);
+		// Insert the dummy profile object into the database.
+		$this->profile->insert($this->getPDO());
+		$pdoProfile = Profile::getProfileByProfileId($this->getPDO(), $this->profile->getProfileId());
+
+
+		//create and insert a Company to own the test Employ
+		$this->company = new Company(null, $pdoProfile->getProfileId(), "Terry's Tacos", "terrytacos@tacos.com", "5052345678", "12345", "2345", "attn: MR taco", "345 Taco Street", "taco street 2", "Albuquerque", "NM", "87654", "We are a Taco truck description", "Tacos, Tortillas, Burritos","848484", 0);
+		$this->company->insert($this->getPDO());
+
+		$pdoCompany = Company::getCompanyByCompanyId($this->getPDO(), $this->company->getCompanyId());
+
+
+		$this->truck = new Truck(null, $pdoCompany->getCompanyId()); //do i need to customize any of this?
 		$this->truck->insert($this->getPDO());
 
 		//calculate the date this event starts (just use the time the unit was setup
@@ -82,7 +106,7 @@ class EventTest extends CrumbTrailTest{
 		//grab the data from mySQL and enforce the fields match our expectations
 		$pdoEvent = Event::getEventByEventId($this->getPDO(), $event->getEventId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("event"));
-		$this->assertEquals($pdoEvent->getTruckId(),$this->truck->getTruckId());
+		$this->assertEquals($pdoEvent->getEventTruckId(),$this->truck->getTruckId());
 		$this->assertEquals($pdoEvent->getEventEnd(),$this->VALID_EVENTEND);
 		$this->assertEquals($pdoEvent->getEventLocation(), $this->VALID_EVENTLOCATION);
 		$this->assertEquals($pdoEvent->getEventStart(), $this->VALID_EVENTSTART);
