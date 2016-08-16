@@ -71,12 +71,15 @@ class PointTest extends \PHPUnit_Framework_TestCase {
 	 * (e.g., latitude > 90 or < -90, or  longitude > 180 or < -180) .
 	 *
 	 * @expectedException \RangeException if lat and long are out of range.
-	 * @throws \RangeException
 	 *
 	 **/
 	public function testInvalidPoint() {
 
 		$point = new Point($this->INVALID_POINTLATITUDE, $this->INVALID_POINTLONGITUDE);
+
+		$this->assertEquals($point->getPointLatitude(), $this->INVALID_POINTLATITUDE, 'Expected latitude not equal to actual latitude, within 0.000001', 0.000001);
+
+		$this->assertEquals($point->getPointLongitude(), $this->INVALID_POINTLONGITUDE, 'Expected longitude not equal to actual longitude, within 0.000001', 0.000001);
 
 	}
 }
