@@ -6,6 +6,9 @@ use Edu\Cnm\CrumbTrail\{Point};
 //  TODO Is the line below needed?
 //  require_once ("PHPUnit_Framework_TestCase.php");
 
+//  TODO Or maybe the line below?
+use PHPUnit_Framework_TestCase;
+
 /**
  * PHPUnit test for the Point class
  *
@@ -62,7 +65,7 @@ class PointTest extends \PHPUnit_Framework_TestCase {
 	}
 
 
-	/**
+	/**s
 	 * Create a point that is out of range, and expect an exception to be thrown.
 	 * We expect an exception because the data values are out of bounds,
 	 * (e.g., latitude > 90 or < -90, or  longitude > 180 or < -180) .
