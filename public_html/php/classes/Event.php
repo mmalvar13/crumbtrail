@@ -261,7 +261,7 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 	/**
 	 * Updates this Event in mySQL
 	 * @param \PDO $pdo PDO connection object
-	 * @throws |\PDOException if mySQL related errors occur
+	 * @throws \PDOException if mySQL related errors occur
 	 * @throws \TypeError is $pdo is not a PDO connection object
 	 **/
 	public function update(\PDO $pdo) {
@@ -270,13 +270,14 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 			throw(new \PDOException("unable to update an event that does not exist"));
 		}
 		//create a query template
-		$query = "UPDATE event SET eventTruckId = :eventTruckId, eventEnd = :eventEnd, eventLocation = :eventLocation, eventStart = :eventStart WHERE eventId = :eventId";
+		$query = "UPDATE event SET eventTruckId = :eventTruckId, eventEnd = :eventEnd, eventLocation = POINT(:eventLocationLong, :eventLocationLat), eventStart = :eventStart WHERE eventId = :eventId";
 		$statement = $pdo->prepare($query);
 
 		//bind the member variables to the place holders in the template
-//		$formattedDate = $this->eventId->format("Y-m-d H:i:s"); do I add this like this?
+		$formattedStartDate = $this->eventStart->format("Y-m-d H:i:s"); //do I add this like this?
+		$formattedEndDate = $this->eventEnd->format("Y-m-d H:i:s"); //do I add this like this?
 
-		$parameters = ["eventTruckId" => $this->eventTruckId, "eventEnd" => $this->eventEnd, "eventLocation" => $this->eventLocation, "eventStart" => $this->eventStart, "eventId" => $this->eventId]; //do i assign start/end to formatted date?? do i add eventId here?
+		$parameters = ["eventTruckId" => $this->eventTruckId, "eventEnd" => $formattedEndDate, "eventLocationLong" => $this->eventLocation->getPointLongitude(), "eventLocationLat" => $this->eventLocation->getPointLatitude(), "eventStart" => $formattedStartDate, "eventId" => $this->eventId]; //do i assign start/end to formatted date?? do i add eventId here?
 
 		$statement->execute($parameters);
 	}
@@ -370,15 +371,18 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
 	public static function getEventByEventLocation(\PDO $pdo, Point $eventLocation) {
-		if($eventLocation < [-180, -90] || $eventLocation > [180, 90]) { //is this how i write the coordinates??
-			throw(new \RangeException("this coordinate is not within the allowed range"));
-		}
+//		if($eventLocation < [-180, -90] || $eventLocation > [180, 90]) { //is this how i write the coordinates??
+//			throw(new \RangeException("this coordinate is not within the allowed range"));
+//		}
 		//create query template
-		$query = "SELECT eventId, eventTruckId, eventEnd, X(eventLocation) AS eventLocationLong, Y(eventLocation) AS eventLocationLat, eventStart FROM event WHERE $eventLocation = :eventLocation";
+		$query = "SELECT eventId, eventTruckId, eventEnd, X(eventLocation) AS eventLocationLong, Y(eventLocation) AS eventLocationLat, eventStart FROM event WHERE eventLocation = POINT(:eventLocationLong, :eventLocationLat)";
 		$statement = $pdo->prepare($query);
 
 		//bind the eventLocation to the placeholder in the template
-		$parameters = ["eventLocation" => $eventLocation];
+		$parameters = ["eventLocationLong" => $eventLocation->getPointLongitude(), "eventLocationLat" => $eventLocation->getPointLatitude()];
+
+//		$parameters = ["eventLocationLong" => $this->eventLocation->getPointLongitude(), "eventLocationLat"=>$event->eventLocation->getPointLatitude()];
+
 		$statement->execute($parameters);
 
 		//build an array of events

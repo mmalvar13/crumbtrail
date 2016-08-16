@@ -95,7 +95,7 @@ class EventTest extends CrumbTrailTest{
 		$this->VALID_EVENTEND2= clone $this->VALID_EVENTSTART;
 		$this->VALID_EVENTEND2->add(new \DateInterval('PT1H30M'));
 
-		$this->VALID_EVENTLOCATION = new Point (31.8643553, -112.857099);
+		$this->VALID_EVENTLOCATION = new Point (-112.857099, 31.8643553);
 //datetimeadd
 		//date time class has an add method.
 		//calculate the date this event ends?? do i?? i have no idea. what is this for??
@@ -132,6 +132,17 @@ class EventTest extends CrumbTrailTest{
 	}
 
 	/**
+	 * test updating an Event that already exists
+	 * @expectedException \PDOException
+	 * //so this is basically saying you're going to update something without changing anything?? like already having your end time at 3 and then "updating" it to end at 3?
+	 */
+	public function testUpdateInvalidEvent(){
+		//create an Event, try to update it without actually updating it and watch it fail
+		$event = new Event(null, $this->truck->getTruckId(), $this->VALID_EVENTEND, $this->VALID_EVENTLOCATION, $this->VALID_EVENTSTART);
+		$event->update($this->getPDO());
+	}
+
+	/**
 	 * test inserting an Event, editing it, and then updating it
 	 *
 	 * Here, what can we update? in the tweet example it gave tweet content as being updated. for our event is there anything we can actually update? i guess we can update the event end, by stopping it before. but updating the event location and the event start would just create new events. right?
@@ -155,17 +166,6 @@ class EventTest extends CrumbTrailTest{
 		$this->assertEquals($pdoEvent->getEventEnd(), $this->VALID_EVENTEND2);
 		$this->assertEquals($pdoEvent->getEventLocation(), $this->VALID_EVENTLOCATION);
 		$this->assertEquals($pdoEvent->getEventStart(), $this->VALID_EVENTSTART);
-	}
-
-	/**
-	 * test updating an Event that already exists
-	 * @expectedException /PDOException //why do some of them have exceptions in the doc blocks and some dont??
-	 * //so this is basically saying you're going to update something without changing anything?? like already having your end time at 3 and then "updating" it to end at 3?
-	 */
-	public function testUpdateInvalidEvent(){
-		//create an Event, try to update it without actually updating it and watch it fail
-		$event = new Event(null, $this->truck->getTruckId(), $this->VALID_EVENTEND, $this->VALID_EVENTLOCATION, $this->VALID_EVENTSTART);
-		$event->update($this->getPDO());
 	}
 
 	/**
@@ -282,7 +282,7 @@ class EventTest extends CrumbTrailTest{
 
 		//grab the result from the array and validate it
 		$pdoEvent = $results[0];
-		$this->assertEquals($pdoEvent->getTruckId(), $this->truck->getTruckId());
+		$this->assertEquals($pdoEvent->getEventTruckId(), $this->truck->getTruckId());
 		$this->assertEquals($pdoEvent->getEventEnd(), $this->VALID_EVENTEND);
 		$this->assertEquals($pdoEvent->getEventLocation(), $this->VALID_EVENTLOCATION);
 		$this->assertEquals($pdoEvent->getEventStart(), $this->VALID_EVENTSTART);
@@ -300,7 +300,7 @@ class EventTest extends CrumbTrailTest{
 	/**
 	 * test grabbing an Event by Event Id and Event Truck Id
 	 **/
-	public function testGetValidEventByEventIdAndEventTruckId(){
+	public function testGetValidEventByEventIdAndEventTruckId() {
 		//count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("event");
 
@@ -309,14 +309,9 @@ class EventTest extends CrumbTrailTest{
 		$event->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields match our expectations
-		$results = Event::getEventByEventIdAndEventTruckId($this->getPDO(), $event->getEventId(), $event->getEventTruckId()); //is this right? i put both event id and event truck id here.
+		$pdoEvent = Event::getEventByEventIdAndEventTruckId($this->getPDO(), $event->getEventId(), $event->getEventTruckId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("event"));
-		$this->assertCount(1, $results);
-		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\CrumbTrail\\Event", $results);
-
-		//grab the result from the array and validate it
-		$pdoEvent = $results[0];
-		$this->assertEquals($pdoEvent->getTruckId(), $this->truck->getTruckId());
+		$this->assertEquals($pdoEvent->getEventTruckId(), $this->truck->getTruckId());
 		$this->assertEquals($pdoEvent->getEventEnd(), $this->VALID_EVENTEND);
 		$this->assertEquals($pdoEvent->getEventLocation(), $this->VALID_EVENTLOCATION);
 		$this->assertEquals($pdoEvent->getEventStart(), $this->VALID_EVENTSTART);
@@ -324,12 +319,11 @@ class EventTest extends CrumbTrailTest{
 
 	/**
 	 * Test grabbing an Event by and Event Id and Event Truck Id that don't exist
-	 * @expectedException \PDOException
 	 **/
 	public function testGetInvalidEventByEventIdAndEventTruckId(){
 		//grab an event by searching for event id that does not exist
 		$event = Event::getEventByEventIdAndEventTruckId($this->getPDO(), CrumbTrailTest::INVALID_KEY, CrumbTrailTest::INVALID_KEY);
-		$this->assertCount(0, $event); //says parameter $eventTruckId is missing. do i separate these? or does this have to do with Truck class namespace problems?
+		$this->assertNull($event);
 	}
 
 	/**
@@ -350,7 +344,7 @@ class EventTest extends CrumbTrailTest{
 
 		//grab the result from the array and validate it
 		$pdoEvent = $results[0];
-		$this->assertEquals($pdoEvent->getTruckId(), $this->truck->getTruckId());
+		$this->assertEquals($pdoEvent->getEventTruckId(), $this->truck->getTruckId());
 		$this->assertEquals($pdoEvent->getEventEnd(), $this->VALID_EVENTEND);
 		$this->assertEquals($pdoEvent->getEventLocation(), $this->VALID_EVENTLOCATION);
 		$this->assertEquals($pdoEvent->getEventStart(), $this->VALID_EVENTSTART);
@@ -384,7 +378,7 @@ class EventTest extends CrumbTrailTest{
 
 		//grab the result from the array and validate it
 		$pdoEvent = $results[0];
-		$this->assertEquals($pdoEvent->getTruckId(), $this->truck->getTruckId());
+		$this->assertEquals($pdoEvent->getEventTruckId(), $this->truck->getTruckId());
 		$this->assertEquals($pdoEvent->getEventEnd(), $this->VALID_EVENTEND);
 		$this->assertEquals($pdoEvent->getEventLocation(), $this->VALID_EVENTLOCATION);
 		$this->assertEquals($pdoEvent->getEventStart(), $this->VALID_EVENTSTART);
