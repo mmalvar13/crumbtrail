@@ -4,10 +4,10 @@ namespace Edu\Cnm\CrumbTrail\Test;
 use Edu\Cnm\CrumbTrail\{Point};
 
 //  TODO Is the line below needed?
-//  require_once ("PHPUnit_Framework_TestCase.php");
+require_once ("PHPUnit_Framework_TestCase.php");
 
 //  TODO Or maybe the line below?
-use PHPUnit_Framework_TestCase;
+//  use PHPUnit_Framework_TestCase;
 
 /**
  * PHPUnit test for the Point class
