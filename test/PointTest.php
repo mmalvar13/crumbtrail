@@ -4,7 +4,7 @@ namespace Edu\Cnm\CrumbTrail\Test;
 use Edu\Cnm\CrumbTrail\{Point};
 
 //  TODO Is the line below needed?
-require_once ("PHPUnit_Framework_TestCase.php");
+//  require_once ("PHPUnit_Framework_TestCase.php");
 
 //  TODO Or maybe the line below?
 //  use PHPUnit_Framework_TestCase;
@@ -71,8 +71,6 @@ class PointTest extends \PHPUnit_Framework_TestCase {
 	 * (e.g., latitude > 90 or < -90, or  longitude > 180 or < -180) .
 	 *
 	 *  @expectedException \RangeException if lat and long are out of range.
-	 * TODO Is this the correct exception?  Check the Point.php file.
-	 *
 	 **/
 	public function testInvalidPoint() {
 
