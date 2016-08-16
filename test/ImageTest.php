@@ -99,6 +99,7 @@ class ImageTest extends CrumbTrailTest {
 	 * @expectedException \PDOException
 	 * @throws \RangeException
 	 * @throws \InvalidArgumentException
+	 * @throws \PDOException
 	 **/
 
 	public function testInsertInvalidImage() {
@@ -136,6 +137,7 @@ class ImageTest extends CrumbTrailTest {
 	 * @expectedException \PDOException
 	 * @throws \RangeException
 	 * @throws \InvalidArgumentException
+	 * @throws \PDOException
 	 **/
 	public function testUpdateInvalidImage() {
 		// create an Image, try to update it without actually updating it, watch if fail.
@@ -168,6 +170,7 @@ class ImageTest extends CrumbTrailTest {
 	 * @expectedException \PDOException
 	 * @throws \RangeException
 	 * @throws \InvalidArgumentException
+	 * @throws \PDOException
 	 **/
 	public function testDeleteInvalidImage() {
 		//create an Image and try to delete it without actually inserting it
