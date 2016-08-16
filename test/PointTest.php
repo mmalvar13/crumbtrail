@@ -23,25 +23,25 @@ class PointTest extends \PHPUnit_Framework_TestCase {
 	 * Latitude for a valid point.
 	 * @var float $VALID_POINTLATITUDE
 	 **/
-	protected $VALID_POINTLATITUDE = 37.123456;
+	protected $VALID_POINTLATITUDE = "37.123456";
 
 	/**
 	 * Latitude for this invalid point.
 	 * @var float $INVALID_POINTLATITUDE
 	 **/
-	protected $INVALID_POINTLATITUDE = 91.000000;
+	protected $INVALID_POINTLATITUDE = "91.000000";
 
 	/**
 	 * Longitude for a valid point.
 	 * @var float $VALID_POINTLONGITUDE
 	 **/
-	protected $VALID_POINTLONGITUDE = -77.123456;
+	protected $VALID_POINTLONGITUDE = "-77.123456";
 
 	/**
 	 * Longitude for this invalid point.
 	 * @var float $INVALID_POINTLONGITUDE
 	 **/
-	protected $INVALID_POINTLONGITUDE = -181.000000;
+	protected $INVALID_POINTLONGITUDE = "-181.000000";
 
 
 	/**
@@ -73,7 +73,6 @@ class PointTest extends \PHPUnit_Framework_TestCase {
 	 **/
 	public function testInvalidPoint() {
 
-		// removed the $this->
 		$point = new Point($this->INVALID_POINTLATITUDE, $this->INVALID_POINTLONGITUDE);
 
 	}
