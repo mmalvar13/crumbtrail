@@ -89,7 +89,7 @@ class Image implements \JsonSerializable {
 
 		//grab image from mySQL
 		try {
-			$image =null;
+			$image = null;
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
@@ -185,7 +185,7 @@ class Image implements \JsonSerializable {
 	 * @throws \PDOException when mySQL related error occur
 	 * @throws \TypeError when variables are nor the correct data type
 	 **/
-	public static function getAllimages(\PDO $pdo) {
+	public static function getAllImages(\PDO $pdo) {
 		//query template
 		//Do I need to select all attributes? Should I exclude file type?
 		$query = "SELECT imageId, imageCompanyId, imageFileType, imageFileName FROM image";
@@ -196,7 +196,7 @@ class Image implements \JsonSerializable {
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$image = new Image($row["imageId"], ["imageCompanyId"], ["imageFileType"], ["imageFileName"]);
+				$image = new Image($row["imageId"], $row["imageCompanyId"], $row["imageFileType"], $row["imageFileName"]);
 				$images[$images->key()] =$image;
 				$images->next();
 			} catch(\Exception $exception) {
