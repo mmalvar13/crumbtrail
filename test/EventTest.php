@@ -356,7 +356,6 @@ class EventTest extends CrumbTrailTest{
 
 	/**
 	 * test grabbing an Event with an EventStart and EventEnd that do not exist
-	 * @expectedException \PDOException
 	 **/
 	public function testGetInvalidEventByEventEndAndEventStart(){
 		//grab an event by searching for eventStart and eventEnd that do not exist
