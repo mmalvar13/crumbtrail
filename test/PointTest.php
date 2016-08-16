@@ -11,8 +11,8 @@ use Edu\Cnm\CrumbTrail\{Point};
  *
  * Since this class is isolated from mySQL, there's no need for the parent class nor autoloader.
  *
- @see Point
- @author Kevin Lee Kirk and Loren Baca
+ * @see Point
+ * @author Kevin Lee Kirk and Loren Baca
  **/
 
 class PointTest extends \PHPUnit_Framework_TestCase {
@@ -23,25 +23,25 @@ class PointTest extends \PHPUnit_Framework_TestCase {
 	 * Latitude for a valid point.
 	 * @var float $VALID_POINTLATITUDE
 	 **/
-	protected $VALID_POINTLATITUDE = "37.123456";
+	protected $VALID_POINTLATITUDE = 37.123456;
 
 	/**
 	 * Latitude for this invalid point.
 	 * @var float $INVALID_POINTLATITUDE
 	 **/
-	protected $INVALID_POINTLATITUDE = "91.000000";
+	protected $INVALID_POINTLATITUDE = 91.000000;
 
 	/**
 	 * Longitude for a valid point.
 	 * @var float $VALID_POINTLONGITUDE
 	 **/
-	protected $VALID_POINTLONGITUDE = "-77.123456";
+	protected $VALID_POINTLONGITUDE = -77.123456;
 
 	/**
 	 * Longitude for this invalid point.
 	 * @var float $INVALID_POINTLONGITUDE
 	 **/
-	protected $INVALID_POINTLONGITUDE = "-181.000000";
+	protected $INVALID_POINTLONGITUDE = -181.000000;
 
 
 	/**
