@@ -297,7 +297,7 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 			throw(new \PDOException("eventId is not positive"));
 		}
 		//create query template
-		$query = "SELECT eventId, eventTruckId, eventEnd, X(eventLocation) AS eventLocationLong, Y(eventLocation) AS eventLocationLat, eventStart FROM event /*is this the class?*/ WHERE eventId = :eventId";
+		$query = "SELECT eventId, eventTruckId, eventEnd, X(eventLocation) AS eventLocationLong, Y(eventLocation) AS eventLocationLat, eventStart FROM event  WHERE eventId = :eventId";
 		$statement = $pdo->prepare($query);
 
 		//bind the event id to the place holder in the template
@@ -349,7 +349,7 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$point = new Point($row["eventLocationLat"], $row["eventLocationLong"]);
+				$point = new Point($row["eventLocationLong"], $row["eventLocationLat"]);
 				$event = new Event($row["eventId"], $row["eventTruckId"], $row["eventEnd"], $point, $row["eventStart"]);
 				$events[$events->key()] = $event;
 				$events->next();
@@ -364,13 +364,13 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 	/**
 	 * get Event by EventLocation
 	 * @param \PDO $pdo PDO connection object
-	 * @param float $eventLocation event location coordinates to search by
+	 * @param Point $eventLocation event location coordinates to search by
 	 * @return \SplFixedArray SplFixedArray of Events found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
-	public static function getEventByEventLocation(\PDO $pdo, float $eventLocation) {
-		if($eventLocation < [-90, -180] || $eventLocation > [90, 180]) { //is this how i write the coordinates??
+	public static function getEventByEventLocation(\PDO $pdo, Point $eventLocation) {
+		if($eventLocation < [-180, -90] || $eventLocation > [180, 90]) { //is this how i write the coordinates??
 			throw(new \RangeException("this coordinate is not within the allowed range"));
 		}
 		//create query template
@@ -386,7 +386,7 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$point = new Point($row["eventLocationLat"], $row["eventLocationLong"]);
+				$point = new Point($row["eventLocationLong"], $row["eventLocationLat"]);
 				$event = new Event($row["eventId"], $row["eventTruckId"], $row["eventEnd"], $point, $row["eventStart"]);
 				$events[$events->key()] = $event;
 				$events->next();
@@ -426,7 +426,7 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-				$point = new Point($row["eventLocationLat"], $row["eventLocationLong"]);
+				$point = new Point($row["eventLocationLong"], $row["eventLocationLat"]);
 				$event = new Event($row["eventId"], $row["eventTruckId"], $row["eventEnd"], $point, $row["eventStart"]);
 			}
 		}catch
@@ -458,7 +458,7 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			while(($row = $statement->fetch()) !== false) {
 				try {
-					$point = new Point($row["eventLocationLat"], $row["eventLocationLong"]);
+					$point = new Point($row["eventLocationLong"], $row["eventLocationLat"]);
 					$event = new Event($row["eventId"], $row["eventTruckId"], $row["eventEnd"], $point, $row["eventStart"]);
 					$events[$events->key()] = $event;
 					$events->next();
@@ -488,7 +488,7 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false){
 			try{
-				$point = [$row["eventLocationLat"], $row["eventLocationLong"]];
+				$point = new Point($row["eventLocationLong"], $row["eventLocationLat"]);
 				$event = new Event($row["eventId"], $row["eventTruckId"], $row["eventEnd"], $point, $row["eventStart"]);
 				$events[$events->key()] = $event;
 				$events->next();

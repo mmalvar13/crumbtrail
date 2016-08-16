@@ -41,7 +41,7 @@ class EventTest extends CrumbTrailTest{
 	 * timestamp of updated end of this event;
 	 *@var \DateTime $VALID_EVENTEND
 	 */
-	protected $VALID_EVENTEND2 = null;
+	protected $VALID_EVENTEND2 = "23:00";
 
 	/**
 	 * timestamp of the start of this Event; this starts as null and is assigned later
@@ -149,7 +149,7 @@ class EventTest extends CrumbTrailTest{
 		//grab the data from mySQL and enforce the fields match our expectations
 		$pdoEvent = Event::getEventByEventId($this->getPDO(), $event->getEventId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("event"));
-		$this->assertEquals($pdoEvent->getTruckId(), $this->truck->getTruckId());
+		$this->assertEquals($pdoEvent->getEventTruckId(), $this->truck->getTruckId());
 		$this->assertEquals($pdoEvent->getEventEnd(), $this->VALID_EVENTEND2);
 		$this->assertEquals($pdoEvent->getEventLocation(), $this->VALID_EVENTLOCATION);
 		$this->assertEquals($pdoEvent->getEventStart(), $this->VALID_EVENTSTART);
@@ -157,7 +157,7 @@ class EventTest extends CrumbTrailTest{
 
 	/**
 	 * test updating an Event that already exists
-	 * @expectedException PDOException //why do some of them have exceptions in the doc blocks and some dont??
+	 * @expectedException /PDOException //why do some of them have exceptions in the doc blocks and some dont??
 	 * //so this is basically saying you're going to update something without changing anything?? like already having your end time at 3 and then "updating" it to end at 3?
 	 */
 	public function testUpdateInvalidEvent(){
@@ -211,7 +211,7 @@ class EventTest extends CrumbTrailTest{
 		//grab the data from mySQL and enforce the fields match our expectations
 		$pdoEvent = Event::getEventByEventId($this->getPDO(), $event->getEventId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("event"));
-		$this->assertEquals($pdoEvent->getTruckId(),$this->truck->getTruckId());
+		$this->assertEquals($pdoEvent->getEventTruckId(),$this->truck->getTruckId());
 		$this->assertEquals($pdoEvent->getEventEnd(),$this->VALID_EVENTEND);
 		$this->assertEquals($pdoEvent->getEventLocation(), $this->VALID_EVENTLOCATION);
 		$this->assertEquals($pdoEvent->getEventStart(), $this->VALID_EVENTSTART);
@@ -245,7 +245,7 @@ class EventTest extends CrumbTrailTest{
 
 		//grab the result from the array and validate it
 		$pdoEvent = $results[0];
-		$this->assertEquals($pdoEvent->getTruckId(), $this->truck->getTruckId());
+		$this->assertEquals($pdoEvent->getEventTruckId(), $this->truck->getTruckId());
 		$this->assertEquals($pdoEvent->getEventEnd(), $this->VALID_EVENTEND);
 		$this->assertEquals($pdoEvent->getEventLocation(), $this->VALID_EVENTLOCATION);
 		$this->assertEquals($pdoEvent->getEventStart(), $this->VALID_EVENTSTART);
@@ -291,7 +291,7 @@ class EventTest extends CrumbTrailTest{
 	 **/
 	public function testGetInvalidEventByEventLocation(){
 		//grab an event by searching for event location that does not exist
-		$event = Event:: getEventByEventLocation($this->getPDO(), "you can't sit with us!!");
+		$event = Event:: getEventByEventLocation($this->getPDO(), $this->VALID_EVENTLOCATION);
 		$this->assertCount(0, $event);
 	}
 
@@ -341,7 +341,7 @@ class EventTest extends CrumbTrailTest{
 		$event->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields match our expectations
-		$results = Event::getEventByEventEndAndEventStart($this->getPDO(), $event->getEventEnd(), $event->getEventStart());
+		$results = Event::getEventByEventEndAndEventStart($this->getPDO());//its NOW() in event class
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("event"));
 		$this->assertCount(1, $results);
 		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\CrumbTrail\\Event", $results);
@@ -359,7 +359,7 @@ class EventTest extends CrumbTrailTest{
 	 **/
 	public function testGetInvalidEventByEventEndAndEventStart(){
 		//grab an event by searching for eventStart and eventEnd that do not exist
-		$event = Event::getEventByEventEndAndEventStart($this->getPDO(),CrumbTrailTest::INVALID_KEY, CrumbTrailTest::INVALID_KEY); //these should be date times. what do i do?
+		$event = Event::getEventByEventEndAndEventStart($this->getPDO()); //this should have no parameters. it is set to NOW() in the Event class
 		$this->assertCount(0, $event);
 	}
 
