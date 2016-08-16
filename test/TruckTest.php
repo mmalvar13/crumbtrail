@@ -219,4 +219,4 @@ class TruckTest extends CrumbTrailTest {
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("truck"));
 	}
 }
-	//This is the end of the Truck unit test, trial two//
+	//This is the end of the Truck unit test, trial four//
