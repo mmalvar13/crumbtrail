@@ -401,7 +401,6 @@ class CompanyTest extends CrumbTrailTest {
 		//changing this line from getProfileId() to getCompanyAccountCreatorId() ~LB
 		$this->assertEquals($pdoCompany->getCompanyAccountCreatorId(), $this->profile->getProfileId());
 
-
 		$this->assertEquals($pdoCompany->getCompanyName(), $this->VALID_COMPANYNAME);
 		$this->assertEquals($pdoCompany->getCompanyEmail(), $this->VALID_COMPANYEMAIL);
 		$this->assertEquals($pdoCompany->getCompanyPhone(), $this->VALID_COMPANYPHONE);
