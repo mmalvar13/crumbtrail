@@ -38,9 +38,6 @@ class TruckTest extends CrumbTrailTest {
 	protected $profile2 = null;
 
 
-
-
-
 	/**
 	 * create dependent objects before running each test
 	 */
@@ -76,10 +73,9 @@ class TruckTest extends CrumbTrailTest {
 
 		//--------------------------company2-----------------------------------------
 		//create and insert a second company to buy the test truck (a truck moving to another company)
-		$this->company2 = new Company(null,$pdoProfile2->getProfileId(), "Truckina's Crepes", "truckina@trucks.com", "5052345666","45678", "4567", "attn: MRS Crepe", "456 Crepe Street", "CrepeStreet2","Albuquerque", "NM", "45678", "We sell crepes", "crepes, ice cream, cakes", "34343409876543212345678998787654", 0);
+		$this->company2 = new Company(null, $pdoProfile2->getProfileId(), "Truckina's Crepes", "truckina@trucks.com", "5052345666", "45678", "4567", "attn: MRS Crepe", "456 Crepe Street", "CrepeStreet2", "Albuquerque", "NM", "45678", "We sell crepes", "crepes, ice cream, cakes", "34343409876543212345678998787654", 0);
 		$this->company2->insert($this->getPDO());
 	}
-
 
 
 	/**
@@ -97,6 +93,7 @@ class TruckTest extends CrumbTrailTest {
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("truck"));
 		$this->assertEquals($pdoTruck->getTruckCompanyId(), $this->company->getCompanyId());
 	}
+
 	/**
 	 *test inserting a truck that already exists
 	 *
@@ -108,6 +105,7 @@ class TruckTest extends CrumbTrailTest {
 		$truck = new Truck(CrumbTrailTest::INVALID_KEY, $this->company->getCompanyId());
 		$truck->insert($this->getPDO());
 	}
+
 	/**
 	 * test inserting an Truck, editing it, and then updating it
 	 **/
@@ -127,9 +125,10 @@ class TruckTest extends CrumbTrailTest {
 
 		$pdoTruck = Truck::getTruckByTruckId($this->getPDO(), $truck->getTruckId());
 
-		$this->assertEquals($numRows + 1, $this->getConnection() ->getRowCount("truck"));
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("truck"));
 		$this->assertEquals($pdoTruck->getTruckCompanyId(), $this->company2->getCompanyId()); //change back to company 2
 	}
+
 	/**
 	 * test updating an truck that does not exist
 	 *
@@ -140,12 +139,13 @@ class TruckTest extends CrumbTrailTest {
 		$truck = new Truck(null, $this->company->getCompanyId());
 		$truck->update($this->getPDO());
 	}
+
 	/**
 	 * test creating a truck and deleting it
 	 **/
 	public function testDeleteValidTruck() {
 		//count the number of rows and save it for later
-		$numRows =$this->getConnection()->getRowCount("truck");
+		$numRows = $this->getConnection()->getRowCount("truck");
 
 		//create new Truck and insert it into mySQL
 		$truck = new Truck(null, $this->company->getCompanyId());
@@ -156,10 +156,11 @@ class TruckTest extends CrumbTrailTest {
 		$truck->delete($this->getPDO());
 
 		//grab the data from mySQL and enforce that the Truck does not exist/
-		$pdoTruck = Truck::getTruckByTruckId($this->getPDO(),$truck->getTruckId());
+		$pdoTruck = Truck::getTruckByTruckId($this->getPDO(), $truck->getTruckId());
 		$this->assertNull($pdoTruck);
 		$this->assertEquals($numRows, $this->getConnection()->getRowCount("truck"));
 	}
+
 	/**
 	 * test deleting and Truck that does not exist
 	 *
@@ -170,6 +171,32 @@ class TruckTest extends CrumbTrailTest {
 		$truck = new Truck(null, $this->company->getCompanyId());
 		$truck->delete($this->getPDO());
 	}
+
+	/**
+	 * Test getting trucks by truck company Id
+	 *
+	 * @expectedException \PDOException
+	 **/
+	public function testGetTruckByTruckCompanyId() {
+
+		//count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("truck");
+		// Create a new Truck and insert it into mySQL
+		$truck = new Truck(null, $this->company->getCompanyId());
+		$truck->insert($this->getPDO());
+
+		// Edit the Truck and update it in mySQL
+		$truck->setTruckCompanyId($this->company2->getCompanyId());
+		$truck->update($this->getPDO());
+
+		//Grab the data from mySQL and check that the fields match our expectations.
+		$pdoTruck = Truck::getTruckByTruckCompanyId($this->getPDO(), $truck->getTruckCompanyId());
+		$this->assert($pdoTruck);
+		$this->assertEquals($numRows, $this->getConnection()->getRowCount("truck"));
+
+
+	}
+
 	/**
 	 * test grabbing all trucks
 	 **/
@@ -182,13 +209,14 @@ class TruckTest extends CrumbTrailTest {
 		$truck->insert($this->getPDO());
 		//grab the data from mySQL and enforce the fields match our expectations
 		$results = Truck::getAllTrucks($this->getPDO());
-		$this->assertEquals($numRows +1, $this->getConnection()->getRowCount("truck"));
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("truck"));
 		$this->assertCount(1, $results);
 		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\CrumbTrail\\Truck", $results);
 
 		//grab the result from the array and validate it
 		$pdoTruck = $results[0];
 		$this->assertEquals($pdoTruck->getTruckCompanyId(), $this->company->getCompanyId());
-		}
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("truck"));
 	}
+}
 	//This is the end of the Truck unit test, trial two//
