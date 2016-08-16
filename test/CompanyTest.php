@@ -509,7 +509,7 @@ class CompanyTest extends CrumbTrailTest {
 
 
 	/**
-	 * Test getting a Company by content that does not exist
+	 * Test getting a Company by content  that does not exist
 	 *
 	 **/
 	public function testGetInvalidCompanyByCompanyName() {
