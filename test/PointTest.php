@@ -68,11 +68,13 @@ class PointTest extends \PHPUnit_Framework_TestCase {
 	 * (e.g., latitude > 90 or < -90, or  longitude > 180 or < -180).
 	 *
 	 *  @expectedException \RangeException if lat and long are bad.
+	 * TODO IS this the correct exception?  Check the Point.php file.
 	 *
 	 **/
 	public function testInvalidPoint() {
 
-		$point = new Point($this->INVALID_POINTLATITUDE, $this->INVALID_POINTLONGITUDE);
+		// removed the $this->
+		$point = new Point(INVALID_POINTLATITUDE, INVALID_POINTLONGITUDE);
 
 	}
 }
