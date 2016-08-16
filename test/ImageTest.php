@@ -178,6 +178,29 @@ class ImageTest extends CrumbTrailTest {
 		$image->delete($this->getPDO());
 	}
 	/**
+	 * test getting image by image company id
+	 **/
+	public function testGetImageByImageCompanyId() {
+
+		//count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("image");
+		// Create a new Image and insert it into mySQL
+		$image = new Image(null, $this->company->getCompanyId(), $this->VALID_IMAGEFILETYPE, $this->VALID_IMAGEFILENAME, $this->VALID_IMAGEFILETYPE2, $this->VALID_IMAGEFILENAME2);
+		$image->insert($this->getPDO());
+
+		// Edit the Truck and update it in mySQL
+		$image->setImageFileName($this->VALID_IMAGEFILETYPE2);
+		$image->setImageFileType($this->VALID_IMAGEFILENAME2);
+		$image->update($this->getPDO());
+
+		//Grab the data from mySQL and check that the fields match our expectations.
+		$pdoImage = Image::getImageByImageCompanyId($this->getPDO(), $image->getImageCompanyId());
+		$this->assert($pdoImage);
+		$this->assertEquals($numRows, $this->getConnection()->getRowCount("image"));
+
+
+	}
+	/**
 	 * test grabbing all Images
 	 */
 	public function testGetAllValidImages() {
