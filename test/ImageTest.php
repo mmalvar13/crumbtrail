@@ -90,8 +90,8 @@ class ImageTest extends CrumbTrailTest {
 		$pdoImage = Image::getImageByImageId($this->getPDO(), $image->getImageId());
 		//$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("image"));//
 		$this->assertEquals($pdoImage->getImageCompanyId(), $this->company->getCompanyId());
-		$this->assertEquals($pdoImage->getImageFileName(), $this->VALID_IMAGEFILETYPE);
-		$this->assertEquals($pdoImage->getImageFileType(), $this->VALID_IMAGEFILENAME);
+		$this->assertEquals($pdoImage->getImageFileType(), $this->VALID_IMAGEFILETYPE);
+		$this->assertEquals($pdoImage->getImageFileName(), $this->VALID_IMAGEFILENAME);
 	}
 	/**
 	 * test inserting an Image that already exists
