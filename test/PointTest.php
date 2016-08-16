@@ -65,7 +65,7 @@ class PointTest extends \PHPUnit_Framework_TestCase {
 	/**
 	 * Create a point that is out of range, and expect an exception to be thrown.
 	 * We expect an exception because the data values are out of bounds,
-	 * (e.g., latitude > 90 or < -90, or  longitude > 180 or < -180).
+	 * (e.g., latitude > 90 or < -90, or  longitude > 180 or < -180) .
 	 *
 	 *  @expectedException \RangeException if lat and long are bad.
 	 * TODO IS this the correct exception?  Check the Point.php file.
