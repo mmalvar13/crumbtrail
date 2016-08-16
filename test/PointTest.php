@@ -70,7 +70,9 @@ class PointTest extends \PHPUnit_Framework_TestCase {
 	 * We expect an exception because the data values are out of bounds,
 	 * (e.g., latitude > 90 or < -90, or  longitude > 180 or < -180) .
 	 *
-	 *  @expectedException \RangeException if lat and long are out of range.
+	 * @expectedException \RangeException if lat and long are out of range.
+	 * @throws RangeException
+	 *
 	 **/
 	public function testInvalidPoint() {
 
