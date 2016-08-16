@@ -41,7 +41,7 @@ class EventTest extends CrumbTrailTest{
 	 * timestamp of updated end of this event;
 	 *@var \DateTime $VALID_EVENTEND
 	 */
-	protected $VALID_EVENTEND2 = "23:00";
+	protected $VALID_EVENTEND2 = null;
 
 	/**
 	 * timestamp of the start of this Event; this starts as null and is assigned later
@@ -92,6 +92,8 @@ class EventTest extends CrumbTrailTest{
 		$this->VALID_EVENTSTART = new \DateTime();
 		$this->VALID_EVENTEND = clone $this->VALID_EVENTSTART;
 		$this->VALID_EVENTEND->add(new \DateInterval('PT1H'));
+		$this->VALID_EVENTEND2= clone $this->VALID_EVENTSTART;
+		$this->VALID_EVENTEND2->add(new \DateInterval('PT1H30M'));
 
 		$this->VALID_EVENTLOCATION = new Point (31.8643553, -112.857099);
 //datetimeadd

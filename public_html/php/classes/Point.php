@@ -23,13 +23,12 @@ class Point implements \JsonSerializable {
 
 	/**
 	 *Constructor for this Point
-	 * @param float $newPointLatitude the latitude for this point
 	 * @param float $newPointLongitude the longitude
-	 * @throws \RangeException if coordinate values are out of range
-	 * @throws \TypeError if data types are incorrect
+	 * @param float $newPointLatitude the latitude for this point
 	 * @throws \Exception if any other exception occurs
-	 **/
-	public function __construct(float $newPointLatitude, float $newPointLongitude) {
+	 * @throws \TypeError if data types are incorrect
+	 */
+	public function __construct(float $newPointLongitude, float $newPointLatitude) {
 		try {
 			$this->setPointLatitude($newPointLatitude);
 			$this->setPointLongitude($newPointLongitude);

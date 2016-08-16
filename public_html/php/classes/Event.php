@@ -311,7 +311,7 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 			$row = $statement->fetch();
 			//sql gives you the two constituents of the point, and then you use the point class to create an event based on those two points.
 			if($row !== false) {
-				$point = new Point($row["eventLocationLat"], $row["eventLocationLong"]);
+				$point = new Point($row["eventLocationLong"], $row["eventLocationLat"]);
 				$event = new Event($row["eventId"], $row["eventTruckId"], $row["eventEnd"], $point, $row["eventStart"]);
 			}
 		} catch(\Exception $exception) {
@@ -349,7 +349,7 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$point = new Point($row["eventLocationLong"], $row["eventLocationLat"]);
+				$point = new Point($row["eventLocationLat"], $row["eventLocationLong"]);
 				$event = new Event($row["eventId"], $row["eventTruckId"], $row["eventEnd"], $point, $row["eventStart"]);
 				$events[$events->key()] = $event;
 				$events->next();
@@ -386,7 +386,7 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$point = new Point($row["eventLocationLong"], $row["eventLocationLat"]);
+				$point = new Point($row["eventLocationLat"], $row["eventLocationLong"]);
 				$event = new Event($row["eventId"], $row["eventTruckId"], $row["eventEnd"], $point, $row["eventStart"]);
 				$events[$events->key()] = $event;
 				$events->next();
@@ -426,7 +426,7 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-				$point = new Point($row["eventLocationLong"], $row["eventLocationLat"]);
+				$point = new Point($row["eventLocationLat"], $row["eventLocationLong"]);
 				$event = new Event($row["eventId"], $row["eventTruckId"], $row["eventEnd"], $point, $row["eventStart"]);
 			}
 		}catch
@@ -458,7 +458,7 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			while(($row = $statement->fetch()) !== false) {
 				try {
-					$point = new Point($row["eventLocationLong"], $row["eventLocationLat"]);
+					$point = new Point($row["eventLocationLat"], $row["eventLocationLong"]);
 					$event = new Event($row["eventId"], $row["eventTruckId"], $row["eventEnd"], $point, $row["eventStart"]);
 					$events[$events->key()] = $event;
 					$events->next();
@@ -488,7 +488,7 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false){
 			try{
-				$point = new Point($row["eventLocationLong"], $row["eventLocationLat"]);
+				$point = new Point($row["eventLocationLat"], $row["eventLocationLong"]);
 				$event = new Event($row["eventId"], $row["eventTruckId"], $row["eventEnd"], $point, $row["eventStart"]);
 				$events[$events->key()] = $event;
 				$events->next();

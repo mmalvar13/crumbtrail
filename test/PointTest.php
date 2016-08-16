@@ -57,7 +57,7 @@ class PointTest extends \PHPUnit_Framework_TestCase {
 	 **/
 	public function testValidPoint() {
 
-		$point = new Point($this->VALID_POINTLATITUDE, $this->VALID_POINTLONGITUDE);
+		$point = new Point($this->VALID_POINTLONGITUDE, $this->VALID_POINTLATITUDE);
 
 		$this->assertEquals($point->getPointLatitude(), $this->VALID_POINTLATITUDE, 'Expected latitude not equal to actual latitude, within 0.000001', 0.000001);
 
@@ -74,7 +74,7 @@ class PointTest extends \PHPUnit_Framework_TestCase {
 	 **/
 	public function testInvalidPoint() {
 
-		$point = new Point($this->INVALID_POINTLATITUDE, $this->INVALID_POINTLONGITUDE);
+		$point = new Point($this->INVALID_POINTLONGITUDE, $this->INVALID_POINTLATITUDE);
 
 	}
 }
