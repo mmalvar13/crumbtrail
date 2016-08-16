@@ -11,7 +11,7 @@ require_once("CrumbTrailTest.php");
 require_once(dirname(__DIR__) . "/public_html/php/classes/autoload.php");
 
 /**
- * Unite test for the truck class
+ * Unit test for the truck class
  *
  * All mySQL/PDO enabled methods tested for valid and invalid inputs
  *

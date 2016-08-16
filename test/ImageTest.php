@@ -89,7 +89,7 @@ class ImageTest extends CrumbTrailTest {
 		//grab the data from mySQL and enforce the fields to match our expectations
 		$pdoImage = Image::getImageByImageId($this->getPDO(), $image->getImageId());
 		//$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("image"));//
-		$this->assertEquals($pdoImage->getImageId(), $this->company->getCompanyId());
+		$this->assertEquals($pdoImage->getImageCompanyId(), $this->company->getCompanyId());
 		$this->assertEquals($pdoImage->getImageFileName(), $this->VALID_IMAGEFILETYPE);
 		$this->assertEquals($pdoImage->getImageFileType(), $this->VALID_IMAGEFILENAME);
 	}
@@ -226,9 +226,9 @@ class ImageTest extends CrumbTrailTest {
 
 		//grab the result from the array and validate it
 		$pdoImage = $results[0];
-		$this->assertEquals($pdoImage->getCompanyId(), $this->company->getCompanyId());
-		$this->assertEquals($pdoImage->getImageFileName(), $this->VALID_IMAGEFILENAME);
+		$this->assertEquals($pdoImage->getImageCompanyId(), $this->company->getCompanyId());
 		$this->assertEquals($pdoImage->getImageFileType(), $this->VALID_IMAGEFILETYPE);
+		$this->assertEquals($pdoImage->getImageFileName(), $this->VALID_IMAGEFILENAME);
 	}
 
 }
