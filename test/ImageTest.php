@@ -181,7 +181,6 @@ class ImageTest extends CrumbTrailTest {
 	/**
 	 * test getting images by image company id
 	 *
-	 * @expectedException \PDOException
 	 **/
 	public function testGetImageByImageCompanyId() {
 
@@ -189,20 +188,42 @@ class ImageTest extends CrumbTrailTest {
 		$numRows = $this->getConnection()->getRowCount("image");
 
 		// Create a new Image and insert it into mySQL
-		$image = new Image(null, $this->company->getCompanyId(), $this->VALID_IMAGEFILETYPE, $this->VALID_IMAGEFILENAME);
+		$image = new Image(null, $this->company->getCompanyId(), $this->VALID_IMAGEFILETYPE, $this->VALID_IMAGEFILENAME, $this->VALID_IMAGEFILETYPE2, $this->VALID_IMAGEFILENAME2);
 		$image->insert($this->getPDO());
 
 		//Grab the data from mySQL and check that the fields match our expectations.
 		$results = Image::getImageByImageCompanyId($this->getPDO(), $this->company->getCompanyId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("image"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnlyInstanceOf("Edu\\Cnm\\CrumbTrail\\Image", $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\CrumbTrail\\Image", $results);
 		//grab the result from the array and validate it
 		$pdoImage = $results[0];
 		$this->assertEquals($pdoImage->getImageCompanyId(), $this->company->getCompanyId());
 		$this->assertEquals($pdoImage->getImageFileType(), $this->VALID_IMAGEFILETYPE);
 		$this->assertEquals($pdoImage->getImageFileName(), $this->VALID_IMAGEFILENAME);
 	}
+	/**
+	 * Test getting image by image File Name
+	 **/
+	public function testGetImageByImageFileName() {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("image");
+
+		//Create a new Image and insert it into mySQL
+		$image = new Image(null, $this->company->getCompanyId(), $this->VALID_IMAGEFILETYPE, $this->VALID_IMAGEFILENAME);
+
+		$image->insert($this->getPDO());
+
+		//Grab the data from mySQL and enforce the fields that match our expectations
+		$results = Image::getImageByImageFileName($this->getPDO(), $this->company->getCompanyId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("image"));
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\CrumbTrail\\Image", $results);
+
+		//grab the results from the array and validate it
+		$pdoImage = $results;
+	}
+
+	//
 	/**
 	 * test grabbing all Images
 	 *

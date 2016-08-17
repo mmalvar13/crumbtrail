@@ -302,7 +302,8 @@ class Image implements \JsonSerializable {
 	 * mutator for image file name
 	 *
 	 * @param string $newImageFileName new value of image file name
-	 * @throw /RangeException if $newImageFileName > 255 characters
+	 * @throws /RangeException if $newImageFileName > 255 characters
+	 * @throws \PDOException
 	 */
 	public function setImageFileName(string $newImageFileName) {
 		if($newImageFileName > 255) {
