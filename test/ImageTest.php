@@ -146,6 +146,7 @@ class ImageTest extends CrumbTrailTest {
 	}
 	/**
 	 * test creating an image and deleting it
+	 *
 	 */
 	public function testDeleteValidImage() {
 		//count the number of rows and save it for later
@@ -178,30 +179,32 @@ class ImageTest extends CrumbTrailTest {
 		$image->delete($this->getPDO());
 	}
 	/**
-	 * test getting image by image company id
+	 * test getting images by image company id
+	 *
+	 * @expectedException \PDOException
 	 **/
 	public function testGetImageByImageCompanyId() {
 
 		//count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("image");
 		// Create a new Image and insert it into mySQL
-		$image = new Image(null, $this->company->getCompanyId(), $this->VALID_IMAGEFILETYPE, $this->VALID_IMAGEFILENAME, $this->VALID_IMAGEFILETYPE2, $this->VALID_IMAGEFILENAME2);
+		$image = new Image(null, $this->company->getCompanyId(), $this->VALID_IMAGEFILETYPE, $this->VALID_IMAGEFILENAME);
 		$image->insert($this->getPDO());
 
-		// Edit the Truck and update it in mySQL
-		$image->setImageFileName($this->VALID_IMAGEFILETYPE2);
-		$image->setImageFileType($this->VALID_IMAGEFILENAME2);
-		$image->update($this->getPDO());
-
 		//Grab the data from mySQL and check that the fields match our expectations.
-		$pdoImage = Image::getImageByImageCompanyId($this->getPDO(), $image->getImageCompanyId());
-		$this->assert($pdoImage);
-		$this->assertEquals($numRows, $this->getConnection()->getRowCount("image"));
-
-
+		$results = Image::getImageByImageCompanyId($this->getPDO(), $this->company->getCompanyId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("image"));
+		$this->assertCount(1, $results);
+		$this->assertEquals("Edu\\Cnm\\CrumbTrail\\Image", $results);
+		//grab the result from the array and validate it
+		$pdoImage = $results[0];
+		$this->assertEquals($pdoImage->getImageCompanyId(), $this->company->getCompanyId());
+		$this->assertEquals($pdoImage->getImageFileType(), $this->VALID_IMAGEFILETYPE);
+		$this->assertEquals($pdoImage->getImageFileName(), $this->VALID_IMAGEFILENAME);
 	}
 	/**
 	 * test grabbing all Images
+	 *
 	 */
 	public function testGetAllValidImages() {
 		//count the number of rows and save it for later

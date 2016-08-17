@@ -109,7 +109,6 @@ class Image implements \JsonSerializable {
 	 * @param int, $imageCompanyId image to search for
 	 * @return \SplFixedArray SplFixedArray of images found
 	 * @throws \PDOException when mySQL related errors occur
-	 * @throws \TypeError when variables are nor the correct data type
 	 **/
 	public static function getImageByImageCompanyId(\PDO $pdo, int $imageCompanyId) {
 		//sanitize the description? before searching
