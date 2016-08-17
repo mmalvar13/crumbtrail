@@ -267,26 +267,23 @@ class Company implements \JsonSerializable {
 
 		// Bind the companyAccountCreatorId to the placeholder in the template.
 		$parameters = ["companyAccountCreatorId" => $companyAccountCreatorId];
-
-		// Execute the SQL statement
 		$statement->execute($parameters);
 
-		// Now that we have selected the correct company, we need to get it from mySQL.
-		try {
-			$company = null;
-			$statement->setFetchMode(\PDO::FETCH_ASSOC);
-			$row = $statement->fetch();
-
-			if($row !== false) {
+		// Build an array of companys.
+		$companys = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
 				$company = new Company($row["companyId"], $row["companyAccountCreatorId"], $row["companyName"], $row["companyEmail"], $row["companyPhone"], $row["companyPermit"], $row["companyLicense"], $row["companyAttn"], $row["companyStreet1"], $row["companyStreet2"], $row["companyCity"], $row["companyState"], $row["companyZip"], $row["companyDescription"], $row["companyMenuText"], $row["companyActivationToken"], $row["companyApproved"]);
-			}
 
-			// Catch exception.
-		} catch(\Exception $exception) {
-			// If the row could not be converted, then re-throw it.
-			throw(new \PDOException($exception->getMessage(), 0, $exception));
+				$companies[$companies->key()] = $company;
+				$companies->next();
+			} catch(\Exception $exception) {
+				//if the row couldn't be converted, rethrow it (the error?)
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
 		}
-		return($company);
+		return($companys);
 	}
 
 	/**
