@@ -187,6 +187,7 @@ class ImageTest extends CrumbTrailTest {
 
 		//count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("image");
+
 		// Create a new Image and insert it into mySQL
 		$image = new Image(null, $this->company->getCompanyId(), $this->VALID_IMAGEFILETYPE, $this->VALID_IMAGEFILENAME);
 		$image->insert($this->getPDO());
