@@ -181,20 +181,20 @@ class TruckTest extends CrumbTrailTest {
 
 		//count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("truck");
+
 		// Create a new Truck and insert it into mySQL
 		$truck = new Truck(null, $this->company->getCompanyId());
 		$truck->insert($this->getPDO());
 
-		// Edit the Truck and update it in mySQL
-		$truck->setTruckCompanyId($this->company2->getCompanyId());
-		$truck->update($this->getPDO());
-
 		//Grab the data from mySQL and check that the fields match our expectations.
-		$pdoTruck = Truck::getTruckByTruckCompanyId($this->getPDO(), $truck->getTruckCompanyId());
-		$this->assert($pdoTruck);
+		$results = Truck::getTruckByTruckCompanyId($this->getPDO(),$this->company->getCompanyId());
+
 		$this->assertEquals($numRows, $this->getConnection()->getRowCount("truck"));
-
-
+		$this->assertCount(1, $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\CrumbTrail\\Image", $results);
+		//grab the results from the array an validate it
+		$pdoTruck = $results[0];
+		$this->assertEquals($pdoTruck->getTruckCompanyId(), $this->company->getCompanyId());
 	}
 
 	/**
