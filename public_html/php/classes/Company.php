@@ -270,20 +270,20 @@ class Company implements \JsonSerializable {
 		$statement->execute($parameters);
 
 		// Build an array of companys.
-		$companyies = new \SplFixedArray($statement->rowCount());
+		$companys = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
 				$company = new Company($row["companyId"], $row["companyAccountCreatorId"], $row["companyName"], $row["companyEmail"], $row["companyPhone"], $row["companyPermit"], $row["companyLicense"], $row["companyAttn"], $row["companyStreet1"], $row["companyStreet2"], $row["companyCity"], $row["companyState"], $row["companyZip"], $row["companyDescription"], $row["companyMenuText"], $row["companyActivationToken"], $row["companyApproved"]);
 
-				$companies[$companies->key()] = $company;
-				$companies->next();
+				$companys[$companys->key()] = $company;
+				$companys->next();
 			} catch(\Exception $exception) {
 				//if the row couldn't be converted, rethrow it (the error?)
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
 		}
-		return($companyies);
+		return($companys);
 	}
 
 	/**
