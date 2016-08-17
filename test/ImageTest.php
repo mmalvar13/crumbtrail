@@ -196,7 +196,7 @@ class ImageTest extends CrumbTrailTest {
 		$results = Image::getImageByImageCompanyId($this->getPDO(), $this->company->getCompanyId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("image"));
 		$this->assertCount(1, $results);
-		$this->assertEquals("Edu\\Cnm\\CrumbTrail\\Image", $results);
+		$this->assertContainsOnlyInstanceOf("Edu\\Cnm\\CrumbTrail\\Image", $results);
 		//grab the result from the array and validate it
 		$pdoImage = $results[0];
 		$this->assertEquals($pdoImage->getImageCompanyId(), $this->company->getCompanyId());
