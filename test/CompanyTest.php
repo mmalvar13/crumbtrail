@@ -421,7 +421,7 @@ class CompanyTest extends CrumbTrailTest {
 
 
 	/**
-	 * Test getting a Company by company account creator id.   ***************************
+	 * Test getting a Company by company account creator id.
 	 **/
 	public function testGetCompanyByCompanyAccountCreatorId() {
 		// Count the number of rows and save it for later.
