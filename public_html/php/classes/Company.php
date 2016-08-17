@@ -270,7 +270,7 @@ class Company implements \JsonSerializable {
 		$statement->execute($parameters);
 
 		// Build an array of companys.
-		$companys = new \SplFixedArray($statement->rowCount());
+		$companyies = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
@@ -283,7 +283,7 @@ class Company implements \JsonSerializable {
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
 		}
-		return($companys);
+		return($companyies);
 	}
 
 	/**
