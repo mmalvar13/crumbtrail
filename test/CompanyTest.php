@@ -20,7 +20,7 @@ require_once(dirname(__DIR__) . "/public_html/php/classes/autoload.php");
  * are tested for both invalid and valid inputs.
  *
  * @see Company
- * @author Kevin Lee Kirk, with a lot of help from Victoria Chacon, Monica Alvarez, and Loren Baca.
+ * @author Kevin Lee Kirk with help from Victoria Chacon and Monica Alvarez and Loren Baca.
  *
  **/
 
@@ -140,12 +140,12 @@ class CompanyTest extends CrumbTrailTest {
 
 	/**
 	 * zip of the Company
-	 * @var int $VALID_COMPANYZIP
+	 * @var string $VALID_COMPANYZIP
 	 **/
 	protected $VALID_COMPANYZIP = "97405";
 	/**
 	 * zip of the updated Company
-	 * @var int $VALID_COMPANYZIP2
+	 * @var string $VALID_COMPANYZIP2
 	 **/
 	protected $VALID_COMPANYZIP2 = "87048";
 
@@ -194,17 +194,17 @@ class CompanyTest extends CrumbTrailTest {
 	protected $VALID_COMPANYAPPROVED2 = true;
 
 	/**
-	 * The Profile of the person who created this account = companyAccountCreatorId,
+	 * The Profile of the person who created this account companyAccountCreatorId,
 	 * this is a foreign key in the Company class.
 	 * @var Profile profile
-	 */
+	 **/
 	protected $profile = null;
 
 
 	/**
 	 * Create dependent objects before running each test.
 	 *
-	 * Profile is a foreign key in Company,
+	 * Profile is a foreign key in Company
 	 * so we need a fake Profile to use in the test of Company.
 	 * The companyAccountCreatorId is the profileId of the person who created this account.
 	 **/
@@ -226,7 +226,7 @@ class CompanyTest extends CrumbTrailTest {
 
 
 	/**
-	 * Test inserting a valid Company into the mySQL database,
+	 * Test inserting a valid Company into the mySQL database
 	 * then check if the data in the database is equal to the
 	 * data that you put into the database.
 	 **/
@@ -277,7 +277,7 @@ class CompanyTest extends CrumbTrailTest {
 
 
 	/**
-	 * Test inserting a Company, editing it, and then updating it.
+	 * Test inserting a Company and editing it and then updating it.
 	 **/
 	public function testUpdateValidCompany() {
 		// count the number of rows and save it for later
@@ -332,7 +332,7 @@ class CompanyTest extends CrumbTrailTest {
 	/**
 	 * Test updating a Company that does not exist.
 	 *
-	 * Create a Company, try to update it (without actually updating it), and watch it fail.
+	 * Create a Company and try to update it (without actually updating it) and watch it fail.
 	 * @expectedException \PDOException
 	 **/
 	public function testUpdateInvalidCompany() {
@@ -465,7 +465,7 @@ class CompanyTest extends CrumbTrailTest {
 
 
 	/**
-	 * Test getting a Company by company menu text.     **************************
+	 * Test getting a Company by company menu text.
 	 **/
 	public function testGetCompanyByCompanyMenuText() {
 		// Count the number of rows and save it for later.
@@ -508,7 +508,7 @@ class CompanyTest extends CrumbTrailTest {
 
 
 	/**
-	 * Test getting a Company by content  that does not exist
+	 * Test getting a invalid Company by company name
 	 *
 	 **/
 	public function testGetInvalidCompanyByCompanyName() {
@@ -518,7 +518,7 @@ class CompanyTest extends CrumbTrailTest {
 	}
 
 	/**
-	 * Test getting all Companies (sp).  All of them!
+	 * Test getting all Companies
 	 **/
 	public function testGetAllValidCompany() {
 		// Count the number of rows and save it for later.
@@ -529,8 +529,8 @@ class CompanyTest extends CrumbTrailTest {
 
 		$company->insert($this->getPDO());
 
-		// Get the data from mySQL, and check that fields match our expectations.
-		// Note that (here) plural Company = Companies (sp)
+		// Get the data from mySQL and check that fields match our expectations.
+		// Note that (here) plural Company is Companies
 		$results = Company::getAllCompanys($this->getPDO());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("company"));
 		$this->assertCount(1, $results);
