@@ -43,8 +43,8 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 		throw(new \RangeException ($range->getMessage(), 0, $range));
 	}catch (\TypeError $typeError) {
 		throw(new \TypeError($typeError->getMessage(), 0, $typeError ));
-	} catch (\Exception $exception) {
-		throw (new \Exception($exception->getMessage(), 0, $exception));
+	} catch (\Exception $Exception) {
+		throw (new \Exception($Exception->getMessage(), 0, $Exception));
 	}
 }
 
@@ -92,6 +92,7 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 	 *
 	 * @param int|null $newTruckCompanyId new value of truck company Id
 	 * @throws \RangeException if $newTruckCompanyId is negative
+	 * @throws \TypeError ??
 	 **/
 	public function setTruckCompanyId(int $newTruckCompanyId) {
 		if($newTruckCompanyId <=0) {

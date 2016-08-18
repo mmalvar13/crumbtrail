@@ -40,7 +40,7 @@ class TruckTest extends CrumbTrailTest {
 
 	/**
 	 * create dependent objects before running each test
-	 */
+	 **/
 	//run the default setUp() method first (creating a face company to house the test truck)
 	public final function setUp() {
 		//run the default setUp() method first
