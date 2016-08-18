@@ -16,12 +16,12 @@ require_once("autoload.php");
 class Truck implements \JsonSerializable {
 	/**
 	 * id for this truck; this is the primary key
-	 * @var $truckId;
+	 * @var int $truckId;
 	 **/
 	private $truckId;
 	/**
 	 * id for the truck and company, this is a foreign key.
-	 * @var $truckCompanyId;
+	 * @var int $truckCompanyId;
 	 **/
 	private $truckCompanyId;
 
@@ -90,6 +90,8 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 		}
 		return($truck);
 	}
+	//PDO section starts here
+	//insert method here
 
 	/**
 	 * gets truck by truckCompany Id
@@ -164,15 +166,13 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 	public function getTruckId() {
 		return ($this->truckId);
 	}
-	//PDO section starts here
-	//insert method here
+	//-------------INSERT, UPDATE, DELETE METHODS---------
 
 	/**
 	 * mutator method for truckId
 	 *
 	 * @param int|null $newTruckId new value of truck id
 	 * @throws \RangeException if $newTruckId is negative
-	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are nor the correct data type
 	 **/
 	public function setTruckId(int $newTruckId = null) {
@@ -188,7 +188,6 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 		//convert and store
 		$this->truckId = $newTruckId;
 	}
-		//delete method here
 
 	/**
 	 * accessor for the truck company Id
@@ -198,7 +197,6 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 	public function getTruckCompanyId() {
 		return ($this->truckCompanyId);
 	}
-		//update method here
 
 	/**
 	 * mutator method for truck company id
@@ -213,6 +211,9 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 		//convert and store
 		$this->truckCompanyId = $newTruckCompanyId;
 	}
+
+
+
 	//getFooByBar
 
 	/**
@@ -222,20 +223,38 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
-		public function insert(\PDO $pdo) {
-			if($this->truckId !== null) {
-				throw(new \PDOException("Not a new Truck"));
-			}
-			//query template
-			$query = "INSERT INTO truck(truckCompanyId) VALUES(:truckCompanyId)";
-			$statement = $pdo->prepare($query);
-
-			$parameters = ["truckCompanyId" => $this->truckCompanyId];
-			$statement->execute($parameters);
-
-			//update the null truckId with what SQL just gave us
-			$this->truckId = intval($pdo->lastInsertId());
+	public function insert(\PDO $pdo) {
+		if($this->truckId !== null) {
+			throw(new \PDOException("Not a new Truck"));
 		}
+		//query template
+		$query = "INSERT INTO truck(truckCompanyId) VALUES(:truckCompanyId)";
+		$statement = $pdo->prepare($query);
+
+		$parameters = ["truckCompanyId" => $this->truckCompanyId];
+		$statement->execute($parameters);
+
+		//update the null truckId with what SQL just gave us
+		$this->truckId = intval($pdo->lastInsertId());
+	}
+
+	/**
+	 * updates the truck in mySQL
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function update(\PDO $pdo) {
+		//don't update an image that has already been inserted
+		if($this->truckId === null) {
+			throw(new \PDOException("unable to update a truck that does not exist "));
+		}
+		$query = "UPDATE truck SET truckCompanyId = :truckCompanyId WHERE truckId = :truckId";
+		$statement = $pdo->prepare($query);
+
+		$parameters = ["truckCompanyId" => $this->truckCompanyId, "truckId" => $this->truckId];
+		$statement->execute($parameters);
+	}
 
 	/**
 	 * deletes the truck from mySQL
@@ -244,37 +263,19 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
-		public function delete(\PDO $pdo) {
-			//don't delete a truck that hasn't been inserted
-			if($this->truckId === null) {
-				throw(new \PDOException("unable to delete a truck that does not exist"));
-			}
-			//query template
-			$query = "DELETE FROM truck WHERE truckId = :truckId";
-			$statement = $pdo->prepare($query);
-
-			//bind the member variable to the place holder in the template
-			$parameters = ["truckId" => $this->truckId];
-			$statement->execute($parameters);
+	public function delete(\PDO $pdo) {
+		//don't delete a truck that hasn't been inserted
+		if($this->truckId === null) {
+			throw(new \PDOException("unable to delete a truck that does not exist"));
 		}
+		//query template
+		$query = "DELETE FROM truck WHERE truckId = :truckId";
+		$statement = $pdo->prepare($query);
 
-	/**
-	 * updates the truck in mySQL
-	 * @param \PDO $pdo PDO connection object
-	 * @throws \PDOException when mySQL related errors occur
-	 * @throws \TypeError if $pdo is not a PDO connection object
-	 **/
-		public function update(\PDO $pdo) {
-			//don't update an image that has already been inserted
-			if($this->truckId === null) {
-				throw(new \PDOException("unable to update a truck that does not exist "));
-			}
-			$query = "UPDATE truck SET truckCompanyId = :truckCompanyId WHERE truckId = :truckId";
-			$statement = $pdo->prepare($query);
-
-			$parameters = ["truckCompanyId" => $this->truckCompanyId, "truckId" => $this->truckId];
-			$statement->execute($parameters);
-		}
+		//bind the member variable to the place holder in the template
+		$parameters = ["truckId" => $this->truckId];
+		$statement->execute($parameters);
+	}
 
 	/**
 	 *formats the state variables for JSON serialization

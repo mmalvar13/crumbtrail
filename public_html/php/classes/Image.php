@@ -46,9 +46,11 @@ class Image implements \JsonSerializable {
 	 * @param int $newImageCompanyId
 	 * @param string $newImageFileType
 	 * @param string $newImageFileName
-	 * @throws \RangeException
 	 * @throws \InvalidArgumentException if the image is not a JPG, Jpeg, or PNG
-	 * @throws \PDOException
+	 * @throws \RangeException if the integer is negative
+	 * @throws \PDOException when SQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 * @throws \Exception when an error is called in mySQL
 	 */
 	public function __construct(int $newImageId = null, int $newImageCompanyId, string $newImageFileType, string $newImageFileName) {
 		try {
@@ -56,11 +58,15 @@ class Image implements \JsonSerializable {
 			$this->setImageCompanyId($newImageCompanyId);
 			$this->setImageFileType($newImageFileType);
 			$this->setImageFileName($newImageFileName);
+		}catch(\InvalidArgumentException $invalidArgument) {
+				throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
 		} catch(\RangeException $range) {
 			//rethrows exception to the caller//
 			throw(new \RangeException($range->getMessage(), 0, $range));
-		} catch(\InvalidArgumentException $invalidArgument) {
-			throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
+		} catch (\PDOException $pdo) {
+			throw(new \PDOException($pdo->getMessage(), 0, $pdo));
+		} catch (\Exception $exception) {
+			throw(new \Exception($exception->getMessage(), 0, $exception));
 		}
 
 	}
@@ -205,6 +211,7 @@ class Image implements \JsonSerializable {
 		}
 		return ($images);
 	}
+	//insert method here
 
 	/**
 	 * accessor method for image id
@@ -214,6 +221,8 @@ class Image implements \JsonSerializable {
 	public function getImageId() {
 		return ($this->imageId);
 	}
+
+	//delete method here
 
 	/**
 	 * mutator method for image id
@@ -233,6 +242,7 @@ class Image implements \JsonSerializable {
 		//converting and storing Image Id
 		$this->imageId = $newImageId;
 	}
+	//update method here
 
 	/**
 	 * accessor method for image company id
@@ -242,6 +252,8 @@ class Image implements \JsonSerializable {
 	public function getImageCompanyId() {
 		return $this->imageCompanyId;
 	}
+	//getFooByBar
+	//need this explained?
 
 	/**
 	 * mutator method for image company id
@@ -255,8 +267,6 @@ class Image implements \JsonSerializable {
 		//convert and store
 		$this->imageCompanyId = $newImageCompanyId;
 	}
-	// start the PDO section here
-	//insert method here
 
 	/** accessor method for image file type
 	 *
@@ -266,26 +276,22 @@ class Image implements \JsonSerializable {
 		return $this->imageFileType;
 	}
 
-	//delete method here
-
 	/**
 	 * mutator for image file type
 	 *
 	 * @param string $newImageFileType new value of image file type
 	 * @throws \InvalidArgumentException if $newImageFileType is not a string
 	 * @throws \RangeException if $newImageFileType > 10 characters
-	 * @throws \PDOException
 	 */
 	public function setImageFileType(string $newImageFileType) {
 		$validFileType = ["image/jpeg", "image/jpg", "image/png"];
 		$newImageFileType = strtolower($newImageFileType);
 		if(in_array($newImageFileType, $validFileType) === false) {
-			throw(new \PDOException("This is not the proper image type. Please insert image/jpeg, or image/jpg"));
+			throw(new \InvalidArgumentException("This is not the proper image type. Please insert image/jpeg, or image/jpg"));
 		}
 		//convert and store
 		$this->imageFileType = $newImageFileType;
 	}
-	//update method here
 
 	/**
 	 * accessor for the image file name
@@ -295,8 +301,6 @@ class Image implements \JsonSerializable {
 	public function getImageFileName() {
 		return $this->imageFileName;
 	}
-	//getFooByBar
-	//need this explained?
 
 	/**
 	 * mutator for image file name
@@ -306,6 +310,9 @@ class Image implements \JsonSerializable {
 	 * @throws \PDOException
 	 */
 	public function setImageFileName(string $newImageFileName) {
+		//verify the image file name is secure
+		$newImageFileName = trim($newImageFileName);
+		$newImageFileName = filter_var($newImageFileName, FILTER_SANITIZE_STRING);
 		if($newImageFileName > 255) {
 			throw(new \RangeException("Image file name is too long"));
 		}
@@ -338,6 +345,24 @@ class Image implements \JsonSerializable {
 	}
 
 	/**
+	 *updates the image in mySQL
+	 * @param \PDO $pdo PDO connection object
+	 * @throws |PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function update(\PDO $pdo) {
+		//don't update an image that hasn't been inserted
+		if($this->imageId === null) {
+			throw(new \PDOException("unable to update an image that does not exist"));
+		}
+		$query = "UPDATE image SET imageCompanyId = :imageCompanyId, imageFileType = :imageFileType, imageFileName =:imageFileName WHERE imageId = :imageId ";
+		$statement = $pdo->prepare($query);
+
+		$parameters = ["imageCompanyId" => $this->imageCompanyId, "imageFileType" =>$this->imageFileType, "imageFileName" =>$this->imageFileName, "imageId"=>$this->imageId];
+		$statement->execute($parameters);
+	}
+
+	/**
 	 * deletes this image from mySQL
 	 *
 	 * @param \PDO $pdo PDO connection object
@@ -355,24 +380,6 @@ class Image implements \JsonSerializable {
 
 		//bind the member variables to the place holder in the template????
 		$parameters = ["imageId" =>$this->imageId];
-		$statement->execute($parameters);
-	}
-
-	/**
-	 *updates the image in mySQL
-	 * @param \PDO $pdo PDO connection object
-	 * @throws |PDOException when mySQL related errors occur
-	 * @throws \TypeError if $pdo is not a PDO connection object
-	 **/
-	public function update(\PDO $pdo) {
-		//don't update an image that hasn't been inserted
-		if($this->imageId === null) {
-			throw(new \PDOException("unable to update an image that does not exist"));
-		}
-		$query = "UPDATE image SET imageCompanyId = :imageCompanyId, imageFileType = :imageFileType, imageFileName =:imageFileName WHERE imageId = :imageId ";
-		$statement = $pdo->prepare($query);
-
-		$parameters = ["imageCompanyId" => $this->imageCompanyId, "imageFileType" =>$this->imageFileType, "imageFileName" =>$this->imageFileName, "imageId"=>$this->imageId];
 		$statement->execute($parameters);
 	}
 
