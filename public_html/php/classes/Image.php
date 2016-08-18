@@ -48,7 +48,6 @@ class Image implements \JsonSerializable {
 	 * @param string $newImageFileName
 	 * @throws \InvalidArgumentException if the image is not a JPG, Jpeg, or PNG
 	 * @throws \RangeException if the integer is negative
-	 * @throws \PDOException when SQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 * @throws \Exception when an error is called in mySQL
 	 */
@@ -58,17 +57,18 @@ class Image implements \JsonSerializable {
 			$this->setImageCompanyId($newImageCompanyId);
 			$this->setImageFileType($newImageFileType);
 			$this->setImageFileName($newImageFileName);
-		}catch(\InvalidArgumentException $invalidArgument) {
-				throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
+		} catch(\InvalidArgumentException $invalidArgument) {
+			throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
 		} catch(\RangeException $range) {
 			//rethrows exception to the caller//
 			throw(new \RangeException($range->getMessage(), 0, $range));
-		} catch (\PDOException $pdo) {
+		} catch(\PDOException $pdo) {
 			throw(new \PDOException($pdo->getMessage(), 0, $pdo));
-		} catch (\Exception $exception) {
+		} catch(\Exception $exception) {
 			throw(new \Exception($exception->getMessage(), 0, $exception));
+		} catch(\TypeError $typeError) {
+			throw(new \TypeError($typeError->getMessage(), 0, $typeError));
 		}
-
 	}
 	//adding in the accessor method for image.php
 	/**
@@ -84,6 +84,7 @@ class Image implements \JsonSerializable {
 	 *
 	 * @param int|null $newImageId new value of image id
 	 * @throw \RangeException if $newImageId is negative
+	 * @throws \TypeError when variables are not the correct data type
 	 **/
 	public function setImageId(int $newImageId = null) {
 		if($newImageId === null) {
@@ -109,6 +110,7 @@ class Image implements \JsonSerializable {
 	 * mutator method for image company id
 	 * @param int|null $newImageCompanyId new value of image company id
 	 * @throw \RangeException if $ImageCompanyId is negative
+	 * @throws \TypeError when variables are not the correct data type
 	 **/
 	public function setImageCompanyId(int $newImageCompanyId = null) {
 		if($newImageCompanyId <= 0) {
@@ -131,7 +133,7 @@ class Image implements \JsonSerializable {
 	 *
 	 * @param string $newImageFileType new value of image file type
 	 * @throws \InvalidArgumentException if $newImageFileType is not a string
-	 * @throws \RangeException if $newImageFileType > 10 characters
+	 * @throws \TypeError when variables are not the correct data type
 	 */
 	public function setImageFileType(string $newImageFileType) {
 		$validFileType = ["image/jpeg", "image/jpg", "image/png"];
@@ -156,8 +158,8 @@ class Image implements \JsonSerializable {
 	 * mutator for image file name
 	 *
 	 * @param string $newImageFileName new value of image file name
-	 * @throws /RangeException if $newImageFileName > 255 characters
-	 * @throws \PDOException
+	 * @throws \RangeException if $newImageFileName > 255 characters
+	 * @throws \TypeError when variables are not the correct data type
 	 */
 	public function setImageFileName(string $newImageFileName) {
 		//verify the image file name is secure
@@ -174,7 +176,7 @@ class Image implements \JsonSerializable {
 	 * inserts this image into mySQL
 	 *
 	 * @param \PDO $pdo PDO connection object
-	 * @throws |PDOException when mySQL related errors occur
+	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
 	public function insert(\PDO $pdo) {
@@ -197,7 +199,7 @@ class Image implements \JsonSerializable {
 	/**
 	 *updates the image in mySQL
 	 * @param \PDO $pdo PDO connection object
-	 * @throws |PDOException when mySQL related errors occur
+	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
 	public function update(\PDO $pdo) {
@@ -216,7 +218,7 @@ class Image implements \JsonSerializable {
 	 * deletes this image from mySQL
 	 *
 	 * @param \PDO $pdo PDO connection object
-	 * @throws |PDOException when mySQL related errors occur
+	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
 	public function delete(\PDO $pdo) {
@@ -278,6 +280,7 @@ class Image implements \JsonSerializable {
 	 * @param int, $imageCompanyId image to search for
 	 * @return \SplFixedArray SplFixedArray of images found
 	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not of the correct data type
 	 **/
 	public static function getImageByImageCompanyId(\PDO $pdo, int $imageCompanyId) {
 		//sanitize the description? before searching
