@@ -283,7 +283,6 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 	 **/
 	public function jsonSerialize() {
 		$fields = get_object_vars($this);
-		//$fields[?no date needed here "tweetDate"] = $this->tweetDate->getTimestamp() 8 1000;
 		return($fields);
 	}
 }
