@@ -22,7 +22,7 @@ class Truck implements \JsonSerializable {
 	/**
 	 * id for the truck and company, this is a foreign key.
 	 * @var $truckCompanyId;
-	 */
+	 **/
 	private $truckCompanyId;
 
 //constructor will go here//
@@ -30,10 +30,10 @@ class Truck implements \JsonSerializable {
 	 * Truck constructor
 	 * @param int|null $newTruckId id of the truck or null if new truck
 	 * @param int $newTruckCompanyId
-	 * @throws \RangeException
-	 * @throws \TypeError
-	 * @throws \exception
-	 */
+	 * @throws \RangeException when the integer is negative
+	 * @throws \TypeError When the variable is not the correct data type
+	 * @throws \exception when errors need to be called in the code
+	 **/
 
 public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 	try {
@@ -99,7 +99,7 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 	 * @return \SplFixedArray SplFixedArray of trucks found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are nor the correct data type
-	 */
+	 **/
 		public static function getTruckByTruckCompanyId(\PDO $pdo, int $truckCompanyId) {
 			//sanitize the description before searching?
 			if($truckCompanyId <=0) {
@@ -160,7 +160,7 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 	 *
 	 * @return int|null value of truck id
 	 *
-	 */
+	 **/
 	public function getTruckId() {
 		return ($this->truckId);
 	}
@@ -194,7 +194,7 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 	 * accessor for the truck company Id
 	 *
 	 *@return Int|null value of truck company Id
-	 */
+	 **/
 	public function getTruckCompanyId() {
 		return ($this->truckCompanyId);
 	}
@@ -205,7 +205,7 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 	 *
 	 * @param int|null $newTruckCompanyId new value of truck company Id
 	 * @throws \RangeException if $newTruckCompanyId is negative
-	 */
+	 **/
 	public function setTruckCompanyId(int $newTruckCompanyId) {
 		if($newTruckCompanyId <=0) {
 			throw (new \RangeException ("Truck Company Id is not positive"));
@@ -261,9 +261,9 @@ public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
 	/**
 	 * updates the truck in mySQL
 	 * @param \PDO $pdo PDO connection object
-	 * @throws |PDOException when mySQL related errors occur
+	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
-	 */
+	 **/
 		public function update(\PDO $pdo) {
 			//don't update an image that has already been inserted
 			if($this->truckId === null) {
