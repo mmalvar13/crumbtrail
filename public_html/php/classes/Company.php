@@ -675,7 +675,7 @@ class Company implements \JsonSerializable {
 
 	/**
 	 * Mutator method for companyStreet2
-	 * @param string , $newCompanyStreet2  The new value of companyStreet2
+	 * @param string $newCompanyStreet2  The new value of companyStreet2
 	 * @throw \RangeException if $newCompanyStreet2 is empty or too long
 	 * @throw \InvalidArgumentException if $newCompanyStreet2 is not a string
 	 * @throw \TypeError if $newCompanyStreet2 is not a string
@@ -706,7 +706,7 @@ class Company implements \JsonSerializable {
 
 	/**
 	 * Mutator method for companyCity
-	 * @param string , $newCompanyCity  The new value of companyCity
+	 * @param string $newCompanyCity  The new value of companyCity
 	 * @throw \RangeException if $newCompanyCity is empty or too long
 	 * @throw \InvalidArgumentException if $newCompanyCity is not a string
 	 * @throw \TypeError if $newCompanyCity is not a string
