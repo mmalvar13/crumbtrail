@@ -71,7 +71,170 @@ class Image implements \JsonSerializable {
 
 	}
 	//adding in the accessor method for image.php
+	/**
+	 * accessor method for image id
+	 *
+	 * @return int|null value of image id
+	 **/
+	public function getImageId() {
+		return ($this->imageId);
+	}
+	/**
+	 * mutator method for image id
+	 *
+	 * @param int|null $newImageId new value of image id
+	 * @throw \RangeException if $newImageId is negative
+	 **/
+	public function setImageId(int $newImageId = null) {
+		if($newImageId === null) {
+			$this->imageId = null;
+			return;
+		}
+		//verifying that the image id is positive??
+		if($newImageId <= 0) {
+			throw(new \RangeException ("image id is not positive"));
+		}
+		//converting and storing Image Id
+		$this->imageId = $newImageId;
+	}
+	/**
+	 * accessor method for image company id
+	 *
+	 * @return int|null value of ImageCompanyId
+	 */
+	public function getImageCompanyId() {
+		return $this->imageCompanyId;
+	}
+	/**
+	 * mutator method for image company id
+	 * @param int|null $newImageCompanyId new value of image company id
+	 * @throw \RangeException if $ImageCompanyId is negative
+	 **/
+	public function setImageCompanyId(int $newImageCompanyId = null) {
+		if($newImageCompanyId <= 0) {
+			throw(new \RangeException ("Image Company Id is not positive"));
+		}
+		//convert and store
+		$this->imageCompanyId = $newImageCompanyId;
+	}
 
+	/** accessor method for image file type
+	 *
+	 * @return string value of imageFileType
+	 */
+	public function getImageFileType() {
+		return $this->imageFileType;
+	}
+
+	/**
+	 * mutator for image file type
+	 *
+	 * @param string $newImageFileType new value of image file type
+	 * @throws \InvalidArgumentException if $newImageFileType is not a string
+	 * @throws \RangeException if $newImageFileType > 10 characters
+	 */
+	public function setImageFileType(string $newImageFileType) {
+		$validFileType = ["image/jpeg", "image/jpg", "image/png"];
+		$newImageFileType = strtolower($newImageFileType);
+		if(in_array($newImageFileType, $validFileType) === false) {
+			throw(new \InvalidArgumentException("This is not the proper image type. Please insert image/jpeg, or image/jpg"));
+		}
+		//convert and store
+		$this->imageFileType = $newImageFileType;
+	}
+
+	/**
+	 * accessor for the image file name
+	 *
+	 * @return string value for imageFileName
+	 **/
+	public function getImageFileName() {
+		return $this->imageFileName;
+	}
+
+	/**
+	 * mutator for image file name
+	 *
+	 * @param string $newImageFileName new value of image file name
+	 * @throws /RangeException if $newImageFileName > 255 characters
+	 * @throws \PDOException
+	 */
+	public function setImageFileName(string $newImageFileName) {
+		//verify the image file name is secure
+		$newImageFileName = trim($newImageFileName);
+		$newImageFileName = filter_var($newImageFileName, FILTER_SANITIZE_STRING);
+		if($newImageFileName > 255) {
+			throw(new \RangeException("Image file name is too long"));
+		}
+		//convert and store
+		$this->imageFileName = $newImageFileName;
+	}
+	//------INSERT, UPDATE, DELETE METHODS
+	/**
+	 * inserts this image into mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws |PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function insert(\PDO $pdo) {
+		//enforce image id...essentially...don't put in an image that already exists.
+		if($this->imageId !== null) {
+			throw(new \PDOException("Not a new image"));
+		}
+		//query template
+		//why yellow????
+		$query = "INSERT INTO image(imageCompanyId, imageFileType, imageFileName) VALUES(:imageCompanyId, :imageFileType, :imageFileName)";
+		$statement =$pdo->prepare($query);
+
+		$parameters = ["imageCompanyId" => $this->imageCompanyId, "imageFileType" => $this ->imageFileType, "imageFileName" => $this->imageFileName];
+		$statement->execute($parameters);
+
+		//update the null imageId with what SQL just gave us
+		$this->imageId = intval($pdo->lastInsertId());
+	}
+
+	/**
+	 *updates the image in mySQL
+	 * @param \PDO $pdo PDO connection object
+	 * @throws |PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function update(\PDO $pdo) {
+		//don't update an image that hasn't been inserted
+		if($this->imageId === null) {
+			throw(new \PDOException("unable to update an image that does not exist"));
+		}
+		$query = "UPDATE image SET imageCompanyId = :imageCompanyId, imageFileType = :imageFileType, imageFileName =:imageFileName WHERE imageId = :imageId ";
+		$statement = $pdo->prepare($query);
+
+		$parameters = ["imageCompanyId" => $this->imageCompanyId, "imageFileType" =>$this->imageFileType, "imageFileName" =>$this->imageFileName, "imageId"=>$this->imageId];
+		$statement->execute($parameters);
+	}
+
+	/**
+	 * deletes this image from mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws |PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function delete(\PDO $pdo) {
+		//don't delete an image that hasn't been inserted
+		if($this->imageId === null) {
+			throw(new \PDOException("unable to delete an image that does not exist"));
+		}
+		//query template
+		$query = "DELETE FROM image WHERE imageId = :imageId";
+		$statement =$pdo->prepare($query);
+
+		//bind the member variables to the place holder in the template????
+		$parameters = ["imageId" =>$this->imageId];
+		$statement->execute($parameters);
+	}
+
+	//getFooByBar
+	//need this explained?
 	/**
 	 * gets image by image id
 	 *
@@ -210,177 +373,6 @@ class Image implements \JsonSerializable {
 			}
 		}
 		return ($images);
-	}
-	//insert method here
-
-	/**
-	 * accessor method for image id
-	 *
-	 * @return int|null value of image id
-	 **/
-	public function getImageId() {
-		return ($this->imageId);
-	}
-
-	//delete method here
-
-	/**
-	 * mutator method for image id
-	 *
-	 * @param int|null $newImageId new value of image id
-	 * @throw \RangeException if $newImageId is negative
-	 **/
-	public function setImageId(int $newImageId = null) {
-		if($newImageId === null) {
-			$this->imageId = null;
-			return;
-		}
-		//verifying that the image id is positive??
-		if($newImageId <= 0) {
-			throw(new \RangeException ("image id is not positive"));
-		}
-		//converting and storing Image Id
-		$this->imageId = $newImageId;
-	}
-	//update method here
-
-	/**
-	 * accessor method for image company id
-	 *
-	 * @return int|null value of ImageCompanyId
-	 */
-	public function getImageCompanyId() {
-		return $this->imageCompanyId;
-	}
-	//getFooByBar
-	//need this explained?
-
-	/**
-	 * mutator method for image company id
-	 * @param int|null $newImageCompanyId new value of image company id
-	 * @throw \RangeException if $ImageCompanyId is negative
-	 **/
-	public function setImageCompanyId(int $newImageCompanyId = null) {
-		if($newImageCompanyId <= 0) {
-			throw(new \RangeException ("Image Company Id is not positive"));
-		}
-		//convert and store
-		$this->imageCompanyId = $newImageCompanyId;
-	}
-
-	/** accessor method for image file type
-	 *
-	 * @return string value of imageFileType
-	 */
-	public function getImageFileType() {
-		return $this->imageFileType;
-	}
-
-	/**
-	 * mutator for image file type
-	 *
-	 * @param string $newImageFileType new value of image file type
-	 * @throws \InvalidArgumentException if $newImageFileType is not a string
-	 * @throws \RangeException if $newImageFileType > 10 characters
-	 */
-	public function setImageFileType(string $newImageFileType) {
-		$validFileType = ["image/jpeg", "image/jpg", "image/png"];
-		$newImageFileType = strtolower($newImageFileType);
-		if(in_array($newImageFileType, $validFileType) === false) {
-			throw(new \InvalidArgumentException("This is not the proper image type. Please insert image/jpeg, or image/jpg"));
-		}
-		//convert and store
-		$this->imageFileType = $newImageFileType;
-	}
-
-	/**
-	 * accessor for the image file name
-	 *
-	 * @return string value for imageFileName
-	 **/
-	public function getImageFileName() {
-		return $this->imageFileName;
-	}
-
-	/**
-	 * mutator for image file name
-	 *
-	 * @param string $newImageFileName new value of image file name
-	 * @throws /RangeException if $newImageFileName > 255 characters
-	 * @throws \PDOException
-	 */
-	public function setImageFileName(string $newImageFileName) {
-		//verify the image file name is secure
-		$newImageFileName = trim($newImageFileName);
-		$newImageFileName = filter_var($newImageFileName, FILTER_SANITIZE_STRING);
-		if($newImageFileName > 255) {
-			throw(new \RangeException("Image file name is too long"));
-		}
-		//convert and store
-		$this->imageFileName = $newImageFileName;
-	}
-
-	/**
-	 * inserts this image into mySQL
-	 *
-	 * @param \PDO $pdo PDO connection object
-	 * @throws |PDOException when mySQL related errors occur
-	 * @throws \TypeError if $pdo is not a PDO connection object
-	 **/
-	public function insert(\PDO $pdo) {
-		//enforce image id...essentially...don't put in an image that already exists.
-		if($this->imageId !== null) {
-			throw(new \PDOException("Not a new image"));
-		}
-		//query template
-		//why yellow????
-		$query = "INSERT INTO image(imageCompanyId, imageFileType, imageFileName) VALUES(:imageCompanyId, :imageFileType, :imageFileName)";
-		$statement =$pdo->prepare($query);
-
-		$parameters = ["imageCompanyId" => $this->imageCompanyId, "imageFileType" => $this ->imageFileType, "imageFileName" => $this->imageFileName];
-		$statement->execute($parameters);
-
-		//update the null imageId with what SQL just gave us
-		$this->imageId = intval($pdo->lastInsertId());
-	}
-
-	/**
-	 *updates the image in mySQL
-	 * @param \PDO $pdo PDO connection object
-	 * @throws |PDOException when mySQL related errors occur
-	 * @throws \TypeError if $pdo is not a PDO connection object
-	 **/
-	public function update(\PDO $pdo) {
-		//don't update an image that hasn't been inserted
-		if($this->imageId === null) {
-			throw(new \PDOException("unable to update an image that does not exist"));
-		}
-		$query = "UPDATE image SET imageCompanyId = :imageCompanyId, imageFileType = :imageFileType, imageFileName =:imageFileName WHERE imageId = :imageId ";
-		$statement = $pdo->prepare($query);
-
-		$parameters = ["imageCompanyId" => $this->imageCompanyId, "imageFileType" =>$this->imageFileType, "imageFileName" =>$this->imageFileName, "imageId"=>$this->imageId];
-		$statement->execute($parameters);
-	}
-
-	/**
-	 * deletes this image from mySQL
-	 *
-	 * @param \PDO $pdo PDO connection object
-	 * @throws |PDOException when mySQL related errors occur
-	 * @throws \TypeError if $pdo is not a PDO connection object
-	 **/
-	public function delete(\PDO $pdo) {
-		//don't delete an image that hasn't been inserted
-		if($this->imageId === null) {
-			throw(new \PDOException("unable to delete an image that does not exist"));
-		}
-		//query template
-		$query = "DELETE FROM image WHERE imageId = :imageId";
-		$statement =$pdo->prepare($query);
-
-		//bind the member variables to the place holder in the template????
-		$parameters = ["imageId" =>$this->imageId];
-		$statement->execute($parameters);
 	}
 
 	/**
