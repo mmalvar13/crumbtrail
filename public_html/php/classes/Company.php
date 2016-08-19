@@ -993,56 +993,56 @@ class Company implements \JsonSerializable {
 
 
 
-//	/**
-//	 * Get company by companyDescription
-//	 *
-//	 * @param \PDO $pdo PDO connection object
-//	 * @param string $companyDescription The companyDescription we want to find
-//	 * @return \SplFixedArray  Returns the company found or null if not found
-//	 * @throws \PDOException  When mySQL related errors occur
-//	 * @throws \TypeError  When variables are not the correct data type
-//	 **/
-//	public static function getCompanyByCompanyDescription(\PDO $pdo, string $companyDescription) {
-//		// Sanitize the search string before searching for it.
-//		$companyDescription = trim($companyDescription);
-//		$companyDescription = filter_var($companyDescription, FILTER_SANITIZE_STRING);
-//		if(empty($companyDescription) === true) {
-//			throw(new \PDOException("The company description is invalid"));
-//		}
-//
-//		// Create the query template.
-//		$query = "SELECT companyId, companyAccountCreatorId, companyName, companyEmail, companyPhone, companyPermit, companyPhone, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved FROM company WHERE companyDescription LIKE :companyDescription";
-//
-//		// Prepare the template.
-//		$statement = $pdo->prepare($query);
-//
-//		// The %companyDescription% is similar to (LIKE) the search string that was entered.
-//		$companyDescription = "%$companyDescription%";
-//
-//		// Bind the companyDescription to the placeholder in the template.
-//		$parameters = ["companyDescription" => $companyDescription];
-//
-//		// Execute the SQL statement
-//		$statement->execute($parameters);
-//
-//		// Build an array of companies that match the search string = the $companies array.
-//		$companies = new \SplFixedArray($statement->rowCount());
-//		$statement->setFetchMode(\PDO::FETCH_ASSOC);
-//
-//		// Now that we have selected the correct company, we need to get it from mySQL.
-//		while(($row = $statement->fetch()) !== false) {
-//			try {
-//				// Run the constructor method.
-//				$company = new Company($row["companyId"], $row["companyAccountCreatorId"], $row["companyName"], $row["companyEmail"], $row["companyPhone"], $row["companyPermit"], $row["companyLicense"], $row["companyAttn"], $row["companyStreet1"], $row["companyStreet2"], $row["companyCity"], $row["companyState"], $row["companyZip"], $row["companyDescription"], $row["companyMenuText"], $row["companyActivationToken"], $row["companyApproved"]);
-//				$companies[$companies->key()] = $company;
-//				$companies->next();
-//			} catch(\Exception $exception) {
-//				// If the row could not be converted, then re-throw it.
-//				throw(new \PDOException($exception->getMessage(), 0, $exception));
-//			}
-//		}
-//		return($companies);
-//	}
+	/**
+	 * Get company by companyDescription
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $companyDescription The companyDescription we want to find
+	 * @return \SplFixedArray  Returns the company found or null if not found
+	 * @throws \PDOException  When mySQL related errors occur
+	 * @throws \TypeError  When variables are not the correct data type
+	 **/
+	public static function getCompanyByCompanyDescription(\PDO $pdo, string $companyDescription) {
+		// Sanitize the search string before searching for it.
+		$companyDescription = trim($companyDescription);
+		$companyDescription = filter_var($companyDescription, FILTER_SANITIZE_STRING);
+		if(empty($companyDescription) === true) {
+			throw(new \PDOException("The company description is invalid"));
+		}
+
+		// Create the query template.
+		$query = "SELECT companyId, companyAccountCreatorId, companyName, companyEmail, companyPhone, companyPermit, companyPhone, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved FROM company WHERE companyDescription LIKE :companyDescription";
+
+		// Prepare the template.
+		$statement = $pdo->prepare($query);
+
+		// The %companyDescription% is similar to (LIKE) the search string that was entered.
+		$companyDescription = "%$companyDescription%";
+
+		// Bind the companyDescription to the placeholder in the template.
+		$parameters = ["companyDescription" => $companyDescription];
+
+		// Execute the SQL statement
+		$statement->execute($parameters);
+
+		// Build an array of companies that match the search string = the $companies array.
+		$companies = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+
+		// Now that we have selected the correct company, we need to get it from mySQL.
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				// Run the constructor method.
+				$company = new Company($row["companyId"], $row["companyAccountCreatorId"], $row["companyName"], $row["companyEmail"], $row["companyPhone"], $row["companyPermit"], $row["companyLicense"], $row["companyAttn"], $row["companyStreet1"], $row["companyStreet2"], $row["companyCity"], $row["companyState"], $row["companyZip"], $row["companyDescription"], $row["companyMenuText"], $row["companyActivationToken"], $row["companyApproved"]);
+				$companies[$companies->key()] = $company;
+				$companies->next();
+			} catch(\Exception $exception) {
+				// If the row could not be converted, then re-throw it.
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($companies);
+	}
 
 	/**
 	 * Get all Companys
