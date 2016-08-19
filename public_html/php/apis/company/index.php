@@ -28,11 +28,11 @@ $reply = new stdClass();
 $reply->status = 200;
 $reply->data = null;
 
-//begin try section
-//
-//try{
-//	//grab the mySQL connection
-//	$pdo = connectToEncryptedMySQL("/etc/apache2/crumbtrail-mysql/company.ini");
-//
-//
-//}
+begin try section
+
+try{
+	//grab the mySQL connection
+	$pdo = connectToEncryptedMySQL("/etc/apache2/crumbtrail-mysql/company.ini");
+
+
+}
