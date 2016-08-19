@@ -4,13 +4,12 @@ require_once "autoloader.php";
 require_once "/lib/xsrf.php";
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
-use Edu\Cnm\Dmcdonald21\DataDesign\Tweet;
-
+use Edu\Cnm\Mmalvar13\Profile;   // TODO check this path
 
 /**
- * api for the Tweet class
+ * api for the Profile class
  *
- * @author Derek Mauldin <derek.e.mauldin@gmail.com>
+ * @author Kevin Lee Kirk
  **/
 
 //verify the session, start if not active
@@ -24,8 +23,8 @@ $reply->status = 200;
 $reply->data = null;
 
 try {
-	//grab the mySQL connection
-	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/tweet.ini");
+	//grab the mySQL connection        TODO Check this
+	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/profile.ini");
 
 	//determine which HTTP method was used
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
@@ -40,83 +39,88 @@ try {
 
 
 	// handle GET request - if id is present, that tweet is returned, otherwise all tweets are returned
+	// You need a separate GET request for each getFooByBar in the Company class.
+
 	if($method === "GET") {
 		//set XSRF cookie
 		setXsrfCookie();
 
-		//get a specific tweet or all tweets and update reply
+
+		//get a specific profile or all profiles and update reply
 		if(empty($id) === false) {
-			$tweet = Tweet::getTweetByTweetId($pdo, $id);
-			if($tweet !== null) {
-				$reply->data = $tweet;
+			$tweet = Profile::getProfileByProfileId($pdo, $id);
+			if($profile !== null) {
+				$reply->data = $profile;
 			}
 		} else {
-			$tweets = Tweet::getAllTweets($pdo);
-			if($tweets !== null) {
-				$reply->data = $tweets;
+			$profile = Profile::getAllProfile($pdo);
+			if($profile !== null) {
+				$reply->data = $profile;
 			}
 		}
+
+
 	} else if($method === "PUT" || $method === "POST") {
 
 		verifyXsrf();
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
 
-		//make sure tweet content is available (required field)
-		if(empty($requestObject->tweetContent) === true) {
-			throw(new \InvalidArgumentException ("No content for Tweet.", 405));
+		// make sure profile foo   ******   is available (required field)
+		if(empty($requestObject->profileFoo) === true) {
+			throw(new \InvalidArgumentException ("No content for Profile.", 405));
 		}
 
-		// make sure tweet date is accurate (optional field)
-		if(empty($requestObject->tweetDate) === true) {
-			$requestObject->tweetDate = new \DateTime();
+		// make sure profile bar   *****   is accurate (optional field)
+		if(empty($requestObject->profileBar) === true) {
+			$requestObject->profileBar = new \DateTime();
 		}
 
 		//  make sure profileId is available
 		if(empty($requestObject->profileId) === true) {
-			throw(new \InvalidArgumentException ("No Pofile ID.", 405));
+			throw(new \InvalidArgumentException ("No Profile ID.", 405));
 		}
 
 		//perform the actual put or post
 		if($method === "PUT") {
 
-			// retrieve the tweet to update
-			$tweet = Tweet::getTweetByTweetId($pdo, $id);
+			// retrieve the profile to update
+			$tweet = Profile::getProfileByProfileId($pdo, $id);
 			if($tweet === null) {
-				throw(new RuntimeException("Tweet does not exist", 404));
+				throw(new RuntimeException("Profile does not exist", 404));
 			}
 
-			// put the new tweet content into the tweet and update
-			$tweet->setTweetContent($requestObject->tweetContent);
-			$tweet->update($pdo);
+			// put the new profile foo   ********    into the tweet and update
+			$profile->setProfileFoo($requestObject->profileFoo);
+			$profile->update($pdo);
 
 			// update reply
-			$reply->message = "Tweet updated OK";
+			$reply->message = "Profile updated OK";
 
 		} else if($method === "POST") {
 
-			// create new tweet and insert into the database
-			$tweet = new Tweet(null, $requestObject->profileId, $requestObject->tweetContent, null);
-			$tweet->insert($pdo);
+			// create new profile and insert into the database
+			$profile = new Profile(null, $requestObject->profileId, $requestObject->profileFoo, null);
+			$profile->insert($pdo);
 
 			// update reply
-			$reply->message = "Tweet created OK";
+			$reply->message = "Profile created OK";
 		}
 
 	} else if($method === "DELETE") {
 		verifyXsrf();
 
-		// retrieve the Tweet to be deleted
-		$tweet = Tweet::getTweetByTweetId($pdo, $id);
-		if($tweet === null) {
-			throw(new RuntimeException("Tweet does not exist", 404));
+		// retrieve the Profile to be deleted
+		$profile = Profile::getProfileByProfileId($pdo, $id);
+		if($profile === null) {
+			throw(new RuntimeException("Profile does not exist", 404));
 		}
 
-		// delete tweet
-		$tweet->delete($pdo);
+		// delete profile
+		$profile->delete($pdo);
 
 		// update reply
-		$reply->message = "Tweet deleted OK";
+		$reply->message = "Profile deleted OK";
 	} else {
 		throw (new InvalidArgumentException("Invalid HTTP method request"));
 	}
