@@ -507,6 +507,49 @@ class CompanyTest extends CrumbTrailTest {
 
 
 
+
+//	/**
+//	 * Test getting a Company by company description.
+//	 **/
+//	public function testGetCompanyByCompanyDescription() {
+//		// Count the number of rows and save it for later.
+//		$numRows = $this->getConnection()->getRowCount("company");
+//
+//		// Create a new Company and insert to into mySQL.
+//		$company = new Company(null, $this->profile->getProfileId(), $this->VALID_COMPANYNAME, $this->VALID_COMPANYEMAIL, $this->VALID_COMPANYPHONE, $this->VALID_COMPANYPERMIT, $this->VALID_COMPANYLICENSE, $this->VALID_COMPANYATTN, $this->VALID_COMPANYSTREET1, $this->VALID_COMPANYSTREET2, $this->VALID_COMPANYCITY, $this->VALID_COMPANYSTATE, $this->VALID_COMPANYZIP, $this->VALID_COMPANYDESCRIPTION, $this->VALID_COMPANYMENUTEXT, $this->VALID_COMPANYACTIVATIONTOKEN, $this->VALID_COMPANYAPPROVED);
+//
+//		$company->insert($this->getPDO());
+//
+//		// Grab the data from mySQL and enforce the fields match our expectations.
+//		$results = Company::getCompanyByCompanyDescription($this->getPDO(), $company->getCompanyDescription());
+//		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("company"));
+//		$this->assertCount(1, $results);
+//		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\CrumbTrail\\Company", $results);
+//
+//		// Grab the result from the array and validate it.
+//		$pdoCompany = $results[0];
+//
+//		//changing this line from getProfileId() to getCompanyAccountCreatorId() ~LB
+//		$this->assertEquals($pdoCompany->getCompanyAccountCreatorId(), $this->profile->getProfileId());
+//
+//		$this->assertEquals($pdoCompany->getCompanyName(), $this->VALID_COMPANYNAME);
+//		$this->assertEquals($pdoCompany->getCompanyEmail(), $this->VALID_COMPANYEMAIL);
+//		$this->assertEquals($pdoCompany->getCompanyPhone(), $this->VALID_COMPANYPHONE);
+//		$this->assertEquals($pdoCompany->getCompanyPermit(), $this->VALID_COMPANYPERMIT);
+//		$this->assertEquals($pdoCompany->getCompanyLicense(), $this->VALID_COMPANYLICENSE);
+//		$this->assertEquals($pdoCompany->getCompanyAttn(), $this->VALID_COMPANYATTN);
+//		$this->assertEquals($pdoCompany->getCompanyStreet1(), $this->VALID_COMPANYSTREET1);
+//		$this->assertEquals($pdoCompany->getCompanyStreet2(), $this->VALID_COMPANYSTREET2);
+//		$this->assertEquals($pdoCompany->getCompanyCity(), $this->VALID_COMPANYCITY);
+//		$this->assertEquals($pdoCompany->getCompanyState(), $this->VALID_COMPANYSTATE);
+//		$this->assertEquals($pdoCompany->getCompanyZip(), $this->VALID_COMPANYZIP);
+//		$this->assertEquals($pdoCompany->getCompanyDescription(), $this->VALID_COMPANYDESCRIPTION);
+//		$this->assertEquals($pdoCompany->getCompanyMenuText(), $this->VALID_COMPANYMENUTEXT);
+//		$this->assertEquals($pdoCompany->getCompanyActivationToken(), $this->VALID_COMPANYACTIVATIONTOKEN);
+//		$this->assertEquals($pdoCompany->getCompanyApproved(), $this->VALID_COMPANYAPPROVED);
+//	}
+
+
 	/**
 	 * Test getting a invalid Company by company name
 	 *

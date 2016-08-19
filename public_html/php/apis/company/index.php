@@ -3,7 +3,11 @@
 
 //We need to:
 //get all companies
-//get a specific company by primary key
+//get a specific company by primary key (companyId)
+//get a specific company by  foreign key (accountCreatorId)
+//get a specific company by company name (companyName)
+//get a specific company by company menu text (companyMenuText)
+//get a specific company by
 //create a new company
 //update a company by primary key
 //delete a company by primary key
