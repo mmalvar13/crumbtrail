@@ -592,7 +592,7 @@ class Company implements \JsonSerializable {
 		if(strlen($newCompanyDescription) === 0) {
 			throw(new \RangeException("company Description is too short."));
 		}
-		if(strlen($newCompanyDescription) > 128) {
+		if(strlen($newCompanyDescription) > 4096) {
 			throw(new \RangeException("company Description is too long."));
 		}
 		// Assign $newCompanyDescription to companyDescription, then store in SQL.

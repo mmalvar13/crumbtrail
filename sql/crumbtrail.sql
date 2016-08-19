@@ -59,7 +59,7 @@ CREATE TABLE company (
 	companyCity VARCHAR(128) NOT NULL,
 	companyState CHAR(2) NOT NULL,
 	companyZip VARCHAR(10) NOT NULL,
-	companyDescription VARCHAR(255),
+	companyDescription VARCHAR(4096),
 	companyMenuText VARCHAR(255),
 	companyActivationToken CHAR(32),
 	companyApproved TINYINT UNSIGNED,
