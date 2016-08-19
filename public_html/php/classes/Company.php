@@ -623,7 +623,7 @@ class Company implements \JsonSerializable {
 		if(strlen($newCompanyMenuText) === 0) {
 			throw(new \RangeException("company MenuText is too short."));
 		}
-		if(strlen($newCompanyMenuText) > 128) {
+		if(strlen($newCompanyMenuText) > 4096) {
 			throw(new \RangeException("company MenuText is too long."));
 		}
 		// Assign $newCompanyMenuText to companyMenuText, then store in SQL.
