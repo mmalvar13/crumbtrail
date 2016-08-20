@@ -4,10 +4,62 @@ require_once "autoloader.php";
 require_once "/lib/xsrf.php";
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
-use Edu\Cnm\Mmalvar13\Profile;   // TODO check this path
+use Edu\Cnm\Mmalvar13\Profile;   // TODO Check this path
 
 /**
- * api for the Profile class
+ * Outline of what the Profile API needs to do:
+ * 	Setup
+ * 		Check the session status. If not active, start a session.
+ * 		Create a new stdClass called $reply; an empty bucket.
+ * 			$reply->status is a state variable that stores the session status.
+ * 			$reply->data is a state variable that stores the results of the API call.
+ * 			($reply->message be updated later).
+ * 		$pdo = ..., connect to the database.
+ *   		$method = array_key_exists(..., finds which HTTP method needs to be processed.
+ * 		$id = filter_input(INPUT_GET, "id", ...,  stores the primary key in $id.
+ * 			$id is the primary key for GET, DELETE, and PUT.
+ * 			The URL from the frontend will contain the primary key value.
+ * 		if(($method === "DELETE" ..., makes sure that we have the primary key for DELETE and PUT.
+ *
+ *
+ * 	GET  =  read requests (SELECT) from the database
+ * 		Get all Profiles
+ * 		Get a specific Profile by primary key
+ *
+ * 	POST  =  create a new object, then INSERT it into the database
+ * 		Create a new Profile
+ *
+ * 	PUT  =  Modify an existing object and UPDATE the database
+ * 		Update Profile by primary key
+ *
+ * 	DELETE  =  delete an object from the database
+ * 		Delete a Profile by primary key
+ *
+ * 	Finishing up
+ *
+ *
+ *
+ * Tweet example:
+ * The Tweet class's getFooByBars:
+ *		getTweetByTweetId
+ * 	getTweetByTweetContent
+ * 	getTweetByTweetProfileId
+ * 	getAllTweets
+ *
+ * After looking at the class, ... we want our API to do:
+ *    GET all Tweets
+ *    GET a specific Tweet by Primary Key
+ *    POST - Create a brand new Tweet
+ *    PUT - Update Tweet by Primary Key
+ *    DELETE - Delete a Tweet by Primary Key
+ *
+ **/
+
+
+
+
+/**
+ * API for the Profile class
  *
  * @author Kevin Lee Kirk
  **/
@@ -23,7 +75,7 @@ $reply->status = 200;
 $reply->data = null;
 
 try {
-	//grab the mySQL connection        TODO Check this
+	//grab the mySQL connection        TODO Check this path
 	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/profile.ini");
 
 	//determine which HTTP method was used
