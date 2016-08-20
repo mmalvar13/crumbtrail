@@ -15,6 +15,10 @@
 
 //DELETE a company by the primary key
 
+
+
+use Edu\Cnm\CrumbTrail\{Profile, Company};
+
 require_once "autoloader.php";
 require_once "/lib/xsrf.php";
 require_once("/etc/apache2/crumbtrail-mysql/encrypted-config.php");
@@ -64,7 +68,7 @@ try {
 				$reply->data = $company;
 			}
 		} elseif((empty($id)) === false) {
-			$company = Company::getCompanyByAccountCreatorId($pdo, $id);
+			$company = Company::getCompanyByCompanyAccountCreatorId($pdo, $id);
 			if($company !== null) {
 				$reply->data = $company;
 			}
@@ -84,7 +88,7 @@ try {
 				$reply->data = $company;
 			}
 		} else {
-			$companies = Company::getAllCompanies($pdo);
+			$companies = Company::getAllCompanys($pdo);
 			if($companies !== null) {
 				$reply->data = $companies;
 			}
@@ -163,6 +167,12 @@ try {
 		//make sure the company account creator ID is available (required field)
 		if(empty($requestObject->companyAccountCreatorId) === true){
 			throw(new \InvalidArgumentException("No company account creator ID for company", 405));
+		}
+
+		//perform the actual PUT or POST
+		if($method === "PUT"){
+			//retrieve the company to update
+
 		}
 
 
