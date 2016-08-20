@@ -24,7 +24,7 @@ $reply->data = null;
 
 try{
 	//grab the mySQL connection
-	$pdo = connectionToEncryptedMySQL("/etc/apache2/crumbtrail-mysql/crumbtrail.ini"); //check notes for this
+	$pdo = connectionToEncryptedMySQL("/etc/apache2/crumbtrail-mysql/signup.ini"); //check notes for this
 
 	//determine which HTTP method was used
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
@@ -57,7 +57,7 @@ try{
 		//create a new profile and insert it into the databases
 		$profile = new Profile(null,$requestObject->profileName, $requestObject->profileEmail, $requestObject->profilePhone, $requestObject->profileAccessToken, $requestObject->profileActivationToken, $requestObject->profileType, $requestObject->profileHash, $requestObject->profileSalt);
 
-		$company = new Company(null, $requestObject->companyAccountCreatorId, $requestObject->companyName, $requestObject->companyEmail, $requestObject->companyPhone, $requestObject->companyPermit, $requestObject->companyLicense, $requestObject->companyAttn, $requestObject->companyStreet1, $requestObject->companyStreet2, $requestObject->companyCity, $requestObject->companyState, $requestObject->companyZip, $requestObject->companyDescription, $requestObject->companyMenuText, $requestObject->companyActivationToken, $requestObject->companyApproved);
+		$company = new Company(null, $requestObject->companyAccountCreatorId, $requestObject->companyName, $requestObject->companyEmail, $requestObject->companyPhone, $requestObject->companyPermit, $requestObject->companyLicense, $requestObject->companyAttn, $requestObject->companyStreet1, $requestObject->companyStreet2, $requestObject->companyCity, $requestObject->companyState, $requestObject->companyZip, $requestObject->companyActivationToken, $requestObject->companyApproved); //took out companyMenuText and companyDescription. will be inserted in company api. right?
 
 
 
