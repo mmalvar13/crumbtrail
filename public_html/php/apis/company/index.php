@@ -91,5 +91,83 @@ try {
 		}
 
 	}elseif(($method === "PUT") || ($method === "POST")){
+		verifyXsrf();
+		$requestContent = file_get_contents("php://input");
+		$requestObject = json_decode($requestContent);
+
+		//make sure the company name is available (required field)
+		if(empty($requestObject->companyName) === true){
+			throw(new \InvalidArgumentException("No name for company", 405));
+		}
+
+		//make sure the company email is available (required field)
+		if(empty($requestObject->companyEmail) === true){
+			throw(new \InvalidArgumentException("No email for company", 405));
+		}
+
+		//make sure the company phone is available (required field)
+		if(empty($requestObject->companyPhone) === true){
+			throw(new \InvalidArgumentException("No phone for company", 405));
+		}
+
+		//make sure the company permit is available (required field)
+		if(empty($requestObject->companyPermit) === true){
+			throw(new \InvalidArgumentException("No permit for company", 405));
+		}
+
+		//make sure the company license is available (required field)
+		if(empty($requestObject->companyLicense) === true){
+			throw(new \InvalidArgumentException("No license for company", 405));
+		}
+
+		//make sure the company Attn is available (required field)
+		if(empty($requestObject->companyAttn) === true){
+			throw(new \InvalidArgumentException("No Attn for company", 405));
+		}
+
+		//make sure the company street1 is available (required field)
+		if(empty($requestObject->companyStreet1) === true){
+			throw(new \InvalidArgumentException("No street1 for company", 405));
+		}
+
+		//make sure the company street2 is available (required field)
+		if(empty($requestObject->companyStreet2) === true){
+			throw(new \InvalidArgumentException("No street2 for company", 405));
+		}
+
+		//make sure the company city is available (required field)
+		if(empty($requestObject->companyCity) === true){
+			throw(new \InvalidArgumentException("No city for company", 405));
+		}
+
+		//make sure the company state is available (required field)
+		if(empty($requestObject->companyState) === true){
+			throw(new \InvalidArgumentException("No state for company", 405));
+		}
+
+		//make sure the company zip is available (required field)
+		if(empty($requestObject->companyZip) === true){
+			throw(new \InvalidArgumentException("No zip for company", 405));
+		}
+
+		//make sure the company description is available (required field)
+		if(empty($requestObject->companyDescription) === true){
+			throw(new \InvalidArgumentException("No description for company", 405));
+		}
+
+		//make sure the company menu text is available (required field)
+		if(empty($requestObject->companyMenuText) === true){
+			throw(new \InvalidArgumentException("No menu for company", 405));
+		}
+
+		//make sure the company account creator ID is available (required field)
+		if(empty($requestObject->companyAccountCreatorId) === true){
+			throw(new \InvalidArgumentException("No company account creator ID for company", 405));
+		}
+
+
+
+
+
 	}
 }
