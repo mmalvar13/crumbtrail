@@ -2,9 +2,10 @@
 
 require_once "autoloader.php";
 require_once "/lib/xsrf.php";
-require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
+require_once("/etc/apache2/capstone-mysql/encrypted-config.php");   // TODO Check this path.
+// TODO  require_once(any other class that you need)  ???
 
-use Edu\Cnm\Mmalvar13\Profile;   // TODO Check this path
+use Edu\Cnm\{Profile, Foo, Bar};   			         // TODO Check this path, and the classes we need here.
 
 /**
  * Outline of what the Profile API needs to do:
@@ -54,7 +55,7 @@ use Edu\Cnm\Mmalvar13\Profile;   // TODO Check this path
  * @author Kevin Lee Kirk
  **/
 
-// Verify the session, start a session if not active
+// Verify the session, start a session if not active.
 if(session_status() !== PHP_SESSION_ACTIVE) {
 	session_start();
 }
@@ -65,41 +66,74 @@ $reply->status = 200;
 $reply->data = null;
 
 try {
-	// Connect to mySQL.           TODO Check this path
-	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/profile.ini");
+	// Connect to mySQL.
+	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/profile.ini");			// TODO Check this path.
 
 	// Determine which HTTP method was used.
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
 	// Sanitize the input.
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
+	$name = filter_input(INPUT_GET, "name", FILTER_VALIDATE_???);		// TODO filter for a string ???
+	$email = filter_input(INPUT_GET, "email", FILTER_VALIDATE_EMAIL);
 
 	// Make sure the id (primary key) is valid for the methods that require it.
 	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
-		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
+		throw(new InvalidArgumentException("ID cannot be empty or negative", 405));
+	}
+
+	// Make sure the profile name is valid for the methods that require it.
+	if(($method === "DELETE" || $method === "PUT") && (empty($name) === true)) {
+		throw(new InvalidArgumentException("Name cannot be empty or negative", 405));
+	}
+
+	// Make sure the profile email is valid for the methods that require it.
+	if(($method === "DELETE" || $method === "PUT") && (empty($email) === true)) {
+		throw(new InvalidArgumentException("Email cannot be empty or negative", 405));
 	}
 
 	// Handle a GET request:
 	//		If id (primary key) is present, then return that profile,
-	//		otherwise all profiles are returned.
-	// 	TODO Do you need a separate GET request for each getFooByBar in the Profile class ???
+	//		otherwise return all profiles.
+	// 	TODO Do you need a separate GET request for EACH getFooByBar in the Profile class ???
 
 	if($method === "GET") {
 		// Set XSRF cookie, to prevent cross-site request forgery attacks.
 		setXsrfCookie();
 
-		// Get a specific profile by profile Id, or get all profiles, and update reply.
 		if(empty($id) === false) {
+			// Get a specific profile by profile Id, then update the reply.
 			$profile = Profile::getProfileByProfileId($pdo, $id);
+			$company = Company::getCompanyeByCompanyId($pdo, $id); // TODO Call this $is something else.  Will this work?
+
 			if($profile !== null) {
 				$reply->data = $profile;
 			}
+
+		} elseif()    				// TODO  Need a $name variable, and an $email variable
+
+
+
 		} else {
+			// Get all profiles, then update the reply.
 			$profile = Profile::getAllProfile($pdo);
 			if($profile !== null) {
 				$reply->data = $profile;
 			}
 		}
+
+
+		if ($a > $b) {
+			echo "a is bigger than b";
+		} elseif ($a == $b) {
+			echo "a is equal to b";
+		} else {
+			echo "a is smaller than b";
+		}
+
+		// 	getProfileByProfileName
+		//  	getProfileByProfileEmail
+
 
 		// Here are the PUT and POST methods.
 	} else if($method === "PUT" || $method === "POST") {
