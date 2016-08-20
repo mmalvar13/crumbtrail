@@ -20,43 +20,33 @@ use Edu\Cnm\Mmalvar13\Profile;   // TODO Check this path
  * 			$id is the primary key for GET, DELETE, and PUT.
  * 			The URL from the frontend will contain the primary key value.
  * 		if(($method === "DELETE" ..., makes sure that we have the primary key for DELETE and PUT.
- *
- *
  * 	GET  =  read requests (SELECT) from the database
  * 		Get all Profiles
  * 		Get a specific Profile by primary key
- *
  * 	POST  =  create a new object, then INSERT it into the database
  * 		Create a new Profile
- *
  * 	PUT  =  Modify an existing object and UPDATE the database
  * 		Update Profile by primary key
- *
  * 	DELETE  =  delete an object from the database
  * 		Delete a Profile by primary key
- *
  * 	Finishing up
  *
+ * The Profile class has these getFooByBars:
+ * 	getProfileByProfileId
+ * 	getProfileByProfileName
+ *  	getProfileByProfileEmail
+ * 	getAllProfiles
  *
- *
- * Tweet example:
- * The Tweet class's getFooByBars:
- *		getTweetByTweetId
- * 	getTweetByTweetContent
- * 	getTweetByTweetProfileId
- * 	getAllTweets
+ * And control the access, based on type of person. TODO If blocks for this.
+ * Throw the various exceptions.       TODO Check this.
  *
  * After looking at the class, ... we want our API to do:
  *    GET all Tweets
- *    GET a specific Tweet by Primary Key
+ *    GET a specific Tweet by Primary Key (tweetId)
  *    POST - Create a brand new Tweet
  *    PUT - Update Tweet by Primary Key
  *    DELETE - Delete a Tweet by Primary Key
- *
  **/
-
-
-
 
 /**
  * API for the Profile class
@@ -64,43 +54,43 @@ use Edu\Cnm\Mmalvar13\Profile;   // TODO Check this path
  * @author Kevin Lee Kirk
  **/
 
-//verify the session, start if not active
+// Verify the session, start a session if not active
 if(session_status() !== PHP_SESSION_ACTIVE) {
 	session_start();
 }
 
-//prepare an empty reply
+// Prepare an empty reply.
 $reply = new stdClass();
 $reply->status = 200;
 $reply->data = null;
 
 try {
-	//grab the mySQL connection        TODO Check this path
+	// Connect to mySQL.           TODO Check this path
 	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/profile.ini");
 
-	//determine which HTTP method was used
+	// Determine which HTTP method was used.
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
-	//sanitize input
+	// Sanitize the input.
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
 
-	//make sure the id is valid for methods that require it
+	// Make sure the id (primary key) is valid for the methods that require it.
 	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
 		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
 	}
 
-
-	// handle GET request - if id is present, that tweet is returned, otherwise all tweets are returned
-	// You need a separate GET request for each getFooByBar in the Company class.
+	// Handle a GET request:
+	//		If id (primary key) is present, then return that profile,
+	//		otherwise all profiles are returned.
+	// 	TODO Do you need a separate GET request for each getFooByBar in the Profile class ???
 
 	if($method === "GET") {
-		//set XSRF cookie
+		// Set XSRF cookie, to prevent cross-site request forgery attacks.
 		setXsrfCookie();
 
-
-		//get a specific profile or all profiles and update reply
+		// Get a specific profile by profile Id, or get all profiles, and update reply.
 		if(empty($id) === false) {
-			$tweet = Profile::getProfileByProfileId($pdo, $id);
+			$profile = Profile::getProfileByProfileId($pdo, $id);
 			if($profile !== null) {
 				$reply->data = $profile;
 			}
@@ -111,73 +101,75 @@ try {
 			}
 		}
 
-
+		// Here are the PUT and POST methods.
 	} else if($method === "PUT" || $method === "POST") {
 
 		verifyXsrf();
+		// Retrieve the JSON package that the front end sent, then store it in $requestContent.
 		$requestContent = file_get_contents("php://input");
+		// Decodes the JSON package, then store it in $requestObject.
 		$requestObject = json_decode($requestContent);
 
-		// make sure profile foo   ******   is available (required field)
+		// Make sure profile is available, i.e. is not empty (required field).
 		if(empty($requestObject->profileFoo) === true) {
 			throw(new \InvalidArgumentException ("No content for Profile.", 405));
 		}
 
-		// make sure profile bar   *****   is accurate (optional field)
+		// Make sure profile bar   *****   is accurate (optional field).
 		if(empty($requestObject->profileBar) === true) {
 			$requestObject->profileBar = new \DateTime();
 		}
 
-		//  make sure profileId is available
+		//  Make sure profileId is available.
 		if(empty($requestObject->profileId) === true) {
 			throw(new \InvalidArgumentException ("No Profile ID.", 405));
 		}
 
-		//perform the actual put or post
+		// Perform the actual PUT or POST.
 		if($method === "PUT") {
 
-			// retrieve the profile to update
-			$tweet = Profile::getProfileByProfileId($pdo, $id);
-			if($tweet === null) {
+			// Retrieve the profile that will be updated in this PUT.
+			$profile = Profile::getProfileByProfileId($pdo, $id);
+			if($profile === null) {
 				throw(new RuntimeException("Profile does not exist", 404));
 			}
 
-			// put the new profile foo   ********    into the tweet and update
+			// PUT the new foo into the Profile object.               TODO  Foo = a profile attribute ???
 			$profile->setProfileFoo($requestObject->profileFoo);
 			$profile->update($pdo);
 
-			// update reply
+			// Update the reply message.
 			$reply->message = "Profile updated OK";
 
-		} else if($method === "POST") {
+		} else if($method === "POST") {              // TODO  Do we need a POST, to allow a new profile???
 
-			// create new profile and insert into the database
+			// Create a new profile, give it an id, then insert it (POST it) into the database.   TODO Foo = ???
 			$profile = new Profile(null, $requestObject->profileId, $requestObject->profileFoo, null);
 			$profile->insert($pdo);
 
-			// update reply
+			// Update the reply message.
 			$reply->message = "Profile created OK";
 		}
 
 	} else if($method === "DELETE") {
 		verifyXsrf();
 
-		// retrieve the Profile to be deleted
-		$profile = Profile::getProfileByProfileId($pdo, $id);
+		// Retrieve the Profile that will be deleted.
+		$profile = Profile::getProfileByProfileId($pdo, $id);     // TODO Need a path in front of Profile???
 		if($profile === null) {
 			throw(new RuntimeException("Profile does not exist", 404));
 		}
 
-		// delete profile
+		// Delete the profile.
 		$profile->delete($pdo);
 
-		// update reply
+		// Update the reply message.
 		$reply->message = "Profile deleted OK";
 	} else {
 		throw (new InvalidArgumentException("Invalid HTTP method request"));
 	}
 
-	// update reply with exception information
+	// Update the reply message with the exception information.
 } catch(Exception $exception) {
 	$reply->status = $exception->getCode();
 	$reply->message = $exception->getMessage();
@@ -191,5 +183,5 @@ if($reply->data === null) {
 	unset($reply->data);
 }
 
-// encode and return reply to front end caller
+// Encode and return the reply to frontend caller.
 echo json_encode($reply);
