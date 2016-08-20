@@ -67,8 +67,8 @@ try {
 
 		$profile->insert($pdo);
 
-		//here i took out companyDescription and companyMenuText. this will be inserted in the Company API, correct?
-		$company = new Company(null, $requestObject->companyAccountCreatorId, $requestObject->companyName, $requestObject->companyEmail, $requestObject->companyPhone, $requestObject->companyPermit, $requestObject->companyLicense, $requestObject->companyAttn, $requestObject->companyStreet1, $requestObject->companyStreet2, $requestObject->companyCity, $requestObject->companyState, $requestObject->companyZip, $requestObject->companyActivationToken, $requestObject->companyApproved);
+		//here i have companyDescription and companyMenuText.
+		$company = new Company(null, $requestObject->companyAccountCreatorId, $requestObject->companyName, $requestObject->companyEmail, $requestObject->companyPhone, $requestObject->companyPermit, $requestObject->companyLicense, $requestObject->companyAttn, $requestObject->companyStreet1, $requestObject->companyStreet2, $requestObject->companyCity, $requestObject->companyState, $requestObject->companyZip, $requestObject->companyDescription, $requestObject->companyMenuText, $requestObject->companyActivationToken, $requestObject->companyApproved);
 
 		$company->insert($pdo);
 
