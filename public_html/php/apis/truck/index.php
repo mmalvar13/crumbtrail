@@ -63,7 +63,7 @@ try {
 		}
 
 
-	} elseif($method === "PUT" || "POST") { //thsi will probably only be POST right? we have nothing to update for the trucks
+	} elseif($method === "PUT" || "POST") { //this will probably only be POST right? we have nothing to update for the trucks
 		verifyXsrf();
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
