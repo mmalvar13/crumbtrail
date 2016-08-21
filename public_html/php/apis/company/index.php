@@ -16,9 +16,7 @@
 //DELETE a company by the primary key
 
 
-use Edu\Cnm\CrumbTrail\{
-	Profile, Company
-};
+use Edu\Cnm\CrumbTrail\{Profile, Company};
 
 
 require_once "autoloader.php";
@@ -64,7 +62,7 @@ try {
 		//set XRF cookie
 		setXsrfCookie();
 
-)
+
 
 		//get a specific company or all companies and update reply
 		if((empty($id)) === false) {

@@ -46,7 +46,7 @@ try {
 	//handle GET request. if a truckId is present that truck is returned, otherwise all trucks are returned
 
 	if($method === "GET") {
-		//set XRF cookie
+		//set XSRF cookie
 		setXsrfCookie();
 
 		//get a specific truck or all trucks and update reply
