@@ -67,10 +67,14 @@ try {
 		verifyXsrf();
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
-		//ensure that the profile trying to make changes to company is either admin or owner
+
+
+		//Do i even need to create these???
 		$profile = Profile::getProfileByProfileId($pdo, $id);
+		$company = Company::getCompanyByCompanyId($pdo, $id);
+
 		if($requestObject->profileType !== 'a' || 'o') {
-			throw(new \InvalidArgumentException("profile type must be admin('a') or owner('o') in order to make changes to a profile"));
+			throw(new \InvalidArgumentException("profile type must be admin('a') or owner('o') in order to make changes to a truck"));
 		}
 
 		//make sure the truck foreign key is available (required field)
@@ -78,9 +82,34 @@ try {
 			throw(new \InvalidArgumentException("No foreign Id for truck", 405));
 		}
 
+		if($method === "POST"){
+			//craete a new truck and insert it into the database
+			$truck = new Truck(null, $requestObject->companyId);
+			$truck->insert($pdo);
 
+			//update reply
+			$reply->message = "Truck created A-OK";
+		}
 
+		//delete section here
+	}elseif($method === "DELETE"){
+		verifyXsrf();
+		//retrieve the company to be deleted
+		$company = Company::getCompanyByCompanyId($pdo, $id);
 
+		//check if empty
+		if($company === null) {
+			throw(new RuntimeException("The company does not exist", 404));
+		}
+
+		//delete the company
+		$company->delete($pdo);
+
+		//update the reply
+		$reply->message = "Company deleted A-OK";
+	} else {
+		throw (new InvalidArgumentException("Invalid HTTP method request"));
+	}
 	}
 
 
