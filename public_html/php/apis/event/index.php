@@ -33,3 +33,18 @@ $reply = new stdClass();
 $reply->status = 200;
 $reply->data = null;
 
+try {
+	//grab mySQL connection
+	//event.ini ?????
+	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/event.ini");
+
+	//determine which HTTP method was used
+	//WAT!!! need the code here explained....
+	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
+
+	//sanitize input
+	//using the Get method here right? Would i need this for event Id??
+	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
+
+}
+
