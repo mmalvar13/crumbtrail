@@ -17,7 +17,7 @@ if(session_status() !== PHP_SESSION_ACTIVE){
 	session_start();
 }
 
-//Not for sure on this, but above we made sure that the session was started. here we are setting the session to an empty array in order to clear the values of the session.
+//Not for sure on this, i checked it out in the php documentation. but above we made sure that the session was started. here we are setting the session to an empty array in order to clear the values of the session.
 
 //unsure if this is all i need or if there is more to this code. Dylan said only one line!! Check back after learning more about sessions.
 $_SESSION = [];
