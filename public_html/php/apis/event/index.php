@@ -87,7 +87,37 @@ try {
 				$reply->data = $events;
 			}
 		}
-	} elseif ((method === "PUT" || "POST")) {
+	} elseif (($method === "PUT" || "POST")) {
+		//what does the "verifyXsrf" and the php://input do again?
+		verifyXsrf();
+		$requestContent = file_get_contents("php://input");
+		$requestObject = json_decode($requestContent);
+
+		//make sure event is available
+		if(empty($requestObject->eventId) === true) {
+			throw(new \InvalidArgumentException("No event exists.", 405));
+		}
+
+		//make sure event truck Id is available
+		if(empty($requestObject->eventTruckId) === true) {
+			throw(new InvalidArgumentException("No event truck id exists", 405));
+		}
+
+		//make sure event location is available
+		if(empty($requestObject->eventLocation) === true) {
+			throw(new InvalidArgumentException("no event location exists", 405));
+		}
+		//make sure get event by event id and truck id is available
+		if(empty($requestObject->event) === true) {
+			throw(new InvalidArgumentException("no event id and event truck id combination exists", 405));
+		}
+		//make sure get event by event end and event start is available
+		if(empty($requestObject->event) === true) {
+			throw(new InvalidArgumentException("no event end and event start combination exists", 405));
+		}
+
+		//Perform actual PUT or POST
+
 	}
 }
 
