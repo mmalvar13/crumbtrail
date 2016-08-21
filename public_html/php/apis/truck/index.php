@@ -55,15 +55,15 @@ try {
 			if($truck !== null) {
 				$reply->data = $truck;
 			}
-		} elseif(empty($id) === false){
+		} elseif(empty($id) === false) {
 			$truck = Truck::getTruckByTruckCompanyId($pdo, $id);
-			if($truck !== null){
+			if($truck !== null) {
 				$reply->data = $truck;
 			}
 		}
 
 
-	}elseif($method === "PUT" || "POST"){ //thsi will probably only be POST right? we have nothing to update for the trucks
+	} elseif($method === "PUT" || "POST") { //thsi will probably only be POST right? we have nothing to update for the trucks
 		verifyXsrf();
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
@@ -82,7 +82,7 @@ try {
 			throw(new \InvalidArgumentException("No foreign Id for truck", 405));
 		}
 
-		if($method === "POST"){
+		if($method === "POST") {
 			//craete a new truck and insert it into the database
 			$truck = new Truck(null, $requestObject->companyId);
 			$truck->insert($pdo);
@@ -92,7 +92,7 @@ try {
 		}
 
 		//delete section here
-	}elseif($method === "DELETE"){
+	} elseif($method === "DELETE") {
 		verifyXsrf();
 		//retrieve the company to be deleted
 		$company = Company::getCompanyByCompanyId($pdo, $id);
@@ -110,9 +110,22 @@ try {
 	} else {
 		throw (new InvalidArgumentException("Invalid HTTP method request"));
 	}
-	}
 
-
+	//end of try, begging of catches
+}catch(Exception $exception) {
+	$reply->status = $exception->getCode();
+	$reply->message = $exception->getMessage();
+} catch(TypeError $typeError) {
+	$reply->status = $typeError->getCode();
+	$reply->message = $typeError->getMessage();
 }
+
+header("Content-type: application/json");
+if($reply->data === null) {
+	unset($reply->data);
+}
+
+// encode and return reply to front end caller
+echo json_encode($reply);
 
 
