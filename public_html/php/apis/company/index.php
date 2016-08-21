@@ -64,8 +64,7 @@ try {
 		//set XRF cookie
 		setXsrfCookie();
 
-		//*****get a specific profile or all profiles and update reply*****
-//		if()
+)
 
 		//get a specific company or all companies and update reply
 		if((empty($id)) === false) {
