@@ -9,13 +9,12 @@
 //GET location?
 //do i need my cnm user id for "use"
 
-use Edu\Cnm\CrumbTrail\ {
-	Event, Truck
-};
 
 require_once "autoloader.php";
 require_once "/lib/xsrf.php";
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
+
+use Edu\Cnm\CrumbTrail\ {Event, Truck};
 
 /**
  * api for the Event class
@@ -26,6 +25,7 @@ require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 //verify the session, start if not active
 if(session_status() !== PHP_SESSION_ACTIVE) {
 	session_start();
+
 }
 
 //prepare an empty reply
@@ -45,6 +45,10 @@ try {
 	//sanitize input
 	//using the Get method here right? Would i need this for event Id??
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
+	$eventId = filter_input(INPUT_GET, "eventId", FILTER_VALIDATE_INT);
+	$eventTruckId = filter_input(INPUT_GET, "eventTruckId", FILTER_VALIDATE_INT);
+	//how do i work with point, would it have it as an integer??? Float location x and location y??
+	$eventLocation = filter_input(INPUT_GET, "eventLocation", FILTER_VALIDATE_INT);
 	//make sure the id is valid for methods that require it
 	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
 		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
@@ -57,11 +61,11 @@ try {
 
 		//get a specific event or all events and update reply
 		if(empty($id) === false) {
-			$event = Event::getEventByEventId($pdo, $id);
+			$event = Event::getEventByEventIdAndEventTruckId($pdo, $id);
 			if($event !== null) {
 				$reply->data = $event;
 			}
-		} elseif((empty($id)) === false) {
+		} elseif ((empty($id)) === false) {
 			$event = Event::getEventByEventTruckId($pdo, $id);
 			if($event !== null) {
 				$reply->data = $event;
@@ -72,7 +76,7 @@ try {
 				$reply->data = $event;
 			}
 		} elseif((empty($id)) === false) {
-			$event = Event::getEventByEventIdAndEventTruckId($pdo, $id);
+			$event = Event::getEventByEventId($pdo, $id);
 			if($event !== null) {
 				$reply->data = $event;
 			}
@@ -130,7 +134,7 @@ try {
 
 			//update reply
 			$reply->message = "Event end time updated successfully";
-		}
+
 	} else if($method === "POST") {
 
 		if(empty($requestObject->evenyId) === true) {
@@ -138,10 +142,12 @@ try {
 		}
 		//create a new event, give it an id, and insert it into the database
 		//(POST = insert something new)
-		$event = new Event(null, $requestObject->EventId, $requestObject->EventEnd, $requestObject->EventStart, $requestObject->eventLocation, null);
+		$event = new Event(null, $requestObject->eventId, $requestObject->eventEnd, $requestObject->eventStart, $requestObject->eventLocation, null);
 		$event->insert($pdo);;
 		//update reply
 		$reply->message = "Event created OK";
+		}
+
 	} else if($method === "DELETE") {
 		verifyXsrf();
 		//retrieve the Event to be deleted
@@ -154,6 +160,7 @@ try {
 
 		//update reply
 		$reply->message = "Event deleted successfully";
+
 	} else {
 		throw (new InvalidArgumentException("Invalid HTTP method request"));
 	}
