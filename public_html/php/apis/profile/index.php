@@ -11,30 +11,12 @@ use Edu\Cnm\{Profile};   										// TODO Check this path.
  *
  * @author Kevin Lee Kirk
  *
- * Outline of what this Profile API needs to do:
- * 	Setup
- * 		Check the session status. If not active, start a session.
- * 		Create a new stdClass called $reply; an empty bucket.
- * 			$reply->status is a state variable that stores the session status.
- * 			$reply->data is a state variable that stores the results of the API call.
- * 			($reply->message to be updated later).
- * 		$pdo = ..., connect to the database.
- *   		$method = array_key_exists(..., finds which HTTP method needs to be processed.
- * 		$id = filter_input(INPUT_GET, "id", ...,  stores the primary key in $id.
- * 			$id is the primary key for GET, DELETE, and PUT.
- * 			The URL from the frontend will contain the primary key value.
+ *  Control the ACCESS to the data, based on type of person,
+ * using the if blocks, ABOVE the PUT and DELETE blocks.
  *
- * 	GET  =  read requests (SELECT) from the database
- * 		GET all Profiles
- * 		GET a specific Profile by primary key (id)
- * 		GET a specific Profile by Profile name
- * 		Get a specific Profile by Profile email
- * 	POST  =  create a new Profile object, then INSERT it into the database
- * 	PUT  =  modify an existing object and UPDATE the database
- * 	DELETE  =  delete an object from the database
- * 	Finishing up
- *
- *   And control the access to the data, based on type of person.
+ * 	Can "use" another class, at the top of this file,
+ * 	and then grab an attribute from another class,
+ * 	using standard object oriented methods.
  **/
 
 
@@ -75,7 +57,16 @@ try {
 		throw(new InvalidArgumentException("Email cannot be empty or negative", 405));
 	}
 
+
+	// Wrap the following 2-3 conditions around every PUT, or DELETE:
+	// do they have a profileId?
+	// do they have the correct profileId?
+	// do they have access to this profile attribute, to PUT, POST, or DELETE it? (Not for this API)
+
+
 // --------------------------- GET --------------------------------
+	elseif((empty($_SESSION["profile"]) === false) && (($_SESSION["profile"]->getProfileId()) === $id))
+
 	if($method === "GET") {
 		setXsrfCookie();
 
@@ -109,7 +100,13 @@ try {
 		}
 
 // --------------------------- PUT  --------------------------------
+	// Do they have the correct profileId?
+	//   So that a person can only change their own profile attributes.
+
+	elseif((empty($_SESSION["profile"]) === false) && (($_SESSION["profile"]->getProfileId()) === $id))
+
 	} elseif($method === "PUT") {
+
 		verifyXsrf();
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
@@ -123,7 +120,6 @@ try {
 		if(empty($requestObject->profileId) === true) {
 			throw(new \InvalidArgumentException ("No Profile ID.", 405));
 		}
-
 
 			// Retrieve the profile that will be updated in this PUT.
 			$profile = Profile::getProfileByProfileId($pdo, $id);
@@ -141,6 +137,11 @@ try {
 
 
 // --------------------------- DELETE --------------------------------
+		// Do they have the correct profileId?
+		//   So that a person can only delete their own profile.
+
+	elseif((empty($_SESSION["profile"]) === false) && (($_SESSION["profile"]->getProfileId()) === $id))
+
 	} elseif($method === "DELETE") {
 		verifyXsrf();
 
@@ -168,8 +169,6 @@ try {
 	$reply->status = $typeError->getCode();
 	$reply->message = $typeError->getMessage();
 }
-
-
 
 // Encode and return the reply to the frontend caller.
 header("Content-type: application/json");
