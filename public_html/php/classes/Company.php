@@ -910,7 +910,7 @@ class Company implements \JsonSerializable {
 		}
 
 		//create query template
-		$query = "SELECT companyId, companyAccountCreatorId, companyName, companyEmail, companyPhone, companyPermit, companyPhone, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved FROM company WHERE companyName LIKE :companyName";
+		$query = "SELECT companyId, companyAccountCreatorId, companyName, companyEmail, companyPhone, companyPermit, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved FROM company WHERE companyName LIKE :companyName";
 
 		//prepare template
 		$statement = $pdo->prepare($query);
@@ -958,7 +958,7 @@ class Company implements \JsonSerializable {
 		}
 
 		// Create the query template.
-		$query = "SELECT companyId, companyAccountCreatorId, companyName, companyEmail, companyPhone, companyPermit, companyPhone, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved FROM company WHERE companyMenuText LIKE :companyMenuText";
+		$query = "SELECT companyId, companyAccountCreatorId, companyName, companyEmail, companyPhone, companyPermit, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved FROM company WHERE companyMenuText LIKE :companyMenuText";
 
 		// Prepare the template.
 		$statement = $pdo->prepare($query);
@@ -1011,7 +1011,7 @@ class Company implements \JsonSerializable {
 		}
 
 		// Create the query template.
-		$query = "SELECT companyId, companyAccountCreatorId, companyName, companyEmail, companyPhone, companyPermit, companyPhone, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved FROM company WHERE companyDescription LIKE :companyDescription";
+		$query = "SELECT companyId, companyAccountCreatorId, companyName, companyEmail, companyPhone, companyPermit, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved FROM company WHERE companyDescription LIKE :companyDescription";
 
 		// Prepare the template.
 		$statement = $pdo->prepare($query);

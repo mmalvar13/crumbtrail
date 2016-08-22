@@ -49,8 +49,10 @@ try {
 	//determine which HTTP method was used (Explain this)
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
-	//sanitize input(Explain this) Where is the input coming from??
+
 	//I think this takes the URL we are given, and strips the id out of the URL so we know which primary key we have
+
+
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
 	$companyAccountCreatorId = filter_input(INPUT_GET, "companyAccountCreatorId", FILTER_VALIDATE_INT);
 	$companyName = filter_input(INPUT_GET, "companyName", FILTER_SANITIZE_STRING);
@@ -112,6 +114,13 @@ try {
 		$requestObject = json_decode($requestContent);
 
 		//ensure that the profile trying to make changes to company is either admin or owner
+
+
+
+		//***SHIIIIIIII MAKE SURE TO ADD IN A CHECK TO SEE IF THE PERSON MAKING CHANGES ACTUALLY OWNS THAT ACCOUNT!!!******
+
+
+
 		$profile = Profile::getProfileByProfileId($pdo, $id);
 		if($requestObject->profileType !== 'a' || 'o') {
 			throw(new \InvalidArgumentException("profile type must be admin('a') or owner('o') in order to make changes to a profile"));

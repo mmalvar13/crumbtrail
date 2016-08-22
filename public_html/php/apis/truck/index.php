@@ -36,6 +36,7 @@ try {
 
 	//sanitize input(Explain this) Where is the input coming from??
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
+	$truckCompanyId = filter_input(INPUT_GET, "truckCompanyId", FILTER_VALIDATE_INT);
 
 
 	//make sure the id is valid for methods that require it, Remember that $id is the primary key!
@@ -56,9 +57,14 @@ try {
 				$reply->data = $truck;
 			}
 		} elseif(empty($id) === false) {
-			$truck = Truck::getTruckByTruckCompanyId($pdo, $id);
+			$truck = Truck::getTruckByTruckCompanyId($pdo, $truckCompanyId);
 			if($truck !== null) {
 				$reply->data = $truck;
+			}
+		}else{
+			$trucks = Truck::getAllTrucks($pdo);
+			if($trucks !== null){
+				$reply->data = $trucks;
 			}
 		}
 

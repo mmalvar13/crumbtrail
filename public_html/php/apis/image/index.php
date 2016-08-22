@@ -38,6 +38,8 @@ try {
 
 	//sanitize input(Explain this) Where is the input coming from??
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
+	$imageCompanyId = filter_input(INPUT_GET, "imageCompanyId", FILTER_VALIDATE_INT);
+	$imageFileName = filter_input(INPUT_GET, "imageFileName", FILTER_VALIDATE_INT);
 
 
 	//make sure the id is valid for methods that require it, Remember that $id is the primary key!
@@ -57,12 +59,12 @@ try {
 				$reply->data = $image;
 			}
 		}elseif(empty($id) === false) {
-			$image = Image::getImageByImageCompanyId($pdo, $id);
+			$image = Image::getImageByImageCompanyId($pdo, $imageCompanyId);
 			if($image !== null) {
 				$reply->data = $image;
 			}
 		}elseif(empty($id) === false) {
-			$image = Image::getImageByImageFileName($pdo, $id);
+			$image = Image::getImageByImageFileName($pdo, $imageFileName);
 			if($image !== null) {
 				$reply->data = $image;
 			}
@@ -109,19 +111,25 @@ try {
 				throw(new \RuntimeException("The image does not exist", 404));
 			}
 
-			//here is where we have to sanitize the image input, create an image out of it
-			//need to have a check for the image file type, so i know to use createImageFrom(jpeg/png) what about jpg????
-			//need to make sure we change the name from whatever they uploaded to something we like
+			$userImage = getimagesize($requestObject->imageFileName);
 
-			//assume I will need FILTER_SANITIZE_URL and FILTER_SANITIZE_STRING at some point for the file names??
-			//right now I think I will need the following:
 
-//			imagescale — Scale an image using the given new width and height
-//			getimagesize — Get the size of an image and verify its an image (guessing Ill need this to check the size of the image uploaded, make sure it isn't too big!)
-//			imagecreatetruecolor — Create a new true color image --do i have to actually create the image that is uploaded?
-//			image_type_to_extension — Get file extension for image type ---- need this to check the extension of the file uploaded?
-//			imagecreatefromjpeg — Create a new image from file or URL --- create image from JPEG
-//			imagecreatefrompng — Create a new image from file or URL --- create image from PNG
+			//1) move image to image directory (safe place to work with it) default
+			//2) sanitize image name/type ---------image_type_to_extension & sanitize string?? getimagesize
+//			create image--------imagecreatefromjpeg/imagecreatefrompng
+			//3)
+
+			//5) scale image down to the size I want------imagescale should be in px
+			//6) rename image to something I want
+//			imagefoo to save
+
+
+//			when they go to POST an image, you must first make a call to delete the image currently in there
+//			THEN, you can make a call to POST the new image
+
+
+
+
 
 
 
