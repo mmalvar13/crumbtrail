@@ -24,7 +24,7 @@ $reply->data = null;
 
 try {
 	//grab the mySQL connection
-	$pdo = connectionToEncryptedMySQL("/etc/apache2/crumbtrail-mysql/signup.ini"); //check notes for this
+	$pdo = connectionToEncryptedMySQL("/etc/apache2/capstone-mysql/crumbtrail.ini"); //check notes for this
 
 	//determine which HTTP method was used
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
@@ -52,15 +52,17 @@ try {
 			throw(new \InvalidArgumentException("This company already exists", 405));
 		}
 		//make sure profileEmail is unique
-		if($requestObject->profileEmail === ){
+		if(empty($requestObject->profileEmail) ===false ){
 			throw(new \InvalidArgumentException("This email is already attached to another profile", 405)); //what error code would i throw. what do i compare the inserted profile email too? do I have to traverse an array of getAllEmails???
 		}
 		//make sure comapny business license is unique
-		if($requestObject->companyLicense ===){
+		if(empty($requestObject->companyLicense) === false){
 			throw(new \InvalidArgumentException("A company already exists under this business license", 405));
 		}
 
 		//what other exceptions do i throw here? what am i trying to catch here? and what do i try to catch in angular??
+		//before hashing and salting, angular sends password and confirmed password. throw exception if they are not the same. requestObject->password/confirm password
+		//hash and salt it here. same as in the test. whatever is in the setup method in test
 
 		//create a new profile and insert it into the databases
 		$profile = new Profile(null, $requestObject->profileName, $requestObject->profileEmail, $requestObject->profilePhone, $requestObject->profileAccessToken, $requestObject->profileActivationToken, $requestObject->profileType, $requestObject->profileHash, $requestObject->profileSalt);
@@ -68,12 +70,13 @@ try {
 		$profile->insert($pdo);
 
 		//here i have companyDescription and companyMenuText.
-		$company = new Company(null, $requestObject->companyAccountCreatorId, $requestObject->companyName, $requestObject->companyEmail, $requestObject->companyPhone, $requestObject->companyPermit, $requestObject->companyLicense, $requestObject->companyAttn, $requestObject->companyStreet1, $requestObject->companyStreet2, $requestObject->companyCity, $requestObject->companyState, $requestObject->companyZip, $requestObject->companyDescription, $requestObject->companyMenuText, $requestObject->companyActivationToken, $requestObject->companyApproved);
+		$company = new Company(null, $requestObject->companyAccountCreatorId, $requestObject->companyName, $requestObject->companyEmail, $requestObject->companyPhone, $requestObject->companyPermit, $requestObject->companyLicense, $requestObject->companyAttn, $requestObject->companyStreet1, $requestObject->companyStreet2, $requestObject->companyCity, $requestObject->companyState, $requestObject->companyZip, null , null, $requestObject->companyActivationToken, $requestObject->companyApproved);
 
 		$company->insert($pdo);
+		//swiftmailer code here
 
 		//update reply
-		$reply->message = "Account created OK";
+		$reply->message = "Check your email to activate";
 
 	} else {
 		throw(new InvalidArgumentException("Invalid HTTP method request"));
