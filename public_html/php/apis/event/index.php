@@ -87,7 +87,7 @@ try {
 				$reply->data = $events;
 			}
 		}
-	} elseif (($method === "PUT" || "POST")) {
+	} elseif(($method === "PUT" || "POST")) {
 		//what does the "verifyXsrf" and the php://input do again?
 		verifyXsrf();
 		$requestContent = file_get_contents("php://input");
@@ -117,8 +117,63 @@ try {
 		}
 
 		//Perform actual PUT or POST
+		if($method === "PUT") {
+			//retrieve the event to update?
+			$event = Event::getEventByEventId($pdo, $id);
+			if($event === null) {
+				throw (new RuntimeException("Event does not exist", 404));
+			}
+			//put the new event content into the event and update
+			//Event End here??
+			$event->setEventEnd($requestObject->eventEnd);
+			$event->update($pdo);
 
+			//update reply
+			$reply->message = "Event end time updated successfully";
+		}
+	} else if($method === "POST") {
+
+		if(empty($requestObject->evenyId) === true) {
+			throw(new \InvalidArgumentException("No profile Id", 405));
+		}
+		//create a new event, give it an id, and insert it into the database
+		//(POST = insert something new)
+		$event = new Event(null, $requestObject->EventId, $requestObject->EventEnd, $requestObject->EventStart, $requestObject->eventLocation, null);
+		$event->insert($pdo);;
+		//update reply
+		$reply->message = "Event created OK";
+	} else if($method === "DELETE") {
+		verifyXsrf();
+		//retrieve the Event to be deleted
+		$event = Event::getEventByEventId($pdo, $id);
+		if($event === null) {
+			throw(new RuntimeException("Event does not exist", 404));
+		}
+		//delete event
+		$event->delete($pdo);
+
+		//update reply
+		$reply->message = "Tweet deleted successfully";
+	} else {
+		throw (new InvalidArgumentException("Invalid HTTP method request"));
 	}
+	//update reply with exception information
+} catch(Exception $exception) {
+	$reply->status = $exception->getCode();
+	$reply->message = $exception->getMessage();
+	$reply->trace = $exception->getTraceAsString();
+} catch(TypeError $typeError) {
+	$reply->status = $typeError->getCode();
+	$reply->message = $typeError->getMessage();
 }
+
+header("Content-type: application.json");
+if($reply->data === null) {
+	unset($reply->data);
+}
+//encode and return reply to front end caller
+echo json_encode($reply);
+
+
 
 
