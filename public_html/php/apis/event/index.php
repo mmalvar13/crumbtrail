@@ -153,7 +153,7 @@ try {
 		$event->delete($pdo);
 
 		//update reply
-		$reply->message = "Tweet deleted successfully";
+		$reply->message = "Event deleted successfully";
 	} else {
 		throw (new InvalidArgumentException("Invalid HTTP method request"));
 	}
