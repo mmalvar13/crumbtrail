@@ -88,24 +88,24 @@ try {
 
 		//make sure the image foreign key is available (required field)
 		if(empty($requestObject->imageCompanyId) === true){
-			throw(new \InvalidArgumentException("The foreign key does not exist", 405);
+			throw(new \InvalidArgumentException("The foreign key does not exist", 405));
 		}
 
 		//make sure the image name is available (required field)
 		if(empty($requestObject->imageName) === true){
-			throw(new \InvalidArgumentException("The image name does not exist", 405);
+			throw(new \InvalidArgumentException("The image name does not exist", 405));
 		}
 
 		//make sure the image file type is available (required field)
 		if(empty($requestObject->imageFileType) === true){
-			throw(new \InvalidArgumentException("The image file type does not exist", 405);
+			throw(new \InvalidArgumentException("The image file type does not exist", 405));
 		}
 
 		if($method === "PUT"){
 
 			//retrieve the image to update
 			$image = Image::getImageByImageId($pdo, $id);
-			if(!$image){
+			if($image === null){
 				throw(new \RuntimeException("The image does not exist", 404));
 			}
 
@@ -114,6 +114,15 @@ try {
 			//need to make sure we change the name from whatever they uploaded to something we like
 
 			//assume I will need FILTER_SANITIZE_URL and FILTER_SANITIZE_STRING at some point for the file names??
+			//right now I think I will need the following:
+
+//			imagescale — Scale an image using the given new width and height
+//			getimagesize — Get the size of an image and verify its an image (guessing Ill need this to check the size of the image uploaded, make sure it isn't too big!)
+//			imagecreatetruecolor — Create a new true color image --do i have to actually create the image that is uploaded?
+//			image_type_to_extension — Get file extension for image type ---- need this to check the extension of the file uploaded?
+//			imagecreatefromjpeg — Create a new image from file or URL --- create image from JPEG
+//			imagecreatefrompng — Create a new image from file or URL --- create image from PNG
+
 
 
 		}

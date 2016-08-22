@@ -50,6 +50,7 @@ try {
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
 	//sanitize input(Explain this) Where is the input coming from??
+	//I think this takes the URL we are given, and strips the id out of the URL so we know which primary key we have
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
 
 	//make sure the id is valid for methods that require it
