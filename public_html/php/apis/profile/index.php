@@ -3,6 +3,7 @@
 require_once "autoloader.php";
 require_once "/lib/xsrf.php";
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");   // TODO Check this path.
+
 // TODO  require_once(any other class that you need)  ???
 
 use Edu\Cnm\{Profile, Foo, Bar};   			         // TODO Check this path, and the classes we need here.
@@ -72,10 +73,12 @@ try {
 	// Determine which HTTP method was used.
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
+
 	// Sanitize the input.
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
-	$name = filter_input(INPUT_GET, "name", FILTER_VALIDATE_???);		// TODO filter for a string ???
+	$name = filter_input(INPUT_GET, "name", FILTER_SANITIZE_STRING);   // TODO Check the FILTER_
 	$email = filter_input(INPUT_GET, "email", FILTER_VALIDATE_EMAIL);
+
 
 	// Make sure the id (primary key) is valid for the methods that require it.
 	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
@@ -91,6 +94,7 @@ try {
 	if(($method === "DELETE" || $method === "PUT") && (empty($email) === true)) {
 		throw(new InvalidArgumentException("Email cannot be empty or negative", 405));
 	}
+
 
 	// Handle a GET request:
 	//		If id (primary key) is present, then return that profile,
@@ -122,17 +126,9 @@ try {
 			}
 		}
 
-
-		if ($a > $b) {
-			echo "a is bigger than b";
-		} elseif ($a == $b) {
-			echo "a is equal to b";
-		} else {
-			echo "a is smaller than b";
-		}
-
 		// 	getProfileByProfileName
 		//  	getProfileByProfileEmail
+
 
 
 		// Here are the PUT and POST methods.
@@ -187,6 +183,7 @@ try {
 
 	} else if($method === "DELETE") {
 		verifyXsrf();
+
 
 		// Retrieve the Profile that will be deleted.
 		$profile = Profile::getProfileByProfileId($pdo, $id);     // TODO Need a path in front of Profile???
