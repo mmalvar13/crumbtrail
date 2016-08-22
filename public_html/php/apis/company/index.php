@@ -52,6 +52,10 @@ try {
 	//sanitize input(Explain this) Where is the input coming from??
 	//I think this takes the URL we are given, and strips the id out of the URL so we know which primary key we have
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
+	$companyAccountCreatorId = filter_input(INPUT_GET, "companyAccountCreatorId", FILTER_VALIDATE_INT);
+	$companyName = filter_input(INPUT_GET, "companyName", FILTER_SANITIZE_STRING);
+	$companyMenuText = filter_input(INPUT_GET, "companyMenuText", FILTER_SANITIZE_STRING);
+	$companyDescription = filter_input(INPUT_GET, "companyDescription", FILTER_SANITIZE_STRING);
 
 	//make sure the id is valid for methods that require it
 	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
@@ -72,22 +76,22 @@ try {
 				$reply->data = $company;
 			}
 		} elseif((empty($id)) === false) {
-			$company = Company::getCompanyByCompanyAccountCreatorId($pdo, $id);
+			$company = Company::getCompanyByCompanyAccountCreatorId($pdo,$companyAccountCreatorId);
 			if($company !== null) {
 				$reply->data = $company;
 			}
 		} elseif((empty($id)) === false) {
-			$company = Company::getCompanyByCompanyName($pdo, $id);
+			$company = Company::getCompanyByCompanyName($pdo, $companyName);
 			if($company !== null) {
 				$reply->data = $company;
 			}
 		} elseif((empty($id)) === false) {
-			$company = Company::getCompanyByCompanyMenuText($pdo, $id);
+			$company = Company::getCompanyByCompanyMenuText($pdo, $companyMenuText);
 			if($company !== null) {
 				$reply->data = $company;
 			}
 		} elseif((empty($id)) === false) {
-			$company = Company::getCompanyByCompanyDescription($pdo, $id);
+			$company = Company::getCompanyByCompanyDescription($pdo, $companyDescription);
 			if($company !== null) {
 				$reply->data = $company;
 			}
