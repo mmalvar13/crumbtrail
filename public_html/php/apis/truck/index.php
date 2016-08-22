@@ -69,7 +69,9 @@ try {
 		}
 
 
-	} elseif($method === "PUT" || "POST") { //this will probably only be POST right? we have nothing to update for the trucks
+	} elseif((empty($_SESSION["profile"]) === false) && (($_SESSION["profile"]->getProfileId()) === $id) && (($_SESSION["profile"]->getProfileType()) === "a") || (($_SESSION["profile"]->getProfileType())) === "o") {
+
+		if($method === "PUT" || $method === "POST") {
 		verifyXsrf();
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);

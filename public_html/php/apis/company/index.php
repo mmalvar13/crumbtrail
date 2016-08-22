@@ -197,7 +197,7 @@ try {
 			//perform the actual PUT or POST
 
 			//I will need 2 sections of PUT, one for ADMINS & Owners, and 1 for JUST ADMINS to change things like permits/license etc
-			if($method === "PUT") {
+			if($method === "PUT" && ($_SESSION["profile"]->getProfileType()) === "a") {
 				//retrieve the company to update
 
 				$company = Company::getCompanyByCompanyId($pdo, $id);
@@ -226,7 +226,7 @@ try {
 				//update reply
 				$reply->message = "Company updated A-OK";
 
-			} elseif($method === "PUT") {
+			} elseif($method === "PUT" && ($_SESSION["profile"]->getProfileType()) === "o") {
 				//retrieve the company to update
 
 				$company = Company::getCompanyByCompanyId($pdo, $id);
