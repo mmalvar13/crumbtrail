@@ -103,7 +103,7 @@ try {
 			throw(new \InvalidArgumentException("The image file type does not exist", 405));
 		}
 
-		if($method === "PUT"){
+		if($method === "POST"){
 
 			//retrieve the image to update
 			$image = Image::getImageByImageId($pdo, $id);
@@ -111,17 +111,15 @@ try {
 				throw(new \RuntimeException("The image does not exist", 404));
 			}
 
-			$userImage = getimagesize($requestObject->imageFileName);
+
 
 
 			//1) move image to image directory (safe place to work with it) default
 			//2) sanitize image name/type ---------image_type_to_extension & sanitize string?? getimagesize
-//			create image--------imagecreatefromjpeg/imagecreatefrompng
-			//3)
-
-			//5) scale image down to the size I want------imagescale should be in px
-			//6) rename image to something I want
-//			imagefoo to save
+//			  3) create image--------imagecreatefromjpeg/imagecreatefrompng
+			//4) scale image down to the size I want------imagescale should be in px
+			//5) rename image to something I want
+//			  6)imagefoo to save
 
 
 //			when they go to POST an image, you must first make a call to delete the image currently in there
