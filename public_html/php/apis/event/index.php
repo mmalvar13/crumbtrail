@@ -36,7 +36,7 @@ $reply->data = null;
 try {
 	//grab mySQL connection
 	//event.ini ?????
-	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/event.ini");
+	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/crumbtrail.ini");
 
 	//determine which HTTP method was used
 	//WAT!!! need the code here explained....
@@ -48,7 +48,7 @@ try {
 	$eventId = filter_input(INPUT_GET, "eventId", FILTER_VALIDATE_INT);
 	$eventTruckId = filter_input(INPUT_GET, "eventTruckId", FILTER_VALIDATE_INT);
 	//how do i work with point, would it have it as an integer??? Float location x and location y??
-	$eventLocation = filter_input(INPUT_GET, "eventLocation", FILTER_VALIDATE_INT);
+	$eventLocationLat = filter_input(INPUT_GET, "eventLocation", FILTER_VALIDATE_FLOAT);
 	//make sure the id is valid for methods that require it
 	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
 		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
@@ -142,10 +142,12 @@ try {
 		}
 		//create a new event, give it an id, and insert it into the database
 		//(POST = insert something new)
+		$point = new Point(null, $requestObject->pointLatitude, $requestObject->pointLongitude);
 		$event = new Event(null, $requestObject->eventId, $requestObject->eventEnd, $requestObject->eventStart, $requestObject->eventLocation, null);
 		$event->insert($pdo);;
 		//update reply
 		$reply->message = "Event created OK";
+
 		}
 
 	} else if($method === "DELETE") {
