@@ -4,12 +4,14 @@ require_once "autoloader.php";
 require_once "/lib/xsrf.php";
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");   // TODO Check this path.
 
-// TODO  require_once(any other class that you need)  ???
-
-use Edu\Cnm\{Profile, Foo, Bar};   		// TODO Check this path, and the classes we need here.
+use Edu\Cnm\{Profile};   										// TODO Check this path.
 
 /**
- * Outline of what the Profile API needs to do:
+ * API for the Profile class
+ *
+ * @author Kevin Lee Kirk
+ *
+ * Outline of what this Profile API needs to do:
  * 	Setup
  * 		Check the session status. If not active, start a session.
  * 		Create a new stdClass called $reply; an empty bucket.
@@ -32,14 +34,9 @@ use Edu\Cnm\{Profile, Foo, Bar};   		// TODO Check this path, and the classes we
  * 	DELETE  =  delete an object from the database
  * 	Finishing up
  *
- *   And control the access to the data, based on type of person.	TODO If blocks for this.
+ *   And control the access to the data, based on type of person.
  **/
 
-/**
- * API for the Profile class
- *
- * @author Kevin Lee Kirk
- **/
 
 // Verify the session, start a session if not active.
 if(session_status() !== PHP_SESSION_ACTIVE) {
@@ -53,15 +50,15 @@ $reply->data = null;
 
 try {
 	// Connect to mySQL.
-	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/profile.ini");	// TODO Check this path.
+	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/profile.ini");		// TODO Check this path.
 
 	// Determine which HTTP method was used: GET, POST, PUT, or DELETE.
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
 	// Sanitize the input.
-	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
-	$name = filter_input(INPUT_GET, "name", FILTER_SANITIZE_STRING);	// TODO Check the FILTER_
-	$email = filter_input(INPUT_GET, "email", FILTER_VALIDATE_EMAIL);
+	$id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);
+	$name = filter_input(INPUT_GET, "name", FILTER_SANITIZE_STRING);
+	$email = filter_input(INPUT_GET, "email", FILTER_SANITIZE_EMAIL);
 
 	// Make sure the id (primary key) is valid for the methods that require it.
 	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
@@ -111,8 +108,8 @@ try {
 			}
 		}
 
-// --------------------------- PUT or POST --------------------------------
-	} elseif($method === "PUT" || $method === "POST") {
+// --------------------------- PUT  --------------------------------
+	} elseif($method === "PUT") {
 		verifyXsrf();
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
@@ -127,8 +124,6 @@ try {
 			throw(new \InvalidArgumentException ("No Profile ID.", 405));
 		}
 
-		// Perform the actual PUT or POST.
-		if($method === "PUT") {
 
 			// Retrieve the profile that will be updated in this PUT.
 			$profile = Profile::getProfileByProfileId($pdo, $id);
@@ -144,21 +139,9 @@ try {
 			// Update the reply message.
 			$reply->message = "The profile was updated OK";
 
-		} else if($method === "POST") {
-			// Create a new profile, give it an id, then POST it into the database.
-			// null, null, null: For the phone, activation token, access token, profile type, salt, hash.
-			// TODO: Check the above ???
-			// TODO: What if a person wants to update their phone number ???
-			// TODO: Remove either the first null, or $...->profileId ???
-			$profile = new Profile(null, $requestObject->profileId, $requestObject->profileName, $requestObject->profileEmail, null, null, null, null, null, null);
-			$profile->insert($pdo);
-
-			// Update the reply message.
-			$reply->message = "Profile created OK";
-		}
 
 // --------------------------- DELETE --------------------------------
-	} else if($method === "DELETE") {
+	} elseif($method === "DELETE") {
 		verifyXsrf();
 
 		// Retrieve the Profile that will be deleted.
@@ -187,10 +170,11 @@ try {
 }
 
 
+
+// Encode and return the reply to the frontend caller.
 header("Content-type: application/json");
 if($reply->data === null) {
 	unset($reply->data);
 }
 
-// Encode and return the reply to frontend caller.
 echo json_encode($reply);
