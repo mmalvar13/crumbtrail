@@ -14,7 +14,7 @@ use Edu\Cnm\{Profile};   										// TODO Check this path.
  *  Control the ACCESS to the data, based on type of person,
  * using the if blocks, ABOVE the PUT and DELETE blocks.
  *
- * 	Can "use" another class, at the top of this file,
+ * 	If needed, can "use" another class, at the top of this file,
  * 	and then grab an attribute from another class,
  * 	using standard object oriented methods.
  **/
