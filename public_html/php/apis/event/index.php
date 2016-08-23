@@ -48,7 +48,8 @@ try {
 	$eventId = filter_input(INPUT_GET, "eventId", FILTER_VALIDATE_INT);
 	$eventTruckId = filter_input(INPUT_GET, "eventTruckId", FILTER_VALIDATE_INT);
 	//how do i work with point, would it have it as an integer??? Float location x and location y??
-	$eventLocationLat = filter_input(INPUT_GET, "eventLocation", FILTER_VALIDATE_FLOAT);
+	$eventLocationLat = filter_input(INPUT_GET, "lat", FILTER_VALIDATE_FLOAT);
+	$eventLocationLng = filter_input(INPUT_GET, "lng", FILTER_VALIDATE_FLOAT);
 	//make sure the id is valid for methods that require it
 	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
 		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
@@ -129,6 +130,8 @@ try {
 			}
 			//put the new event content into the event and update
 			//Event End here??
+			$point = new Point(null, $requestObject->location->lat, $requestObject->location->lng);
+			$event->setEventLocation($point);
 			$event->setEventEnd($requestObject->eventEnd);
 			$event->update($pdo);
 
@@ -137,12 +140,12 @@ try {
 
 	} else if($method === "POST") {
 
-		if(empty($requestObject->evenyId) === true) {
+		if(empty($requestObject->eventId) === true) {
 			throw(new \InvalidArgumentException("No profile Id", 405));
 		}
 		//create a new event, give it an id, and insert it into the database
 		//(POST = insert something new)
-		$point = new Point(null, $requestObject->pointLatitude, $requestObject->pointLongitude);
+		$point = new Point(null, $requestObject->location->lat, $requestObject->location->lng);
 		$event = new Event(null, $requestObject->eventId, $requestObject->eventEnd, $requestObject->eventStart, $requestObject->eventLocation, null);
 		$event->insert($pdo);;
 		//update reply
