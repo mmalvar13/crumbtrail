@@ -111,6 +111,23 @@ try {
 				throw(new \RuntimeException("The image does not exist", 404));
 			}
 
+			//image sanitization----------------------------------------------------------------
+			$validExts = array(".jpg", ".jpeg",".png");
+			//what does ("image/jpeg") and ("image/png") do??
+			$validTypes = array();
+
+			//strrchr — Find the last occurrence of a character in a string.
+			//     returns the portion of haystack which starts at the last occurrence of needle and goes until the end of haystack.
+			//$_FILES['file']['name']-----The original name of the file on the client machine.
+
+
+			$userFileExt = strrchr($_FILES["userImage"]["name"], ".");
+
+			if(!in_array($userFileExt, $validExts)){
+				throw(new InvalidArgumentException("That isn't a valid image"));
+			}
+
+
 
 
 
