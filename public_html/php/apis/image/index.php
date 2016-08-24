@@ -107,7 +107,7 @@ try {
 			$validTypes = array("image/jpeg", "image/jpg", "image/png");
 
 
-			//assing variables to the user image name, MIME type, and image extension
+			//assigning variables to the user image name, MIME type, and image extension
 			$userFileName = $_FILES["userImage"]["name"];
 			$userFileType = $_FILES["userImage"]["type"];
 			$userFileExtension = strrchr($_FILES["userImage"]["name"], ".");
@@ -115,15 +115,22 @@ try {
 			//check to ensure the file has correct extension and MIME type
 			if(!in_array($userFileExtension, $validExtensions) || (!in_array($userFileType, $validTypes))){
 				throw(new \InvalidArgumentException("That isn't a valid image"));
+			}else{
+				//would I even need to make a new assignment, can I just use $userFileName??
+				$tempFileName = $userFileName;
+				$newFilExtension = $userFileExtension;
+				$newFileType = $userFileType;
 			}
+		}
 
 
 			//image creation if file is .jpg/.jpeg or .png--------------------------------------------------------------------
-			if($userFileExtension === ".jpg" || $userFileExtension === ".jpeg"){
-				$sanitizedUserImage = imagecreatefromjpeg($requestObject->image);
-			}elseif($userFileExtension === ".png"){
-				$sanitizedUserImage = imagecreatefrompng($requestObject->image);
+			if($newFileExtension === ".jpg" || $newFileExtension === ".jpeg"){
+				$sanitizedUserImage = imagecreatefromjpeg($tempFileName);
+			}elseif($newFileExtension === ".png"){
+				$sanitizedUserImage = imagecreatefrompng($tempFileName);
 			}
+			//WTF does imageCreateFromFoo actually output?? returns an image identifier what is that??
 
 			//image scale to 500px width, leave height auto---------------------------------------------------------------------
 			$scaledImage = imagescale($sanitizedUserImage, 500);
@@ -133,7 +140,7 @@ try {
 			$newImageName = round(microtime(true)) . '.' . $scaledImage;
 
 
-			$image = new Image(null, $requestObject->imageCompanyId, $requestObject->imageFileType, $requestObject->$newImageName);
+			$image = new Image(null, $requestObject->imageCompanyId, $newFileType, $scaledImage);
 
 
 			move_uploaded_file($_FILES["file"]["tmp_name"], "../img/imageDirectory/" . $newfilename);
