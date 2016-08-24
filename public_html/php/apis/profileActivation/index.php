@@ -56,6 +56,9 @@ try{
 			$companyAccountCreatorEmailActivation->update($pdo);
 
 			//use swiftmailer hereish
+			//api gets profile by profile activation token
+			//update activation token to null when activation link is clicked. that means its activated
+			//same link in same email to approve company activation and profile activation tokens.
 		}
 	}
 }
