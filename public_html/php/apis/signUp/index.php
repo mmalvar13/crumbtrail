@@ -100,7 +100,7 @@ try {
 		$profileEmail = filter_var($requestObject->profileEmail, FILTER_SANITIZE_EMAIL);
 		$profile = Profile::getProfileByProfileEmail($pdo, $profileEmail);
 		if($profile !== null){
-			throw(new \InvalidArgumentException("this email already has an account",422);
+			throw(new \InvalidArgumentException("this email already has an account",422));
 		}
 
 		//hash and salt it here. before hashing and salting, angular sends a password and confirmed password. throw an exception if they are not the same.
