@@ -103,8 +103,14 @@ try {
 			throw(new \InvalidArgumentException("this email already has an account",422);
 		}
 
-		//before hashing and salting, angular sends password and confirmed password. throw exception if they are not the same. requestObject->password/confirm password
-		//hash and salt it here. same as in the test. whatever is in the setup method in test
+		//hash and salt it here. before hashing and salting, angular sends a password and confirmed password. throw an exception if they are not the same.
+		//create a new salt and email activation
+		$salt = bin2hex(random_bytes(16));
+		//do i create email activation here? see line 176
+
+		//create the hash
+		$hash = hash_pbkdf2("sha512", $requestObject->password, $requestObject->confirmPassword, $salt, 262144);
+
 
 		//create a new profile and insert it into the databases
 		$profile = new Profile(null, $requestObject->profileName, $requestObject->profileEmail, $requestObject->profilePhone, $profileAccessToken, $profileActivationToken, $requestObject->profileType, $profileHash, $profileSalt);
@@ -120,7 +126,6 @@ try {
 		$reply->message = "In the next 48 hours you will receive your approval notice from Crumbtrail. Check your email to activate your account";
 
 		//swiftmailer code here
-		//this is where my own swiftmailer code begins
 		/**
 		 * we're sending an email upon sign up to notify them that we have received their request for a CrumbTrail account, and they
 		 * should check their email in the next few days for their approval message.
@@ -147,7 +152,6 @@ try {
 		$message = Swift_Message::newInstance();//to set a subject line you can pass it as a parameter in newInstance or set it afterwards. I chose to set it afterwards. Same with body.
 
 		//attach a sender to the message
-		//if you wish to refer to a single email address just use a string. here we use an associative array to include a name
 		$message->setFrom(['admin@crumbtrail.com'=> 'Crumbtrail Admin']);//is this the same as setFrom(array('someaddress'=>'name'));
 
 		//attach recipients to the message. you can add
@@ -159,9 +163,10 @@ try {
 
 		//the body of the message-seen when the user opens the message
 		$message->setBody('Thanks for signing your company up with Crumbtrail. Our team will get to work on approving your account. You should receive an approval email in the next 48 hours with a link to confirm and activate your account. ','text/html')
+
 			//add alternative parts with addPart() for those who can only read plaintext or dont wwant to view in html
-			->addPart('Thanks for signing your company up with Crumbtrail. Our team will get to work on approving your account. You should receive an approval email in the next 48 hours with a link to confirm and activate your account. ', 'text/plain')
-			->setReturnPath('bounces@address.tld');//return path address specifies where bounce notifications should be sent
+		$message->addPart('Thanks for signing your company up with Crumbtrail. Our team will get to work on approving your account. You should receive an approval email in the next 48 hours with a link to confirm and activate your account. ', 'text/plain');
+		$message->setReturnPath('bounces@address.tld');//return path address specifies where bounce notifications should be sent
 
 
 		//building the activation link that can travel to another server and still work. this is the link that will be clicked on to confirm. maybe this is not actually h ere, but in companyActivation/ProfileActivation/EmployeeActivation.
