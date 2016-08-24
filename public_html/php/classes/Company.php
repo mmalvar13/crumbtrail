@@ -1044,6 +1044,59 @@ class Company implements \JsonSerializable {
 		return($companies);
 	}
 
+
+	/**
+	 * gets company by the company activation token
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $companyActivationToken used as the company token to search for
+	 * @return company|null if company not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 * @author LB
+	 **/
+	public static function getCompanyByCompanyActivationToken(\PDO $pdo, string $companyActivationToken){
+		//sanitize the ID before searching for it
+		$companyActivationToken = trim($companyActivationToken);
+		$companyActivationToken = filter_var($companyActivationToken, FILTER_SANITIZE_STRING);
+
+		if(empty($companyActivationToken) === true){
+			throw(new \PDOException("The company token is empty"));
+		}
+
+		if(strlen($companyActivationToken)>32){
+			throw(new \PDOException("The company token entered is too long"));
+		}
+
+		//create query template
+		$query = "SELECT companyId, companyAccountCreatorId, companyName, companyEmail, companyPhone, companyPermit, companyLicense, companyAttn, companyStreet1, companyStreet2, companyCity, companyState, companyZip, companyDescription, companyMenuText, companyActivationToken, companyApproved FROM company WHERE companyActivationToken = :companyActivationToken";
+
+		// Prepare the template.
+		$statement = $pdo->prepare($query);
+
+		// Bind the companyId to the placeholder in the template.
+		$parameters = ["companyActivationToken" => $companyActivationToken];
+
+		// Execute the SQL statement
+		$statement->execute($parameters);
+
+		// Now that we have selected the correct company, we need to get it from mySQL.
+		try {
+			$company = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+
+			if($row !== false) {
+				$company = new Company($row["companyId"], $row["companyAccountCreatorId"], $row["companyName"], $row["companyEmail"], $row["companyPhone"], $row["companyPermit"], $row["companyLicense"], $row["companyAttn"], $row["companyStreet1"], $row["companyStreet2"], $row["companyCity"], $row["companyState"], $row["companyZip"], $row["companyDescription"], $row["companyMenuText"], $row["companyActivationToken"], $row["companyApproved"]);
+			}
+
+			// Catch exception.
+		} catch(\Exception $exception) {
+			// If the row could not be converted, then re-throw it.
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($company);
+	}
+
 	/**
 	 * Get all Companys
 	 *
