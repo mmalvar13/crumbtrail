@@ -4,12 +4,12 @@
  * API for the Profile class
  * @author Kevin Lee Kirk
  *
- * This API does not need a POST, since other APIs will handle the creation of a new profile.
+ *  This API does not need a POST, since other APIs will handle the creation of a new profile.
  *
- *  Set up to make the all of the profile information confidential, i.e. allow only the person who created a profile to view or modify that profile.
+ *  Set up to make the all of the profile information confidential,
+ *  i.e. allow only the person who created a profile to view or modify that profile.
  *
- * Attributes involved: profileId, profileName, profileEmail, profilePhone.
- *
+ *  Attributes involved: profileId, profileName, profileEmail, profilePhone.
  **/
 
 require_once "autoloader.php";
@@ -151,6 +151,7 @@ try {
 			$profile->delete($pdo);
 			$reply->message = "Profile deleted OK";
 
+// ------------ Throw exception if no legitimate $method --------------
 		} else {
 			throw (new InvalidArgumentException("Invalid HTTP method request"));
 		}
