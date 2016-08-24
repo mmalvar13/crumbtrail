@@ -75,18 +75,13 @@ try {
 			}
 		}
 
+		//this is a check to make sure only a profile type of ADMIN or OWNER can make changes
+	}elseif((empty($_SESSION["profile"]) === false) && (($_SESSION["profile"]->getProfileId()) === $id) && (($_SESSION["profile"]->getProfileType()) === "a") || (($_SESSION["profile"]->getProfileType())) === "o") {
 
-	}elseif($method === "PUT" || "POST"){
+		if($method ==="POST"){
 		verifyXsrf();
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
-
-//		create company to pull stuff from, DO I EVEN NEED THIS??? IM GUESSING NOT
-		$company = Company::getCompanyByCompanyId($pdo, $id);
-
-		if($requestObject->profileType !== 'a' || 'o') {
-			throw(new \InvalidArgumentException("profile type must be admin('a') or owner('o') in order to make changes to an image"));
-		}
 
 		//make sure the image foreign key is available (required field)
 		if(empty($requestObject->imageCompanyId) === true){
@@ -105,30 +100,31 @@ try {
 
 		if($method === "POST"){
 
-			//retrieve the image to update
-			$image = Image::getImageByImageId($pdo, $id);
-			if($image === null){
-				throw(new \RuntimeException("The image does not exist", 404));
-			}
-
 			//image sanitization----------------------------------------------------------------
-			$validExts = array(".jpg", ".jpeg",".png");
-			//what does ("image/jpeg") and ("image/png") do??
-			$validTypes = array();
+			$validExtensions = array(".jpg", ".jpeg",".png");
 
-			//strrchr — Find the last occurrence of a character in a string.
-			//     returns the portion of haystack which starts at the last occurrence of needle and goes until the end of haystack.
+			//strrchr — Find the last occurrence of a character in a string. returns the portion of haystack which starts at the last occurrence of needle and goes until the end of haystack.
 			//$_FILES['file']['name']-----The original name of the file on the client machine.
-
-
-			$userFileExt = strrchr($_FILES["userImage"]["name"], ".");
-
-			if(!in_array($userFileExt, $validExts)){
-				throw(new InvalidArgumentException("That isn't a valid image"));
+			$userFileExtension = strrchr($_FILES["userImage"]["name"], ".");
+			if(!in_array($userFileExtension, $validExtensions)){
+				throw(new \InvalidArgumentException("That isn't a valid image"));
 			}
 
 
+			//image creation--------------------------------------------------------------------
+			if($userFileExtension === ".jpg" || $userFileExtension === ".jpeg"){
+				$userImage = imagecreatefromjpeg($requestObject->image);
+			}elseif($userFileExtension === ".png"){
+				$userImage = imagecreatefrompng($requestObject->image);
+			}
 
+			//image scale---------------------------------------------------------------------
+			$scaledImage = imagescale($userImage, 500);
+
+
+//
+			$newfilename = round(microtime(true)) . '.' . $scaledImage;
+			move_uploaded_file($_FILES["file"]["tmp_name"], "../img/imageDirectory/" . $newfilename);
 
 
 			//1) move image to image directory (safe place to work with it) default
@@ -139,8 +135,6 @@ try {
 //			  6)imagefoo to save
 
 
-//			when they go to POST an image, you must first make a call to delete the image currently in there
-//			THEN, you can make a call to POST the new image
 
 
 
