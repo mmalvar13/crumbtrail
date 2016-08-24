@@ -58,101 +58,99 @@ try {
 			if($image !== null) {
 				$reply->data = $image;
 			}
-		}elseif(empty($id) === false) {
+		} elseif(empty($id) === false) {
 			$image = Image::getImageByImageCompanyId($pdo, $imageCompanyId);
 			if($image !== null) {
 				$reply->data = $image;
 			}
-		}elseif(empty($id) === false) {
+		} elseif(empty($id) === false) {
 			$image = Image::getImageByImageFileName($pdo, $imageFileName);
 			if($image !== null) {
 				$reply->data = $image;
 			}
-		}else{
+		} else {
 			$images = Image::getAllImages($pdo);
-			if($images !== null){
+			if($images !== null) {
 				$reply->data = $images;
 			}
 		}
 
 		//this is a check to make sure only a profile type of ADMIN or OWNER can make changes
-	}elseif((empty($_SESSION["profile"]) === false) && (($_SESSION["profile"]->getProfileId()) === $id) && (($_SESSION["profile"]->getProfileType()) === "a") || (($_SESSION["profile"]->getProfileType())) === "o") {
+	} elseif((empty($_SESSION["profile"]) === false) && (($_SESSION["profile"]->getProfileId()) === $id) && (($_SESSION["profile"]->getProfileType()) === "a") || (($_SESSION["profile"]->getProfileType())) === "o") {
 
-		if($method ==="POST"){
-		verifyXsrf();
-		$requestContent = file_get_contents("php://input");
-		$requestObject = json_decode($requestContent);
+		if($method === "POST") {
+			verifyXsrf();
+			$requestContent = file_get_contents("php://input");
+			$requestObject = json_decode($requestContent);
 
-		//make sure the image foreign key is available (required field)
-		if(empty($requestObject->imageCompanyId) === true){
-			throw(new \InvalidArgumentException("The foreign key does not exist", 405));
-		}
-
-		//make sure the image name is available (required field)
-		if(empty($requestObject->imageName) === true){
-			throw(new \InvalidArgumentException("The image name does not exist", 405));
-		}
-
-		//make sure the image file type is available (required field)
-		if(empty($requestObject->imageFileType) === true){
-			throw(new \InvalidArgumentException("The image file type does not exist", 405));
-		}
-
-		if($method === "POST"){
-
-			//image sanitization----------------------------------------------------------------
-
-			//create arrays for valid image extensions and valid image MIME types
-			$validExtensions = array(".jpg", ".jpeg",".png");
-			$validTypes = array("image/jpeg", "image/jpg", "image/png");
-
-
-			//assigning variables to the user image name, MIME type, and image extension
-			$userFileName = $_FILES["userImage"]["name"];
-			$userFileType = $_FILES["userImage"]["type"];
-			$userFileExtension = strrchr($_FILES["userImage"]["name"], ".");
-
-			//check to ensure the file has correct extension and MIME type
-			if(!in_array($userFileExtension, $validExtensions) || (!in_array($userFileType, $validTypes))){
-				throw(new \InvalidArgumentException("That isn't a valid image"));
-			}else{
-				//would I even need to make a new assignment, can I just use $userFileName??
-				$tempFileName = $userFileName;
-				$newFileExtension = $userFileExtension;
-				$newFileType = $userFileType;
+			//make sure the image foreign key is available (required field)
+			if(empty($requestObject->imageCompanyId) === true) {
+				throw(new \InvalidArgumentException("The foreign key does not exist", 405));
 			}
 
-			//image creation if file is .jpg/.jpeg or .png--------------------------------------------------------------------
-			if($newFileExtension === ".jpg" || $newFileExtension === ".jpeg"){
-				$sanitizedUserImage = imagecreatefromjpeg($tempFileName);
-			}elseif($newFileExtension === ".png"){
-				$sanitizedUserImage = imagecreatefrompng($tempFileName);
-			}
-			//WTF does imageCreateFromFoo actually output?? returns an image identifier what is that??
-
-			//image scale to 500px width, leave height auto---------------------------------------------------------------------
-			$scaledImage = imagescale($sanitizedUserImage, 500);
-
-			//split new name so we can add custom name
-			$scaledExplode = explode(".", $scaledImage);
-			$scaledExtension = end($scaledExplode);
-
-			//use microtime to give file new name
-			$newImageName = round(microtime(true)) . "." . $scaledExtension;
-
-			if($scaledExtension === ".jpg" || $scaledExtension === ".jpeg"){
-				$createdProperly = imagejpeg($sanitizedUserImage);
-			}elseif($scaledExtension === ".png"){
-				$createdProperly = imagepng($sanitizedUserImage);
+			//make sure the image name is available (required field)
+			if(empty($requestObject->imageName) === true) {
+				throw(new \InvalidArgumentException("The image name does not exist", 405));
 			}
 
-			//put new image into the database
-			if($createdProperly === true) {
-				$image = new Image(null, $requestObject->imageCompanyId, $newFileType, $newImageName);
-				$image->insert($pdo);
+			//make sure the image file type is available (required field)
+			if(empty($requestObject->imageFileType) === true) {
+				throw(new \InvalidArgumentException("The image file type does not exist", 405));
 			}
 
-		}
+			if($method === "POST") {
+
+				//image sanitization----------------------------------------------------------------
+
+				//create arrays for valid image extensions and valid image MIME types
+				$validExtensions = array(".jpg", ".jpeg", ".png");
+				$validTypes = array("image/jpeg", "image/jpg", "image/png");
+
+
+				//assigning variables to the user image name, MIME type, and image extension
+				$tempUserFileName = $_FILES["userImage"]["name"];
+				$userFileType = $_FILES["userImage"]["type"];
+				$userFileExtension = strrchr($_FILES["userImage"]["name"], ".");
+
+				//check to ensure the file has correct extension and MIME type
+				if(!in_array($userFileExtension, $validExtensions) || (!in_array($userFileType, $validTypes))) {
+					throw(new \InvalidArgumentException("That isn't a valid image"));
+				} else {
+					//would I even need to make a new assignment, can I just use $userFileName??
+
+					$newFileExtension = $userFileExtension;
+					$newFileType = $userFileType;
+				}
+
+				//image creation if file is .jpg/.jpeg or .png--------------------------------------------------------------------
+				if($newFileExtension === ".jpg" || $newFileExtension === ".jpeg") {
+					$sanitizedUserImage = imagecreatefromjpeg($tempUserFileName);
+				} elseif($newFileExtension === ".png") {
+					$sanitizedUserImage = imagecreatefrompng($tempUserFileName);
+				}
+				//WTF does imageCreateFromFoo actually output?? returns an image identifier what is that??
+
+				//image scale to 500px width, leave height auto---------------------------------------------------------------------
+				$scaledImage = imagescale($sanitizedUserImage, 500);
+
+				//use microtime to give file new name
+				$newImageName = round(microtime(true)) . $userFileExtension;
+
+				if($userFileExtension === ".jpg" || $userFileExtension === ".jpeg") {
+					//I think we may need to add a path to the second argument of imagejpeg()
+					$createdProperly = imagejpeg($sanitizedUserImage, $newImageName);
+				} elseif($userFileExtension === ".png") {
+					//I think we may need to add a path to the second argument of imagepng()
+					$createdProperly = imagepng($sanitizedUserImage, $newImageName);
+				}
+
+				//put new image into the database
+				if($createdProperly === true) {
+					$image = new Image(null, $requestObject->imageCompanyId, $userFileType, $newImageName);
+					$image->insert($pdo);
+				}
+
+			}
 
 		}
 
