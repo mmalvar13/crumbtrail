@@ -3,9 +3,13 @@
  * API for Company Activation.
  * The response to a confirmation email to a new company owner, i.e. the companyAccountCreator.
  *
- * Does this API send out the confirmation email message???
- * Or does it receive the information that a new user has clicked the confirmation email???
- * Or both???
+ * QUESTIONS:
+ * Does this API send the confirmation email message?
+ * Or does this API receive the information that a new user has clicked the confirmation email?
+ * Or both?
+ * How and where is the activation token generated?
+ * How and where is the activation token checked (verified)?
+ *
  *
  * @author Kevin Lee Kirk
  **/
