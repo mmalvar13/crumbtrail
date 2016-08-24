@@ -96,9 +96,7 @@ try {
 			}
 
 			//delete section here
-		} elseif((empty($_SESSION["profile"]) === false) && (($_SESSION["profile"]->getProfileId()) === $id) && (($_SESSION["profile"]->getProfileType()) === "a") || (($_SESSION["profile"]->getProfileType())) === "o") {
-
-			if($method === "DELETE") {
+		} elseif($method === "DELETE") {
 				verifyXsrf();
 				//retrieve the company to be deleted
 				$company = Company::getCompanyByCompanyId($pdo, $id);
@@ -118,7 +116,7 @@ try {
 			}
 
 		}
-	}
+
 	//end of try, begging of catches
 } catch(Exception $exception) {
 	$reply->status = $exception->getCode();

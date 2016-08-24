@@ -152,6 +152,20 @@ try {
 
 			}
 
+		}elseif($method === "DELETE"){
+			verifyXsrf();
+			//get image to be delted by the ID
+			$image = Image::getImageByImageId($pdo, $id);
+
+			//check if image is empty
+			if($image === null){
+				throw(new RuntimeException("The image does not exist!"));
+			}
+
+			$image->getImageFileName(); //wtf do i need this for??
+
+			$image->delete($pdo);
+			$reply->message("Image deleted A-OK");
 		}
 
 	}
