@@ -1,8 +1,9 @@
 <?php
 
-require_once "autoloader.php";//where is this? same autoload.php as before or a new one?
-require_once "/lib/xsrf.php"; //when do we make this?
+require_once (dirname(__DIR__)) . "autoloader.php";//where is this? same autoload.php as before or a new one?
+require_once (dirname(__DIR__) . "/lib/xsrf.php"; //when do we make this?
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php"); //do i put crumbtrail-mysql here?
+require_once (dirname(__DIR__)) . "composer.json";
 
 use Edu\Cnm\Crumbtrail\{Company, Profile}; //is this correct? i dont have to add mmalvar13 right? do i add company and profile like this?
 
@@ -114,6 +115,10 @@ try {
 		$company = new Company(null, $profile->getProfileId(), $requestObject->companyName, $requestObject->companyEmail, $requestObject->companyPhone, $requestObject->companyPermit, $requestObject->companyLicense, $requestObject->companyAttn, $requestObject->companyStreet1, $requestObject->companyStreet2, $requestObject->companyCity, $requestObject->companyState, $requestObject->companyZip, $requestObject->companyDescription , $requestObject->companyMenuText, $companyActivationToken, $companyApproved);
 
 		$company->insert($pdo);
+
+		//update reply
+		$reply->message = "In the next 48 hours you will receive your approval notice from Crumbtrail. Check your email to activate your account";
+
 		//swiftmailer code here
 
 		//create Swift message
@@ -179,8 +184,7 @@ EOF;
 			throw(new RuntimeException("unable to send email"));
 		}
 
-		//update reply
-		$reply->message = "Check your email to activate";
+
 
 	} else {
 		throw(new InvalidArgumentException("Invalid HTTP method request"));
