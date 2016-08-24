@@ -5,36 +5,50 @@ Summary of the structure of the frontend (first draft):
 
 views ("pages")
 	eater map
+	trucker map  (shows the "start serving" and "stop serving" buttons and fields)
+	company list
 	sign-in
-	sign-up/registration
+	sign-up
 		personal info section
 		company info section
 	first-time profile
 	profile
 	settings
-	truck map
-	list of all food truck companies in ABQ
 
 layouts
 	map
 	profile
 	basic
 
-templates  (to be injected by Angular into ...)
-	navbar  (into all the views)
-		our icon
+templates  (to be injected by Angular)
+	navbar  (injected into all the views)
+		our logo
 		search field
-		hamburger nav menu
-			nav menu items for eaters
-			nav menu items for truckers
-
-	map  (into the eater map and the truck map)
-		map itself, from Google Maps
-
-	slide-up list of active food trucks  (into the eater map)
-
+		hamburger navigation menu (changes, depending on the view you're in):
+			in the eater map view
+				to the company list view
+				to the trucker map view
+				to the sign-up view ???
+ 			in the trucker map view
+				to the sign-in view
+				to the sign-up view
+				to the trucker map view
+				to the profile view
+				to the settings view (if profileType = "O")
+				to the eater map view
+			in the company list, sign-in, sign-up and first-time profile views
+				to the eater map view
+			in the profile view
+				to the settings view
+				to the trucker map view
+				to the eater map view
+			in the settings view
+				to the profile view
+				to the trucker map view
+				to the eater map view
+	map, from Google Maps  (injected into the eater map and the truck map)
+	slide-up list of active food trucks  (injected into the eater map)
 	start/stop serving ???
-
 	forms and buttons for sign-up, -in, -out, etc. ???
 
 
