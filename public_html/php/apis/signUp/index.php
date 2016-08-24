@@ -3,7 +3,7 @@
 require_once (dirname(__DIR__)) . "autoloader.php";//where is this? same autoload.php as before or a new one?
 require_once (dirname(__DIR__) . "/lib/xsrf.php"; //when do we make this?
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php"); //do i put crumbtrail-mysql here?
-require_once (dirname(__DIR__)) . "composer.json";
+require_once (dirname(__DIR__)) . "lib/swift_required.php"; //idk, composer.json. this is just what the documentation had.
 
 use Edu\Cnm\Crumbtrail\{Company, Profile}; //is this correct? i dont have to add mmalvar13 right? do i add company and profile like this?
 
@@ -120,72 +120,77 @@ try {
 		$reply->message = "In the next 48 hours you will receive your approval notice from Crumbtrail. Check your email to activate your account";
 
 		//swiftmailer code here
-
-		//create Swift message
-		$swiftMessage = Swift_Message::newInstance();
-
-		//attach the sender to the message
-		//this takes the form of an associative array where the Email is the key for the real name
-		$swiftMessage->setFrom(["crumbtrail@gmail.com" => "CrumbTrail"]);
-
+		//this is where my own swiftmailer code begins
 		/**
-		 * attach the recipients to the message
-		 * notice this is an array that can inlcude or omit the recipient's real name
-		 * use the recipient's real name where possible; this reduces the probability of the Email being marked as spam
-		 **/
-		$recipients = [$requestObject->profileEmail];
-		$swiftMessage->setTo($recipients);
-
-		//attach the subject line to the message
-		$swiftMessage->setSubject("Please confirm your CrumbTrail account to activate");
-
-		/**
-		 * attach the actual message to the message
-		 * here, we set two versions of the message: the HTML formatted message and a special filter_var()ed version of the message that generates a plaint ext version of the HTML content.
-		 * notice one tactic used is to display the entire $confirmLink to plain text; this lets users who aren't viewing HTML content in emails to still access your links
+		 * we're sending an email upon sign up to notify them that we have received their request for a CrumbTrail account, and they
+		 * should check their email in the next few days for their approval message.
+		 * To send a message with swiftmailer, you create a transport, use it to create the Mailer, and then y ou use the Mailer to send
+		 * the message
+		 *
+		 * We are using the SMTP Transport Type. A transport is the component that actually does the sending.
+		 * SMTP (Simple Message Transfer Protocol). It is the most commonly used Transport because it will work on 99% of web servers,
+		 * according to the PEDOMA analysis.
 		 **/
 
-		//building the activation link that can travel to another server and still work. This is the link that will be clicked to confirm
+		//to use the SMTP transport, you need to know which SMTP server your code needs to connect to. this seems familiar from configuration. dont we use port 22?
 
+		//Create the Transport
+		$transport = Swift_SmtpTransport::newInstance('smtp.example.org', 25) //can add third parameter for SSL encryption. need?
+		//some servers require authentication. You can provide a username and password with setUsername() and setPassword() methods. but do we need this? this is not for the user, correct?
+			->setUsername('your username')
+			->setPassword('your password');
+
+		//Create the Mailer using your created Transport
+		$mailer = Swift_Mailer::newInstance($transport);
+
+		//Create a message
+		$message = Swift_Message::newInstance();//to set a subject line you can pass it as a parameter in newInstance or set it afterwards. I chose to set it afterwards. Same with body.
+
+		//attach a sender to the message
+		//if you wish to refer to a single email address just use a string. here we use an associative array to include a name
+		$message->setFrom(['admin@crumbtrail.com'=> 'Crumbtrail Admin']);//is this the same as setFrom(array('someaddress'=>'name'));
+
+		//attach recipients to the message. you can add
+		$recipients = ['originalAccountCreator@foodtruck.org' => 'Truckina McTruckerson'];
+		$message->setTo($recipients);//we will just send to one person.
+
+		//attach a subject line to the message
+		$message->setSubject('Thanks for signing up with Crumbtrail');
+
+		//the body of the message-seen when the user opens the message
+		$message->setBody('Thanks for signing your company up with Crumbtrail. Our team will get to work on approving your account. You should receive an approval email in the next 48 hours with a link to confirm and activate your account. ','text/html')
+			//add alternative parts with addPart() for those who can only read plaintext or dont wwant to view in html
+			->addPart('Thanks for signing your company up with Crumbtrail. Our team will get to work on approving your account. You should receive an approval email in the next 48 hours with a link to confirm and activate your account. ', 'text/plain')
+			->setReturnPath('bounces@address.tld');//return path address specifies where bounce notifications should be sent
+
+
+		//building the activation link that can travel to another server and still work. this is the link that will be clicked on to confirm. maybe this is not actually h ere, but in companyActivation/ProfileActivation/EmployeeActivation.
+		//this is from breadbasket so it might be old or something, idk!
 		$lastSlash = strrpos($_SERVER["SCRIPT_NAME"], "/");
 		$basePath = substr($_SERVER["SCRIPT_NAME"], 0, $lastSlash + 1);
-		$urlglue = $basePath . "email-confirmation?emailActivation=" . $profileEmailActivation;
+		$urlglue = $basePath . "email-confirmation?emailActivation=" . $volEmailActivation;
 
 		$confirmLink = "https://" . $_SERVER["SERVER_NAME"] . $urlglue;
-
 		$message = <<< EOF
-<h1> Thanks for signing up with Crumbtrail!</h1>
-<p>Your food truck has been approved. Please click on the following link to set up your profile and start serving: </p>
-<a href = "$confirmLink">$confirmLink</a></p>
+<h1>You have been approved to start serving with CrumbTrail</h1>
+<p>Please click the following link to confirm your email and activate your account: </p>
+<a href="$confirmLink">$confirmLink</a></p>
 EOF;
 
-		$swiftMessage->setBody($message, "text/html");
-		$swiftMessage->addPart(html_entity_decode(filter_var($message, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES)), "text/plain");
+		//Send the message
+		$numSent = $mailer->send($message);
 
-
-		/**
-		 * send the Email via SMTP; the SMTP server here is configured to relay everything upstream via CNM
-		 * this default may or may not be available on all web hosts; consult their documentation/support for details
-		 * SwiftMailer supports many different transport methods; SMTP was chosen because it's the most compatible and has the best error handling
-		 *
-		 * @see http://swiftmailer.org/docs/sending.html Sending Messages - Documentation - SwiftMailer
-		 **/
-
-		$smtp = Swift_SmtpTransport::newInstance("localhost", 25);
-		$mailer = Swift_Mailer::newInstance($smtp);
-		$numSent = $mailer->send($swiftMessage, $failedRecipients);
+		printf("Sent %d messages\n", $numSent);
 
 		/**
 		 * the send method returns the number of recipients that accepted the Email
-		 * so, if the number attempted is not the number accepted, this is an exception
+		 * so if the number attempted is not the number accepted, this is the exception (number attempted should only be one at a time)
 		 **/
 		if($numSent !== count($recipients)){
 			//the $failedRecipients parameter passed in the send() method now contains an array of the Emails that failed
 			throw(new RuntimeException("unable to send email"));
 		}
-
-
-
+		//this is where my own swiftmailer code ends
 	} else {
 		throw(new InvalidArgumentException("Invalid HTTP method request"));
 	}
