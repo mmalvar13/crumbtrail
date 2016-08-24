@@ -48,13 +48,13 @@ try {
 			throw(new \InvalidArgumentException("Must provide your name", 405));
 		}
 		if(empty($requestObject->profileEmail) === true ){
-			throw(new \InvalidArgumentException("Must provide an email address", 405)); //what error code would i throw. what do i compare the inserted profile email too? do I have to traverse an array of getAllEmails???
+			throw(new \InvalidArgumentException("Must provide an email address", 405));
 		}
 		if(empty($requestObject->profilePhone)=== true){
 			throw(new \InvalidArgumentException("Must provide a phone number", 405));
 		}
 		if(empty($requestObject->profileType)=== true){
-			$requestObject->profileType = "o"; //is this correct? anyone going this route is going to be an owner automatically right????
+			$requestObject->profileType = "o"; //is this the correct default value for profileType? anyone signing up via this route
 		}
 		if(empty($requestObject->companyName)=== true){
 			throw(new \InvalidArgumentException("You must enter a company name", 405));
@@ -118,7 +118,7 @@ try {
 		$hash = hash_pbkdf2("sha512", $requestObject->profilePassword, $salt, 262144);
 
 		//create a new profile and insert it into the databases
-		$profile = new Profile(null, $requestObject->profileName, $requestObject->profileEmail, $requestObject->profilePhone, null, $profileActivationToken, $requestObject->profileType, $hash, $salt);
+		$profile = new Profile(null, $requestObject->profileName, $requestObject->profileEmail, $requestObject->profilePhone, null, $profileActivationToken, $requestObject->profileType = null, $hash, $salt);
 
 		$profile->insert($pdo);
 
@@ -130,16 +130,18 @@ try {
 		//update reply
 		$reply->message = "In the next 48 hours you will receive your approval notice from Crumbtrail. Check your email to activate your account";
 
-		//swiftmailer code here
+		/*----------------------------------swiftmailer code here-------------------------------------------------*/
+
 		/**
-		 * we're sending an email upon sign up to notify them that we have received their request for a CrumbTrail account, and they
-		 * should check their email in the next few days for their approval message.
-		 * To send a message with swiftmailer, you create a transport, use it to create the Mailer, and then y ou use the Mailer to send
-		 * the message
+		 * we're sending an email upon sign up to notify them that we have received their request for a CrumbTrail account, and
+		 * they should check their email in the next few days for their approval message.
+		 *
+		 * To send a message with swiftmailer, you create a transport, use it to create the Mailer, and then y ou use the
+		 * Mailer to send the message
 		 *
 		 * We are using the SMTP Transport Type. A transport is the component that actually does the sending.
-		 * SMTP (Simple Message Transfer Protocol). It is the most commonly used Transport because it will work on 99% of web servers,
-		 * according to the PIDOMA analysis.
+		 * SMTP (Simple Message Transfer Protocol). It is the most commonly used Transport because it will work on 99% of web
+		 * servers, according to the PIDOMA analysis.
 		 **/
 
 
