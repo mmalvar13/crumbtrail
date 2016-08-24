@@ -1,7 +1,7 @@
 <?php
 
 require_once (dirname(__DIR__)) . "autoloader.php";//where is this? same autoload.php as before or a new one?
-require_once (dirname(__DIR__) . "/lib/xsrf.php"; //when do we make this?
+require_once (dirname(__DIR__)) . "/lib/xsrf.php"; //when do we make this?
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php"); //do i put crumbtrail-mysql here?
 require_once (dirname(__DIR__)) . "lib/swift_required.php"; //idk, composer.json. this is just what the documentation had.
 
@@ -108,17 +108,22 @@ try {
 		$salt = bin2hex(random_bytes(16));
 		//do i create email activation here? see line 176
 
-		//create the hash
-		$hash = hash_pbkdf2("sha512", $requestObject->password, $requestObject->confirmPassword, $salt, 262144);
+		if($requestObject->profilePassword !== $requestObject->confirmProfilePassword) {
+			throw (new InvalidArgumentException("the passwords you provided do not match"));
+		}
+		$profileActivationToken = bin2hex(random_bytes(16));
+		$companyActivationToken = bin2hex(random_bytes(16));
 
+		//create the hash
+		$hash = hash_pbkdf2("sha512", $requestObject->profilePassword, $salt, 262144);
 
 		//create a new profile and insert it into the databases
-		$profile = new Profile(null, $requestObject->profileName, $requestObject->profileEmail, $requestObject->profilePhone, $profileAccessToken, $profileActivationToken, $requestObject->profileType, $profileHash, $profileSalt);
+		$profile = new Profile(null, $requestObject->profileName, $requestObject->profileEmail, $requestObject->profilePhone, null, $profileActivationToken, $requestObject->profileType, $hash, $salt);
 
 		$profile->insert($pdo);
 
 		//create a new company and insert it into the database
-		$company = new Company(null, $profile->getProfileId(), $requestObject->companyName, $requestObject->companyEmail, $requestObject->companyPhone, $requestObject->companyPermit, $requestObject->companyLicense, $requestObject->companyAttn, $requestObject->companyStreet1, $requestObject->companyStreet2, $requestObject->companyCity, $requestObject->companyState, $requestObject->companyZip, $requestObject->companyDescription , $requestObject->companyMenuText, $companyActivationToken, $companyApproved);
+		$company = new Company(null, $profile->getProfileId(), $requestObject->companyName, $requestObject->companyEmail, $requestObject->companyPhone, $requestObject->companyPermit, $requestObject->companyLicense, $requestObject->companyAttn, $requestObject->companyStreet1, $requestObject->companyStreet2, $requestObject->companyCity, $requestObject->companyState, $requestObject->companyZip, $requestObject->companyDescription , $requestObject->companyMenuText, $companyActivationToken, false);
 
 		$company->insert($pdo);
 
@@ -134,16 +139,12 @@ try {
 		 *
 		 * We are using the SMTP Transport Type. A transport is the component that actually does the sending.
 		 * SMTP (Simple Message Transfer Protocol). It is the most commonly used Transport because it will work on 99% of web servers,
-		 * according to the PEDOMA analysis.
+		 * according to the PIDOMA analysis.
 		 **/
 
-		//to use the SMTP transport, you need to know which SMTP server your code needs to connect to. this seems familiar from configuration. dont we use port 22?
 
 		//Create the Transport
-		$transport = Swift_SmtpTransport::newInstance('smtp.example.org', 25) //can add third parameter for SSL encryption. need?
-		//some servers require authentication. You can provide a username and password with setUsername() and setPassword() methods. but do we need this? this is not for the user, correct?
-			->setUsername('your username')
-			->setPassword('your password');
+		$transport = Swift_SmtpTransport::newInstance('smtp.example.org', 25); //can add third parameter for SSL encryption. need?
 
 		//Create the Mailer using your created Transport
 		$mailer = Swift_Mailer::newInstance($transport);
@@ -162,7 +163,7 @@ try {
 		$message->setSubject('Thanks for signing up with Crumbtrail');
 
 		//the body of the message-seen when the user opens the message
-		$message->setBody('Thanks for signing your company up with Crumbtrail. Our team will get to work on approving your account. You should receive an approval email in the next 48 hours with a link to confirm and activate your account. ','text/html')
+		$message->setBody('Thanks for signing your company up with Crumbtrail. Our team will get to work on approving your account. You should receive an approval email in the next 48 hours with a link to confirm and activate your account. ','text/html');
 
 			//add alternative parts with addPart() for those who can only read plaintext or dont wwant to view in html
 		$message->addPart('Thanks for signing your company up with Crumbtrail. Our team will get to work on approving your account. You should receive an approval email in the next 48 hours with a link to confirm and activate your account. ', 'text/plain');
