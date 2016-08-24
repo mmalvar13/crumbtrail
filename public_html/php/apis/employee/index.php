@@ -56,20 +56,19 @@ try {
 
 		//get specific employee or all employees and update reply
 		if(empty($id) === false) {
-			$employ = Employ::getEmployByEmployCompanyIdAndEmployProfileId($pdo, $id);
+			$employ = Employ::getEmployByEmployCompanyIdAndEmployProfileId($pdo, $employCompanyId, $employProfileId);
 			if($employ !== null) {
 				$reply->data = $employ;
 			}
 		} elseif((empty($id)) === false) {
-			$employ = Employ::getEmployByEmployProfileId($pdo, $id);
+			$employ = Employ::getEmployByEmployProfileId($pdo, $employProfileId);
 			if($employ !== null) {
 				{
 					$reply->data = $employ;
 				}
 			} elseif
-			((empty($id)) === false
-			) {
-				$employ = Employ::getEmployByEmployCompanyId($pdo, $id);
+			((empty($id)) === false) {
+				$employ = Employ::getEmployByEmployCompanyId($pdo, $employCompanyid);
 				if($employ !== null) {
 					{
 						$reply->data = $employ;
@@ -101,7 +100,7 @@ try {
 				//perform actual PUT or POST
 
 				if($method === "POST") {
-					$employ = Employ::getEmployByEmployCompanyIdAndEmployProfileId($pdo, $id);
+					$employ = Employ::getEmployByEmployCompanyIdAndEmployProfileId($pdo, $employCompanyId, $employProfileId);
 					if($employ === null) {
 						////create new relationship between profile and company id
 						$employ = new Employ($requestObject->employCompanyId, $requestObject->employProfileId);
@@ -120,7 +119,7 @@ try {
 		verifyXsrf();
 		//retrieve employ to be deleted
 		//would I want employ by company and profile id, in the case that a worker/co owner is part of many companies??
-		$employ = Employ::getEmployByEmployCompanyIdAndEmployProfileId($pdo, $id);
+		$employ = Employ::getEmployByEmployCompanyIdAndEmployProfileId($pdo, $employCompanyId, $employProfileId);
 		if($employ === null) {
 			throw(new RuntimeException("No employ Company Id and employ Profile Id combination exists.", 404));
 		}
