@@ -118,11 +118,9 @@ try {
 			}else{
 				//would I even need to make a new assignment, can I just use $userFileName??
 				$tempFileName = $userFileName;
-				$newFilExtension = $userFileExtension;
+				$newFileExtension = $userFileExtension;
 				$newFileType = $userFileType;
 			}
-		}
-
 
 			//image creation if file is .jpg/.jpeg or .png--------------------------------------------------------------------
 			if($newFileExtension === ".jpg" || $newFileExtension === ".jpeg"){
@@ -135,34 +133,30 @@ try {
 			//image scale to 500px width, leave height auto---------------------------------------------------------------------
 			$scaledImage = imagescale($sanitizedUserImage, 500);
 
+			//split new name so we can add custom name
+			$scaledExplode = explode(".", $scaledImage);
+			$scaledExtension = end($scaledExplode);
 
-//
-			$newImageName = round(microtime(true)) . '.' . $scaledImage;
+			//use microtime to give file new name
+			$newImageName = round(microtime(true)) . "." . $scaledExtension;
 
+			if($scaledExtension === ".jpg" || $scaledExtension === ".jpeg"){
+				$createdProperly = imagejpeg($sanitizedUserImage);
+			}elseif($scaledExtension === ".png"){
+				$createdProperly = imagepng($sanitizedUserImage);
+			}
 
-			$image = new Image(null, $requestObject->imageCompanyId, $newFileType, $scaledImage);
+			//put new image into the database
+			if($createdProperly === true) {
+				$image = new Image(null, $requestObject->imageCompanyId, $newFileType, $newImageName);
+				$image->insert($pdo);
+			}
 
-
-			move_uploaded_file($_FILES["file"]["tmp_name"], "../img/imageDirectory/" . $newfilename);
-
-
-			//1) move image to image directory (safe place to work with it) default
-			//2) sanitize image name/type ---------image_type_to_extension & sanitize string?? getimagesize
-//			  3) create image--------imagecreatefromjpeg/imagecreatefrompng
-			//4) scale image down to the size I want------imagescale should be in px
-			//5) rename image to something I want
-//			  6)imagefoo to save
-
-
-
-
-
-
-
-
+		}
 
 		}
 
 	}
-}
+} //for delete 1) get image by ID, 2) get image file path 3) delete image from server 4) delete image from database
+//look for delete file function PHP for files
 

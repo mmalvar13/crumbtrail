@@ -227,7 +227,7 @@ public static function getProfileByProfileId(\PDO $pdo, int $profileId){
 	 * gets profile by the profile email
 	 * @param \PDO $pdo PDO connection object
 	 * @param string $profileEmail used as the profile email to search for
-	 * @return \SplFixedArray SplFixedArray of profiles found
+	 * @return Profile|null Profile found or null if not found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 */
@@ -245,34 +245,34 @@ public static function getProfileByProfileId(\PDO $pdo, int $profileId){
 		}
 
 		//create query template
-		$query = "SELECT profileId, profileName, profileEmail, profilePhone, profileAccessToken, profileActivationToken, profileType, profileHash, profileSalt FROM profile WHERE profileEmail LIKE :profileEmail";
+		$query = "SELECT profileId, profileName, profileEmail, profilePhone, profileAccessToken, profileActivationToken, profileType, profileHash, profileSalt FROM profile WHERE profileEmail = :profileEmail";
 
 		//prepare template
 		$statement = $pdo->prepare($query);
 
-		//bind the profileId to the placeholder in the template
-		$profileEmail = "%$profileEmail%";
+		//bind the profileId to the placeholder in the template ***WHY JUST TO PROFILE ID?***
 		$parameters = ["profileEmail"=>$profileEmail];
 		//execute the SQL statement
 		$statement->execute($parameters);
 
-		//build an array of profiles
-		$profiles = new \SplFixedArray($statement->rowCount());
-		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		//now that we have selected the correct profile, we need to grab it from mySQL
+		try{
+			$profile = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 
-		while(($row = $statement->fetch()) !== false){
-			try{
+			$row = $statement->fetch();
+
+
+			if($row !== false){
+				//set $profile to a new object based on the Profile class with these values assigned into it (I think)
 				$profile = new Profile($row["profileId"], $row["profileName"], $row["profileEmail"], $row["profilePhone"], $row["profileAccessToken"], $row["profileActivationToken"], $row["profileType"], $row["profileHash"], $row["profileSalt"]);
-
-				//What exactly is happening here ****
-				$profiles[$profiles->key()] = $profile;
-				$profiles->next();
-			}catch(\Exception $exception){
-				//if the row couldn't be converted, rethrow it (the error?)
-				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
+			//catch statement
+		}catch(\Exception $exception){
+			// if the row couldn't be converted, re-throw it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
-		return($profiles);
+		return($profile);
 	}
 
 
@@ -327,6 +327,60 @@ public static function getProfileByProfileId(\PDO $pdo, int $profileId){
 			}
 		}
 		return($profiles);
+	}
+
+
+
+	/**
+	 * gets profile by the profile activation token
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $profileActivationToken used as the profile activation token to search for
+	 * @return Profile|null Profile found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 */
+	public static function getProfileByProfileActivationToken(\PDO $pdo, string $profileActivationToken){
+		//sanitize the ID before searching for it
+		$profileActivationToken = trim($profileActivationToken);
+		$profileActivationToken = filter_var($profileActivationToken, FILTER_SANITIZE_STRING);
+
+		if(empty($profileActivationToken) === true){
+			throw(new \PDOException("The profile activation token is empty"));
+		}
+
+		if(strlen($profileActivationToken)>32){
+			throw(new \PDOException("The profile activation token is too long"));
+		}
+
+		//create query template
+		$query = "SELECT profileId, profileName, profileEmail, profilePhone, profileAccessToken, profileActivationToken, profileType, profileHash, profileSalt FROM profile WHERE profileActivationToken = :profileActivationToken";
+
+		//prepare template
+		$statement = $pdo->prepare($query);
+
+		//bind the profileId to the placeholder in the template ***WHY JUST TO PROFILE ID?***
+		$parameters = ["profileActivationToken"=>$profileActivationToken];
+		//execute the SQL statement
+		$statement->execute($parameters);
+
+		//now that we have selected the correct profile, we need to grab it from mySQL
+		try{
+			$profile = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+
+			$row = $statement->fetch();
+
+
+			if($row !== false){
+				//set $profile to a new object based on the Profile class with these values assigned into it (I think)
+				$profile = new Profile($row["profileId"], $row["profileName"], $row["profileEmail"], $row["profilePhone"], $row["profileAccessToken"], $row["profileActivationToken"], $row["profileType"], $row["profileHash"], $row["profileSalt"]);
+			}
+			//catch statement
+		}catch(\Exception $exception){
+			// if the row couldn't be converted, re-throw it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($profile);
 	}
 
 
