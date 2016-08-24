@@ -77,10 +77,6 @@ try {
 			$requestObject = json_decode($requestContent);
 
 
-			//Do i even need to create these???
-			$profile = Profile::getProfileByProfileId($pdo, $id);
-			$company = Company::getCompanyByCompanyId($pdo, $id);
-
 			if($requestObject->profileType !== 'a' || 'o') {
 				throw(new \InvalidArgumentException("profile type must be admin('a') or owner('o') in order to make changes to a truck"));
 			}

@@ -113,24 +113,27 @@ try {
 			$userFileExtension = strrchr($_FILES["userImage"]["name"], ".");
 
 			//check to ensure the file has correct extension and MIME type
-			if(!in_array($userFileExtension, $validExtensions) || !(in_array($userFileType, $validTypes))){
+			if(!in_array($userFileExtension, $validExtensions) || (!in_array($userFileType, $validTypes))){
 				throw(new \InvalidArgumentException("That isn't a valid image"));
 			}
 
 
-			//image creation--------------------------------------------------------------------
+			//image creation if file is .jpg/.jpeg or .png--------------------------------------------------------------------
 			if($userFileExtension === ".jpg" || $userFileExtension === ".jpeg"){
 				$sanitizedUserImage = imagecreatefromjpeg($requestObject->image);
 			}elseif($userFileExtension === ".png"){
 				$sanitizedUserImage = imagecreatefrompng($requestObject->image);
 			}
 
-			//image scale---------------------------------------------------------------------
+			//image scale to 500px width, leave height auto---------------------------------------------------------------------
 			$scaledImage = imagescale($sanitizedUserImage, 500);
 
 
 //
 			$newImageName = round(microtime(true)) . '.' . $scaledImage;
+
+
+			$image = new Image(null, $requestObject->imageCompanyId, $requestObject->imageFileType, $requestObject->$newImageName);
 
 
 			move_uploaded_file($_FILES["file"]["tmp_name"], "../img/imageDirectory/" . $newfilename);
