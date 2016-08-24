@@ -101,29 +101,38 @@ try {
 		if($method === "POST"){
 
 			//image sanitization----------------------------------------------------------------
-			$validExtensions = array(".jpg", ".jpeg",".png");
 
-			//strrchr — Find the last occurrence of a character in a string. returns the portion of haystack which starts at the last occurrence of needle and goes until the end of haystack.
-			//$_FILES['file']['name']-----The original name of the file on the client machine.
+			//create arrays for valid image extensions and valid image MIME types
+			$validExtensions = array(".jpg", ".jpeg",".png");
+			$validTypes = array("image/jpeg", "image/jpg", "image/png");
+
+
+			//assing variables to the user image name, MIME type, and image extension
+			$userFileName = $_FILES["userImage"]["name"];
+			$userFileType = $_FILES["userImage"]["type"];
 			$userFileExtension = strrchr($_FILES["userImage"]["name"], ".");
-			if(!in_array($userFileExtension, $validExtensions)){
+
+			//check to ensure the file has correct extension and MIME type
+			if(!in_array($userFileExtension, $validExtensions) || !(in_array($userFileType, $validTypes))){
 				throw(new \InvalidArgumentException("That isn't a valid image"));
 			}
 
 
 			//image creation--------------------------------------------------------------------
 			if($userFileExtension === ".jpg" || $userFileExtension === ".jpeg"){
-				$userImage = imagecreatefromjpeg($requestObject->image);
+				$sanitizedUserImage = imagecreatefromjpeg($requestObject->image);
 			}elseif($userFileExtension === ".png"){
-				$userImage = imagecreatefrompng($requestObject->image);
+				$sanitizedUserImage = imagecreatefrompng($requestObject->image);
 			}
 
 			//image scale---------------------------------------------------------------------
-			$scaledImage = imagescale($userImage, 500);
+			$scaledImage = imagescale($sanitizedUserImage, 500);
 
 
 //
-			$newfilename = round(microtime(true)) . '.' . $scaledImage;
+			$newImageName = round(microtime(true)) . '.' . $scaledImage;
+
+
 			move_uploaded_file($_FILES["file"]["tmp_name"], "../img/imageDirectory/" . $newfilename);
 
 
