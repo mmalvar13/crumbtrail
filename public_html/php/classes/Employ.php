@@ -5,6 +5,8 @@ require_once("autoload.php");
 
 /**
  * Welcome to the Employ class! Enjoy your stay!
+ *
+ * @author Monica Alvarez <mmalvar13@gmail.com>
  **/
 class Employ implements \JsonSerializable {
 	/**
