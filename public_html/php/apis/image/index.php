@@ -40,6 +40,7 @@ try {
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
 	$imageCompanyId = filter_input(INPUT_GET, "imageCompanyId", FILTER_VALIDATE_INT);
 	$imageFileName = filter_input(INPUT_GET, "imageFileName", FILTER_VALIDATE_INT);
+	$imageFileType = filter_input(INPUT_GET, "imageFileType", FILTER_VALIDATE_INT);
 
 
 	//make sure the id is valid for methods that require it, Remember that $id is the primary key!
@@ -89,77 +90,60 @@ try {
 				throw(new \InvalidArgumentException("The foreign key does not exist", 405));
 			}
 
-			//make sure the image name is available (required field)
 
-//			taking out because we will verify image name and file type from files superglobal array
+			//image sanitization----------------------------------------------------------------
 
-//			if(empty($requestObject->imageName) === true) {
-//				throw(new \InvalidArgumentException("The image name does not exist", 405));
-//			}
-
-			//make sure the image file type is available (required field)
-//			if(empty($requestObject->imageFileType) === true) {
-//				throw(new \InvalidArgumentException("The image file type does not exist", 405));
-//			}
+			//create arrays for valid image extensions and valid image MIME types
+			$validExtensions = array(".jpg", ".jpeg", ".png");
+			$validTypes = array("image/jpeg", "image/jpg", "image/png");
 
 
-			if($method === "POST") {
+			//assigning variables to the user image name, MIME type, and image extension
+			$tempUserFileName = $_FILES["userImage"]["tmp_name"]; //tmp_name is the actual name on the server that is uploaded, has nothing to do with user file name
+			//file that lives in tmp_name will auto delete when this is all over
+			$userFileType = $_FILES["userImage"]["type"];
+			$userFileExtension = strtolower(strrchr($_FILES["userImage"]["name"], "."));
 
-				//image sanitization----------------------------------------------------------------
-
-				//create arrays for valid image extensions and valid image MIME types
-				$validExtensions = array(".jpg", ".jpeg", ".png");
-				$validTypes = array("image/jpeg", "image/jpg", "image/png");
-
-
-				//assigning variables to the user image name, MIME type, and image extension
-				$tempUserFileName = $_FILES["userImage"]["tmp_name"]; //tmp_name is the actual name on the server that is uploaded, has nothing to do with user file name
-				//file that lives in tmp_name will auto delete when this is all over
-				$userFileType = $_FILES["userImage"]["type"];
-				$userFileExtension = strtolower(strrchr($_FILES["userImage"]["name"], "."));
-
-				//check to ensure the file has correct extension and MIME type
-				if(!in_array($userFileExtension, $validExtensions) || (!in_array($userFileType, $validTypes))) {
-					throw(new \InvalidArgumentException("That isn't a valid image"));
-				}
-
-				//image creation if file is .jpg/.jpeg or .png--------------------------------------------------------------------
-				if($userFileExtension === ".jpg" || $userFileExtension === ".jpeg") {
-					$sanitizedUserImage = imagecreatefromjpeg($tempUserFileName);
-				} elseif($userFileExtension === ".png") {
-					$sanitizedUserImage = imagecreatefrompng($tempUserFileName);
-				} else {
-					throw(new InvalidArgumentException("This image is not a valid image!"));)
-				}
-
-				if($sanitizedUserImage === false) {
-					throw(new InvalidArgumentException("This image is not a valid image!"));
-				}
-				//imageCreateFromFoo returns an image identifier what is that??
-
-				//image scale to 500px width, leave height auto---------------------------------------------------------------------
-				$sanitizedUserImage = imagescale($sanitizedUserImage, 500);
-
-//				//use microtime to give file new name
-//				$newImageName = round(microtime(true)) . $userFileExtension;
-
-				$newImageFileName = "/var/www/html/public_html/crumbtrail/" . hash("ripemd160", microtime(true) + random_int(0, 4200000000)) . $userFileExtension;
-
-				if($userFileExtension === ".jpg" || $userFileExtension === ".jpeg") {
-					//I think we may needs to add a path to the second argument of imagejpeg()
-					$createdProperly = imagejpeg($sanitizedUserImage, $newImageFileName);
-				} elseif($userFileExtension === ".png") {
-					//I think we may need to add a path to the second argument of imagepng()
-					$createdProperly = imagepng($sanitizedUserImage, $newImageFileName);
-				}
-
-				//put new image into the database
-				if($createdProperly === true) {
-					$image = new Image(null, $requestObject->imageCompanyId, $userFileType, $newImageFileName);
-					$image->insert($pdo);
-				}
-
+			//check to ensure the file has correct extension and MIME type
+			if(!in_array($userFileExtension, $validExtensions) || (!in_array($userFileType, $validTypes))) {
+				throw(new \InvalidArgumentException("That isn't a valid image"));
 			}
+
+			//image creation if file is .jpg/.jpeg or .png--------------------------------------------------------------------
+			if($userFileExtension === ".jpg" || $userFileExtension === ".jpeg") {
+				$sanitizedUserImage = imagecreatefromjpeg($tempUserFileName);
+			} elseif($userFileExtension === ".png") {
+				$sanitizedUserImage = imagecreatefrompng($tempUserFileName);
+			} else {
+				throw(new InvalidArgumentException("This image is not a valid image!"));
+			}
+
+			if($sanitizedUserImage === false) {
+				throw(new InvalidArgumentException("This image is not a valid image!"));
+			}
+			//imageCreateFromFoo returns an image identifier what is that??
+
+			//image scale to 500px width, leave height auto---------------------------------------------------------------------
+			$sanitizedUserImage = imagescale($sanitizedUserImage, 500);
+
+
+			$newImageFileName = "/var/www/html/public_html/crumbtrail/" . hash("ripemd160", microtime(true) + random_int(0, 4200000000)) . $userFileExtension;
+
+			if($userFileExtension === ".jpg" || $userFileExtension === ".jpeg") {
+				//I think we may needs to add a path to the second argument of imagejpeg()
+				$createdProperly = imagejpeg($sanitizedUserImage, $newImageFileName);
+			} elseif($userFileExtension === ".png") {
+				//I think we may need to add a path to the second argument of imagepng()
+				$createdProperly = imagepng($sanitizedUserImage, $newImageFileName);
+			}
+
+			//put new image into the database
+			if($createdProperly === true) {
+				$image = new Image(null, $requestObject->imageCompanyId, $userFileType, $newImageFileName);
+				$image->insert($pdo);
+			}
+			$reply->message = "Image created A-OK";
+
 
 		} elseif($method === "DELETE") {
 			verifyXsrf();
@@ -173,7 +157,8 @@ try {
 			unlink($image->getImageFileName()); //this will delete from the server
 
 			$image->delete($pdo);
-			$reply->message("Image deleted A-OK");
+
+			$reply->message = "Image deleted A-OK";
 			//how do we delete from both the server and database?
 			//is the server temporary memory and the database/SQL something different
 			//is server where we quarantine images before we sanitize them?
