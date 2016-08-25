@@ -1,21 +1,24 @@
 <?php
 /**
  * API for Company Activation.
- * The response to a confirmation email to a new company owner, i.e. the companyAccountCreator.
- *
- * QUESTIONS:
- * Does this API send the confirmation email message?
- * Or does this API receive the information that a new user has clicked the confirmation email?
- * Or both?
- * How and where is the activation token generated?
- * How and where is the activation token checked (verified)?
- *
- *
  * @author Kevin Lee Kirk
+
+ * The response to a activation email to a new company owner (the companyAccountCreator).
+ * So this API needs to receive information from the activation email.
+ *
+ * The sign-up API sends the new company owner an activation email.
+ * The new company owner clicks a link in the activation email.
+ * The click calls this company activation API.
+ * This API sets the company activation token to null.
+ *
+ * How much of this does Angular do?
+ * In what form does the information from Angular arrive?
+ *
  **/
 require_once "autoloader.php";
 require_once "/lib/xsrf.php";
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
+
 // TODO A require_once for  swiftmailer/mailgun?
 
 use Edu\Cnm\Crumbtrail\{Company};
@@ -30,6 +33,10 @@ $reply = new stdClass();
 $reply->status = 200;
 $reply->data = null;
 
+
+// TODO Insert code for receiving the information that the activation email link has been clicked.
+
+
 try{
 	// Get the mySQL connection.
 	$pdo = connectToEncyptedMySQL("/etc/apache2/capstone-mysql/companyActivation.ini"); // TODO Check path.
@@ -40,8 +47,8 @@ try{
 	// Sanitize the input.
 	$companyAccountCreatorEmailActivation = filter_input(INPUT_GET, "companyAccountCreatorEmailActivation", FILTER_SANITIZE_STRING);
 
-	// what is this supposed to do?? it is placed here in the breadbasket example but is within an if block under the GET methods block in the paper example
 	$company = Company::getCompanyByCompanyAccountCreatorId($pdo, $companyAccountCreatorEmailActivation);
+
 
 	//handle GET request - if id is present, that profile is returned, otherwise all profiles are returned??
 	if($method === "GET") {
@@ -56,7 +63,8 @@ try{
 			$companyAccountCreatorEmailActivation->setCompanyAccountCreatorId(null);
 			$companyAccountCreatorEmailActivation->update($pdo);
 
-			// TODO Swiftmailer/Mailgun ???
+			// TODO After receiving the click from the activation email,
+			// set the companyActivationToken to null.
 
 		}
 	}
