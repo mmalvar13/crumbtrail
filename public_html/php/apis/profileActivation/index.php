@@ -5,7 +5,7 @@ require_once "/lib/xsrf.php";
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 //do i add something here for swiftmailer?
 
-use Edu\Cnm\Crumbtrail\{Company}; //por que greasy grissss????
+use Edu\Cnm\Crumbtrail\{Company};
 
 /**
  * api for Profile Activation. Getting a confirmation email from a new user
@@ -31,7 +31,7 @@ try{
 	$pdo = connectToEncyptedMySQL("/etc/apache2/capstone-mysql/profileActivation.ini"); //??
 
 	//determine which HTTP method was used. first one is the method you use, second is the fall back if the first is not available
-	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"]; //do i use this?
+	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
 	//sanitize input
 	$companyAccountCreatorEmailActivation = filter_input(INPUT_GET, "companyAccountCreatorEmailActivation", FILTER_SANITIZE_STRING);

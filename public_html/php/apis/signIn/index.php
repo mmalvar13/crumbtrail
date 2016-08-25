@@ -24,7 +24,7 @@ $reply->data = null;
 
 try {
 	//grab the mySQL connection
-	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/signin.ini"); // what do i write here?
+	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/signin.ini");
 
 	//determine which HTTP method was used
 	$method = array_key_exists("HTTP_x_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
@@ -32,8 +32,7 @@ try {
 	//sanitize input
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);//do not need
 
-	//handle POST request - if id is present, that account is returned, otherwise all accounts are returned?? nooo.
-
+	//handle POST request
 	if($method === "POST") {
 		//set XSRF cookie
 		setXsrfCookie();
@@ -42,6 +41,7 @@ try {
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
 
+		/*---------------checking and sanitizing activation token, profileEmail, profilePassword------------------------------*/
 		//check that profile activation token is null. if not, throw an exception.
 		if($requestObject->profileActivationToken !== null) {
 			throw(new InvalidArgumentException("Your account has not been activated or does not exist"));
@@ -61,6 +61,7 @@ try {
 			$password = filter_input($requestObject->profilePassword, FILTER_SANITIZE_STRING);
 		}
 
+		//retrieve the data for profileEmail
 		$profile = Profile::getProfileByProfileEmail($pdo, $profileEmail);
 
 		//use profile salt to hash password
@@ -77,19 +78,13 @@ try {
 			$reply->message = "Successfully logged in";
 		} else {
 			throw(new InvalidArgumentException("email or password is invalid", 401));
-		}
-	else{
+		} else{ //todo why is this red??
 			throw(new InvalidArgumentException("email or password is invalid", 401));
 		}
+	} else {
+		throw(new InvalidArgumentException("Invalid HTTP method request"));
 	}
-
-
-	//create the user's profile session somehow here
-	//throw an exception if they have an activation token. BRO, do you even profile?!
-	//get those secret potatoes and compare it with the user input --if there isn't a match then BRO DO YOU EVEN PASSWORD???
-	//something happens with a session somewhere in here.
-
-//catch(Exception $exception){
+	//catch(Exception $exception){
 }catch(Exception $exception){
 	$reply->status = $exception->getCode();
 	$reply->message = $exception->getMessage();
