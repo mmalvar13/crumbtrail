@@ -14,9 +14,9 @@
  * then set the activation token = null
  *
  * Does this API need to do this????:
- * Call the profileActivation API, to get the profileActivationToken.
+ * Call the profileActivation API, to getProfileByProfileActivationToken.
  * When the new company owner clicks the link in the activation email,
- * tell the profileActivation API that the new account has been activated,
+ * this API then tells the profileActivation API that the new account has been activated,
  * so that not only is the companyActivationToken = null,
  * but also the profileActivationToken = null.
  **/
@@ -96,7 +96,7 @@ try {
 
 			// TODO After receiving the click from the activation email,
 			// set the companyActivationToken to null.
-
+			// And tell the profileActivation API to set the profileActivationToken to null?
 
 		} else {
 			$companyAccountCreatorEmailActivation->setCompanyActivationToken(null);    // ???
