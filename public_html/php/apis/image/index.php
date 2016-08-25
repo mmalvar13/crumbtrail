@@ -154,7 +154,7 @@ try {
 
 		}elseif($method === "DELETE"){
 			verifyXsrf();
-			//get image to be delted by the ID
+			//get image to be deleted by the ID
 			$image = Image::getImageByImageId($pdo, $id);
 
 			//check if image is empty
@@ -162,10 +162,14 @@ try {
 				throw(new RuntimeException("The image does not exist!"));
 			}
 
-			if(($requestObject->fileName) === ($image->getImageFileName())){
+			if($requestObject->fileName === $image->getImageFileName()){
 
 				$image->delete($pdo);
 				$reply->message("Image deleted A-OK");
+				//how do we delete from both the server and database?
+				//is the server temporary memory and the database/SQL something different
+				//is server where we quarantine images before we sanitize them?
+
 
 			}
 
