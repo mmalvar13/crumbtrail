@@ -1,17 +1,18 @@
 <?php
 
-require_once (dirname(__DIR__)) . "autoloader.php";//where is this? same autoload.php as before or a new one?
-require_once (dirname(__DIR__)) . "/lib/xsrf.php"; //when do we make this?
-require_once("/etc/apache2/capstone-mysql/encrypted-config.php"); //do i put crumbtrail-mysql here?
-require_once (dirname(__DIR__)) . "lib/swift_required.php"; //idk, composer.json. this is just what the documentation had.
+require_once (dirname(__DIR__, 2)) . "/classes/autoload.php";//need to add these
+require_once (dirname(__DIR__, 2)) . "/lib/xsrf.php";
+require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
+require_once (dirname(__DIR__,2)) . "lib/swift_required.php"; //idk, composer.json. this is just what the documentation had.
 
-use Edu\Cnm\Crumbtrail\{Company, Profile}; //is this correct? i dont have to add mmalvar13 right? do i add company and profile like this?
+use Edu\Cnm\Crumbtrail\{Company, Profile};
 
 /**
  * api for signUp
  *
  * @author Monica Alvarez <mmalvar13@gmail.com>
  **/
+
 
 //verify the session, start if not active
 if(session_status() !== PHP_SESSION_ACTIVE){
@@ -25,7 +26,7 @@ $reply->data = null;
 
 try {
 	//grab the mySQL connection
-	$pdo = connectionToEncryptedMySQL("/etc/apache2/capstone-mysql/crumbtrail.ini"); //check notes for this
+	$pdo = connectionToEncryptedMySQL("/etc/apache2/capstone-mysql/crumbtrail.ini");
 
 	//determine which HTTP method was used
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
@@ -33,14 +34,14 @@ try {
 	//sanitize input
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
 
-	//skipping "make sure the id is valid for the methods that require it"
 
 	if($method === "POST") {
 		//set XSRF cookie
 		setXsrfCookie();
 
+
 		verifyXsrf();
-		$requestContent = file_get_contents("php://input"); //what is the directory reference here??
+		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
 
 		//make sure all required fields are entered
@@ -54,7 +55,7 @@ try {
 			throw(new \InvalidArgumentException("Must provide a phone number", 405));
 		}
 		if(empty($requestObject->profileType)=== true){
-			$requestObject->profileType = "o"; //is this the correct default value for profileType? anyone signing up via this route
+			$requestObject->profileType = "o"; //TODO is this the correct default value for profileType? anyone signing up via this route
 		}
 		if(empty($requestObject->companyName)=== true){
 			throw(new \InvalidArgumentException("You must enter a company name", 405));
@@ -103,11 +104,12 @@ try {
 			throw(new \InvalidArgumentException("this email already has an account",422));
 		}
 
-		//hash and salt it here. before hashing and salting, angular sends a password and confirmed password. throw an exception if they are not the same.
+
 		//create a new salt and email activation
 		$salt = bin2hex(random_bytes(16));
-		//do i create email activation here? see line 176
+		//do i create email activation here? see line 179
 
+		/*before hashing  and salting, angular sends a password and confirmed password. Throw an exception if they are not the same*/
 		if($requestObject->profilePassword !== $requestObject->confirmProfilePassword) {
 			throw (new InvalidArgumentException("the passwords you provided do not match"));
 		}
@@ -118,7 +120,7 @@ try {
 		$hash = hash_pbkdf2("sha512", $requestObject->profilePassword, $salt, 262144);
 
 		//create a new profile and insert it into the databases
-		$profile = new Profile(null, $requestObject->profileName, $requestObject->profileEmail, $requestObject->profilePhone, null, $profileActivationToken, $requestObject->profileType = null, $hash, $salt);
+		$profile = new Profile(null, $requestObject->profileName, $requestObject->profileEmail, $requestObject->profilePhone, $profileAccessToken = null, $profileActivationToken, $requestObject->profileType = null, $hash, $salt);
 
 		$profile->insert($pdo);
 
@@ -128,7 +130,7 @@ try {
 		$company->insert($pdo);
 
 		//update reply
-		$reply->message = "In the next 48 hours you will receive your approval notice from Crumbtrail. Check your email to activate your account";
+		$reply->message = "You have been sent an email to confirm that you have signed up with CrumbTrail. This is NOT your approval email. Keep a look out for a second email over the next 48 hours. If your business has been approved, we will provide you with a link to activate your account";
 
 		/*----------------------------------swiftmailer code here-------------------------------------------------*/
 
@@ -173,7 +175,7 @@ try {
 
 
 		//building the activation link that can travel to another server and still work. this is the link that will be clicked on to confirm. maybe this is not actually h ere, but in companyActivation/ProfileActivation/EmployeeActivation.
-		//this is from breadbasket so it might be old or something, idk!
+		//this is from breadbasket. must be changed to reflect crumbtrail stuff.
 		$lastSlash = strrpos($_SERVER["SCRIPT_NAME"], "/");
 		$basePath = substr($_SERVER["SCRIPT_NAME"], 0, $lastSlash + 1);
 		$urlglue = $basePath . "email-confirmation?emailActivation=" . $volEmailActivation;
@@ -198,7 +200,7 @@ EOF;
 			//the $failedRecipients parameter passed in the send() method now contains an array of the Emails that failed
 			throw(new RuntimeException("unable to send email"));
 		}
-		//this is where my own swiftmailer code ends
+		/*----------------------------------SwiftMailer Code Ends Here------------------------------------------*/
 	} else {
 		throw(new InvalidArgumentException("Invalid HTTP method request"));
 	}
