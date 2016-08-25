@@ -6,6 +6,7 @@ require_once("autoload.php");
 /**
  * Welcome to the Event class! You are about to have a most splendid time.
  *
+ * @author Monica Alvarez <mmalvar13@gmail.com>
  **/
 class Event implements \JsonSerializable { //implement JsonSerializable??
 	use ValidateDate;

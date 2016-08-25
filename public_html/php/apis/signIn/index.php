@@ -2,7 +2,7 @@
 
 require_once "autoloader.php";
 require_once "/lib/xsrf.php";
-require_once("/etc/apache2/capstone-mysql/encrypted-config.php"); //dirnamedirs
+require_once("/etc/apache2/capstone-mysql/encrypted-config.php"); //need to add files for this stuff
 
 use Edu\Cnm\Crumbtrail\{Profile};
 
