@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
 <html lang="en">
 
 Summary of the structure of the frontend (first draft):
@@ -65,4 +65,110 @@ templates  (to be injected by Angular)
 
 
 
+<!--</html>-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+	<!-- First draft of HTML code for the "company list" view/page. -->
+
+	<!-- Much of this is "pseudo-code". -->
+
+	<head>
+		<meta charset="utf-8">
+
+		<!--  Compatibility with IE  -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+		<!--  Makes the viewport width = device width. -->
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+		<!--  Dependencies  -->
+		<!-- Bootstrap: Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+
+		<!-- Bootstrap: Optional theme -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous" />
+
+		<!--  Optional: Load Font Awesome here.  -->
+		<link type="text/css" href="maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" />
+
+		<!--  Support for IE8.   -->
+		<script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+		<script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+		<!-- Latest compiled and minified Bootstrap JavaScript, all compiled plugins included -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+		<!--  Add your extra custom CSS here, LAST, after all other CSS dependencies.  -->
+		<link rel="stylesheet" href="css/style.css" type="text/css">
+
+		<title>Crumbtrail</title>
+	</head>
+
+
+	<body>
+
+		<!-- The Bootstrap navbar -->
+		<!-- This navbar has our logo, a search field, and a hamburger nav -->
+		<!-- An Angular controller will inject the correct nav menu items, depending on the view you are in. -->
+
+		<nav class="navbar navbar-default navbar-fixed-top">
+			<div class="container-fluid">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">Crumb Trail</a>
+					<!-- or our logo ? -->
+				</div>
+
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+								<li><a href="#">Map</a></li>
+								<li><a href="#">Company Sign In</a></li>
+								<li><a href="#">New Company Sign Up</a></li>
+					</ul>
+					<form class="navbar-form navbar-right">
+					</form>
+							</ul>
+				</div>
+			</div>
+		</nav>
+
+
+
+
+
+
+		<!-- The list of all truck companies -->
+		<!--  <html ng-app="CompanyList">  -->
+		<script src="angular/company-list-app.js"></script>
+		<script src="angular/services/company-list-service.js"></script>
+		<script src="angular/controllers/company-list-controller.js"></script>
+
+		<!-- The list itself, showing all truck companies (sorted alphabetically?) -->
+		<!-- TODO How to add mySQL data to the {{ }} ??? -->
+		<!-- TODO Use a sub-list, instead of <td> ??? -->
+		<ul class="foo bar" ng-controller="CompanyListController">
+			<li ng-repeat= "item in list">
+				<td class="photo"> {{ item.image belonging to that company }}</td>
+				<td class="name"> {{ item.companyName }}</td>
+				<td class="description">{{ item.companyDescription }}</td>
+				<!-- Show only the first sentence of the "companyDescription" attribute here ??? -->
+			</li>
+		</ul>
+		<!-- JavaScript, so a click on a company in the list sends the user to that company's profile page. -->
+
+	</body>
 </html>
+
+
