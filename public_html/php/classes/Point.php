@@ -5,7 +5,9 @@ require_once("autoload.php");
 /**
  * Class Point
  * @package Edu\Cnm\Crumbtrail
- * welcome to the point class! this is for things! emjoy your stay!
+ * welcome to the point class! this is for things! enjoy your stay!
+ *
+ * @author Monica Alvarez <mmalvar13@gmail.com>
  **/
 
 class Point implements \JsonSerializable {
