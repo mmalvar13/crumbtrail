@@ -166,9 +166,27 @@ try {
 
 			$image->delete($pdo);
 			$reply->message("Image deleted A-OK");
+
+		} else {
+			throw (new InvalidArgumentException("Invalid HTTP method request"));
 		}
 
 	}
-} //for delete 1) get image by ID, 2) get image file path 3) delete image from server 4) delete image from database
+}catch(Exception $exception) {
+	$reply->status = $exception->getCode();
+	$reply->message = $exception->getMessage();
+} catch(TypeError $typeError) {
+	$reply->status = $typeError->getCode();
+	$reply->message = $typeError->getMessage();
+}
+
+header("Content-type: application/json");
+if($reply->data === null) {
+	unset($reply->data);
+}
+
+// encode and return reply to front end caller
+echo json_encode($reply);
+//for delete 1) get image by ID, 2) get image file path 3) delete image from server 4) delete image from database
 //look for delete file function PHP for files
 
