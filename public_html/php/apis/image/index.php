@@ -162,10 +162,13 @@ try {
 				throw(new RuntimeException("The image does not exist!"));
 			}
 
-			$image->getImageFileName(); //wtf do i need this for??
+			if(($requestObject->fileName) === ($image->getImageFileName())){
 
-			$image->delete($pdo);
-			$reply->message("Image deleted A-OK");
+				$image->delete($pdo);
+				$reply->message("Image deleted A-OK");
+
+			}
+
 
 		} else {
 			throw (new InvalidArgumentException("Invalid HTTP method request"));
