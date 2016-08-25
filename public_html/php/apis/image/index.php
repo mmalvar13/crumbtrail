@@ -31,7 +31,7 @@ $reply->status = 200;
 try {
 	//grab mySQL connection
 
-	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/tweet.ini");
+	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/crumbtrail.ini");
 
 	//determine which HTTP method was used, what does the ? mean??
 	$method = array_key_exists("HTTP_X_HTTP-METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
@@ -43,7 +43,7 @@ try {
 
 
 	//make sure the id is valid for methods that require it, Remember that $id is the primary key!
-	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
+	if(($method === "DELETE") && (empty($id) === true || $id < 0)) {
 		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
 	}
 
@@ -76,12 +76,13 @@ try {
 		}
 
 		//this is a check to make sure only a profile type of ADMIN or OWNER can make changes
+		//could also check for the reverse and throw an exception in that case
 	} elseif((empty($_SESSION["profile"]) === false) && (($_SESSION["profile"]->getProfileId()) === $id) && (($_SESSION["profile"]->getProfileType()) === "a") || (($_SESSION["profile"]->getProfileType())) === "o") {
 
 		if($method === "POST") {
 			verifyXsrf();
 			$requestContent = file_get_contents("php://input");
-			$requestObject = json_decode($requestContent);
+			$requestObject = json_decode($requestContent); //request object will only contain the metadata
 
 			//make sure the image foreign key is available (required field)
 			if(empty($requestObject->imageCompanyId) === true) {
@@ -89,14 +90,18 @@ try {
 			}
 
 			//make sure the image name is available (required field)
-			if(empty($requestObject->imageName) === true) {
-				throw(new \InvalidArgumentException("The image name does not exist", 405));
-			}
+
+//			taking out because we will verify image name and file type from files superglobal array
+
+//			if(empty($requestObject->imageName) === true) {
+//				throw(new \InvalidArgumentException("The image name does not exist", 405));
+//			}
 
 			//make sure the image file type is available (required field)
-			if(empty($requestObject->imageFileType) === true) {
-				throw(new \InvalidArgumentException("The image file type does not exist", 405));
-			}
+//			if(empty($requestObject->imageFileType) === true) {
+//				throw(new \InvalidArgumentException("The image file type does not exist", 405));
+//			}
+
 
 			if($method === "POST") {
 
@@ -108,70 +113,70 @@ try {
 
 
 				//assigning variables to the user image name, MIME type, and image extension
-				$tempUserFileName = $_FILES["userImage"]["name"];
+				$tempUserFileName = $_FILES["userImage"]["tmp_name"]; //tmp_name is the actual name on the server that is uploaded, has nothing to do with user file name
+				//file that lives in tmp_name will auto delete when this is all over
 				$userFileType = $_FILES["userImage"]["type"];
-				$userFileExtension = strrchr($_FILES["userImage"]["name"], ".");
+				$userFileExtension = strtolower(strrchr($_FILES["userImage"]["name"], "."));
 
 				//check to ensure the file has correct extension and MIME type
 				if(!in_array($userFileExtension, $validExtensions) || (!in_array($userFileType, $validTypes))) {
 					throw(new \InvalidArgumentException("That isn't a valid image"));
-				} else {
-					//would I even need to make a new assignment, can I just use $userFileName??
-
-					$newFileExtension = $userFileExtension;
-					$newFileType = $userFileType;
 				}
 
 				//image creation if file is .jpg/.jpeg or .png--------------------------------------------------------------------
-				if($newFileExtension === ".jpg" || $newFileExtension === ".jpeg") {
+				if($userFileExtension === ".jpg" || $userFileExtension === ".jpeg") {
 					$sanitizedUserImage = imagecreatefromjpeg($tempUserFileName);
-				} elseif($newFileExtension === ".png") {
+				} elseif($userFileExtension === ".png") {
 					$sanitizedUserImage = imagecreatefrompng($tempUserFileName);
+				} else {
+					throw(new InvalidArgumentException("This image is not a valid image!"));)
 				}
-				//WTF does imageCreateFromFoo actually output?? returns an image identifier what is that??
+
+				if($sanitizedUserImage === false) {
+					throw(new InvalidArgumentException("This image is not a valid image!"));
+				}
+				//imageCreateFromFoo returns an image identifier what is that??
 
 				//image scale to 500px width, leave height auto---------------------------------------------------------------------
-				$scaledImage = imagescale($sanitizedUserImage, 500);
+				$sanitizedUserImage = imagescale($sanitizedUserImage, 500);
 
-				//use microtime to give file new name
-				$newImageName = round(microtime(true)) . $userFileExtension;
+//				//use microtime to give file new name
+//				$newImageName = round(microtime(true)) . $userFileExtension;
+
+				$newImageFileName = "/var/www/html/public_html/crumbtrail/" . hash("ripemd160", microtime(true) + random_int(0, 4200000000)) . $userFileExtension;
 
 				if($userFileExtension === ".jpg" || $userFileExtension === ".jpeg") {
-					//I think we may need to add a path to the second argument of imagejpeg()
-					$createdProperly = imagejpeg($sanitizedUserImage, $newImageName);
+					//I think we may needs to add a path to the second argument of imagejpeg()
+					$createdProperly = imagejpeg($sanitizedUserImage, $newImageFileName);
 				} elseif($userFileExtension === ".png") {
 					//I think we may need to add a path to the second argument of imagepng()
-					$createdProperly = imagepng($sanitizedUserImage, $newImageName);
+					$createdProperly = imagepng($sanitizedUserImage, $newImageFileName);
 				}
 
 				//put new image into the database
 				if($createdProperly === true) {
-					$image = new Image(null, $requestObject->imageCompanyId, $userFileType, $newImageName);
+					$image = new Image(null, $requestObject->imageCompanyId, $userFileType, $newImageFileName);
 					$image->insert($pdo);
 				}
 
 			}
 
-		}elseif($method === "DELETE"){
+		} elseif($method === "DELETE") {
 			verifyXsrf();
 			//get image to be deleted by the ID
 			$image = Image::getImageByImageId($pdo, $id);
 
 			//check if image is empty
-			if($image === null){
+			if($image === null) {
 				throw(new RuntimeException("The image does not exist!"));
 			}
+			unlink($image->getImageFileName()); //this will delete from the server
 
-			if($requestObject->fileName === $image->getImageFileName()){
-
-				$image->delete($pdo);
-				$reply->message("Image deleted A-OK");
-				//how do we delete from both the server and database?
-				//is the server temporary memory and the database/SQL something different
-				//is server where we quarantine images before we sanitize them?
-
-
-			}
+			$image->delete($pdo);
+			$reply->message("Image deleted A-OK");
+			//how do we delete from both the server and database?
+			//is the server temporary memory and the database/SQL something different
+			//is server where we quarantine images before we sanitize them?
 
 
 		} else {
@@ -179,7 +184,7 @@ try {
 		}
 
 	}
-}catch(Exception $exception) {
+} catch(Exception $exception) {
 	$reply->status = $exception->getCode();
 	$reply->message = $exception->getMessage();
 } catch(TypeError $typeError) {
