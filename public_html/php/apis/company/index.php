@@ -238,9 +238,6 @@ try {
 				$company->setCompanyEmail($requestObject->companyEmail);
 				$company->setCompanyPhone($requestObject->companyPhone);
 				$company->setCompanyName($requestObject->companyName);
-				//what else needs to be omitted from owner change
-//			$company->setCompanyPermit($requestObject->companyPermit);
-//			$company->setCompanyLicense($requestObject->companyLicense);
 				$company->setCompanyAttn($requestObject->companyAttn);
 				$company->setCompanyStreet1($requestObject->companyStreet1);
 				$company->setCompanyStreet2($requestObject->companyStreet2);
