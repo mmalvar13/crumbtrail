@@ -28,6 +28,7 @@ require_once '/path/to/swift-mailer/lib/swift_required.php';     // TODO Path?
 
 use Edu\Cnm\Crumbtrail\{Company};
 
+
 // SwiftMailer things.  Move this block. ---------------
 // Create the Transport
 $transport = Swift_SmtpTransport::newInstance('smtp.example.org', 25)
@@ -68,6 +69,7 @@ $reply = new stdClass();
 $reply->status = 200;
 $reply->data = null;
 
+
 try {
 	// Get the mySQL connection.
 	$pdo = connectToEncyptedMySQL("/etc/apache2/capstone-mysql/companyActivation.ini"); // TODO Check path.
@@ -78,17 +80,14 @@ try {
 	// Sanitize the input.
 	$companyAccountCreatorEmailActivation = filter_input(INPUT_GET, "companyAccountCreatorEmailActivation", FILTER_SANITIZE_STRING);
 
-	// Only accept a GET request.  Catch all other methods and throw an exception.
+	// Only accept a GET request.  Catch all other methods and throw exceptions.
 	if($method === "GET") {
 		//set XSRF cookie
 		setXsrfCookie();
 
-
 		$company = Company::getCompanyByCompanyAccountCreatorId($pdo, $companyAccountCreatorEmailActivation);
 		// TODO Or ... ???
 		$company = Company::getCompanyByCompanyActivationToken($pdo, $companyActivationToken);
-
-
 
 		//check if empty activation token, that means the account has already been activated or doesnt exist.
 		if(empty($companyAccountCreatorEmailActivation) === true) {
