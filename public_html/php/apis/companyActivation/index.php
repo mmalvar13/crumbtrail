@@ -19,14 +19,41 @@
  * this API then tells the profileActivation API that the new account has been activated,
  * so that not only is the companyActivationToken = null,
  * but also the profileActivationToken = null.
+ *
+ * When profileActivation API gets the link with the profileActivationToken,
+ * it automatically redirects to companyActivation API, giving it the companyActivationToken.
+ *
+ *
  **/
 
 require_once "autoloader.php";
 require_once "/lib/xsrf.php";
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
-require_once '/path/to/swift-mailer/lib/swift_required.php';     // TODO Path?
+
+require_once (dirname(__DIR__, 4)) . "/vendor/autoload.php";
 
 use Edu\Cnm\Crumbtrail\{Company};
+
+
+
+// Activation token things.  --------------------
+
+// this should already have been retrieved earlier on
+$fakeActivationToken = "feeddeadbeefcafe";
+
+// you should really use $_SERVER["SCRIPT_NAME"] instead
+$fakeScriptName = "/~gsandoval25/flek-truck-n-table/public_html/php/api/sign-up/index.php";
+$linkPath = dirname($fakeScriptName, 2) . "/activation/?activationToken=" . $fakeActivationToken;
+
+
+// serverScriptName is a server constant.  Grabs the current script name.
+// Change to script path, or script name.
+// Change fakeActivationToken to companyActivationToken.
+
+// ---------------------------------------------
+
+
+
 
 
 // SwiftMailer things.  Move this block. ---------------
@@ -53,6 +80,8 @@ $message = Swift_Message::newInstance('Welcome to CrumbTrail')
  * We have verified your business license and health permit.
  * To complete your company's CrumbTrail sign-up, and to fill in the description of your
  * company, please click this link:  LINK."
+ *
+ * See mmal
  **/
 
 // Send the message
