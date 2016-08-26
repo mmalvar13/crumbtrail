@@ -118,12 +118,7 @@ try {
 		$linkPath = dirname($scriptPath, 2) . "/profileActivation/?profileActivationToken";
 		/*end of stuff dylan sent*/
 
-
-		$lastSlash = strrpos($_SERVER["SCRIPT_NAME"], "/");
-		$basePath = substr($_SERVER["SCRIPT_NAME"], 0, $lastSlash + 1);
-		$urlglue = $basePath . "email-confirmation?emailActivation=" . $volEmailActivation;
-
-		$confirmLink = "https://" . $_SERVER["SERVER_NAME"] . $urlglue;
+		$confirmLink = "https://" . $_SERVER["SERVER_NAME"] . $urlglue; //maybe dont need this. this is from breadbasket.
 		$message = <<< EOF
 <h1>You have been approved to start serving with CrumbTrail</h1>
 <p>Please click the following link to confirm your email and activate your account: </p>
