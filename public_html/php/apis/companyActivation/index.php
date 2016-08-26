@@ -30,16 +30,16 @@ use Edu\Cnm\Crumbtrail\{Company};
 
 
 // SwiftMailer things.  Move this block. ---------------
-// Create the Transport
+// Create the Transport class.
 $transport = Swift_SmtpTransport::newInstance('smtp.example.org', 25)
 	->setUsername('your username')
 	->setPassword('your password')
 ;
 
-// Create the Mailer, using your created Transport
+// Create the Mailer class, using your created Transport.
 $mailer = Swift_Mailer::newInstance($transport);
 
-// Create a message
+// Create a message.
 $message = Swift_Message::newInstance('Welcome to CrumbTrail')
 	->setFrom(array('john@doe.com' => 'John Doe'))
 	->setTo(array('receiver@domain.org', 'other@domain.org' => 'A name'))
@@ -50,7 +50,7 @@ $message = Swift_Message::newInstance('Welcome to CrumbTrail')
  * Draft of the email message body:
  * "Welcome to CrumbTrail!
  * Thank you for waiting for our response to your request for a CrumbTrail account.
- * We have verified the business license and health permit of your food truck company.
+ * We have verified your business license and health permit.
  * To complete your company's CrumbTrail sign-up, and to fill in the description of your
  * company, please click this link:  LINK."
  **/
