@@ -63,7 +63,7 @@ try {
 			$event = Event::getEventByEventTruckId($pdo, $eventTruckId);
 			if($event !== null) {
 				$reply->data = $event;
-			}
+            }
 		} elseif ((empty($eventLocationLat)) === false) {
 			//is this how i would want to get Event location???
 			$point = new Point(null, $eventLocationLat, $eventLocationLng);
@@ -103,13 +103,13 @@ try {
 		//make sure event truck id is available
 		if(empty($requestObject->eventTruckId) === true) {
 			throw(new \InvalidArgumentException("No event truck id exists.", 405));
-		}
+        }
 		//make sure event location is available
 		//since all are used to find a location should all be used to ensure that a location is available??
 		if(empty($requestObject->eventLocationLat->eventLocationLng->point) === true) {
 			throw(new \InvalidArgumentException("No event location exists.", 405));
-		}
-	}
+        }
+    }
 //Perform actual PUT
 	if($method === "PUT") {
 		//retrieve the event to update
@@ -120,12 +120,12 @@ try {
 		//put new event content into the event and update
 		$point = new Point(null, $requestObject->location->lat, $requestObject->location->lng);
 		$event->setEventLocation($point);
-		$event->setEventEnd($requestObject->eventEnd);
-		$event->update($pdo);
+            $event->setEventEnd($requestObject->eventEnd);
+            $event->update($pdo);
 		//update reply
 		$reply->message = "Event end time updated successfully.";
 
-	} elseif ($method === "POST") {
+        } elseif ($method === "POST") {
 		if(empty($requestObject->eventId) === true) {
 			throw(new \InvalidArgumentException("No Event Id.", 405));
 		}
@@ -141,7 +141,7 @@ try {
 		$event = Event::getEventByEventId($pdo, $id);
 		if($event === null) {
 			throw(new RuntimeException("Event does not exist.", 404));
-		}
+            }
 		//delete the Event
 		$event->delete($pdo);
 
@@ -168,6 +168,23 @@ if($reply->data === null) {
 }
 //encode and return reply to front end caller
 echo json_encode($reply);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
