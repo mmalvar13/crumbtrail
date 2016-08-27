@@ -164,28 +164,26 @@ try {
 		$message->setTo($recipients);//we will just send to one person.
 
 		//attach a subject line to the message
-		$message->setSubject('Thanks for signing up with Crumbtrail');
+		$message->setSubject('Thanks for signing up with Crumbtrail. Please confirm your email');
 
 		//the body of the message-seen when the user opens the message
-		$message->setBody('Thanks for signing your company up with Crumbtrail. Our team will get to work on approving your account. You should receive an approval email in the next 48 hours with a link to confirm and activate your account. ','text/html');
+		$message->setBody('Thanks for signing your company up with Crumbtrail. Please confirm your email by clicking on this link. Once you have confirmed your email, Crumbtrail admins can get to work on verifying your business and approving you to use the app. You will recieve an email when you have been approved.  ','text/html');
 
 			//add alternative parts with addPart() for those who can only read plaintext or dont wwant to view in html
-		$message->addPart('Thanks for signing your company up with Crumbtrail. Our team will get to work on approving your account. You should receive an approval email in the next 48 hours with a link to confirm and activate your account. ', 'text/plain');
+		$message->addPart('Thanks for signing your company up with Crumbtrail. Please confirm your email by clicking on this link. Once you have confirmed your email, Crumbtrail admins can get to work on verifying your business and approving you to use the app. You will recieve an email when you have been approved.  ', 'text/plain');
 		$message->setReturnPath('bounces@address.tld');//return path address specifies where bounce notifications should be sent
 
 
-		//building the activation link that can travel to another server and still work. this is the link that will be clicked on to confirm. maybe this is not actually h ere, but in companyActivation/ProfileActivation/EmployeeActivation.
-		//this is from breadbasket. must be changed to reflect crumbtrail stuff.
-		$lastSlash = strrpos($_SERVER["SCRIPT_NAME"], "/");
-		$basePath = substr($_SERVER["SCRIPT_NAME"], 0, $lastSlash + 1);
-		$urlglue = $basePath . "email-confirmation?emailActivation=" . $volEmailActivation;
+		//building the profile activation link. this is the link that will be clicked on to confirm the companyAccountCreators email address and set their profileActivationToken to null. This triggers an email (over in profileActivation API) to be send to crumbtrail admins to check out this businesses credentials.
+		/*new stuff dylan sent*/
+		//this sshould already have been retrieved earlier on
+		$profileActivationToken = "feeddeadbeefcafe"; //what do i put here?
 
-		$confirmLink = "https://" . $_SERVER["SERVER_NAME"] . $urlglue;
-		$message = <<< EOF
-<h1>You have been approved to start serving with CrumbTrail</h1>
-<p>Please click the following link to confirm your email and activate your account: </p>
-<a href="$confirmLink">$confirmLink</a></p>
-EOF;
+		//you should use $_SERVER["SCRIPT_NAME"] insteead
+		$scriptPath = $_SERVER["SCRIPT_NAME"];
+		$linkPath = dirname($scriptPath, 2) . "/profileActivation/?profileActivationToken";
+		/*end of stuff dylan sent*/
+
 
 		//Send the message
 		$numSent = $mailer->send($message);
