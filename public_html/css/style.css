@@ -1,2 +1,8 @@
-<?php
-header("Location: ../", true, 301);
+.nav-search{
+	text-align: center;
+}
+
+@media (min-width: 400px) {
+
+	.nav-search { display: inline; }
+}

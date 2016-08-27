@@ -1,21 +1,5 @@
 <?php
 
-
-//We need to:
-//GET all companies
-//GET a specific company by primary key (companyId)
-//GET a specific company by  foreign key (accountCreatorId)
-//GET a specific company by company name (companyName)
-//GET a specific company by company menu text (companyMenuText)
-//GET a specific company by company description (companyDescription)
-
-//POST a new company
-
-//PUT update a company by primary key
-
-//DELETE a company by the primary key
-
-
 use Edu\Cnm\CrumbTrail\{
 	Profile, Company
 };
@@ -106,12 +90,8 @@ try {
 		}
 
 
-		//HOW DO I PUT A CATCH HERE TO MAKE SURE ONLY A ADMIN OR OWNER IS MAKING A PUT OR POST????
-		//maybe I do still need a post in case they fill out a form later on? That would only work if we didnt make all
-		//fields required on signup.
-		//put all this in a check to the session, where we check on the profile type(a/o) and also check to ensure the profile ID, matches
-		//the profile they are trying to PUT/POST
 
+		//ensure the person making changes is admin or owner and owns that account
 	} elseif((empty($_SESSION["profile"]) === false) && (($_SESSION["profile"]->getProfileId()) === $id) && (($_SESSION["profile"]->getProfileType()) === "a") || (($_SESSION["profile"]->getProfileType())) === "o") {
 
 		if(($method === "PUT" || $method === "POST")) {
@@ -119,9 +99,6 @@ try {
 			$requestContent = file_get_contents("php://input");
 			$requestObject = json_decode($requestContent);
 
-			//ensure that the profile trying to make changes to company is either admin or owner
-
-			//***SHIIIIIIII MAKE SURE TO ADD IN A CHECK TO SEE IF THE PERSON MAKING CHANGES ACTUALLY OWNS THAT ACCOUNT!!!******
 
 
 			//make sure the company name is available (required field)
