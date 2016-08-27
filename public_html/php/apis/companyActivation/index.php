@@ -1,92 +1,29 @@
 <?php
 /**
- * API for Company Activation.
+ * API for Company Activation, AKA "company approval API".
  * @author Kevin Lee Kirk
  *
- * The sign-up API sends the new company owner an activation email.
- * The new company owner clicks a link in the activation email.
- * The click calls this company activation API.
- * This API sets the company activation token to null.
- *
- * Must do this:
- * getCompanyByCompanyActivationToken
- * check that there is an activation token
- * then set the activation token = null
- *
- * Does this API need to do this????:
- * Call the profileActivation API, to getProfileByProfileActivationToken.
- * When the new company owner clicks the link in the activation email,
- * this API then tells the profileActivation API that the new account has been activated,
- * so that not only is the companyActivationToken = null,
- * but also the profileActivationToken = null.
- *
- * When profileActivation API gets the link with the profileActivationToken,
- * it automatically redirects to companyActivation API, giving it the companyActivationToken.
- *
+ * Company activation- is like company approved.
+ * This sends an email to company account creators to let them know they have been approved or denied.
+ * companyActivation API does not send a link.
+ * It only sends a message on the basis that companyActivationToken has been set to null
+ * (which is a link sent to developer team by profileActivationAPI),
+ * and depending on the value of companyApproved (true or false)
+ * it sends an email that says “you’ve been approved” or “you’ve been denied”.
  *
  **/
 
 require_once "autoloader.php";
 require_once "/lib/xsrf.php";
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
-
 require_once (dirname(__DIR__, 4)) . "/vendor/autoload.php";
 
 use Edu\Cnm\Crumbtrail\{Company};
 
-
-
-// Activation token things.  --------------------
-
-// this should already have been retrieved earlier on
-$fakeActivationToken = "feeddeadbeefcafe";
-
-// you should really use $_SERVER["SCRIPT_NAME"] instead
-$fakeScriptName = "/~gsandoval25/flek-truck-n-table/public_html/php/api/sign-up/index.php";
-$linkPath = dirname($fakeScriptName, 2) . "/activation/?activationToken=" . $fakeActivationToken;
-
-
-// serverScriptName is a server constant.  Grabs the current script name.
-// Change to script path, or script name.
-// Change fakeActivationToken to companyActivationToken.
-
-// ---------------------------------------------
-
-
-
-
-
-// SwiftMailer things.  Move this block. ---------------
-// Create the Transport class.
-$transport = Swift_SmtpTransport::newInstance('smtp.example.org', 25)
-	->setUsername('your username')
-	->setPassword('your password')
-;
-
-// Create the Mailer class, using your created Transport.
-$mailer = Swift_Mailer::newInstance($transport);
-
-// Create a message.
-$message = Swift_Message::newInstance('Welcome to CrumbTrail')
-	->setFrom(array('john@doe.com' => 'John Doe'))
-	->setTo(array('receiver@domain.org', 'other@domain.org' => 'A name'))
-	->setBody('Here is the message itself')
-;
-
-/**
- * Draft of the email message body:
- * "Welcome to CrumbTrail!
- * Thank you for waiting for our response to your request for a CrumbTrail account.
- * We have verified your business license and health permit.
- * To complete your company's CrumbTrail sign-up, and to fill in the description of your
- * company, please click this link:  LINK."
- *
- * See mmal
- **/
-
-// Send the message
-$result = $mailer->send($message);
-// --------------------------------------------------------
+// Somehow, this API gets the information from the profileActivation API:
+//  This company's id.
+//  This company has been approved or not.
+//  This company's activation token === null (whether approved or not).
 
 
 // Verify the session, start a session if not active.
@@ -98,6 +35,10 @@ $reply = new stdClass();
 $reply->status = 200;
 $reply->data = null;
 
+//  if($companyActivationToken !== null) {
+//	  $companyActivationToken = null;}
+// Instead, check that it's null, if not then throw an exception ...
+//  (so a try catch block, probably)
 
 try {
 	// Get the mySQL connection.
@@ -114,22 +55,10 @@ try {
 		//set XSRF cookie
 		setXsrfCookie();
 
-		$company = Company::getCompanyByCompanyAccountCreatorId($pdo, $companyAccountCreatorEmailActivation);
-		// TODO Or ... ???
-		$company = Company::getCompanyByCompanyActivationToken($pdo, $companyActivationToken);
-
-		//check if empty activation token, that means the account has already been activated or doesnt exist.
-		if(empty($companyAccountCreatorEmailActivation) === true) {
-			throw(new InvalidArgumentException("Account has already been activated or does not exist", 404));
-
-			// TODO After receiving the click from the activation email,
-			// set the companyActivationToken to null.
-			// And tell the profileActivation API to set the profileActivationToken to null?
-
-		} else {
-			$companyAccountCreatorEmailActivation->setCompanyActivationToken(null);    // ???
-			$companyAccountCreatorEmailActivation->update($pdo);
-
+		// TODO Fix this object oriented stuff:
+		$company = Company::getCompanyByCompanyId($pdo, $companyId);
+		$companyEmail = Company($pdo, $companyEmail);
+		$companyApproved = Company($pdo, $companyApproved);
 		}
 	}
 
@@ -141,6 +70,67 @@ try {
 	$reply->status = $typeError->getCode();
 	$reply->message = $typeError->getMessage();
 }
+
+// --------- From Course Materials: Sending email in PHP  -------
+try {
+	// sanitize the inputs from the form: name, email, subject, and message
+	// this assumes jQuery (not Angular will be submitting the form, so we're using the $_POST superglobal
+
+	$name = Profile(profileName);
+	$email = Profile(profileEmail);
+	$subject = "Message from Crumbtrail";
+
+	if($companyApproved === 1) {
+		$message = $approvalMessage;
+	} else {
+		$message = $denialMessage;
+	}
+
+	// create Swift message
+	$swiftMessage = Swift_Message::newInstance();
+
+	// attach the sender to the message
+	// this takes the form of an associative array where the Email is the key for the real name
+	$swiftMessage->setFrom([$email => $name]);
+
+	// $recipients = ["$emailRecipient"];
+	$swiftMessage->setTo($recipients);
+
+	// attach the subject line to the message
+	$swiftMessage->setSubject($subject);
+
+	/**
+	 * attach the actual message to the message
+	 * here, we set two versions of the message: the HTML formatted message and a special filter_var()ed
+	 * version of the message that generates a plain text version of the HTML content
+	 * notice one tactic used is to display the entire $confirmLink to plain text; this lets users
+	 * who aren't viewing HTML content in Emails still access your links
+	 **/
+	$swiftMessage->setBody($message, "text/html");
+	$swiftMessage->addPart(html_entity_decode($message), "text/plain");
+
+	/**
+	 * send the Email via SMTP; the SMTP server here is configured to relay everything upstream via CNM
+	 **/
+	$smtp = Swift_SmtpTransport::newInstance("localhost", 25);
+	$mailer = Swift_Mailer::newInstance($smtp);
+	$numSent = $mailer->send($swiftMessage, $failedRecipients);
+
+	/**
+	 * the send method returns the number of recipients that accepted the Email
+	 * so, if the number attempted is not the number accepted, this is an Exception
+	 **/
+	if($numSent !== count($recipients)) {
+		// the $failedRecipients parameter passed in the send() method now contains contains an array of the Emails that failed
+		throw(new RuntimeException("unable to send email"));
+	}
+
+	// report a successful send
+	echo "<div class=\"alert alert-success\" role=\"alert\">Email successfully sent.</div>";
+} catch(Exception $exception) {
+	echo "<div class=\"alert alert-danger\" role=\"alert\"><strong>Oh snap!</strong> Unable to send email: " . $exception->getMessage() . "</div>";
+}
+
 
 // Encode and return reply to front end caller.
 echo json_encode($reply);
