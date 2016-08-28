@@ -44,6 +44,10 @@ try {
 //we wouldn't need an Id since this wouldn't be tracked right, this is destroyed once the employee verifies that they are part of the profile?
 	$employProfileId = filter_input(INPUT_GET, "employProfileId", FILTER_SANITIZE_STRING);
 	$employCompanyId = filter_input(INPUT_GET, "employCompanyId", FILTER_SANITIZE_STRING);
+	$profileName = filter_input(INPUT_POST, "profileName", FILTER_SANITIZE_STRING);
+	$profileType = filter_input(INPUT_POST, "profileType", FILTER_SANITIZE_STRING);
+	$profileEmail = filter_input(INPUT_POST, "profileEmail", FILTER_SANITIZE_EMAIL);
+	//may possible write in GET to link to company------//
 	//make sure the id is valid for methods that require it
 	If(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
 		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
@@ -96,6 +100,11 @@ try {
 				if(empty($requestObject->employ) === true) {
 					throw(new InvalidArgumentException("No employ Company id and employ Profile combination exists ", 405));
 				}
+				//here??
+				if(empty($requestObject->profileName) === true) {
+					throw(new InvalidArgumentException("No profile name exists", 405));
+				}
+
 
 				//perform actual PUT or POST
 
