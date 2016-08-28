@@ -98,6 +98,15 @@ try {
 				if(empty($requestObject->profileEmail) === true) {
 					throw(new InvalidArgumentException("Need to insert employee email.", 405));
 				}
+				//Todo----GET COMPANY BY COMPANYEMAIL....POSSIBLY....IF WE NEED TO LINK BACK TO COMPANY
+				//-----here im making Salt, DummyPassword, profile activation token and hash---//
+				$salt	= bin2hex(random_bytes(16));
+				$dummyPassword = bin2hex(random_bytes(16));
+				$profileActivationToken = bin2hex(random_bytes(16));
+				//what is the number at the end of the hash??
+				$hash = hash_pbkdf2("sha512", $dummyPassword, $salt, 262144);
+
+
 				//------DO I NEED ALL OF THIS HERE???WHY???-------//
 				//---if(empty($requestObject->employProfileId) === true) {
 				//--	throw(new InvalidArgumentException("No profile exists.", 405));
