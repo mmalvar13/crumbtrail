@@ -89,6 +89,15 @@ try {
 				$requestObject = json_decode($requestContent);
 
 				//make sure employ profile is available
+				if(empty($requestObject->profileName) === true) {
+					throw(new InvalidArgumentException("Need to input employee name.", 405));
+				}
+				if(empty($requestObject->profileType) === true) {
+					throw(new InvalidArgumentException("Need to input the owner and employee status.", 405));
+				}
+				if(empty($requestObject->profileEmail) === true) {
+					throw(new InvalidArgumentException("Need to insert employee email.", 405));
+				}
 				if(empty($requestObject->employProfileId) === true) {
 					throw(new InvalidArgumentException("No profile exists.", 405));
 				}
@@ -107,7 +116,7 @@ try {
 
 
 				//perform actual PUT or POST
-
+/*-------------------------------WHy is this here again?---------------*/
 				if($method === "POST") {
 					$employ = Employ::getEmployByEmployCompanyIdAndEmployProfileId($pdo, $employCompanyId, $employProfileId);
 					if($employ === null) {
