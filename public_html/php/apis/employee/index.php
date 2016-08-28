@@ -83,26 +83,36 @@ try {
 						$reply->data = $employs;
 					}
 				}
-			} elseif(($method === "PUT" || "POST")) {
+			} elseif(($method ===  "POST")) {
 				//verify Xsrf
 				$requestContent = file_get_contents("php://input");
 				$requestObject = json_decode($requestContent);
 
 				//make sure employ profile is available
-				if(empty($requestObject->employProfileId) === true) {
-					throw(new InvalidArgumentException("No profile exists.", 405));
+				if(empty($requestObject->profileName) === true) {
+					throw(new InvalidArgumentException("Need to input employee name.", 405));
 				}
+				if(empty($requestObject->profileType) === true) {
+					throw(new InvalidArgumentException("Need to input the owner or employee status.", 405));
+				}
+				if(empty($requestObject->profileEmail) === true) {
+					throw(new InvalidArgumentException("Need to insert employee email.", 405));
+				}
+				//------DO I NEED ALL OF THIS HERE???WHY???-------//
+				//---if(empty($requestObject->employProfileId) === true) {
+				//--	throw(new InvalidArgumentException("No profile exists.", 405));
+				//--}
 				//make sure employ company id exists
-				if(empty($requestObject->employCompanyId) === true) {
-					throw(new InvalidArgumentException("No company exists.", 405));
+				//--if(empty($requestObject->employCompanyId) === true) {
+				//--	throw(new InvalidArgumentException("No company exists.", 405));
 				}
 				//make sure the company id and the profile id exist
-				if(empty($requestObject->employ) === true) {
-					throw(new InvalidArgumentException("No employ Company id and employ Profile combination exists ", 405));
+				//--if(empty($requestObject->employ) === true) {
+					//--throw(new InvalidArgumentException("No employ Company id and employ Profile combination exists ", 405));
 				}
 				//here??
-				if(empty($requestObject->profileName) === true) {
-					throw(new InvalidArgumentException("No profile name exists", 405));
+				//--if(empty($requestObject->profileName) === true) {
+					//--throw(new InvalidArgumentException("No profile name exists", 405));
 				}
 
 
@@ -110,15 +120,6 @@ try {
 /*-------------------------------WHy is this here again?---------------*/
 				if($method === "POST") {
 					//makes sure tht everything I put in filter_sanitize exists
-					if(empty($requestObject->profileName) === true) {
-						throw(new InvalidArgumentException("Need to input employee name.", 405));
-					}
-					if(empty($requestObject->profileType) === true) {
-						throw(new InvalidArgumentException("Need to input the owner or employee status.", 405));
-					}
-					if(empty($requestObject->profileEmail) === true) {
-						throw(new InvalidArgumentException("Need to insert employee email.", 405));
-					}
 					$employ = Employ::getEmployByEmployCompanyIdAndEmployProfileId($pdo, $employCompanyId, $employProfileId);
 					if($employ === null) {
 						////create new relationship between profile and company id
