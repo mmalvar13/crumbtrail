@@ -110,6 +110,8 @@ try {
 				$profile = new Profile(null, $requestObject->profileName, $requestObject->profileEmail,$profilePhone = "555-555-5555", $profileAccessToken = null, $profileActivationToken, $requestObject->profileType, $hash, $salt);
 
 				$profile->insert($pdo);
+				//update reply
+				$reply->message = "A link has been sent to your employee/CoOwner for verification.";
 
 
 				//------DO I NEED ALL OF THIS HERE???WHY???-------//
