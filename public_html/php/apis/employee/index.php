@@ -118,6 +118,7 @@ try {
 
 				//perform actual PUT or POST
 /*-------------------------------WHy is this here again?---------------*/
+/*-----------NEED TO GET THIS EXTRA POST OUT---------------------------*/
 				//if($method === "POST") {
 					//makes sure tht everything I put in filter_sanitize exists
 					//$employ = Employ::getEmployByEmployCompanyIdAndEmployProfileId($pdo, $employCompanyId, $employProfileId);
