@@ -36,6 +36,8 @@ try {
 	$profileName = filter_input(INPUT_POST, "profileName", FILTER_SANITIZE_STRING);
 	$profileEmail = filter_input(INPUT_POST, "profileEmail", FILTER_SANITIZE_EMAIL);
 	$profilePhone = filter_input(INPUT_POST, "profilePhone", FILTER_SANITIZE_STRING);
+	$profilePassword = filter_input(INPUT_POST, "profilePassword", FILTER_SANITIZE_STRING);
+	$confirmProfilePassword = filter_input(INPUT_POST, "confirmProfilePassword", FILTER_SANITIZE_STRING);
 	$companyName = filter_input(INPUT_POST, "companyName", FILTER_SANITIZE_STRING);
 	$companyEmail = filter_input(INPUT_POST,"companyEmail", FILTER_SANITIZE_EMAIL);
 	$companyPhone = filter_input(INPUT_POST, "companyPhone", FILTER_SANITIZE_STRING);
@@ -52,9 +54,8 @@ try {
 	if($method === "POST") {
 		//set XSRF cookie
 		setXsrfCookie();
-
-
 		verifyXsrf();
+
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
 
@@ -69,7 +70,7 @@ try {
 			throw(new \InvalidArgumentException("Must provide a phone number", 405));
 		}
 		if(empty($requestObject->profileType)=== true){
-			$requestObject->profileType = "o"; //TODO is this the correct default value for profileType? anyone signing up via this route
+			$requestObject->profileType = "O"; //TODO is this the correct default value for profileType? anyone signing up via this route
 		}
 		if(empty($requestObject->companyName)=== true){
 			throw(new \InvalidArgumentException("You must enter a company name", 405));
@@ -111,7 +112,7 @@ try {
 			$requestObject->companyMenuText = null;
 		}
 
-		//sanitize the email
+		//sanitize the email. Make sure there is not already an account attached to this email
 		$profileEmail = filter_var($requestObject->profileEmail, FILTER_SANITIZE_EMAIL);
 		$profile = Profile::getProfileByProfileEmail($pdo, $profileEmail);
 		if($profile !== null){
@@ -126,6 +127,8 @@ try {
 		if($requestObject->profilePassword !== $requestObject->confirmProfilePassword) {
 			throw (new InvalidArgumentException("the passwords you provided do not match"));
 		}
+
+		//create profile and company activation tokens
 		$profileActivationToken = bin2hex(random_bytes(16));
 		$companyActivationToken = bin2hex(random_bytes(16));
 
@@ -138,7 +141,7 @@ try {
 		$profile->insert($pdo);
 
 		//create a new company and insert it into the database
-		$company = new Company(null, $profile->getProfileId(), $requestObject->companyName, $requestObject->companyEmail, $requestObject->companyPhone, $requestObject->companyPermit, $requestObject->companyLicense, $requestObject->companyAttn, $requestObject->companyStreet1, $requestObject->companyStreet2, $requestObject->companyCity, $requestObject->companyState, $requestObject->companyZip, $requestObject->companyDescription , $requestObject->companyMenuText, $companyActivationToken, false);
+		$company = new Company(null, $profile->getProfileId(), $requestObject->companyName, $requestObject->companyEmail, $requestObject->companyPhone, $requestObject->companyPermit, $requestObject->companyLicense, $requestObject->companyAttn, $requestObject->companyStreet1, $requestObject->companyStreet2, $requestObject->companyCity, $requestObject->companyState, $requestObject->companyZip, $requestObject->companyDescription , $requestObject->companyMenuText, $companyActivationToken, $companyApproved = false);
 
 		$company->insert($pdo);
 
@@ -148,8 +151,7 @@ try {
 		/*----------------------------------swiftmailer code here-------------------------------------------------*/
 
 		/**
-		 * we're sending an email upon sign up to notify them that we have received their request for a CrumbTrail account, and
-		 * they should check their email in the next few days for their approval message.
+		 * we're sending an email upon sign up to notify them that we have received their request for a CrumbTrail account, and that we need them to confirm their email (which activates their profile). This email should also explain that their account is not ready to use until we have verified the business information they have provided, and they should recieve an acceptance email from us soon.
 		 *
 		 * To send a message with swiftmailer, you create a transport, use it to create the Mailer, and then y ou use the
 		 * Mailer to send the message

@@ -55,11 +55,15 @@ try {
 		//we need to check that their profile is null, because they clicked the link to nullify it. get company by company activation token,
 
 		if($profileActivationToken !== null) {
-			throw(new InvalidArgumentException("Account has not been activated yet, they haven't clicked the link they recieved from their sign up email", 404));
-		} else {
+			$profile = Profile::getProfileByProfileActivationToken($pdo, $profileActivationToken);
+			$profile->setProfileActivationToken(null);
+		}else {
+			throw(new InvalidArgumentException("Account has already been activated", 404));
+		}
+		if(empty($companyActivationToken)=== false) {
 			$company = Company::getCompanyByCompanyActivationToken($pdo, $companyActivationToken);
-			$companyActivationToken->update($pdo);
-		}//update activation token to null when activation link is clicked. the link was sent over in signUp API, i think.
+		}else{
+			throw(new InvalidArgumentException("company Activation token does not exist, company account has not been created"));
 
 
 		//do i add a check to see if profileType is "O"?
@@ -108,7 +112,7 @@ try {
 		$message->setSubject("Someone has activated their profile and need you to verify their business credentials");
 
 		//the body of the message-seen when the user opens the message
-		$message->setBody('Crumbtrail  Admin, a user has confirmed their emai and activated their profile. Please take a look at their business license and health permit to verify their business. One you have made the decision to confirm or deny them, click on this link. This link will set their companyActivationToken to null, and allow you to choose whether you confirm or deny', 'text/html');
+		$message->setBody('Crumbtrail  Admin, a user has confirmed their email and activated their profile. Please take a look at their business license and health permit to verify their business. Once you have made the decision to confirm or deny them, click on this link. This link will set their companyActivationToken to null, and allow you to choose whether you confirm or deny', 'text/html');
 
 		//add alternative parts with addPart() for those who can only read plaintext or dont wwant to view in html
 		$message->addPart('Crumbtrail  Admin, a user has confirmed their emai and activated their profile. Please take a look at their business license and health permit to verify their business. One you have made the decision to confirm or deny them, click on this link. This link will set their companyActivationToken to null, and allow you to choose whether you confirm or deny ', 'text/plain');
@@ -124,7 +128,7 @@ try {
 
 		//you should use $_SERVER["SCRIPT_NAME"] insteead
 		$scriptPath = $_SERVER["SCRIPT_NAME"];
-		$linkPath = dirname($scriptPath, 2) . "/profileActivation/?companyActivationToken";
+		$linkPath = dirname($scriptPath, 2) . "/companyActivation/?companyActivationToken";
 		/*end of stuff dylan sent*/
 
 
