@@ -89,6 +89,7 @@ try {
 				$requestObject = json_decode($requestContent);
 
 				//make sure employ profile is available
+				//makes sure tht everything I put in filter_sanitize exists
 				if(empty($requestObject->profileName) === true) {
 					throw(new InvalidArgumentException("Need to input employee name.", 405));
 				}
