@@ -107,7 +107,7 @@ try {
 				$hash = hash_pbkdf2("sha512", $dummyPassword, $salt, 262144);
 
 				//created new profile and insert into database
-				$profile = new Profile(null, $requestObject->profileName, $requestObject->profileEmail,$profilePhone = "555-555-5555", $profileAccessToken = null, $profileActivationToken, $profileType = null, $hash, $salt);
+				$profile = new Profile(null, $requestObject->profileName, $requestObject->profileEmail,$profilePhone = "555-555-5555", $profileAccessToken = null, $profileActivationToken, $requestObject->profileType, $hash, $salt);
 
 
 				//------DO I NEED ALL OF THIS HERE???WHY???-------//
