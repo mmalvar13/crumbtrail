@@ -106,6 +106,9 @@ try {
 				//what is the number at the end of the hash??
 				$hash = hash_pbkdf2("sha512", $dummyPassword, $salt, 262144);
 
+				//created new profile and insert into database
+				$profile = new Profile(null, $requestObject->profileName, $requestObject->profileEmail,$profilePhone = "555-555-5555", $profileAccessToken = null, $profileActivationToken, $profileType = null, $hash, $salt);
+
 
 				//------DO I NEED ALL OF THIS HERE???WHY???-------//
 				//---if(empty($requestObject->employProfileId) === true) {
