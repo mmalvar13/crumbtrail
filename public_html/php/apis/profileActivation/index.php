@@ -6,9 +6,7 @@ require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 require_once(dirname(__DIR__, 4) . "/vendor/autoload.php");
 //do i add something here for swiftmailer?
 
-use Edu\Cnm\Crumbtrail\{
-	Profile
-};
+use Edu\Cnm\Crumbtrail\{Profile, Company};
 
 /**
  * api for Profile Activation. Getting a confirmation email from a new user
@@ -36,25 +34,36 @@ try {
 	//determine which HTTP method was used. first one is the method you use, second is the fall back if the first is not available
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
-	//sanitize input
-	$profileActivationToken = filter_input(INPUT_GET, "profileActivationToken", FILTER_SANITIZE_STRING);
+	//sanitize input---what do i put here????
+	$profileActivationToken = filter_input(INPUT_GET, "profileActivationToken", FILTER_SANITIZE_STRING); //dont know if this is here.
+	$profileId
+
+		//get the profile, once we have it, we will check to make sure that the profileActivationTOken is null. if so , we need to get the whole company object. now we have accesss to license and permit numbers. we can also pull the company activation token. that is what we put in a link to activate their company.
 
 	//what is this supposed to do?? it is placed here in the breadbasket example but is within an if block under the GET methods block in the paper example
 	//$company = Company::getCompanyByCompanyAccountCreatorId($pdo, $companyAccountCreatorEmailActivation);
 
-	//this one is probably the GET dylan was talking about! since the others were POSTs
-	//handle GET request - if id is present, that profile is returned, otherwise all profiles are returned??
+//	Profile activation-  Actually, in the case that profile type is O for owner, profile activation SENDS the email to the developer team that says “this person has activated their profile, check out their credientials. This email has the link for us to push that sets companyActivation to null. When we check them out, and click that link, companyActivation is set to null, and we are redirected to a page that says Approved or denied? This is where we set companyApproved to true or false, to be used by companyActivationToken. (how we we redirect to a new page?
+//
+
 	if($method === "GET") {
 		//set XSRF cookie
 		setXsrfCookie();
 
-		if(empty($profileActivationToken) === true) {
-			throw(new InvalidArgumentException("Account has already been activated or does not exist", 404));
+		//ok, this is iffy. the link in signUp has $profileActivationToken in it, and upon clicking it, will set that to null. How does this all connect? is profileActivation api really the one that sets it to null? is clicking the link just directing it over here, to go through this process? where we check that there is an activation token, and then can set it to null in here? effffff
+
+		//we need to check that their profile is null, because they clicked the link to nullify it. get company by company activation token,
+
+		if($profileActivationToken !== null) {
+			throw(new InvalidArgumentException("Account has not been activated yet, they haven't clicked the link they recieved from their sign up email", 404));
 		} else {
-			$profile = Profile::getProfileByProfileActivationToken($pdo, $profileActivationToken);
-			$profileActivationToken->setProfileActivationToken(null);
-			$profileActivationToken->update($pdo);
-		}//update activation token to null when activation link is clicked. that means its activated. is this done within swiftmailer code or right here?
+			$company = Company::getCompanyByCompanyActivationToken($pdo, $companyActivationToken);
+			$companyActivationToken->update($pdo);
+		}//update activation token to null when activation link is clicked. the link was sent over in signUp API, i think.
+
+
+		//do i add a check to see if profileType is "O"?
+		}
 
 
 		//use swiftmailer hereish
@@ -78,7 +87,7 @@ try {
 		 * servers, according to the PIDOMA analysis.
 		 **/
 
-
+//here do i make an if block saying if companyAccountCreatorId === not empty do this one.
 		//Create the Transport
 		$transport = Swift_SmtpTransport::newInstance('smtp.example.org', 25); //can add third parameter for SSL encryption. need?
 
@@ -92,17 +101,17 @@ try {
 		$message->setFrom(['admin@crumbtrail.com' => 'Crumbtrail Admin']);//is this the same as setFrom(array('someaddress'=>'name'));
 
 		//attach recipients to the message. you can add
-		$recipients = ['originalAccountCreator@foodtruck.org' => 'Truckina McTruckerson'];
+		$recipients = ['admin@crumbtrail.org' => 'Admin who needs to verify business license'];
 		$message->setTo($recipients);//we will just send to one person.
 
 		//attach a subject line to the message
-		$message->setSubject("You've been invited to join Crumbtrail");
+		$message->setSubject("Someone has activated their profile and need you to verify their business credentials");
 
 		//the body of the message-seen when the user opens the message
-		$message->setBody('You have been invited to join Crumbtrail by your supervisor. Click this link to activate your account ', 'text/html');
+		$message->setBody('Crumbtrail  Admin, a user has confirmed their emai and activated their profile. Please take a look at their business license and health permit to verify their business. One you have made the decision to confirm or deny them, click on this link. This link will set their companyActivationToken to null, and allow you to choose whether you confirm or deny', 'text/html');
 
 		//add alternative parts with addPart() for those who can only read plaintext or dont wwant to view in html
-		$message->addPart('You have been invited to join Crumbtrail by your supervisor. Click this link to activatet your account. ', 'text/plain');
+		$message->addPart('Crumbtrail  Admin, a user has confirmed their emai and activated their profile. Please take a look at their business license and health permit to verify their business. One you have made the decision to confirm or deny them, click on this link. This link will set their companyActivationToken to null, and allow you to choose whether you confirm or deny ', 'text/plain');
 		$message->setReturnPath('bounces@address.tld');//return path address specifies where bounce notifications should be sent
 
 
@@ -115,15 +124,9 @@ try {
 
 		//you should use $_SERVER["SCRIPT_NAME"] insteead
 		$scriptPath = $_SERVER["SCRIPT_NAME"];
-		$linkPath = dirname($scriptPath, 2) . "/profileActivation/?profileActivationToken";
+		$linkPath = dirname($scriptPath, 2) . "/profileActivation/?companyActivationToken";
 		/*end of stuff dylan sent*/
 
-		$confirmLink = "https://" . $_SERVER["SERVER_NAME"] . $urlglue; //maybe dont need this. this is from breadbasket.
-		$message = <<< EOF
-<h1>You have been approved to start serving with CrumbTrail</h1>
-<p>Please click the following link to confirm your email and activate your account: </p>
-<a href="$confirmLink">$confirmLink</a></p>
-EOF;
 
 		//Send the message
 		$numSent = $mailer->send($message);

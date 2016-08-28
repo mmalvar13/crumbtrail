@@ -31,8 +31,22 @@ try {
 	//determine which HTTP method was used
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
-	//sanitize input
+	//sanitize input, put more stuff here
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
+	$profileName = filter_input(INPUT_POST, "profileName", FILTER_SANITIZE_STRING);
+	$profileEmail = filter_input(INPUT_POST, "profileEmail", FILTER_SANITIZE_EMAIL);
+	$profilePhone = filter_input(INPUT_POST, "profilePhone", FILTER_SANITIZE_STRING);
+	$companyName = filter_input(INPUT_POST, "companyName", FILTER_SANITIZE_STRING);
+	$companyEmail = filter_input(INPUT_POST,"companyEmail", FILTER_SANITIZE_EMAIL);
+	$companyPhone = filter_input(INPUT_POST, "companyPhone", FILTER_SANITIZE_STRING);
+	$companyPermit = filter_input(INPUT_POST, "companyPermit", FILTER_SANITIZE_STRING);
+	$companyLicense = filter_input(INPUT_POST, "companyLicense", FILTER_SANITIZE_STRING);
+	$companyAttn = filter_input(INPUT_POST, "companyAttn", FILTER_SANITIZE_STRING);
+	$companyStreet1 = filter_input(INPUT_POST, "companyStreet1", FILTER_SANITIZE_STRING);
+	$companyStreet2 = filter_input(INPUT_POST, "companyStreet2", FILTER_SANITIZE_STRING);
+	$companyCity = filter_input(INPUT_POST, "companyCity", FILTER_SANITIZE_STRING);
+	$companyState = filter_input(INPUT_POST, "companyState", FILTER_SANITIZE_STRING);
+	$companyZip = filter_input(INPUT_POST, "companyZip", FILTER_SANITIZE_STRING);
 
 
 	if($method === "POST") {
@@ -107,7 +121,6 @@ try {
 
 		//create a new salt and email activation
 		$salt = bin2hex(random_bytes(16));
-		//do i create email activation here? see line 179
 
 		/*before hashing  and salting, angular sends a password and confirmed password. Throw an exception if they are not the same*/
 		if($requestObject->profilePassword !== $requestObject->confirmProfilePassword) {
@@ -130,7 +143,7 @@ try {
 		$company->insert($pdo);
 
 		//update reply
-		$reply->message = "You have been sent an email to confirm that you have signed up with CrumbTrail. This is NOT your approval email. Keep a look out for a second email over the next 48 hours. If your business has been approved, we will provide you with a link to activate your account";
+		$reply->message = "We have sent you an email to the personal address you have provided. Please confirm your account by clicking on the link in that email.";
 
 		/*----------------------------------swiftmailer code here-------------------------------------------------*/
 
@@ -181,7 +194,7 @@ try {
 
 		//you should use $_SERVER["SCRIPT_NAME"] insteead
 		$scriptPath = $_SERVER["SCRIPT_NAME"];
-		$linkPath = dirname($scriptPath, 2) . "/profileActivation/?profileActivationToken";
+		$linkPath = dirname($scriptPath, 2) . "/profileActivation/?profileActivationToken"; //I changed the path to signUp/profileActivation because $profileActivationToken is generated here. is this correct???
 		/*end of stuff dylan sent*/
 
 
