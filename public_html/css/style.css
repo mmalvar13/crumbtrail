@@ -121,6 +121,10 @@ p {
 
 /*CSS FOR TRUCK LIST*/
 
+.truck-body{
+	background-color: #FFB996;
+}
+
 .truck-list-box{
 	/*background-image: url("https://hd.unsplash.com/photo-1468956398224-6d6f66e22c35");*/
 	margin-top: 2rem;
@@ -188,4 +192,38 @@ p {
 }
 
 
+/*----------------------------------------CSS FOR FOOTER-------------------------------------------------*/
+/*Sticky footer*/
+/***
+* Flexbox Sticky Footer
+* http://philipwalton.github.io/solved-by-flexbox/demos/sticky-footer/
+***/
+
+/*corrects IE min-height bug*/
+html { display: flex;}
+body { width: 100%;}
+
+.sfooter {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	font-size: 16px;
+}
+
+.sfooter-content {
+	flex: 1 0 auto;
+}
+
+/*bottom footer */
+.bfoot{
+	color: #7181A2;
+	background-color: #192947;
+	height: 5em;
+	width:100%;
+	display: inline-flex;
+	font-family:sans-serif;
+	text-align: left;
+	padding-top: 1rem;
+	margin-top: 1rem;
+}
 

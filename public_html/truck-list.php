@@ -41,109 +41,112 @@
 	</head>
 
 	<!-----------------------Beginning of user content--------------------------------->
-	<body>
-		<header>
-			<div class="navbar navbar-default navbar-fixed-top">
-				<div class="container">
-					<div class="navbar-header">
-						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-						</button>
-						<a class="navbar-brand hidden-xs" href="#">CrumbTrail</a>
-						<a class="navbar-brand visible-xs" href="#">CT</a>
-						<form class="navbar-form pull-left" role="search">
-							<div class="input-group">
-								<input type="text" class="form-control" placeholder="Search">
-								<div class="input-group-btn">
-									<button type="submit" class="btn btn-default"><span
-											class="glyphicon glyphicon-search"></span></button>
+	<body class="truck-body">
+		<div class="sfooter-content">
+			<header>
+				<div class="navbar navbar-default navbar-fixed-top">
+					<div class="container">
+						<div class="navbar-header">
+							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+							</button>
+							<a class="navbar-brand hidden-xs" href="#">CrumbTrail</a>
+							<a class="navbar-brand visible-xs" href="#">CT</a>
+							<form class="navbar-form pull-left" role="search">
+								<div class="input-group">
+									<input type="text" class="form-control" placeholder="Search">
+									<div class="input-group-btn">
+										<button type="submit" class="btn btn-default"><span
+												class="glyphicon glyphicon-search"></span></button>
+									</div>
 								</div>
-							</div>
-						</form>
+							</form>
+						</div>
+						<div class="navbar-collapse collapse">
+							<ul class="nav navbar-nav navbar-right">
+								<li class="active"><a href="#">Home</a></li>
+								<li><a href="#about">See All Trucks</a></li>
+								<li><a href="#contact">Settings</a></li>
+								<li><a href="#contact">Signout</a></li>
+							</ul>
+						</div>
+						<!--/.navbar-collapse -->
 					</div>
-					<div class="navbar-collapse collapse">
-						<ul class="nav navbar-nav navbar-right">
-							<li class="active"><a href="#">Home</a></li>
-							<li><a href="#about">See All Trucks</a></li>
-							<li><a href="#contact">Settings</a></li>
-							<li><a href="#contact">Signout</a></li>
-						</ul>
+				</div>
+			</header>
+
+			<!----MAIN BODY --->
+			<div class="container-fluid">
+				<div class="row">
+					<div class="container">
+						<div class="truck-list-box truck-image">
+							<div class="truck-list-serving-icon"></div>
+							<h3 class="truck-h3">Company Name</h3>
+							<hr class="truck-list-hr">
+							<ul class="truck-list-ul">
+								<li>asdfasdfasdf</li>
+								<li>asdfasdfasdf</li>
+								<li>asdfasdfasdf</li>
+								<li>asdfasdfasdf</li>
+							</ul>
+
+						</div>
 					</div>
-					<!--/.navbar-collapse -->
+				</div>
+
+				<div class="row">
+					<div class="container">
+						<div class="truck-list-box truck-image">
+							<div class="truck-list-serving-icon"></div>
+							<h3 class="truck-h3">Company Name</h3>
+							<hr class="truck-list-hr">
+							<p class="truck-list-text">We make the best damn tacos in the whole damn world!</p>
+							<ul class="truck-list-ul">
+								<li>Tacos</li>
+								<li>Burritos</li>
+								<li>Nachos</li>
+								<li>People-meat</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="container">
+						<div class="truck-list-box truck-image">
+							<div class="truck-list-serving-icon"></div>
+							<h3 class="truck-h3">Company Name</h3>
+							<hr class="truck-list-hr">
+							<ul class="truck-list-ul">
+								<li>asdfasdfasdf</li>
+								<li>asdfasdfasdf</li>
+								<li>asdfasdfasdf</li>
+								<li>asdfasdfasdf</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="container">
+						<div class="truck-list-box truck-image">
+							<div class="truck-list-serving-icon"></div>
+							<h3 class="truck-h3">Company Name</h3>
+							<hr class="truck-list-hr">
+							<ul class="truck-list-ul">
+								<li>asdfasdfasdf</li>
+								<li>asdfasdfasdf</li>
+								<li>asdfasdfasdf</li>
+								<li>asdfasdfasdf</li>
+							</ul>
+						</div>
+					</div>
 				</div>
 			</div>
-		</header>
+			<footer class="bfoot">
 
-		<!----MAIN BODY --->
-		<div class="container-fluid">
-			<div class="row">
-				<div class="container">
-					<div class="truck-list-box truck-image">
-						<div class="truck-list-serving-icon"></div>
-					<h3 class="truck-h3">Company Name</h3>
-						<hr class="truck-list-hr">
-						<ul class="truck-list-ul">
-							<li>asdfasdfasdf</li>
-							<li>asdfasdfasdf</li>
-							<li>asdfasdfasdf</li>
-							<li>asdfasdfasdf</li>
-						</ul>
-
-					</div>
-			</div>
+			</footer>
 		</div>
-
-			<div class="row">
-				<div class="container">
-					<div class="truck-list-box truck-image">
-						<div class="truck-list-serving-icon"></div>
-						<h3 class="truck-h3">Company Name</h3>
-						<hr class="truck-list-hr">
-						<p class="truck-list-text">We make the best damn tacos in the whole damn world!</p>
-						<ul class="truck-list-ul">
-							<li>Tacos</li>
-							<li>Burritos</li>
-							<li>Nachos</li>
-							<li>People-meat</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="container">
-					<div class="truck-list-box truck-image">
-						<div class="truck-list-serving-icon"></div>
-						<h3 class="truck-h3">Company Name</h3>
-						<hr class="truck-list-hr">
-						<ul class="truck-list-ul">
-							<li>asdfasdfasdf</li>
-							<li>asdfasdfasdf</li>
-							<li>asdfasdfasdf</li>
-							<li>asdfasdfasdf</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="container">
-					<div class="truck-list-box truck-image">
-						<div class="truck-list-serving-icon"></div>
-						<h3 class="truck-h3">Company Name</h3>
-						<hr class="truck-list-hr">
-						<ul class="truck-list-ul">
-							<li>asdfasdfasdf</li>
-							<li>asdfasdfasdf</li>
-							<li>asdfasdfasdf</li>
-							<li>asdfasdfasdf</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-
-
 	</body>
