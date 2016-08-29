@@ -113,6 +113,56 @@ try {
 				//update reply
 				$reply->message = "A link has been sent to your employee/CoOwner for verification.";
 
+//-----------------------------adding in swiftmailer------------------------------------//
+				//sends email between owner and employee??
+				$transport = Swift_SmtpTransport::newInstance('smtp.example.org', 25);
+
+				//Create the Mailer using your created Transport
+				$mailer = Swift_Mailer::newInstance($transport);
+
+				//Create a message
+				$message = Swift_Message::newInstance();//to set a subject line you can pass it as a parameter in newInstance or set it afterwards. I chose to set it afterwards. Same with body.
+
+				//attach a sender to the message
+				$message->setFrom(['admin@crumbtrail.com'=> 'Crumbtrail Admin']);//is this the same as setFrom(array('someaddress'=>'name'));
+
+				//attach recipients to the message. you can add
+				$recipients = ['FoodTruckOwner@yahoo.org' => 'Florence Gray'];
+				$message->setTo($recipients);//we will just send to one person.
+
+				//attach a subject line to the message
+				$message->setSubject('You have been invited to join crumbtrail. Please verify your email.');
+
+				//the body of the message-seen when the user opens the message
+				$message->setBody('You have been invited to joint crumbtrail. PLease click this link to verify your email. Once clicking this link you will be prompted to reset your password.','text/html');
+
+				//add alternative parts with addPart() meant for those who cannot read in html???
+				$message->addPart('Thanks for signing your company up with Crumbtrail. Please confirm your email by clicking on this link. Once you have confirmed your email, Crumbtrail admins can get to work on verifying your business and approving you to use the app. You will recieve an email when you have been approved.  ', 'text/plain');
+				$message->setReturnPath('bounces@address.tld');//return path address specifies where bounce notifications should be sent
+
+
+				//Link that will be clicked on to confirm the companyAccountCreators email address and set their profileActivationToken to null. This triggers an email (over in profileActivation API) to be send to crumbtrail admins to check out this businesses credentials.
+
+				$profileActivationToken = "WhatNeedsToBeHere";
+
+				//you should use $_SERVER["SCRIPT_NAME"]
+				$scriptPath = $_SERVER["SCRIPT_NAME"];
+				$linkPath = dirname($scriptPath, 2) . "/profileActivation/?profileActivationToken";
+
+
+				//Send the message
+				$numSent = $mailer->send($message);
+
+				printf("Sent %d messages\n", $numSent);
+
+				/**
+				 * the send method returns the number of recipients that accepted the Email
+				 * so if the number attempted is not the number accepted, this is the exception (number attempted should only be one at a time)
+				 **/
+				if($numSent !== count($recipients)){
+					//the $failedRecipients parameter passed in the send() method now contains an array of the Emails that failed
+					throw(new RuntimeException("unable to send email"));
+				}
 
 				//------DO I NEED ALL OF THIS HERE???WHY???-------//
 				//---if(empty($requestObject->employProfileId) === true) {
