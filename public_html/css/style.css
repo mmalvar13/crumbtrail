@@ -58,6 +58,7 @@
 	transform: translateY(17.5%);
 }
 
+
 .locate-btn{
 	width: 10rem;
 }
@@ -124,7 +125,7 @@ p {
 	box-sizing: border-box;
 	margin-top: 2rem;
 	border: 0.15rem solid slategrey;
-	display: inline-block;
+	/*display: inline-block;*/
 	padding-top: 0.5rem;
 	padding-bottom: 0.5rem;
 	padding-left: 0.5rem;

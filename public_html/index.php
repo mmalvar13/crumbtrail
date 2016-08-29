@@ -83,8 +83,8 @@
 			</div>
 			<div class="container">
 			<div class="row">
-				<div class="col-xs-3"><div class="serving-icon"></div> </div>
-				<div class="col-xs-4 text-center"><h5>Serving Now!</h5></div>
+				<div class="col-xs-1"><div class="serving-icon"></div> </div>
+				<div class="col-xs-4 "><h5>Serving Now!</h5></div>
 				<button type="button" class="btn btn-warning pull-right locate-btn">Locate</button>
 			</div>
 			</div>
