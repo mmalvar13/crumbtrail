@@ -1,4 +1,4 @@
-
+/*CSS FOR NAVBAR*/
 /*When the screen is small (phone) search bar will be visible at 185px*/
 @media(max-width:767px) {
 	.navbar .navbar-form {
@@ -37,6 +37,10 @@
 	box-shadow: none;
 }
 
+/*----------------------------------------------------------------------------------------------------*/
+
+/*CSS FOR COMPANY PROFILE*/
+
 .company-name{
 
 	text-align: center;
@@ -65,14 +69,14 @@
 .description-box{
 	box-sizing: border-box;
 	margin-top: 2rem;
-	border: 0.5px solid slategrey;
+	border: 0.15rem solid slategrey;
 	padding-top: 1rem;
 
 }
 
 .menu-box{
 	margin-top: 2rem;
-	border: 0.5px solid slategrey;
+	border: 0.15rem solid slategrey;
 	padding-top: 1rem;
 }
 
@@ -82,7 +86,7 @@
 }
 
 .week-description{
-	border: 0.5px solid slategrey;
+	border: 0.15rem solid slategrey;
 	box-sizing: border-box;
 	margin: 2rem;
 	padding: 2rem;
@@ -111,3 +115,41 @@ h3{
 p {
 	font-family: 'Roboto', sans-serif;
 }
+
+/*---------------------------------------------------------------------------------------------------*/
+
+/*CSS FOR TRUCK LIST*/
+
+.truck-list-box{
+	box-sizing: border-box;
+	margin-top: 2rem;
+	border: 0.15rem solid slategrey;
+	display: inline-block;
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+	padding-left: 0.5rem;
+}
+
+/*remove some padding from columns in this page*/
+.truck-div-padding{
+	padding-right:0.25rem;
+	padding-left: 0.25rem;
+}
+.truck-list-company-name{
+	text-align: center;
+	margin-bottom: 0.2rem;
+}
+
+.truck-list-hr{
+	width: 50%;
+	margin-top:0.25rem;
+}
+
+.truck-list-ul{
+	list-style: none;
+	padding-left:0;  /*this will remove the list item indentation and center everything */
+	text-align: center;
+}
+
+
+
