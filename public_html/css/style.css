@@ -1,3 +1,5 @@
+
+/*When the screen is small (phone) search bar will be visible at 185px*/
 @media(max-width:767px) {
 	.navbar .navbar-form {
 		width: 185px;
@@ -5,17 +7,20 @@
 		padding-right:0;
 	}
 }
+/*when the screen is big (laptop) search bar will be larger at 250px*/
 @media(min-width:768px) {
 	.navbar .navbar-form {
 		width: 250px;
 	}
 }
 
+/*add padding to body so content isnt stuck behind navbar when on small screen*/
 @media (max-width: 768px){
 	body{padding-top:70px;
 	}
 }
 
+/*add (slightly less) padding to body when on large screen*/
 @media (min-width: 769px){
 	body{padding-top: 60px;
 	}
@@ -41,14 +46,11 @@
 }
 
 .serving-icon{
-	border: 0.5px solid black;
+	border: 0.1rem solid black;
 	border-radius: 100%;
 	width: 2.5rem;
 	height: 2.5rem;
 	background: green;
-	/*display: inline-flex;*/
-	/*position: relative;*/
-	/*padding-top: 50%;*/
 	transform: translateY(17.5%);
 }
 
@@ -61,8 +63,17 @@
 }
 
 .description-box{
+	box-sizing: border-box;
+	margin-top: 2rem;
 	border: 0.5px solid slategrey;
+	padding-top: 1rem;
 
+}
+
+.menu-box{
+	margin-top: 2rem;
+	border: 0.5px solid slategrey;
+	padding-top: 1rem;
 }
 
 .week-schedule-h3{
@@ -76,4 +87,27 @@
 	margin: 2rem;
 	padding: 2rem;
 
+}
+
+h1{
+	font-family: 'Fascinate Inline', cursive;
+}
+
+h3{
+	font-family: 'Nixie One', cursive;
+}
+
+/*menu-horizontal rule*/
+.menu-hr{
+	width: 50%;
+}
+
+/*remove bullets from menu unordered list*/
+.menu-ul{
+	list-style: none;
+	padding-left:0  /*this will remove the list item indentation and center everything */
+}
+
+p {
+	font-family: 'Roboto', sans-serif;
 }

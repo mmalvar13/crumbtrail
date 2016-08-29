@@ -31,6 +31,10 @@
 		<!---------------Custom CSS here----------------------->
 		<link href="css/style.css" rel="stylesheet" type="text/css"/>
 
+
+		<!-------------------GOOGLE FONTS------------------>
+		<link href="https://fonts.googleapis.com/css?family=Fascinate+Inline|Nixie+One|Roboto" rel="stylesheet">
+
 		<title>
 			CrumbTrail   <!----add cool icon for tabs here ------->
 		</title>
@@ -115,9 +119,27 @@
 					<h3 class="week-schedule-h3">Sunday</h3>
 					<p class="week-description">Extraordinary claims require extraordinary evidence! Finite but unbounded. Birth, explorations take root and flourish Vangelis at the edge of forever made in the interiors of collapsing stars a mote of dust suspended in a sunbeam with pretty stories for which there's little good evidence. Circumnavigated Hypatia finite but unbounded circumnavigated. Bits of moving fluff, ship of the imagination rich in heavy atoms take root and flourish, Hypatia tingling of the spine. A very small stage in a vast cosmic arena.</p>
 				</div>
-
 			</div>
 
-		</div>
+			<!-------menu box ------->
+			<div class="container menu-box">
+				<div class="row text-center">
+					<h3>Menu</h3>
+					<hr class="menu-hr">
+					<ul class="menu-ul">
+						<li >tacos: $2 each</li>
+						<li >burrito: $5</li>
+						<li >nachos: $99 (they are that good)</li>
+						<li >lemonade: $2</li>
+						<li >chile: $3</li>
+						<li>mead: $4</li>
+						<li>"The Finest Grool": $8</li>
+					</ul>
+
+				</div>
+			</div>
+
+
+		</div> <!----fluid container------>
 
 	</body>
