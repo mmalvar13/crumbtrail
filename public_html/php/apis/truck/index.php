@@ -56,7 +56,7 @@ try {
 			if($truck !== null) {
 				$reply->data = $truck;
 			}
-		} elseif(empty($id) === false) {
+		} elseif(empty($truckCompanyId) === false) {
 			$truck = Truck::getTruckByTruckCompanyId($pdo, $truckCompanyId);
 			if($truck !== null) {
 				$reply->data = $truck;
