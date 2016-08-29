@@ -57,7 +57,8 @@
 							<div class="input-group">
 								<input type="text" class="form-control" placeholder="Search">
 								<div class="input-group-btn">
-									<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+									<button type="submit" class="btn btn-default"><span
+											class="glyphicon glyphicon-search"></span></button>
 								</div>
 							</div>
 						</form>
@@ -77,25 +78,72 @@
 
 		<!----MAIN BODY --->
 		<div class="container-fluid">
-			<div class="container truck-list-box">
-				<div class="row">
-					<div class="col-xs-6"><img src="https://hd.unsplash.com/photo-1468956398224-6d6f66e22c35" class="img-responsive img-thumbnail"></div>
-					<div class="col-xs-4 truck-div-padding">
-						<h4 class="truck-list-company-name">Company Name</h4>
+			<div class="row">
+				<div class="container">
+					<div class="truck-list-box truck-image">
+						<div class="truck-list-serving-icon"></div>
+					<h3 class="truck-h3">Company Name</h3>
 						<hr class="truck-list-hr">
 						<ul class="truck-list-ul">
-							<li>"A Taste of NM"</li>
-							<li>tacos</li>
-							<li>burritos</li>
-							<li>nachos</li>
+							<li>asdfasdfasdf</li>
+							<li>asdfasdfasdf</li>
+							<li>asdfasdfasdf</li>
+							<li>asdfasdfasdf</li>
 						</ul>
 
 					</div>
-				</div>
+			</div>
+		</div>
 
+			<div class="row">
+				<div class="container">
+					<div class="truck-list-box truck-image">
+						<div class="truck-list-serving-icon"></div>
+						<h3 class="truck-h3">Company Name</h3>
+						<hr class="truck-list-hr">
+						<p class="truck-list-text">We make the best damn tacos in the whole damn world!</p>
+						<ul class="truck-list-ul">
+							<li>Tacos</li>
+							<li>Burritos</li>
+							<li>Nachos</li>
+							<li>People-meat</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="container">
+					<div class="truck-list-box truck-image">
+						<div class="truck-list-serving-icon"></div>
+						<h3 class="truck-h3">Company Name</h3>
+						<hr class="truck-list-hr">
+						<ul class="truck-list-ul">
+							<li>asdfasdfasdf</li>
+							<li>asdfasdfasdf</li>
+							<li>asdfasdfasdf</li>
+							<li>asdfasdfasdf</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="container">
+					<div class="truck-list-box truck-image">
+						<div class="truck-list-serving-icon"></div>
+						<h3 class="truck-h3">Company Name</h3>
+						<hr class="truck-list-hr">
+						<ul class="truck-list-ul">
+							<li>asdfasdfasdf</li>
+							<li>asdfasdfasdf</li>
+							<li>asdfasdfasdf</li>
+							<li>asdfasdfasdf</li>
+						</ul>
+					</div>
+				</div>
 			</div>
 		</div>
 
 
-
-</body>
+	</body>

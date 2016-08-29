@@ -122,13 +122,25 @@ p {
 /*CSS FOR TRUCK LIST*/
 
 .truck-list-box{
-	box-sizing: border-box;
+	/*background-image: url("https://hd.unsplash.com/photo-1468956398224-6d6f66e22c35");*/
 	margin-top: 2rem;
 	border: 0.15rem solid slategrey;
-	/*display: inline-block;*/
-	padding-top: 0.5rem;
-	padding-bottom: 0.5rem;
-	padding-left: 0.5rem;
+	width: 100%;
+	height: 20rem;
+
+
+	/*padding-top: 0.5rem;*/
+	/*padding-bottom: 0.5rem;*/
+	/*padding-left: 0.5rem;*/
+}
+
+.truck-image{
+	background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("https://hd.unsplash.com/photo-1468956398224-6d6f66e22c35");
+	width: 100%;
+	/*padding-bottom: 66.666666666667%;*/
+	background-size: cover;
+	background-position: center;
+
 }
 
 /*remove some padding from columns in this page*/
@@ -141,6 +153,10 @@ p {
 	margin-bottom: 0.2rem;
 }
 
+.truck-h3{
+	text-align: center;
+	color: white;
+}
 .truck-list-hr{
 	width: 50%;
 	margin-top:0.25rem;
@@ -150,6 +166,25 @@ p {
 	list-style: none;
 	padding-left:0;  /*this will remove the list item indentation and center everything */
 	text-align: center;
+	color: white;
+}
+
+.truck-list-text{
+	text-align: center;
+	color: orangered;
+}
+
+
+.truck-list-serving-icon{
+	border: 0.1rem solid black;
+	border-radius: 100%;
+	width: 2.5rem;
+	height: 2.5rem;
+	background: green;
+	transform: translateY(17.5%);
+	float: right;
+	margin-right: 1rem;
+	margin-top: 1rem;
 }
 
 
