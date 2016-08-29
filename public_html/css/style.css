@@ -117,9 +117,11 @@ p {
 	font-family: 'Roboto', sans-serif;
 }
 
-/*---------------------------------------------------------------------------------------------------*/
 
-/*CSS FOR TRUCK LIST*/
+
+
+/*---------------------------------------/*CSS FOR TRUCK LIST------------------------------------------------------------*/
+
 
 .truck-body{
 	background-color: #FFB996;
@@ -160,6 +162,7 @@ p {
 .truck-h3{
 	text-align: center;
 	color: white;
+	padding-left: 4rem;
 }
 .truck-list-hr{
 	width: 50%;
