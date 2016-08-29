@@ -134,7 +134,7 @@ try {
 				$message->setSubject('You have been invited to join crumbtrail. Please verify your email.');
 
 				//the body of the message-seen when the user opens the message
-				$message->setBody('You have been invited to joint crumbtrail. PLease click this link to verify your email. Once clicking this link you will be prompted to reset your password.','text/html');
+				$message->setBody('Thanks for signing your company up with Crumbtrail. Please confirm your email by clicking on this link. Once you have confirmed your email, Crumbtrail admins can get to work on verifying your business and approving you to use the app. You will recieve an email when you have been approved.  ','text/html');
 
 				//add alternative parts with addPart() meant for those who cannot read in html???
 				$message->addPart('Thanks for signing your company up with Crumbtrail. Please confirm your email by clicking on this link. Once you have confirmed your email, Crumbtrail admins can get to work on verifying your business and approving you to use the app. You will recieve an email when you have been approved.  ', 'text/plain');
