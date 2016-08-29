@@ -29,8 +29,7 @@ try {
 	//determine which HTTP method was used
 	$method = array_key_exists("HTTP_x_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
-	//sanitize input
-	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);//do not need
+	//sanitize input deleted
 
 	//handle POST request
 	if($method === "POST") {
@@ -77,8 +76,6 @@ try {
 			$reply->status = 200;
 			$reply->message = "Successfully logged in";
 		} else {
-			throw(new InvalidArgumentException("email or password is invalid", 401));
-		} else{ //todo why is this red??
 			throw(new InvalidArgumentException("email or password is invalid", 401));
 		}
 	} else {

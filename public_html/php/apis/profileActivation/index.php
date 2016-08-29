@@ -32,7 +32,7 @@ try {
 	//determine which HTTP method was used. first one is the method you use, second is the fall back if the first is not available
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
-	//sanitize input
+	//sanitize input todo: I added these to sanitize in case i need a put, is that correct?
 	$profileId = filter_input(INPUT_GET, "profileId",  FILTER_VALIDATE_INT);
 	$profilePassword = filter_input(INPUT_GET, "profilePassword", FILTER_SANITIZE_STRING);
 	$confirmProfilePassword = filter_input(INPUT_GET, "confirmProfilePassword", FILTER_SANITIZE_STRING);
@@ -52,14 +52,14 @@ try {
 			throw(new InvalidArgumentException("Account has already been activated", 404));
 		}
 		if(empty($companyActivationToken)=== true) {
-			//put something here that for the new employee to input their new password and phone number
+			//todo: put something here that for the new employee to input their new password and phone number
 		}else{
 			$company = Company::getCompanyByCompanyActivationToken($pdo, $companyActivationToken);
 			if($company !== null){
 				$reply->data = $company;
 			}
 		}
-	}elseif($method === "PUT"){
+	}elseif($method === "PUT"){ //todo: do i need to add a put method? i want to redirect them to either approve company for new companies, or to change their password for invited employees
 		verifyXsrf();
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
@@ -77,7 +77,7 @@ try {
 		if($requestObject->profilePassword !== $requestObject->confirmProfilePassword) {
 			throw (new InvalidArgumentException("the passwords you provided do not match"));
 	}
-
+//todo: this is all possibly wrong here, or unneeded
 	//retrieve the profile to update
 		$profile = Profile::getProfileByProfileId($pdo, $id);
 		if($profile === null){
@@ -91,16 +91,13 @@ try {
 		//update reply
 		$reply->message = "Profile Updated OK";
 
-		//retrive the company to update
+		//retrieve the company to update
 		$company =  Company::getCompanyByCompanyActivationToken($pdo, $companyActivationToken);
 		if($company === null){
 			throw(new RuntimeException("Company does not exist", 404));
 		}
 }
-//use swiftmailer hereish
-	//api gets profile by profile activation token
-	//update activation token to null when activation link is clicked. that means its activated
-	//same link in same email to approve company activation and profile activation tokens.
+
 	/*----------------------------------swiftmailer code here-------------------------------------------------*/
 
 	/**
@@ -112,7 +109,7 @@ try {
 	 * servers, according to the PIDOMA analysis.
 	 **/
 
-//here do i make an if block saying if companyAccountCreatorId === not empty do this one.
+	//todo: how do i make sure this is only sent to companyAccountCreators whose companyActivationTokens are not yet null?
 	//Create the Transport
 	$transport = Swift_SmtpTransport::newInstance('smtp.example.org', 25); //can add third parameter for SSL encryption. need?
 
@@ -145,12 +142,12 @@ try {
 
 	/*new stuff dylan sent*/
 	//this sshould already have been retrieved earlier on
-	$companyActivationToken = "feeddeadbeefcafe"; //what do i put here?
+	$companyActivationToken = "feeddeadbeefcafe"; //todo: what do i put here?
 
 	//you should use $_SERVER["SCRIPT_NAME"] insteead
 	$scriptPath = $_SERVER["SCRIPT_NAME"];
 	$linkPath = dirname($scriptPath, 2) . "/companyActivation/?companyActivationToken";
-	//do i maybe add the boolean value to this link as well? to be sent to company ActivatioN?
+	//todo: do i maybe add the boolean value to this link as well? to be sent to company ActivatioN?
 	/*end of stuff dylan sent*/
 
 
@@ -168,5 +165,20 @@ try {
 		throw(new RuntimeException("unable to send email"));
 	}
 	/*----------------------------------SwiftMailer Code Ends Here------------------------------------------*/
+}catch(Exception $exception){
+	$reply->status = $exception->getCode();
+	$reply->message = $exception->getMessage();
+	$reply->trace = $exception->getTraceAsString();
+}catch(TypeError $typeError){
+	$reply->status = $typeError->getCode();
+	$reply->message = $typeError->getMessage();
 }
+
+header("Content-type: application/json");
+if($reply->data === null){
+	unset($reply->data);
+}
+
+//encode and return reply to front end caller
+echo json_encode($reply);
 
