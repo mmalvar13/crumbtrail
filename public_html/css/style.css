@@ -3,9 +3,7 @@
 		width: 185px;
 		padding-left:0;
 		padding-right:0;
-
 	}
-
 }
 @media(min-width:768px) {
 	.navbar .navbar-form {
@@ -13,9 +11,16 @@
 	}
 }
 
-.bod-padding{
-	padding-top: 65px;
+@media (max-width: 768px){
+	body{padding-top:70px;
+	}
 }
+
+@media (min-width: 769px){
+	body{padding-top: 60px;
+	}
+}
+
 
 .navbar .navbar-form {
 	padding-top: 0;
@@ -53,5 +58,22 @@
 
 .profile-image{
 	margin-top: 1rem;
+}
+
+.description-box{
+	border: 0.5px solid slategrey;
+
+}
+
+.week-schedule-h3{
+	margin-top: 1rem;
+	margin-bottom:1rem;
+}
+
+.week-description{
+	border: 0.5px solid slategrey;
+	box-sizing: border-box;
+	margin: 2rem;
+	padding: 2rem;
 
 }

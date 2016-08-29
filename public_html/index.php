@@ -37,9 +37,10 @@
 	</head>
 
 	<!-----------------------Beginning of user content--------------------------------->
-	<body class="bod-padding">
+	<body>
 		<header>
-			<div class="navbar navbar-default navbar-fixed-top"
+			<div class="navbar navbar-default navbar-fixed-top">
+				<div class="container">
 					<div class="navbar-header">
 						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 							<span class="icon-bar"></span>
@@ -50,7 +51,7 @@
 						<a class="navbar-brand visible-xs" href="#">CT</a>
 						<form class="navbar-form pull-left" role="search">
 							<div class="input-group">
-								<input type="text" class="form-control" placeholder="What do you seek?">
+								<input type="text" class="form-control" placeholder="Search">
 								<div class="input-group-btn">
 									<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
 								</div>
@@ -62,7 +63,7 @@
 							<li class="active"><a href="#">Home</a></li>
 							<li><a href="#about">See All Trucks</a></li>
 							<li><a href="#contact">Settings</a></li>
-							<li><a href="#contact">Logout</a></li>
+							<li><a href="#contact">Signout</a></li>
 						</ul>
 					</div>
 					<!--/.navbar-collapse -->
@@ -91,6 +92,31 @@
 			</div>
 
 			<!--------------company description-------------->
+			<div class="container description-box">
+				<div class="row text-center">
+					<p>Buccaneer hail-shot haul wind gaff chase guns driver Sink me wherry barque Spanish Main. Driver prow Blimey bowsprit reef grog blossom weigh anchor lad Plate Fleet rope's end. Deadlights interloper rigging booty clipper lateen sail Privateer rum execution dock bounty.</p>
+					<p>Brigantine tender hail-shot gun interloper trysail tack starboard hardtack rigging. Man-of-war yawl sutler skysail brig driver square-rigged barque rope's end bowsprit. Sea Legs keelhaul pinnace ho Spanish Main six pounders overhaul chase gibbet lanyard.</p>
+					<p>Gibbet jib Corsair Privateer pinnace chase guns tack ahoy come about haul wind. Reef six pounders crow's nest Spanish Main scurvy warp schooner Barbary Coast spanker topsail. Wherry fluke Shiver me timbers boatswain quarter topsail Jack Ketch coxswain topmast belay.</p>
+					<hr>
+
+					<!---------days of the week "loose" schedule------------>
+					<h3 class="week-schedule-h3 display-4">Monday</h3>
+					<div><p class="week-description">Extraordinary claims require extraordinary evidence! Finite but unbounded. Birth, explorations take root and flourish Vangelis at the edge of forever made in the interiors of collapsing stars a mote of dust suspended in a sunbeam with pretty stories for which there's little good evidence. Circumnavigated Hypatia finite but unbounded circumnavigated. Bits of moving fluff, ship of the imagination rich in heavy atoms take root and flourish, Hypatia tingling of the spine. A very small stage in a vast cosmic arena.</p></div>
+					<h3 class="week-schedule-h3">Tuesday</h3>
+					<p class="week-description">Extraordinary claims require extraordinary evidence! Finite but unbounded. Birth, explorations take root and flourish Vangelis at the edge of forever made in the interiors of collapsing stars a mote of dust suspended in a sunbeam with pretty stories for which there's little good evidence. Circumnavigated Hypatia finite but unbounded circumnavigated. Bits of moving fluff, ship of the imagination rich in heavy atoms take root and flourish, Hypatia tingling of the spine. A very small stage in a vast cosmic arena.</p>
+					<h3 class="week-schedule-h3">Wednesday</h3>
+					<p class="week-description">Extraordinary claims require extraordinary evidence! Finite but unbounded. Birth, explorations take root and flourish Vangelis at the edge of forever made in the interiors of collapsing stars a mote of dust suspended in a sunbeam with pretty stories for which there's little good evidence. Circumnavigated Hypatia finite but unbounded circumnavigated. Bits of moving fluff, ship of the imagination rich in heavy atoms take root and flourish, Hypatia tingling of the spine. A very small stage in a vast cosmic arena.</p>
+					<h3 class="week-schedule-h3">Thursday</h3>
+					<p class="week-description">Extraordinary claims require extraordinary evidence! Finite but unbounded. Birth, explorations take root and flourish Vangelis at the edge of forever made in the interiors of collapsing stars a mote of dust suspended in a sunbeam with pretty stories for which there's little good evidence. Circumnavigated Hypatia finite but unbounded circumnavigated. Bits of moving fluff, ship of the imagination rich in heavy atoms take root and flourish, Hypatia tingling of the spine. A very small stage in a vast cosmic arena.</p>
+					<h3 class="week-schedule-h3">Friday</h3>
+					<p class="week-description">Extraordinary claims require extraordinary evidence! Finite but unbounded. Birth, explorations take root and flourish Vangelis at the edge of forever made in the interiors of collapsing stars a mote of dust suspended in a sunbeam with pretty stories for which there's little good evidence. Circumnavigated Hypatia finite but unbounded circumnavigated. Bits of moving fluff, ship of the imagination rich in heavy atoms take root and flourish, Hypatia tingling of the spine. A very small stage in a vast cosmic arena.</p>
+					<h3 class="week-schedule-h3">Saturday</h3>
+					<p class="week-description">Extraordinary claims require extraordinary evidence! Finite but unbounded. Birth, explorations take root and flourish Vangelis at the edge of forever made in the interiors of collapsing stars a mote of dust suspended in a sunbeam with pretty stories for which there's little good evidence. Circumnavigated Hypatia finite but unbounded circumnavigated. Bits of moving fluff, ship of the imagination rich in heavy atoms take root and flourish, Hypatia tingling of the spine. A very small stage in a vast cosmic arena.</p>
+					<h3 class="week-schedule-h3">Sunday</h3>
+					<p class="week-description">Extraordinary claims require extraordinary evidence! Finite but unbounded. Birth, explorations take root and flourish Vangelis at the edge of forever made in the interiors of collapsing stars a mote of dust suspended in a sunbeam with pretty stories for which there's little good evidence. Circumnavigated Hypatia finite but unbounded circumnavigated. Bits of moving fluff, ship of the imagination rich in heavy atoms take root and flourish, Hypatia tingling of the spine. A very small stage in a vast cosmic arena.</p>
+				</div>
+
+			</div>
 
 		</div>
 
