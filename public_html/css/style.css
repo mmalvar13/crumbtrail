@@ -12,6 +12,11 @@
 		width: 250px;
 	}
 }
+
+.bod-padding{
+	padding-top: 65px;
+}
+
 .navbar .navbar-form {
 	padding-top: 0;
 	padding-bottom: 0;
@@ -23,17 +28,30 @@
 }
 
 .company-name{
-	margin-top: 7rem;
+
 	text-align: center;
 	border: 0.15rem solid lightgray;
 	border-radius: 2%;
+	margin-top:0;
 }
 
 .serving-icon{
-	border: 1px solid black;
+	border: 0.5px solid black;
 	border-radius: 100%;
-	width: 2rem;
-	height: 2rem;
+	width: 2.5rem;
+	height: 2.5rem;
 	background: green;
-	display: inline-block;
+	/*display: inline-flex;*/
+	/*position: relative;*/
+	/*padding-top: 50%;*/
+	transform: translateY(17.5%);
+}
+
+.locate-btn{
+	width: 10rem;
+}
+
+.profile-image{
+	margin-top: 1rem;
+
 }

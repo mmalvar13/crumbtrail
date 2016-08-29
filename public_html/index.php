@@ -37,10 +37,9 @@
 	</head>
 
 	<!-----------------------Beginning of user content--------------------------------->
-	<body>
+	<body class="bod-padding">
 		<header>
-			<div class="navbar navbar-default navbar-fixed-top nav-pad">
-				<div class="container">
+			<div class="navbar navbar-default navbar-fixed-top"
 					<div class="navbar-header">
 						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 							<span class="icon-bar"></span>
@@ -72,16 +71,26 @@
 		</header>
 
 		<!-- Main body-->
-		<div class="container">
+		<div class="container-fluid">
 <!--			title row-->
 			<div class="row">
 				<h1 class="company-name">Company Name here</h1>
 			</div>
+			<div class="container">
 			<div class="row">
-				<div class="col-xs-3 serving-icon"></div>
-				<div class="col-xs-5">Serving Now!</div>
-
+				<div class="col-xs-3"><div class="serving-icon"></div> </div>
+				<div class="col-xs-4 text-center"><h5>Serving Now!</h5></div>
+				<button type="button" class="btn btn-warning pull-right locate-btn">Locate</button>
 			</div>
+			</div>
+			<!-------------company image-------------------->
+			<div class="container">
+				<div class="row">
+<img src="https://hd.unsplash.com/photo-1428542244207-0aaec316e609" class="img-responsive img-thumbnail profile-image">
+				</div>
+			</div>
+
+			<!--------------company description-------------->
 
 		</div>
 
