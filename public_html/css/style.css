@@ -1,8 +1,38 @@
-.nav-search{
-	text-align: center;
+@media(max-width:767px) {
+	.navbar .navbar-form {
+		width: 185px;
+		padding-left:0;
+		padding-right:0;
+
+	}
+
+}
+@media(min-width:768px) {
+	.navbar .navbar-form {
+		width: 250px;
+	}
+}
+.navbar .navbar-form {
+	padding-top: 0;
+	padding-bottom: 0;
+	margin-right: 0;
+	margin-left: 0;
+	border: 0;
+	-webkit-box-shadow: none;
+	box-shadow: none;
 }
 
-@media (min-width: 400px) {
+.company-name{
+	margin-top: 7rem;
+	text-align: center;
+	border: 0.15rem solid lightgray;
+	border-radius: 2%;
+}
 
-	.nav-search { display: inline; }
+.serving-icon{
+	border: 1px solid black;
+	border-radius: 100%;
+	width: 2rem;
+	height: 2rem;
+	background: green;
 }

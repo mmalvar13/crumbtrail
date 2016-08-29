@@ -62,22 +62,22 @@ try {
 			if($company !== null) {
 				$reply->data = $company;
 			}
-		} elseif((empty($id)) === false) {
+		} elseif((empty($companyAccountCreatorId)) === false) {
 			$company = Company::getCompanyByCompanyAccountCreatorId($pdo, $companyAccountCreatorId);
 			if($company !== null) {
 				$reply->data = $company;
 			}
-		} elseif((empty($id)) === false) {
+		} elseif((empty($companyName)) === false) {
 			$company = Company::getCompanyByCompanyName($pdo, $companyName);
 			if($company !== null) {
 				$reply->data = $company;
 			}
-		} elseif((empty($id)) === false) {
+		} elseif((empty($companyMenuText)) === false) {
 			$company = Company::getCompanyByCompanyMenuText($pdo, $companyMenuText);
 			if($company !== null) {
 				$reply->data = $company;
 			}
-		} elseif((empty($id)) === false) {
+		} elseif((empty($companyDescription)) === false) {
 			$company = Company::getCompanyByCompanyDescription($pdo, $companyDescription);
 			if($company !== null) {
 				$reply->data = $company;
