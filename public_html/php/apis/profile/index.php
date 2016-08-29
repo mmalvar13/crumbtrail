@@ -4,19 +4,15 @@
  * API for the Profile class
  * @author Kevin Lee Kirk
  *
- *  This API does not need a POST, since other APIs will handle the creation of a new profile.
- *
- *  Set up to make the all of the profile information confidential,
- *  i.e. allow only the person who created a profile to view or modify that profile.
- *
+ *  Profile information is confidential, so allow only the person who created a profile to view or modify that profile.
  *  Attributes involved: profileId, profileName, profileEmail, profilePhone.
  **/
 
 require_once "autoloader.php";
 require_once "/lib/xsrf.php";
-require_once("/etc/apache2/capstone-mysql/encrypted-config.php");   // TODO Check this path.
+require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
-use Edu\Cnm\{Profile};   // TODO Check this path.
+use Edu\Cnm\{Profile};
 
 // Verify the session, start a session if not active.
 if(session_status() !== PHP_SESSION_ACTIVE) {
@@ -31,35 +27,20 @@ $reply->data = null;
 
 try {
 	// Connect to mySQL.
-	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/profile.ini");    // TODO Check this path.
+	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/profile.ini");
 
 	// Determine which HTTP method was used: GET, (POST), PUT, or DELETE.
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
 	// Sanitize the input.
-	$id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);
-	$name = filter_input(INPUT_GET, "name", FILTER_SANITIZE_STRING);
-	$email = filter_input(INPUT_GET, "email", FILTER_SANITIZE_EMAIL);
-	$phone = filter_input(INPUT_GET, "phone", FILTER_SANITIZE_STRING);
+	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
+	$profileName = filter_input(INPUT_GET, "profileName", FILTER_SANITIZE_STRING);
+	$profileEmail = filter_input(INPUT_GET, "profileEmail", FILTER_SANITIZE_EMAIL);
+	$profilePhone = filter_input(INPUT_GET, "profilePhone", FILTER_SANITIZE_STRING);
 
 	// Make sure the id (primary key) is valid for the methods that require it.
 	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
 		throw(new InvalidArgumentException("ID cannot be empty or negative", 405));
-	}
-
-	// Make sure the profile name is valid for the methods that require it.
-	if(($method === "DELETE" || $method === "PUT") && (empty($name) === true)) {
-		throw(new InvalidArgumentException("Name cannot be empty or negative", 405));
-	}
-
-	// Make sure the profile email is valid for the methods that require it.
-	if(($method === "DELETE" || $method === "PUT") && (empty($email) === true)) {
-		throw(new InvalidArgumentException("Email cannot be empty or negative", 405));
-	}
-
-	// Make sure the profile phone is valid for the methods that require it.
-	if(($method === "DELETE" || $method === "PUT") && (empty($phone) === true)) {
-		throw(new InvalidArgumentException("Name cannot be empty or negative", 405));
 	}
 
 	/**
@@ -72,32 +53,31 @@ try {
 		if($method === "GET") {
 			setXsrfCookie();
 
-			// Get a specific profile by profile Id, then update the reply.
+			// Get a specific profile, or all profiles, then update the reply.
 			if(empty($id) === false) {
 				$profile = Profile::getProfileByProfileId($pdo, $id);
 				if($profile !== null) {
 					$reply->data = $profile;
 				}
-
-				// Get a profile by profile Name, then update the reply.
-			} elseif(empty($name) === false) {
-				$name = Profile::getProfileByProfileName($pdo, $name);
+			} elseif(empty($profileName) === false) {							// TODO Check these elseif() lines.
+				$profile = Profile::getProfileByProfileName($pdo, $profileName);
 				if($profile !== null) {
 					$reply->data = $profile;
 				}
-
-				// Get a profile by profile Email, then update the reply.
-			} elseif(empty($name) === false) {
-				$email = Profile::getProfileByProfileEmail($pdo, $email);
+			} elseif(empty($profileEmail) === false) {
+				$profile = Profile::getProfileByProfileEmail($pdo, $profileEmail);
 				if($profile !== null) {
 					$reply->data = $profile;
 				}
-
-				// Get all profiles, then update the reply.
+			} elseif(empty($profilePhone) === false) {
+				$profile = Profile::getProfileByProfilePhone($pdo, $profilePhone);
+				if($profile !== null) {
+					$reply->data = $profile;
+				}
 			} else {
-				$profile = Profile::getAllProfile($pdo);
-				if($profile !== null) {
-					$reply->data = $profile;
+				$profiles = Profile::getAllProfiles($pdo);
+				if($profiles !== null) {
+					$reply->data = $profiles;
 				}
 			}
 
@@ -107,19 +87,29 @@ try {
 			$requestContent = file_get_contents("php://input");
 			$requestObject = json_decode($requestContent);
 
-			//  Make sure profileId is available.
-			if(empty($requestObject->profileId) === true) {
-				throw(new \InvalidArgumentException ("No Profile ID.", 405));
-			}
-
-			// Make sure profileName is available.
+			// Make sure profileName is available (required field).
 			if(empty($requestObject->profileName) === true) {
 				throw(new \InvalidArgumentException ("No content for Profile name.", 405));
 			}
-
-			// Make sure profileEmail is available.
+			// Make sure profileEmail is available (required field).
 			if(empty($requestObject->profileEmail) === true) {
 				throw(new \InvalidArgumentException ("No content for Profile email.", 405));
+			}
+			// Make sure profilePhone is available (required field).
+			if(empty($requestObject->profilePhone) === true) {
+				throw(new \InvalidArgumentException ("No content for Profile phone.", 405));
+			}
+			// Make sure profileType is available (required field).
+			if(empty($requestObject->profileType) === true) {
+				throw(new \InvalidArgumentException ("No content for Profile type.", 405));
+			}
+			// Make sure profileSalt is available (required field).
+			if(empty($requestObject->profileSalt) === true) {
+				throw(new \InvalidArgumentException ("No content for Profile salt.", 405));
+			}
+			// Make sure profileHash is available (required field).
+			if(empty($requestObject->profileHash) === true) {
+				throw(new \InvalidArgumentException ("No content for Profile hash.", 405));
 			}
 
 			// Retrieve the profile that will be updated in this PUT.
@@ -128,10 +118,14 @@ try {
 				throw(new RuntimeException("The profile does not exist", 404));
 			}
 
-			// Update profileName, profileEmail and profilePhone in this profile.
+			// Update these attributes in this profile.
 			$profile->setProfileName($requestObject->profileName);
 			$profile->setProfileEmail($requestObject->profileEmail);
 			$profile->setProfilePhone($requestObject->profilePhone);
+			$profile->setProfileType($requestObject->profileType);
+			$profile->setProfileSalt($requestObject->profileSalt);
+			$profile->setProfileHash($requestObject->profileHash);
+
 			$profile->update($pdo);
 
 			// Update the reply message.
@@ -151,13 +145,13 @@ try {
 			$profile->delete($pdo);
 			$reply->message = "Profile deleted OK";
 
-// ------------ Throw exception if no legitimate $method --------------
+// ------------ Throw exception if no valid HTTP method request has been made. ---------
 		} else {
 			throw (new InvalidArgumentException("Invalid HTTP method request"));
 		}
 	}
 
-// Here's the catches: Update the reply error message with the exception information.
+// -----------  Update the reply error message with the exception information.  --------
 } catch (Exception $exception) {
 	$reply->status = $exception->getCode();
 	$reply->message = $exception->getMessage();
@@ -167,8 +161,7 @@ try {
 	$reply->message = $typeError->getMessage();
 }
 
-
-// Encode and return the reply to the frontend caller.
+// ---------  Encode and return the reply to the frontend caller.  ---------------------
 header("Content-type: application/json");
 if($reply->data === null) {
 	unset($reply->data);
