@@ -35,4 +35,5 @@
 	width: 2rem;
 	height: 2rem;
 	background: green;
+	display: inline-block;
 }

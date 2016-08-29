@@ -72,18 +72,15 @@
 		</header>
 
 		<!-- Main body-->
-		<div class="container-fluid">
+		<div class="container">
 <!--			title row-->
 			<div class="row">
 				<h1 class="company-name">Company Name here</h1>
 			</div>
 			<div class="row">
-				<div class="col-xs-6">
-					<div class="serving-icon"></div>
-					<h5>SERVING NOW</h5>
+				<div class="col-xs-3 serving-icon"></div>
+				<div class="col-xs-5">Serving Now!</div>
 
-				</div>
-				<div col-xs-6></div>
 			</div>
 
 		</div>
