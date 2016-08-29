@@ -60,11 +60,10 @@ try {
 		}else {
 			throw(new InvalidArgumentException("Account has already been activated", 404));
 		}
-		if(empty($companyActivationToken)=== false) {
-			$company = Company::getCompanyByCompanyActivationToken($pdo, $companyActivationToken);
+		if(empty($companyActivationToken)=== true) {
+			//put something here that for the new employee to input their new password and phone number
 		}else{
-			throw(new InvalidArgumentException("company Activation token does not exist, company account has not been created"));
-
+			$company = Company::getCompanyByCompanyActivationToken($pdo, $companyActivationToken);
 
 		//do i add a check to see if profileType is "O"?
 		}
