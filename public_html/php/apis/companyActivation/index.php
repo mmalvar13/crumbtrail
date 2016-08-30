@@ -21,6 +21,7 @@ use Edu\Cnm\Crumbtrail\{Company};
 if(session_status() !== PHP_SESSION_ACTIVE) {
 	session_start();
 }
+
 // Prepare an empty $reply "bucket".
 $reply = new stdClass();
 $reply->status = 200;
