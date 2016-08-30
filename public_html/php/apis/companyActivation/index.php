@@ -27,18 +27,6 @@ $reply->status = 200;
 $reply->data = null;
 
 try {
-	if($companyActivationToken !== null) {
-		$companyActivationToken = null;
-	}
-} catch (Exception $exception) {
-	$reply->status = $exception->getCode();
-	$reply->message = $exception->getMessage();
-} catch (TypeError $typeError) {
-	$reply->status = $typeError->getCode();
-	$reply->message = $typeError->getMessage();
-}
-
-try {
 	// Get the mySQL connection.
 	$pdo = connectToEncyptedMySQL("/etc/apache2/capstone-mysql/companyActivation.ini"); // TODO Check path.
 
@@ -53,6 +41,19 @@ try {
 		$company = Company::getCompanyByCompanyId($pdo, $companyId);
 		$companyEmail = Company($pdo, $companyEmail);
 		$companyApproved = Company($pdo, $companyApproved);
+		$companyActivationToken = Company($pdo, $companyActivationToken);
+	}
+
+		try {
+			if($companyActivationToken !== null) {
+				$companyActivationToken = null;
+			}
+		} catch (Exception $exception) {
+			$reply->status = $exception->getCode();
+			$reply->message = $exception->getMessage();
+		} catch (TypeError $typeError) {
+			$reply->status = $typeError->getCode();
+			$reply->message = $typeError->getMessage();
 		}
 
 	} catch (Exception $exception) {
