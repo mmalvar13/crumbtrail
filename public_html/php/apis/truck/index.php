@@ -29,7 +29,7 @@ $reply->status = 200;
 try {
 	//grab mySQL connection
 
-	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/truck.ini");
+	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/crumbtrail.ini");
 
 	//determine which HTTP method was used, what does the ? mean??
 	$method = array_key_exists("HTTP_X_HTTP-METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
