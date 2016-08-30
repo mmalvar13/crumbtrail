@@ -4,7 +4,7 @@
  * API for the Profile class
  * @author Kevin Lee Kirk
  *
- *  Profile information is confidential, so allow only the person who created a profile to view or modify that profile.
+ *  Profile information is confidential; only the person who created a profile can view or modify that profile.
  *  Attributes involved: profileId, profileName, profileEmail, profilePhone.
  **/
 
