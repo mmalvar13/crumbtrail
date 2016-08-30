@@ -1,12 +1,12 @@
 <?php
 
-require_once (dirname(__DIR__, 2) . "/classes/autoload.php");//need to add these
-require_once (dirname(__DIR__,2) . "/lib/xsrf.php");
+require_once(dirname(__DIR__, 2) . "/classes/autoload.php");//need to add these
+require_once(dirname(__DIR__, 2) . "/lib/xsrf.php");
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 require_once (dirname(__DIR__,4) . "/vendor/autoload.php"); //idk, composer.json. this is just what the documentation had.
 
 
-use Edu\Cnm\Crumbtrail\{Company, Profile};
+use Edu\Cnm\Crumbtrail\{Company, Employ, Profile};
 
 /**
  * api for signUp
@@ -146,6 +146,10 @@ try {
 
 		$company->insert($pdo);
 
+		//create employ
+		$employ = new Employ($company->getCompanyId(), $profile->getProfileId());
+		$employ->insert($pdo);
+
 		//update reply
 		$reply->message = "We have sent you an email to the personal address you have provided. Please confirm your account by clicking on the link in that email.";
 
@@ -173,7 +177,7 @@ try {
 		$message = Swift_Message::newInstance();//to set a subject line you can pass it as a parameter in newInstance or set it afterwards. I chose to set it afterwards. Same with body.
 
 		//attach a sender to the message
-		$message->setFrom(['admin@crumbtrail.com'=> 'Crumbtrail Admin']);//is this the same as setFrom(array('someaddress'=>'name'));
+		$message->setFrom(['malvarez30@cnm.edu'=> 'Crumbtrail Admin']);//is this the same as setFrom(array('someaddress'=>'name'));
 
 		//attach recipients to the message. you can add
 		$recipients = ['originalAccountCreator@foodtruck.org' => 'Truckina McTruckerson'];
@@ -192,12 +196,10 @@ try {
 
 		//building the profile activation link. this is the link that will be clicked on to confirm the companyAccountCreators email address and set their profileActivationToken to null. This triggers an email (over in profileActivation API) to be send to crumbtrail admins to check out this businesses credentials.
 		/*new stuff dylan sent*/
-		//this sshould already have been retrieved earlier on
-		$profileActivationToken = "feeddeadbeefcafe"; //what do i put here?
 
 		//you should use $_SERVER["SCRIPT_NAME"] insteead
 		$scriptPath = $_SERVER["SCRIPT_NAME"];
-		$linkPath = dirname($scriptPath, 2) . "/profileActivation/?profileActivationToken"; //I changed the path to signUp/profileActivation because $profileActivationToken is generated here. is this correct???
+		$linkPath = dirname($scriptPath, 2) . "/profileActivation/?profileActivationToken=$profileActivationToken"; //I changed the path to signUp/profileActivation because $profileActivationToken is generated here. is this correct???
 		/*end of stuff dylan sent*/
 
 

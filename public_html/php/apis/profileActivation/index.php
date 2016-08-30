@@ -6,7 +6,9 @@ require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 require_once(dirname(__DIR__, 4) . "/vendor/autoload.php");
 //do i add something here for swiftmailer?
 
-use Edu\Cnm\Crumbtrail\{Profile, Company};
+use Edu\Cnm\Crumbtrail\{
+	Company, Employ, Profile
+};
 
 /**
  * api for Profile Activation. This sets profileActivationTokens to null, and uses swiftmailer to send an email to Crumbtrail admins, notifying them that a new person has activated an account and their credentials should be checked.
@@ -33,7 +35,7 @@ try {
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
 	//sanitize input todo: I added these to sanitize in case i need a put, is that correct?
-	$profileId = filter_input(INPUT_GET, "profileId",  FILTER_VALIDATE_INT);
+	$profileId = filter_input(INPUT_GET, "profileId", FILTER_VALIDATE_INT);
 	$profilePassword = filter_input(INPUT_GET, "profilePassword", FILTER_SANITIZE_STRING);
 	$confirmProfilePassword = filter_input(INPUT_GET, "confirmProfilePassword", FILTER_SANITIZE_STRING);
 	$companyApproved = filter_input(INPUT_GET, "companyApproved", FILTER_VALIDATE_BOOLEAN);
@@ -47,135 +49,105 @@ try {
 
 		if($profileActivationToken !== null) {
 			$profile = Profile::getProfileByProfileActivationToken($pdo, $profileActivationToken);
+			//verify that the profile itself is not null. what if its an invalid activation token. if profile === null throw exception.
 			$profile->setProfileActivationToken(null);
-		}else {
+			$profile->update($pdo);
+		} else {
 			throw(new InvalidArgumentException("Account has already been activated", 404));
 		}
-		if(empty($companyActivationToken)=== true) {
-			//todo: put something here that for the new employee to input their new password and phone number
-		}else{
-			$company = Company::getCompanyByCompanyActivationToken($pdo, $companyActivationToken);
-			if($company !== null){
-				$reply->data = $company;
+		if(empty($companyId) === false) {
+			$employ = Employ::getEmployByEmployCompanyIdAndEmployProfileId($pdo, $employCompanyId, $employProfileId);
+			if($employ === null) {
+				throw (new \InvalidArgumentException("this relationship does not exist"));
+			}
+			$company = Company::getCompanyByCompanyId($pdo, $companyId);
+			if($company === null) {
+				throw(new \InvalidArgumentException("this company does not exist"));
+			}
+			$companyActivationToken = $company->getCompanyActivationToken();
+			if($companyActivationToken === null) {
+				$reply->redirectUrl = "something/here/angular";
+			} else {
+				if($company->getCompanyAccountCreatorId() === $profile->getProfileId()) {
+					/*----------------------------------swiftmailer code here-------------------------------------------*/
+
+					/**
+					 * To send a message with swiftmailer, you create a transport, use it to create the Mailer, and then y ou use the
+					 * Mailer to send the message
+					 *
+					 * We are using the SMTP Transport Type. A transport is the component that actually does the sending.
+					 * SMTP (Simple Message Transfer Protocol). It is the most commonly used Transport because it will work on 99% of web
+					 * servers, according to the PIDOMA analysis.
+					 **/
+
+					//todo: how do i make sure this is only sent to companyAccountCreators whose companyActivationTokens are not yet null?
+					//Create the Transport
+					$transport = Swift_SmtpTransport::newInstance('smtp.example.org', 25); //can add third parameter for SSL encryption. need?
+
+					//Create the Mailer using your created Transport
+					$mailer = Swift_Mailer::newInstance($transport);
+
+					//Create a message
+					$message = Swift_Message::newInstance();//to set a subject line you can pass it as a parameter in newInstance or set it afterwards. I chose to set it afterwards. Same with body.
+
+					//attach a sender to the message
+					$message->setFrom(['admin@crumbtrail.com' => 'Crumbtrail Admin']);//is this the same as setFrom(array('someaddress'=>'name'));
+
+					//attach recipients to the message. you can add
+					$recipients = ['admin@crumbtrail.org' => 'Admin who needs to verify business license'];
+					$message->setTo($recipients);//we will just send to one person.
+
+					//attach a subject line to the message
+					$message->setSubject("Someone has activated their profile and need you to verify their business credentials");
+
+					//the body of the message-seen when the user opens the message
+					$message->setBody('Crumbtrail  Admin, a user has confirmed their email and activated their profile. Please take a look at their business license and health permit to verify their business. Once you have made the decision to confirm or deny them, click on this link. This link will set their companyActivationToken to null, and allow you to choose whether you confirm or deny', 'text/html');
+
+					//add alternative parts with addPart() for those who can only read plaintext or dont wwant to view in html
+					$message->addPart('Crumbtrail  Admin, a user has confirmed their emai and activated their profile. Please take a look at their business license and health permit to verify their business. One you have made the decision to confirm or deny them, click on this link. This link will set their companyActivationToken to null, and allow you to choose whether you confirm or deny ', 'text/plain');
+					$message->setReturnPath('bounces@address.tld');//return path address specifies where bounce notifications should be sent
+
+
+					//building the activation link that can travel to another server and still work. this is the link that will be clicked on to confirm. maybe this is not actually h ere, but in companyActivation/ProfileActivation/EmployeeActivation.
+					//this is from breadbasket. must be changed to reflect crumbtrail stuff.
+
+					/*new stuff dylan sent*/
+
+					//you should use $_SERVER["SCRIPT_NAME"] insteead
+					$scriptPath = $_SERVER["SCRIPT_NAME"];
+					$linkPath = dirname($scriptPath, 2) . "/companyActivation/?companyActivationToken=$companyActivationToken";
+					/*end of stuff dylan sent*/
+
+
+					//Send the message
+					$numSent = $mailer->send($message);
+
+					printf("Sent %d messages\n", $numSent);
+
+					/**
+					 * the send method returns the number of recipients that accepted the Email
+					 * so if the number attempted is not the number accepted, this is the exception (number attempted should only be one at a time)
+					 **/
+					if($numSent !== count($recipients)) {
+						//the $failedRecipients parameter passed in the send() method now contains an array of the Emails that failed
+						throw(new RuntimeException("unable to send email"));
+					}
+					/*----------------------------------SwiftMailer Code Ends Here--------------------------------------*/
+				}
 			}
 		}
-	}elseif($method === "PUT"){ //todo: do i need to add a put method? i want to redirect them to either approve company for new companies, or to change their password for invited employees
-		verifyXsrf();
-		$requestContent = file_get_contents("php://input");
-		$requestObject = json_decode($requestContent);
-
-		//make sure content is available
-		if(empty($requestObject->companyApproved)=== true){
-			throw(new InvalidArgumentException("Must approve or deny company", 405));
-		}
-		if(empty($requestObject->profilePassword)=== true){
-			throw(new InvalidArgumentException("Must enter new password", 405));
-		}
-		if(empty($requestObject->confirmProfilePassword)=== true){
-			throw(new InvalidArgumentException("Must confirm password", 405));
-		}
-		if($requestObject->profilePassword !== $requestObject->confirmProfilePassword) {
-			throw (new InvalidArgumentException("the passwords you provided do not match"));
 	}
-//todo: this is all possibly wrong here, or unneeded
-	//retrieve the profile to update
-		$profile = Profile::getProfileByProfileId($pdo, $id);
-		if($profile === null){
-			throw(new RuntimeException("Profile does not exist", 404));
-		}
-		//put password into the profile and update
-		$profile->setProfileHash($requestObject->profileHash);
-		$profile->setProfileSalt($requestObject->profileSalt);
-		$profile->update($pdo);
-
-		//update reply
-		$reply->message = "Profile Updated OK";
-
-		//retrieve the company to update
-		$company =  Company::getCompanyByCompanyActivationToken($pdo, $companyActivationToken);
-		if($company === null){
-			throw(new RuntimeException("Company does not exist", 404));
-		}
-}
-
-	/*----------------------------------swiftmailer code here-------------------------------------------------*/
-
-	/**
-	 * To send a message with swiftmailer, you create a transport, use it to create the Mailer, and then y ou use the
-	 * Mailer to send the message
-	 *
-	 * We are using the SMTP Transport Type. A transport is the component that actually does the sending.
-	 * SMTP (Simple Message Transfer Protocol). It is the most commonly used Transport because it will work on 99% of web
-	 * servers, according to the PIDOMA analysis.
-	 **/
-
-	//todo: how do i make sure this is only sent to companyAccountCreators whose companyActivationTokens are not yet null?
-	//Create the Transport
-	$transport = Swift_SmtpTransport::newInstance('smtp.example.org', 25); //can add third parameter for SSL encryption. need?
-
-	//Create the Mailer using your created Transport
-	$mailer = Swift_Mailer::newInstance($transport);
-
-	//Create a message
-	$message = Swift_Message::newInstance();//to set a subject line you can pass it as a parameter in newInstance or set it afterwards. I chose to set it afterwards. Same with body.
-
-	//attach a sender to the message
-	$message->setFrom(['admin@crumbtrail.com' => 'Crumbtrail Admin']);//is this the same as setFrom(array('someaddress'=>'name'));
-
-	//attach recipients to the message. you can add
-	$recipients = ['admin@crumbtrail.org' => 'Admin who needs to verify business license'];
-	$message->setTo($recipients);//we will just send to one person.
-
-	//attach a subject line to the message
-	$message->setSubject("Someone has activated their profile and need you to verify their business credentials");
-
-	//the body of the message-seen when the user opens the message
-	$message->setBody('Crumbtrail  Admin, a user has confirmed their email and activated their profile. Please take a look at their business license and health permit to verify their business. Once you have made the decision to confirm or deny them, click on this link. This link will set their companyActivationToken to null, and allow you to choose whether you confirm or deny', 'text/html');
-
-	//add alternative parts with addPart() for those who can only read plaintext or dont wwant to view in html
-	$message->addPart('Crumbtrail  Admin, a user has confirmed their emai and activated their profile. Please take a look at their business license and health permit to verify their business. One you have made the decision to confirm or deny them, click on this link. This link will set their companyActivationToken to null, and allow you to choose whether you confirm or deny ', 'text/plain');
-	$message->setReturnPath('bounces@address.tld');//return path address specifies where bounce notifications should be sent
-
-
-	//building the activation link that can travel to another server and still work. this is the link that will be clicked on to confirm. maybe this is not actually h ere, but in companyActivation/ProfileActivation/EmployeeActivation.
-	//this is from breadbasket. must be changed to reflect crumbtrail stuff.
-
-	/*new stuff dylan sent*/
-	//this sshould already have been retrieved earlier on
-	$companyActivationToken = "feeddeadbeefcafe"; //todo: what do i put here?
-
-	//you should use $_SERVER["SCRIPT_NAME"] insteead
-	$scriptPath = $_SERVER["SCRIPT_NAME"];
-	$linkPath = dirname($scriptPath, 2) . "/companyActivation/?companyActivationToken";
-	//todo: do i maybe add the boolean value to this link as well? to be sent to company ActivatioN?
-	/*end of stuff dylan sent*/
-
-
-	//Send the message
-	$numSent = $mailer->send($message);
-
-	printf("Sent %d messages\n", $numSent);
-
-	/**
-	 * the send method returns the number of recipients that accepted the Email
-	 * so if the number attempted is not the number accepted, this is the exception (number attempted should only be one at a time)
-	 **/
-	if($numSent !== count($recipients)) {
-		//the $failedRecipients parameter passed in the send() method now contains an array of the Emails that failed
-		throw(new RuntimeException("unable to send email"));
-	}
-	/*----------------------------------SwiftMailer Code Ends Here------------------------------------------*/
-}catch(Exception $exception){
+} catch(Exception $exception) {
 	$reply->status = $exception->getCode();
 	$reply->message = $exception->getMessage();
 	$reply->trace = $exception->getTraceAsString();
-}catch(TypeError $typeError){
+} catch(TypeError $typeError) {
 	$reply->status = $typeError->getCode();
 	$reply->message = $typeError->getMessage();
 }
 
 header("Content-type: application/json");
-if($reply->data === null){
+if($reply->data === null) {
 	unset($reply->data);
 }
 
