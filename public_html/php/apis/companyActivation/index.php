@@ -38,10 +38,11 @@ try {
 
 	$companyActivationToken = filter_input(INPUT_GET, "companyActivationToken", FILTER_SANITIZE_STRING);
 
-	// Only accept a GET request.  Catch all other methods and exceptions.
-	if($method === "GET") {
-		//set XSRF cookie
-		setXsrfCookie();
+	// Only accept a POST request.  Catch all other methods and exceptions.
+	if($method === "POST") {
+		verifyXsrf();
+		$requestContent = file_get_contents("php://input");
+		$requestObject = json_decode($requestContent);
 
 		$company = Company::getCompanyByCompanyActivationToken($pdo, $companyActivationToken);
 
@@ -57,6 +58,7 @@ try {
 }
 
 // check comActTok not null, then set to null
+//Angular will send us the companyApproved
 
 if($requestObject->companyApproved === null) {
 	throw(new \RuntimeException('company has not been approved yet'));
