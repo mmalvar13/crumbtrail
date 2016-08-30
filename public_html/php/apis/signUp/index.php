@@ -1,9 +1,10 @@
 <?php
 
-require_once (dirname(__DIR__, 2)) . "/classes/autoload.php";//need to add these
-require_once (dirname(__DIR__, 2)) . "/lib/xsrf.php";
+require_once (dirname(__DIR__, 2) . "/classes/autoload.php");//need to add these
+require_once (dirname(__DIR__,2) . "/lib/xsrf.php");
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
-require_once (dirname(__DIR__,2)) . "lib/swift_required.php"; //idk, composer.json. this is just what the documentation had.
+require_once (dirname(__DIR__,4) . "/vendor/autoload.php"); //idk, composer.json. this is just what the documentation had.
+
 
 use Edu\Cnm\Crumbtrail\{Company, Profile};
 
