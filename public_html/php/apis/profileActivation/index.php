@@ -36,8 +36,6 @@ try {
 
 	//sanitize input todo: I added these to sanitize in case i need a put, is that correct?
 	$profileId = filter_input(INPUT_GET, "profileId", FILTER_VALIDATE_INT);
-	$profilePassword = filter_input(INPUT_GET, "profilePassword", FILTER_SANITIZE_STRING);
-	$confirmProfilePassword = filter_input(INPUT_GET, "confirmProfilePassword", FILTER_SANITIZE_STRING);
 	$companyApproved = filter_input(INPUT_GET, "companyApproved", FILTER_VALIDATE_BOOLEAN);
 	$companyId = filter_input(INPUT_GET, "companyId", FILTER_VALIDATE_INT);
 
