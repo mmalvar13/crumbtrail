@@ -44,59 +44,63 @@ try {
 		$requestObject = json_decode($requestContent);
 
 		$company = Company::getCompanyByCompanyActivationToken($pdo, $companyActivationToken);
-	}
 
-if($companyActivationToken !== null) {
-	$company->setCompanyActivationToken(null);
-	$company->update($pdo);
-} else {
-	throw(new InvalidArgumentException("company has already been activated", 404));
-}
+		if($companyActivationToken !== null) {
+			$company->setCompanyActivationToken(null);
+			$company->update($pdo);
+		} else {
+			throw(new InvalidArgumentException("company has already been activated", 404));
+		}
 
-if($requestObject->companyApproved === null) {
-	throw(new \RuntimeException('company has not been approved yet'));
-} else {
+		if($requestObject->companyApproved === null) {
+			throw(new \RuntimeException('company has not been approved yet'));
+		} else {
 
 // ------------ SwiftMailer: send Approve or Deny email to companyAccountCreator ------------
 //Create the Transport
-	$transport = Swift_SmtpTransport::newInstance('localhost', 25);
+			$transport = Swift_SmtpTransport::newInstance('localhost', 25);
 
 //Create the Mailer using your created Transport
-	$mailer = Swift_Mailer::newInstance($transport);
+			$mailer = Swift_Mailer::newInstance($transport);
 
 //Create a message
-	$message = Swift_Message::newInstance();
+			$message = Swift_Message::newInstance();
 
 //attach a sender to the message
-	$message->setFrom(['admin@crumbtrail.com' => 'Crumbtrail Admin']);
+			$message->setFrom(['kkirk4@cnm.edu' => 'Crumbtrail Admin']);
 
 //attach recipients to the message. you can add
-	$recipients = ['companyEmail' => $company->getCompanyEmail()];  //TODO Need 'companyEmail' ???
+			$recipients = ['companyEmail' => $company->getCompanyEmail()];  //TODO Need 'companyEmail' ???
 //$message->setTo($recipients);	//we will just send to one person.
 
 //attach a subject line to the message
-	$message->setSubject("Message from CrumbTrail");
+			$message->setSubject("Message from CrumbTrail");
 
 //the body of the message-seen when the user opens the message
-	if($company->getCompanyApproved() === 1) {
-		$message->setBody('Welcome to CrumbTrail! Your company account has been approved. Please go to crumbtrail.com to add the description and menu of your food truck company.', 'text/html');
-	} else {
-		$message->setBody('CrumbTrail has been unable to verify your business license and/or health permit.', 'text/html');
-	}
+			if($company->getCompanyApproved() === 1) {
+				$message->setBody('Welcome to CrumbTrail! Your company account has been approved. Please go to crumbtrail.com to add the description and menu of your food truck company.', 'text/html');
+			} else {
+				$message->setBody('CrumbTrail has been unable to verify your business license and/or health permit.', 'text/html');
+			}
 
-	//TODO add alternative parts with addPart() for those who can only read plaintext or dont wwant to view in html
+			//TODO add alternative parts with addPart() for those who can only read plaintext or dont wwant to view in html
 
 //Send the message
-	$numSent = $mailer->send($message);
+			$numSent = $mailer->send($message);
 
-	printf("Sent %d messages\n", $numSent);
+			printf("Sent %d messages\n", $numSent);
 
-	if($numSent !== count($recipients)) {
-		//the $failedRecipients parameter passed in the send() method now contains an array of the Emails that failed
-		throw(new RuntimeException("unable to send email"));
-	}
+			if($numSent !== count($recipients)) {
+				//the $failedRecipients parameter passed in the send() method now contains an array of the Emails that failed
+				throw(new RuntimeException("unable to send email"));
+			}
+		}
+	} else {
+		throw(new InvalidArgumentException("Invalid HTTP method request"));
+		}
+
 	/*----------------------------------SwiftMailer Code Ends Here------------------------------------------*/
-}
+
 
 } catch(Exception $exception) {
 		$reply->status = $exception->getCode();
