@@ -48,6 +48,9 @@ try {
 	$companyMenuText = filter_input(INPUT_GET, "companyMenuText", FILTER_SANITIZE_STRING);
 	$companyDescription = filter_input(INPUT_GET, "companyDescription", FILTER_SANITIZE_STRING);
 
+	//HOW DO I MAKE A LINK THROUGH EMPLOY TO ENSURE THAT ThE PROFILE MAKING CHANGES TO A COMPANY OWN THAT COMPANY PROFILE TODO
+
+
 	//make sure the id is valid for methods that require it
 	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
 		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
@@ -95,7 +98,7 @@ try {
 
 
 		//ensure the person making changes is admin or owner and owns that account
-	} elseif((empty($_SESSION["profile"]) === false) && (($_SESSION["profile"]->getProfileId()) === $id) && (($_SESSION["profile"]->getProfileType()) === "a") || (($_SESSION["profile"]->getProfileType())) === "o") {
+	} elseif((empty($_SESSION["profile"]) === false) && (($_SESSION["profile"]->getProfileId()) === $profileId????) && (($_SESSION["profile"]->getProfileType()) === "a") || (($_SESSION["profile"]->getProfileType())) === "o") {
 
 		if(($method === "PUT" || $method === "POST")) {
 			verifyXsrf();

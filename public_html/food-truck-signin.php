@@ -83,7 +83,8 @@
 					<h1>Food Truck Login</h1>
 					<hr class="truck-login-hr">
 					<!-----------LOGIN FORM------------------->
-					<form class="form-signin">
+					<div class="form-wrapper">
+					<form class="truck-login-form">
 						<label for="inputEmail" class="sr-only">Email address</label>
 						<input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
 						<label for="inputPassword" class="sr-only">Password</label>
@@ -96,12 +97,17 @@
 						<button class="btn btn-lg btn-warning btn-block" type="submit">Sign in</button>
 					</form>
 				</div>
+				</div>
 
 				<!----------NEED TO REGISTER SECTION-------->
 				<button type="button" class="btn btn-outline-warning btn-lg btn-block truck-login-register-btn">Need to register your company?</button>
 
 
 			</div>
+
+			<footer class="bfoot">
+
+			</footer>
 		</div>
 	</body>
 
