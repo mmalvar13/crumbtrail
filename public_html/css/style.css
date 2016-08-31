@@ -202,25 +202,29 @@ p {
 	margin-top:0.25rem;
 }
 
-.truck-login-body{
-	text-align: center;
-	margin: 1rem;
-}
+/*.truck-login-body{*/
+	/*text-align: center;*/
+	/*margin: 1rem;*/
+/*}*/
 
-.form-wrapper{
-	text-align: center;
-	display: inline-block;
-}
+/*.form-wrapper{*/
+	/*text-align: center;*/
+	/*display: inline-block;*/
+	/*margin: 0 auto;*/
+/*}*/
 
 .truck-login-form{
 	padding: 15px;
-	margin: 0 auto;
+	/*margin: 0 auto;*/
 }
 
 .truck-login-register-btn{
 	margin-top: 2rem;
 	background: none;
 	border: 0.1rem solid orange;
+
+
+
 
 }
 

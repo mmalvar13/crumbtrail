@@ -78,13 +78,14 @@
 			</header>
 
 			<!--------------------------------MAIN BODY----------------------------------->
-			<div class="container truck-login-body">
+			<div class="container">
 				<div class="row">
-					<h1>Food Truck Login</h1>
+					<h1 class="text-center">Food Truck Login</h1>
 					<hr class="truck-login-hr">
+					</div>
 					<!-----------LOGIN FORM------------------->
-					<div class="form-wrapper">
-					<form class="truck-login-form">
+					<div class="col-md-4 col-md-offset-4">
+					<form>
 						<label for="inputEmail" class="sr-only">Email address</label>
 						<input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
 						<label for="inputPassword" class="sr-only">Password</label>
@@ -100,8 +101,10 @@
 				</div>
 
 				<!----------NEED TO REGISTER SECTION-------->
+			<div class="row">
+			<div class="col-md-8 col-md-offset-2">
 				<button type="button" class="btn btn-outline-warning btn-lg btn-block truck-login-register-btn">Need to register your company?</button>
-
+			</div>
 
 			</div>
 
