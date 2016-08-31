@@ -1,12 +1,14 @@
 <?php
 
+require_once(dirname(__DIR__, 2) . "/classes/autoload.php");//need to add these
+require_once(dirname(__DIR__, 2) . "/lib/xsrf.php");
+require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
+require_once (dirname(__DIR__,4) . "/vendor/autoload.php");
+
+
 use Edu\Cnm\CrumbTrail\{
 	Profile, Company, Truck
 };
-
-require_once "autoloader.php";
-require_once "/lib/xsrf.php";
-require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
 /**
  * api for the Truck class
