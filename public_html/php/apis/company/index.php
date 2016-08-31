@@ -100,7 +100,7 @@ try {
 		//ensure the person making changes is admin or owner and owns that account
 	} elseif((empty($_SESSION["profile"]) === false) && (($_SESSION["profile"]->getProfileId()) === $profileId????) && (($_SESSION["profile"]->getProfileType()) === "a") || (($_SESSION["profile"]->getProfileType())) === "o") {
 
-		if(($method === "PUT" || $method === "POST")) {
+		if(($method === "PUT" || $method === "POST")) { //TODO do we need a POST at all
 			verifyXsrf();
 			$requestContent = file_get_contents("php://input");
 			$requestObject = json_decode($requestContent);
@@ -143,9 +143,9 @@ try {
 			}
 
 			//make sure the company street2 is available (required field)
-			if(empty($requestObject->companyStreet2) === true) {
-				throw(new \InvalidArgumentException("No street2 for company", 405));
-			}
+//			if(empty($requestObject->companyStreet2) === true) {
+//				throw(new \InvalidArgumentException("No street2 for company", 405));
+//			} TODO can we remove this exception throw?
 
 			//make sure the company city is available (required field)
 			if(empty($requestObject->companyCity) === true) {
@@ -269,7 +269,7 @@ try {
 	$reply->message = $typeError->getMessage();
 }
 
-header("Content-type: application/json");
+header("Content-type: application/json"); //TODO what does this do again?
 if($reply->data === null) {
 	unset($reply->data);
 }
