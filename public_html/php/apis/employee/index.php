@@ -128,7 +128,7 @@ try {
 				$message->setFrom(['vchacon8@cnm.edu'=> 'Crumbtrail Admin']);//is this the same as setFrom(array('someaddress'=>'name'));
 
 				//attach recipients to the message. you can add
-				$recipients = [($profile->getProfileEmail()) => $profile->getProfileName()];
+				$recipients = [$profile->getProfileEmail() => $profile->getProfileName()];
 				$message->setTo($recipients);//we will just send to one person.
 				//include owner and employee name here???
 				//attach a subject line to the message
