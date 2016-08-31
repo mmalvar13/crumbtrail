@@ -201,6 +201,7 @@ try {
 				}
 			//}
 		//}
+		//TODO: Do we need this here
 	} elseif($method === "DELETE") {
 		verifyXsrf();
 		//retrieve employ to be deleted
