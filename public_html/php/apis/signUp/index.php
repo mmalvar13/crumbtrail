@@ -188,11 +188,11 @@ try {
 		$message->setSubject('Thanks for signing up with Crumbtrail. Please confirm your email');
 
 		//the body of the message-seen when the user opens the message
-		$message->setBody('Thanks for signing your company up with Crumbtrail. Please confirm your email by clicking on this link. Once you have confirmed your email, Crumbtrail admins can get to work on verifying your business and approving you to use the app. You will recieve an email when you have been approved.  ','text/html');
+		$message->setBody('Thanks for signing your company up with Crumbtrail. Please confirm your email by clicking on this link. Once you have confirmed your email, Crumbtrail admins can get to work on verifying your business and approving you to use the app. You will receive an email when you have been approved.  ','text/html');
 
 			//add alternative parts with addPart() for those who can only read plaintext or dont wwant to view in html
-		$message->addPart('Thanks for signing your company up with Crumbtrail. Please confirm your email by clicking on this link. Once you have confirmed your email, Crumbtrail admins can get to work on verifying your business and approving you to use the app. You will recieve an email when you have been approved.  ', 'text/plain');
-		$message->setReturnPath('bounces@address.tld');//return path address specifies where bounce notifications should be sent
+		$message->addPart('Thanks for signing your company up with Crumbtrail. Please confirm your email by clicking on this link. Once you have confirmed your email, Crumbtrail admins can get to work on verifying your business and approving you to use the app. You will receive an email when you have been approved.  ', 'text/plain');
+		$message->setReturnPath('bounces@address.tld');//return path address specifies where bounce notifications should be sent todo what is thiss for?
 
 
 		//building the profile activation link. this is the link that will be clicked on to confirm the companyAccountCreators email address and set their profileActivationToken to null. This triggers an email (over in profileActivation API) to be send to crumbtrail admins to check out this businesses credentials.
@@ -200,7 +200,7 @@ try {
 
 		//you should use $_SERVER["SCRIPT_NAME"] insteead
 		$scriptPath = $_SERVER["SCRIPT_NAME"];
-		$linkPath = dirname($scriptPath, 2) . "/profileActivation/?profileActivationToken=$profileActivationToken"; //I changed the path to signUp/profileActivation because $profileActivationToken is generated here. is this correct???
+		$linkPath = dirname($scriptPath, 2) . "/profileActivation/?profileActivationToken=$profileActivationToken";
 		/*end of stuff dylan sent*/
 
 
