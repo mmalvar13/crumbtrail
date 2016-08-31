@@ -130,7 +130,7 @@ try {
 			$sanitizedUserImage = imagescale($sanitizedUserImage, 500);
 
 
-			$newImageFileName = "/var/www/html/public_html/crumbtrail/" . hash("ripemd160", microtime(true) + random_int(0, 4200000000)) . $userFileExtension;
+			$newImageFileName = "/var/www/html/public_html/crumbtrail/" . hash("ripemd160", microtime(true) + random_int(0, 4200000000)) . $userFileExtension; //TODO has this path been created yet??
 
 			if($userFileExtension === ".jpg" || $userFileExtension === ".jpeg") {
 				//I think we may needs to add a path to the second argument of imagejpeg()
@@ -142,7 +142,7 @@ try {
 
 			//put new image into the database
 			if($createdProperly === true) {
-				$image = new Image(null, $requestObject->imageCompanyId, $userFileType, $newImageFileName);
+				$image = new Image(null, $requestObject->imageCompanyId, $userFileType, $newImageFileName); //TODO where is the actual image living??
 				$image->insert($pdo);
 			}
 			$reply->message = "Image created A-OK";
