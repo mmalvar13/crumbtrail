@@ -34,7 +34,7 @@ try {
 	//determine which HTTP method was used. first one is the method you use, second is the fall back if the first is not available
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
-	//sanitize input todo: I added these to sanitize in case i need a put, is that correct?
+	//sanitize input
 	$profileId = filter_input(INPUT_GET, "profileId", FILTER_VALIDATE_INT);
 	$companyApproved = filter_input(INPUT_GET, "companyApproved", FILTER_VALIDATE_BOOLEAN);
 	$companyId = filter_input(INPUT_GET, "companyId", FILTER_VALIDATE_INT); //todo so where do we get this companyId from?? is it in the url?
