@@ -31,30 +31,20 @@ $reply->data = null;
 
 try {
 	// Get the mySQL connection.
-	$pdo = connectToEncyptedMySQL("/etc/apache2/capstone-mysql/crumbtrail.ini");
+	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/crumbtrail.ini");
 
 	// Determine which HTTP method was used.
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
 	$companyActivationToken = filter_input(INPUT_GET, "companyActivationToken", FILTER_SANITIZE_STRING);
 
-	// Only accept a POST request.  Catch all other methods and exceptions.
-	if($method === "POST") {
+	if($method === "PUT") {
 		verifyXsrf();
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
 
 		$company = Company::getCompanyByCompanyActivationToken($pdo, $companyActivationToken);
 	}
-
-} catch(Exception $exception) {
-	$reply->status = $exception->getCode();
-	$reply->message = $exception->getMessage();
-
-} catch(TypeError $typeError) {
-	$reply->status = $typeError->getCode();
-	$reply->message = $typeError->getMessage();
-}
 
 if($companyActivationToken !== null) {
 	$company->setCompanyActivationToken(null);
@@ -81,7 +71,7 @@ if($requestObject->companyApproved === null) {
 	$message->setFrom(['admin@crumbtrail.com' => 'Crumbtrail Admin']);
 
 //attach recipients to the message. you can add
-	$recipients = ['companyEmail' => $company->getCompanyEmail()];
+	$recipients = ['companyEmail' => $company->getCompanyEmail()];  //TODO Need 'companyEmail' ???
 //$message->setTo($recipients);	//we will just send to one person.
 
 //attach a subject line to the message
@@ -94,6 +84,8 @@ if($requestObject->companyApproved === null) {
 		$message->setBody('CrumbTrail has been unable to verify your business license and/or health permit.', 'text/html');
 	}
 
+	//TODO add alternative parts with addPart() for those who can only read plaintext or dont wwant to view in html
+
 //Send the message
 	$numSent = $mailer->send($message);
 
@@ -105,5 +97,16 @@ if($requestObject->companyApproved === null) {
 	}
 	/*----------------------------------SwiftMailer Code Ends Here------------------------------------------*/
 }
+
+} catch(Exception $exception) {
+		$reply->status = $exception->getCode();
+		$reply->message = $exception->getMessage();
+
+	} catch(TypeError $typeError) {
+		$reply->status = $typeError->getCode();
+		$reply->message = $typeError->getMessage();
+	}
+
+
 // Encode and return reply to front end caller.
 echo json_encode($reply);
