@@ -138,7 +138,7 @@ try {
 				$message->setBody('Thank you for joining crumbtrail. Please confirm your email by clicking on this link.','text/html');
 
 				//add alternative parts with addPart() meant for those who cannot read in html???
-				$message->addPart('Thanks for signing your company up with Crumbtrail. Please confirm your email by clicking on this link. Once you have confirmed your email, Crumbtrail admins can get to work on verifying your business and approving you to use the app. You will recieve an email when you have been approved.  ', 'text/plain');
+				$message->addPart('Thank you for joining crumbtrail. Please confirm your email by clicking on this link. ', 'text/plain');
 				$message->setReturnPath('bounces@address.tld');//return path address specifies where bounce notifications should be sent
 
 
