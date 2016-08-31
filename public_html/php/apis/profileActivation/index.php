@@ -37,7 +37,7 @@ try {
 	//sanitize input todo: I added these to sanitize in case i need a put, is that correct?
 	$profileId = filter_input(INPUT_GET, "profileId", FILTER_VALIDATE_INT);
 	$companyApproved = filter_input(INPUT_GET, "companyApproved", FILTER_VALIDATE_BOOLEAN);
-	$companyId = filter_input(INPUT_GET, "companyId", FILTER_VALIDATE_INT);
+	$companyId = filter_input(INPUT_GET, "companyId", FILTER_VALIDATE_INT); //todo so where do we get this companyId from?? is it in the url?
 
 
 	/*You can get here one of two ways. First way: a food truck owner is signing up for the first time, via SignUp API. They have clicked the link to activate their profile. Second way: an employee or co-owner was invited to join a pre-existing company. They have clicked the link to activate their profile*/
@@ -63,7 +63,7 @@ try {
 				throw(new \InvalidArgumentException("this company does not exist"));
 			}
 			$companyActivationToken = $company->getCompanyActivationToken();
-			if($companyActivationToken === null) {
+			if($companyActivationToken === null) { //this is for employee path.
 				$reply->redirectUrl = "something/here/angular";
 			} else {
 				if($company->getCompanyAccountCreatorId() === $profile->getProfileId()) {
@@ -78,7 +78,6 @@ try {
 					 * servers, according to the PIDOMA analysis.
 					 **/
 
-					//todo: how do i make sure this is only sent to companyAccountCreators whose companyActivationTokens are not yet null?
 					//Create the Transport
 					$transport = Swift_SmtpTransport::newInstance('localhost', 25); //can add third parameter for SSL encryption. need?
 
@@ -89,17 +88,17 @@ try {
 					$message = Swift_Message::newInstance();//to set a subject line you can pass it as a parameter in newInstance or set it afterwards. I chose to set it afterwards. Same with body.
 
 					//attach a sender to the message
-					$message->setFrom(['admin@crumbtrail.com' => 'Crumbtrail Admin']);//is this the same as setFrom(array('someaddress'=>'name'));
+					$message->setFrom(['mmalvar13@gmail.com' => 'Crumbtrail Admin']);//is this the same as setFrom(array('someaddress'=>'name'));
 
 					//attach recipients to the message. you can add
-					$recipients = ['admin@crumbtrail.org' => 'Admin who needs to verify business license'];
+					$recipients = ['mmalvar13@gmail.com' => 'Admin who needs to verify business license'];
 					$message->setTo($recipients);//we will just send to one person.
 
 					//attach a subject line to the message
 					$message->setSubject("Someone has activated their profile and need you to verify their business credentials");
 
 					//the body of the message-seen when the user opens the message
-					$message->setBody('Crumbtrail  Admin, a user has confirmed their email and activated their profile. Please take a look at their business license and health permit to verify their business. Once you have made the decision to confirm or deny them, click on this link. This link will set their companyActivationToken to null, and allow you to choose whether you confirm or deny', 'text/html');
+					$message->setBody('Hi Crumbtrail Admin, a user has confirmed their email and activated their profile. Please take a look at their business license and health permit to verify their business. Once you have made the decision to confirm or deny them, click on this link. This link will set their companyActivationToken to null, and allow you to choose whether you confirm or deny', 'text/html');
 
 					//add alternative parts with addPart() for those who can only read plaintext or dont wwant to view in html
 					$message->addPart('Crumbtrail  Admin, a user has confirmed their emai and activated their profile. Please take a look at their business license and health permit to verify their business. One you have made the decision to confirm or deny them, click on this link. This link will set their companyActivationToken to null, and allow you to choose whether you confirm or deny ', 'text/plain');
