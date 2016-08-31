@@ -1,7 +1,7 @@
 <?php
 
-require_once "autoloader.php";
-require_once "/lib/xsrf.php";
+require_once (dirname(__DIR__, 2) . "/classes/autoload.php");
+require_once (dirname(__DIR__,2) . "/lib/xsrf.php");
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 require_once(dirname(__DIR__, 4) . "/vendor/autoload.php");
 //do i add something here for swiftmailer?
@@ -29,7 +29,7 @@ $reply->data = null; //making a placeholder for the variable reply. you will sto
 
 try {
 	//grab the mySQL connection
-	$pdo = connectToEncyptedMySQL("/etc/apache2/capstone-mysql/crumbtrail.ini");
+	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/crumbtrail.ini");
 
 	//determine which HTTP method was used. first one is the method you use, second is the fall back if the first is not available
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];

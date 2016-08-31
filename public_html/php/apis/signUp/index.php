@@ -1,5 +1,6 @@
 <?php
 
+
 require_once(dirname(__DIR__, 2) . "/classes/autoload.php");//need to add these
 require_once(dirname(__DIR__, 2) . "/lib/xsrf.php");
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
@@ -54,7 +55,7 @@ try {
 
 	if($method === "POST") {
 		//set XSRF cookie
-		setXsrfCookie();
+		setXsrfCookie(); //do we need this?
 		verifyXsrf();
 
 		$requestContent = file_get_contents("php://input");
@@ -71,7 +72,7 @@ try {
 			throw(new \InvalidArgumentException("Must provide a phone number", 405));
 		}
 		if(empty($requestObject->profileType)=== true){
-			$requestObject->profileType = "O"; //TODO is this the correct default value for profileType? anyone signing up via this route
+			$requestObject->profileType = "O";
 		}
 		if(empty($requestObject->companyName)=== true){
 			throw(new \InvalidArgumentException("You must enter a company name", 405));
@@ -116,7 +117,7 @@ try {
 		//sanitize the email. Make sure there is not already an account attached to this email
 		$profileEmail = filter_var($requestObject->profileEmail, FILTER_SANITIZE_EMAIL);
 		$profile = Profile::getProfileByProfileEmail($pdo, $profileEmail);
-		if($profile !== null){
+		if(empty($profile) === false){ //correct?? or set to not null?
 			throw(new \InvalidArgumentException("this email already has an account",422));
 		}
 
@@ -131,18 +132,18 @@ try {
 
 		//create profile and company activation tokens
 		$profileActivationToken = bin2hex(random_bytes(16));
-		$companyActivationToken = bin2hex(random_bytes(16));
+		$companyActivationToken = bin2hex(random_bytes(16)); //do i need company activation token.
 
 		//create the hash
 		$hash = hash_pbkdf2("sha512", $requestObject->profilePassword, $salt, 262144);
 
 		//create a new profile and insert it into the databases
-		$profile = new Profile(null, $requestObject->profileName, $requestObject->profileEmail, $requestObject->profilePhone, $profileAccessToken = null, $profileActivationToken, $requestObject->profileType = null, $hash, $salt);
+		$profile = new Profile(null, $requestObject->profileName, $requestObject->profileEmail, $requestObject->profilePhone, $profileAccessToken = null, $profileActivationToken, $requestObject->profileType, $hash, $salt);
 
 		$profile->insert($pdo);
 
 		//create a new company and insert it into the database
-		$company = new Company(null, $profile->getProfileId(), $requestObject->companyName, $requestObject->companyEmail, $requestObject->companyPhone, $requestObject->companyPermit, $requestObject->companyLicense, $requestObject->companyAttn, $requestObject->companyStreet1, $requestObject->companyStreet2, $requestObject->companyCity, $requestObject->companyState, $requestObject->companyZip, $requestObject->companyDescription , $requestObject->companyMenuText, $companyActivationToken, $companyApproved = false);
+		$company = new Company(null, $profile->getProfileId(), $requestObject->companyName, $requestObject->companyEmail, $requestObject->companyPhone, $requestObject->companyPermit, $requestObject->companyLicense, $requestObject->companyAttn, $requestObject->companyStreet1, $requestObject->companyStreet2, $requestObject->companyCity, $requestObject->companyState, $requestObject->companyZip, $requestObject->companyDescription , $requestObject->companyMenuText, $companyActivationToken, $companyApproved = null);
 
 		$company->insert($pdo);
 
@@ -168,7 +169,7 @@ try {
 
 
 		//Create the Transport
-		$transport = Swift_SmtpTransport::newInstance('smtp.example.org', 25); //can add third parameter for SSL encryption. need?
+		$transport = Swift_SmtpTransport::newInstance('localhost', 25); //can add third parameter for SSL encryption. need?
 
 		//Create the Mailer using your created Transport
 		$mailer = Swift_Mailer::newInstance($transport);
