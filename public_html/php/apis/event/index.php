@@ -6,7 +6,7 @@ require_once (dirname(__DIR__, 2) . "classes/autoload.php");
 require_once (dirname(__DIR__, 2) . "/lib/xsrf.php");
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
-use Edu\Cnm\Crumbtrail\ {Event, Truck};
+use Edu\Cnm\CrumbTrail\ {Event, Truck, Point};
 
 /**
  * api for the Event class
@@ -37,7 +37,6 @@ try {
 	$id = filter_input(INPUT_GET, "eventId", FILTER_VALIDATE_INT);
 	//$eventId = filter_input(INPUT_GET, "eventId", FILTER_VALIDATE_INT);// 39
 	$eventTruckId = filter_input(INPUT_GET, "eventTruckId", FILTER_VALIDATE_INT);
-	//TODO: Lat and long, why? because it is a point??
 	$eventLocationLat = filter_input(INPUT_GET, "eventLocationLat", FILTER_VALIDATE_FLOAT);
 	$eventLocationLng = filter_input(INPUT_GET, "eventLocationLng", FILTER_VALIDATE_FLOAT);
 
@@ -64,19 +63,11 @@ try {
 				$reply->data = $event;
 			}
 			//TODO: WAT!!!!
-		} elseif ((empty($eventLocationLat)) === false) {
-			//is this how i would want to get Event location???
-			$point = new Point(null, $eventLocationLat, $eventLocationLng);
-			$event = Event::getEventByEventLocation($pdo, $eventLocationLat, $eventLocationLng, $point);
-			if($event !== null) {
-				$reply->data = $event;
-			}
 		} elseif ((empty($id)) === false) {
 			$event = Event::getEventByEventId ($pdo, $id);
 			if($event !== null) {
 				$reply->data = $event;
 			}
-			//TODO: event end and event start together because they were put together in the class
 		} elseif ((empty($event)) === false) {
 			$event = Event::getEventByEventEndAndEventStart ($pdo);
 			if($event !== null) {
@@ -134,7 +125,8 @@ try {
 		if(empty($requestObject->eventId) === true) {
 			throw(new \InvalidArgumentException("No Event Id.", 405));
 		}
-		$point = new Point(null, $requestObject->location->lat, $requestObject->location->lng);
+		//because this is how angular will send the associate array.......
+		$point = new Point($requestObject->location->lat, $requestObject->location->lng);
 		$event = new Event(null, $requestObject->eventId, $requestObject->eventEnd, $requestObject->eventStart,$requestObject->eventLocation, null);
 		$event->insert($pdo);;
 		//update reply
