@@ -42,13 +42,14 @@ try {
 	//sanitize input
 	//using the Get method here...so I am not writing the "employ class" but a bridge between employ and profile?
 //we wouldn't need an Id since this wouldn't be tracked right, this is destroyed once the employee verifies that they are part of the profile?
-	$employProfileId = filter_input(INPUT_GET, "employProfileId", FILTER_SANITIZE_STRING);
-	$employCompanyId = filter_input(INPUT_GET, "employCompanyId", FILTER_SANITIZE_STRING);
+	$employProfileId = filter_input(INPUT_GET, "employProfileId", FILTER_VALIDATE_INT);
+	$employCompanyId = filter_input(INPUT_GET, "employCompanyId", FILTER_VALIDATE_INT);
 	$profileName = filter_input(INPUT_POST, "profileName", FILTER_SANITIZE_STRING);
 	$profileType = filter_input(INPUT_POST, "profileType", FILTER_SANITIZE_STRING);
 	$profileEmail = filter_input(INPUT_POST, "profileEmail", FILTER_SANITIZE_EMAIL);
 	//may possible write in GET to link to company------//
 	//make sure the id is valid for methods that require it
+	//TODO: if an owner takes an employee of their profile how does that work? DO i need the delete method, maybe set profile type to null, and possibly i  a PUT method if we wanted to dirupt the connedction betweent employee and company profile...."//
 	If(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
 		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
 	}
@@ -57,7 +58,7 @@ try {
 	if($method === "GET") {
 		//set XSRF cookie
 		setXsrfCookie();
-
+//TODO: we get the company by.....so we cant attach to the company...
 		//get specific employee or all employees and update reply
 		if(empty($id) === false) {
 			$employ = Employ::getEmployByEmployCompanyIdAndEmployProfileId($pdo, $employCompanyId, $employProfileId);
@@ -127,7 +128,7 @@ try {
 				$message->setFrom(['vchacon8@cnm.edu'=> 'Crumbtrail Admin']);//is this the same as setFrom(array('someaddress'=>'name'));
 
 				//attach recipients to the message. you can add
-				$recipients = ['FoodTruckOwner@yahoo.org' => 'Florence Gray'];
+				$recipients = [($profile->getProfileEmail()) => $profile->getProfileName()];
 				$message->setTo($recipients);//we will just send to one person.
 				//include owner and employee name here???
 				//attach a subject line to the message
