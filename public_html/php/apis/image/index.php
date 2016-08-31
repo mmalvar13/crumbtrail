@@ -40,10 +40,10 @@ try {
 	$method = array_key_exists("HTTP_X_HTTP-METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
 	//sanitize input(Explain this) Where is the input coming from??
-	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
+	$id = filter_input(INPUT_GET, "imageId", FILTER_VALIDATE_INT);
 	$imageCompanyId = filter_input(INPUT_GET, "imageCompanyId", FILTER_VALIDATE_INT);
-	$imageFileName = filter_input(INPUT_GET, "imageFileName", FILTER_VALIDATE_INT);
-	$imageFileType = filter_input(INPUT_GET, "imageFileType", FILTER_VALIDATE_INT);
+	$imageFileName = filter_input(INPUT_GET, "imageFileName", FILTER_SANITIZE_STRING);
+	$imageFileType = filter_input(INPUT_GET, "imageFileType", FILTER_SANITIZE_STRING);
 
 
 	//make sure the id is valid for methods that require it, Remember that $id is the primary key!
@@ -62,12 +62,12 @@ try {
 			if($image !== null) {
 				$reply->data = $image;
 			}
-		} elseif(empty($id) === false) {
+		} elseif(empty($imageCompanyId) === false) {
 			$image = Image::getImageByImageCompanyId($pdo, $imageCompanyId);
 			if($image !== null) {
 				$reply->data = $image;
 			}
-		} elseif(empty($id) === false) {
+		} elseif(empty($imageFileName) === false) {
 			$image = Image::getImageByImageFileName($pdo, $imageFileName);
 			if($image !== null) {
 				$reply->data = $image;
