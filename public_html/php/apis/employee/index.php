@@ -106,12 +106,15 @@ try {
 		if($company === null) {
 			throw(new InvalidArgumentException("No company Id exists.", 405));
 		}
-		// ?? :D
+		// ?? :D will try first, if its null it will go to the second...if null...will go to the third WootWoot!
 		$profilePhone = $requestObject->profilePhone ?? $company->getCompanyPhone() ?? "555-555-5555";
 		//created new profile and insert into database
-		$profile = new Profile(null, $requestObject->profileName, $requestObject->profileEmail, $profilePhone, $profileAccessToken = null, $profileActivationToken, $requestObject->profileType, $hash, $salt);
+		$profile = new Profile(null, $requestObject->profileName, $requestObject->profileEmail, $profilePhone, null, $profileActivationToken, $requestObject->profileType, $hash, $salt);
 
 		$profile->insert($pdo);
+		//new employ
+		$employ = new Employ($requestObject->companyId, $profile->getProfileId());
+		$employ->insert($pdo);
 		//update reply
 		$reply->message = "A link has been sent to your employee/CoOwner for verification.";
 
