@@ -30,11 +30,12 @@ try {
 	$method = array_key_exists("HTTP_x_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
 	//sanitize input deleted
+	//todo do i put all the input sanitization up here? like $profileEmail = filter_input(INPUT_GET...etc...
 
 	//handle POST request
-	if($method === "POST") {
+	if($method === "POST") { //todo why a post? because its a temporary?
 		//set XSRF cookie
-		setXsrfCookie();
+		setXsrfCookie(); //TODO do i set this here?
 
 		verifyXsrf();
 		$requestContent = file_get_contents("php://input");
@@ -54,7 +55,7 @@ try {
 		}
 
 		//checking the password field for user input
-		if(empty($requestObject->profilePassword) === true) {
+		if(empty($requestObject->profilePassword) === true) { //TODO profile password, do i also have confirm profile password?
 			throw(new \InvalidArgumentException("Please enter your password", 405));
 		} else {
 			$password = filter_input($requestObject->profilePassword, FILTER_SANITIZE_STRING);
@@ -67,7 +68,7 @@ try {
 		$salt = $profile->getProfileSalt();
 
 		//create the hash
-		$confirmHash = hash_pbkdf2("sha512", $requestObject->confirmProfilePassword, $salt, 262144);
+		$confirmHash = hash_pbkdf2("sha512", $requestObject->confirmProfilePassword, $salt, 262144); //TODO is this the correct requestObject to be put in here?
 
 		//matches hashes
 		//put profile into session
