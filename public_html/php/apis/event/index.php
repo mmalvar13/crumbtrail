@@ -34,15 +34,12 @@ try {
 	$method = array_key_exists("HTTP_X_HTTP METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
 	//sanitize input
-	//TODO: do i need Id or should i take out line
 	$id = filter_input(INPUT_GET, "eventId", FILTER_VALIDATE_INT);
 	//$eventId = filter_input(INPUT_GET, "eventId", FILTER_VALIDATE_INT);// 39
 	$eventTruckId = filter_input(INPUT_GET, "eventTruckId", FILTER_VALIDATE_INT);
-	//TODO: Lat and long, why? because it is a pont??
-	$eventLocationLat = filter_input(INPUT_GET, "lat", FILTER_VALIDATE_FLOAT);
-	$eventLocationLng = filter_input(INPUT_GET, "lng", FILTER_VALIDATE_FLOAT);
-	//does this need to be an integer??? it resolved the issue here in PHPstorm
-	//$event = filter_input(INPUT_GET, "event", FILTER_VALIDATE_INT);//
+	//TODO: Lat and long, why? because it is a point??
+	$eventLocationLat = filter_input(INPUT_GET, "eventLocationLat", FILTER_VALIDATE_FLOAT);
+	$eventLocationLng = filter_input(INPUT_GET, "eventLocationLng", FILTER_VALIDATE_FLOAT);
 
 	//make sure the id is valid for methods that require it
 	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
@@ -110,6 +107,7 @@ try {
 		}
 		//make sure event location is available
 		//since all are used to find a location should all be used to ensure that a location is available??
+		//TODO: location lat and long?? explanation
 		if(empty($requestObject->eventLocationLat->eventLocationLng->point) === true) {
 			throw(new \InvalidArgumentException("No event location exists.", 405));
 		}
@@ -122,8 +120,11 @@ try {
 			throw (new RuntimeException("Event does not exist.", 404));
 		}
 		//put new event content into the event and update
+		//TODO: why isnt this working???
 		$point = new Point(null, $requestObject->location->lat, $requestObject->location->lng);
 		$event->setEventLocation($point);
+		//TODO: Do we need event start...this is done as current, but the user still set it???
+		$event->setEventStart($requestObject->eventStart);
 		$event->setEventEnd($requestObject->eventEnd);
 		$event->update($pdo);
 		//update reply
@@ -138,7 +139,7 @@ try {
 		$event->insert($pdo);;
 		//update reply
 		$reply->message = "Event created successfully.";
-
+	//TODO Do i need a delete block???
 	} elseif ($method === "DELETE") {
 		verifyXsrf();
 		//retrieve event to be deleted
