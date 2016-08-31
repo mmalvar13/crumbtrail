@@ -153,9 +153,15 @@
 
 							<h3>Company Address</h3>
 							<div class="form-group text-center">
-								<label for="street">Street</label>
+								<label for="street">Street 1</label>
 								<input type="text" class="form-control registration-input" id="exampleInputEmail1"
 										 aria-describedby="emailHelp" placeholder="1234 yourstreet Ave NE">
+							</div>
+
+							<div class="form-group text-center">
+								<label for="street">Street 2</label>
+								<input type="text" class="form-control registration-input" id="exampleInputEmail1"
+										 aria-describedby="emailHelp" placeholder="Street address continued...">
 							</div>
 
 							<div class="form-group text-center">
@@ -194,6 +200,7 @@
 								</small>
 							</div>
 						</form>
+						<button type="button" class="btn btn-secondary btn-lg registration-submit-button">Submit</button>
 					</div>
 				</div>
 			</main>

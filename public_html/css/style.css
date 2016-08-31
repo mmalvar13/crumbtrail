@@ -228,6 +228,11 @@ p {
 	background-color: #FFC468;
 }
 
+.registration-submit-button{
+	color: orange;
+	border: 0.1rem solid orange;
+}
+
 
 
 
