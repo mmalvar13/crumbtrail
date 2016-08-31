@@ -181,7 +181,7 @@ try {
 		$message->setFrom(['malvarez30@cnm.edu'=> 'Crumbtrail Admin']);//is this the same as setFrom(array('someaddress'=>'name'));
 
 		//attach recipients to the message. you can add
-		$recipients = [($profile->getProfileEmail()) => $profile->getProfileName()]; //TODO is this the correct way to attach email to name?
+		$recipients = [($company->getCompanyEmail()) => $company->getCompanyName()]; //TODO is this the correct way to attach email to name?
 		$message->setTo($recipients);//we will just send to one person.
 
 		//attach a subject line to the message
