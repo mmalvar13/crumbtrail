@@ -48,7 +48,7 @@ try {
 	$employCompanyId = filter_input(INPUT_GET, "employCompanyId", FILTER_VALIDATE_INT);
 	//may possible write in GET to link to company------OUR LINK TO COMPANY IS THE EMPLOYCOMPANYID//
 	//make sure the id is valid for methods that require it
-	//TODO: if an owner takes an employee of their profile how does that work? DO i need the delete method, maybe set profile type to null, and possibly a PUT method if we wanted to disrupt the connection between employee and company profile....DELETE $employ, in teh delete method?"//
+	//TODO: if an owner takes an employee of their profile how does that work? DO i need the delete method, maybe set profile type to null, and possibly a PUT method if we wanted to disrupt the connection between employee and company profile....DELETE $employ, in the delete method?"//
 	if(($method === "DELETE") && (empty($id) === true || $id < 0)) {
 		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
 	}
@@ -81,6 +81,7 @@ try {
 		$requestObject = json_decode($requestContent);
 
 		//make sure employ profile is available
+		//request object...whatever is on the angular form....
 		if(empty($requestObject->profileName) === true) {
 			throw(new InvalidArgumentException("Need to input employee name.", 405));
 		}
@@ -90,16 +91,25 @@ try {
 		if(empty($requestObject->profileEmail) === true) {
 			throw(new InvalidArgumentException("Need to insert employee email.", 405));
 		}
-		//Todo----GET COMPANY BY COMPANYEMAIL....POSSIBLY....IF WE NEED TO LINK BACK TO COMPANY
+		//put what company they are in...if only one company...no option for employeer to select...dropdown with all companies that they own.
+		if(empty($requestObject->companyId) === true) {
+			throw(new InvalidArgumentException("No company Id exists.", 405));
+		}
+		//Todo----GET COMPANY BY COMPANYEMAIL....POSSIBLY....IF WE NEED TO LINK BACK TO COMPANY/ YES, noted in above if block...employee works for a company employer can either choose company of angular defaults it to the one company if an owner only has one company!
 		//-----here im making Salt, DummyPassword, profile activation token and hash---//
 		$salt = bin2hex(random_bytes(16));
 		$dummyPassword = bin2hex(random_bytes(16));
 		$profileActivationToken = bin2hex(random_bytes(16));
 		//what is the number at the end of the hash??
 		$hash = hash_pbkdf2("sha512", $dummyPassword, $salt, 262144);
-
+		$company = Company::getCompanyByCompanyId($pdo, $requestObject->companyId);
+		if($company === null) {
+			throw(new InvalidArgumentException("No company Id exists.", 405));
+		}
+		// ?? :D
+		$profilePhone = $requestObject->profilePhone ?? $company->getCompanyPhone() ?? "555-555-5555";
 		//created new profile and insert into database
-		$profile = new Profile(null, $requestObject->profileName, $requestObject->profileEmail, $profilePhone = "555-555-5555", $profileAccessToken = null, $profileActivationToken, $requestObject->profileType, $hash, $salt);
+		$profile = new Profile(null, $requestObject->profileName, $requestObject->profileEmail, $profilePhone, $profileAccessToken = null, $profileActivationToken, $requestObject->profileType, $hash, $salt);
 
 		$profile->insert($pdo);
 		//update reply
