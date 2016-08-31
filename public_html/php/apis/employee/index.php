@@ -115,7 +115,7 @@ try {
 
 //-----------------------------adding in swiftmailer------------------------------------//
 				//sends email between owner and employee??
-				$transport = Swift_SmtpTransport::newInstance('smtp.example.org', 25);
+				$transport = Swift_SmtpTransport::newInstance('localhost', 25);
 
 				//Create the Mailer using your created Transport
 				$mailer = Swift_Mailer::newInstance($transport);
@@ -124,12 +124,12 @@ try {
 				$message = Swift_Message::newInstance();//to set a subject line you can pass it as a parameter in newInstance or set it afterwards. I chose to set it afterwards. Same with body.
 
 				//attach a sender to the message
-				$message->setFrom(['admin@crumbtrail.com'=> 'Crumbtrail Admin']);//is this the same as setFrom(array('someaddress'=>'name'));
+				$message->setFrom(['vchacon8@cnm.edu'=> 'Crumbtrail Admin']);//is this the same as setFrom(array('someaddress'=>'name'));
 
 				//attach recipients to the message. you can add
 				$recipients = ['FoodTruckOwner@yahoo.org' => 'Florence Gray'];
 				$message->setTo($recipients);//we will just send to one person.
-
+				//include owner and employee name here???
 				//attach a subject line to the message
 				$message->setSubject('You have been invited to join crumbtrail. Please verify your email.');
 
@@ -141,13 +141,11 @@ try {
 				$message->setReturnPath('bounces@address.tld');//return path address specifies where bounce notifications should be sent
 
 
-				//Link that will be clicked on to confirm the companyAccountCreators email address and set their profileActivationToken to null. This triggers an email (over in profileActivation API) to be send to crumbtrail admins to check out this businesses credentials.
-
-				$profileActivationToken = "WhatNeedsToBeHere";
+				//Link that will be clicked on to confirm the employess email address? and set their profileActivationToken to null. This triggers an email (over in profileActivation API)
 
 				//you should use $_SERVER["SCRIPT_NAME"]
 				$scriptPath = $_SERVER["SCRIPT_NAME"];
-				$linkPath = dirname($scriptPath, 2) . "/profileActivation/?profileActivationToken";
+				$linkPath = dirname($scriptPath, 2) . "/profileActivation/?profileActivationToken =$profileActivationToken";
 
 
 				//Send the message
@@ -163,7 +161,7 @@ try {
 					//the $failedRecipients parameter passed in the send() method now contains an array of the Emails that failed
 					throw(new RuntimeException("unable to send email"));
 				}
-
+//-----------------------------------------------SWIFTMAILER END-----------------------------------------------//
 				//------DO I NEED ALL OF THIS HERE???WHY???-------//
 				//---if(empty($requestObject->employProfileId) === true) {
 				//--	throw(new InvalidArgumentException("No profile exists.", 405));

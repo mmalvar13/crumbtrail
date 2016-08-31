@@ -82,7 +82,7 @@ try {
 
 					//todo: how do i make sure this is only sent to companyAccountCreators whose companyActivationTokens are not yet null?
 					//Create the Transport
-					$transport = Swift_SmtpTransport::newInstance('smtp.example.org', 25); //can add third parameter for SSL encryption. need?
+					$transport = Swift_SmtpTransport::newInstance('localhost', 25); //can add third parameter for SSL encryption. need?
 
 					//Create the Mailer using your created Transport
 					$mailer = Swift_Mailer::newInstance($transport);
