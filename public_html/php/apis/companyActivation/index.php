@@ -10,10 +10,10 @@
  * This company's activation token === null (whether approved or not).
  **/
 
-require_once "autoloader.php";
-require_once "/lib/xsrf.php";
+require_once(dirname(__DIR__, 2) . "/classes/autoload.php");
+require_once(dirname(__DIR__, 2) . "/lib/xsrf.php");
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
-require_once (dirname(__DIR__, 4)) . "/vendor/autoload.php";
+require_once (dirname(__DIR__,4) . "/vendor/autoload.php");
 
 use Edu\Cnm\Crumbtrail\{
 	Company
@@ -45,7 +45,6 @@ try {
 		$requestObject = json_decode($requestContent);
 
 		$company = Company::getCompanyByCompanyActivationToken($pdo, $companyActivationToken);
-
 	}
 
 } catch(Exception $exception) {
@@ -57,8 +56,12 @@ try {
 	$reply->message = $typeError->getMessage();
 }
 
-// check comActTok not null, then set to null
-//Angular will send us the companyApproved
+if($companyActivationToken !== null) {
+	$company->setCompanyActivationToken(null);
+	$company->update($pdo);
+} else {
+	throw(new InvalidArgumentException("company has already been activated", 404));
+}
 
 if($requestObject->companyApproved === null) {
 	throw(new \RuntimeException('company has not been approved yet'));
@@ -66,7 +69,7 @@ if($requestObject->companyApproved === null) {
 
 // ------------ SwiftMailer: send Approve or Deny email to companyAccountCreator ------------
 //Create the Transport
-	$transport = Swift_SmtpTransport::newInstance('localhost', 25); //can add third parameter for SSL encryption. need?
+	$transport = Swift_SmtpTransport::newInstance('localhost', 25);
 
 //Create the Mailer using your created Transport
 	$mailer = Swift_Mailer::newInstance($transport);
@@ -90,7 +93,6 @@ if($requestObject->companyApproved === null) {
 	} else {
 		$message->setBody('CrumbTrail has been unable to verify your business license and/or health permit.', 'text/html');
 	}
-
 
 //Send the message
 	$numSent = $mailer->send($message);
