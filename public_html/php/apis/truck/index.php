@@ -70,7 +70,7 @@ try {
 			}
 		}
 
-
+	//TODO need to ensure person adding/deleting trucks links back to the right company AND profile
 	} elseif((empty($_SESSION["profile"]) === false) && (($_SESSION["profile"]->getProfileId()) === $id) && (($_SESSION["profile"]->getProfileType()) === "a") || (($_SESSION["profile"]->getProfileType())) === "o") {
 
 		if($method === "PUT" || $method === "POST") {
@@ -79,7 +79,7 @@ try {
 			$requestObject = json_decode($requestContent);
 
 
-			if($requestObject->profileType !== 'a' || 'o') {
+			if($requestObject->profileType !== 'a' || 'o') { //TODO is this the right way to reference profileType????!
 				throw(new \InvalidArgumentException("profile type must be admin('a') or owner('o') in order to make changes to a truck"));
 			}
 
@@ -90,7 +90,7 @@ try {
 
 			if($method === "POST") {
 				//create a new truck and insert it into the database
-				$truck = new Truck(null, $requestObject->companyId);
+				$truck = new Truck(null, $requestObject->truckCompanyId);
 				$truck->insert($pdo);
 
 				//update reply
@@ -101,18 +101,18 @@ try {
 		} elseif($method === "DELETE") {
 				verifyXsrf();
 				//retrieve the company to be deleted
-				$company = Company::getCompanyByCompanyId($pdo, $id);
+				$truck = Truck::getTruckByTruckId($pdo, $id);
 
 				//check if empty
-				if($company === null) {
-					throw(new RuntimeException("The company does not exist", 404));
+				if($truck === null) {
+					throw(new RuntimeException("The truck does not exist", 404));
 				}
 
 				//delete the company
-				$company->delete($pdo);
+			$truck->delete($pdo);
 
 				//update the reply
-				$reply->message = "Company deleted A-OK";
+				$reply->message = "Truck deleted A-OK";
 			} else {
 				throw (new InvalidArgumentException("Invalid HTTP method request"));
 			}
