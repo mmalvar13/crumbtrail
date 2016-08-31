@@ -71,6 +71,12 @@ try {
 		if(empty($requestObject->profilePhone)=== true){
 			throw(new \InvalidArgumentException("Must provide a phone number", 405));
 		}
+		if(empty($requestObject->profilePassword)===true){
+			throw(new \InvalidArgumentException("Must provide a password", 405));
+		}
+		if(empty($requestObject->confirmProfilePassword)=== true){
+			throw(new \InvalidArgumentException("Must confirm your password", 405));
+		}
 		if(empty($requestObject->profileType)=== true){
 			$requestObject->profileType = "O";
 		}
