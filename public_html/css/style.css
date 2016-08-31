@@ -202,17 +202,6 @@ p {
 	margin-top:0.25rem;
 }
 
-/*.truck-login-body{*/
-	/*text-align: center;*/
-	/*margin: 1rem;*/
-/*}*/
-
-/*.form-wrapper{*/
-	/*text-align: center;*/
-	/*display: inline-block;*/
-	/*margin: 0 auto;*/
-/*}*/
-
 .truck-login-form{
 	padding: 15px;
 	/*margin: 0 auto;*/
@@ -222,10 +211,21 @@ p {
 	margin-top: 2rem;
 	background: none;
 	border: 0.1rem solid orange;
+}
 
 
+/*--------------------------------------TRUCK REGISTRATION-------------------------------*/
+.registration-main{
+	text-align: center;
+}
 
+.registration-hr{
+	width: 50%;
+	margin-top:0.25rem;
+}
 
+.registration-input{
+	background-color: #FFC468;
 }
 
 

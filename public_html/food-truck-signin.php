@@ -109,7 +109,6 @@
 			</div>
 
 			<footer class="bfoot">
-
 			</footer>
 		</div>
 	</body>
