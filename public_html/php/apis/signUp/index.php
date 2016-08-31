@@ -7,7 +7,7 @@ require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 require_once (dirname(__DIR__,4) . "/vendor/autoload.php"); //idk, composer.json. this is just what the documentation had.
 
 
-use Edu\Cnm\Crumbtrail\{Company, Employ, Profile};
+use Edu\Cnm\CrumbTrail\{Company, Employ, Profile};
 
 /**
  * api for signUp
