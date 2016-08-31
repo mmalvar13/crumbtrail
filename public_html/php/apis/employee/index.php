@@ -188,13 +188,14 @@ try {
 		// update profile here
 		//} else {
 		//throw (new InvalidArgumentException("This profile Id and Profile type combination does not exist.", 405));
-	}
-}
+
+
 		//}
 		//}
 		//TODO: Do we need this here
-	} elseif($method === "DELETE"){
-verifyXsrf();
+
+	} elseif($method === "DELETE") {
+		verifyXsrf();
 		//retrieve employ to be deleted
 		//would I want employ by company and profile id, in the case that a worker/co owner is part of many companies??
 		$employ = Employ::getEmployByEmployCompanyIdAndEmployProfileId($pdo, $employCompanyId, $employProfileId);
@@ -207,8 +208,9 @@ verifyXsrf();
 		$reply->message = "Employee or CoOwner deleted successfully";
 
 	} else {
-	throw (new InvalidArgumentException("Invalid HTTP method Request"));
-}
+		throw (new InvalidArgumentException("Invalid HTTP method Request"));
+	}
+
 	//update reply with exception information
 } catch(Exception $exception) {
 	$reply->status = $exception->getCode();
