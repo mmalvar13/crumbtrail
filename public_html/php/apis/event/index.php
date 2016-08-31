@@ -28,19 +28,21 @@ try {
 	//grab mySQL connection
 	//capital SQL???
 	//lowercase c in crumbtrail???
-	$pdo = connectToEncryptedMySql("/etc/apache2/capstone-mysql/Crumbtrail.ini");
+	$pdo = connectToEncryptedMySql("/etc/apache2/capstone-mysql/crumbtrail.ini");
 
 	//determine which HTTP method was used
 	$method = array_key_exists("HTTP_X_HTTP METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
 	//sanitize input
-	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
-	$eventId = filter_input(INPUT_GET, "eventId", FILTER_VALIDATE_INT);
+	//TODO: do i need Id or should i take out line
+	$id = filter_input(INPUT_GET, "eventId", FILTER_VALIDATE_INT);
+	//$eventId = filter_input(INPUT_GET, "eventId", FILTER_VALIDATE_INT);// 39
 	$eventTruckId = filter_input(INPUT_GET, "eventTruckId", FILTER_VALIDATE_INT);
+	//TODO: Lat and long, why? because it is a pont??
 	$eventLocationLat = filter_input(INPUT_GET, "lat", FILTER_VALIDATE_FLOAT);
 	$eventLocationLng = filter_input(INPUT_GET, "lng", FILTER_VALIDATE_FLOAT);
 	//does this need to be an integer??? it resolved the issue here in PHPstorm
-	$event = filter_input(INPUT_GET, "event", FILTER_VALIDATE_INT);
+	//$event = filter_input(INPUT_GET, "event", FILTER_VALIDATE_INT);//
 
 	//make sure the id is valid for methods that require it
 	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
@@ -49,12 +51,12 @@ try {
 
 	//copy from here...so far no issues in PHPstrom
 	//handle the GET request- if id is present, that event is returned. Otherwise, all Events are returned
-	if(method === "GET") {
+	if($method === "GET") {
 		//set xsrf cookie
 		setXsrfCookie();
 
 		//get a specific event or all events and update reply
-		if(empty($id) === false && empty(eventTruckId) === false) {
+		if(empty($id) === false && empty($eventTruckId) === false) {
 			$event = Event::getEventByEventIdAndEventTruckId($pdo, $id, $eventTruckId);
 			if($event !== null) {
 				$reply->data = $event;
@@ -64,6 +66,7 @@ try {
 			if($event !== null) {
 				$reply->data = $event;
 			}
+			//TODO: WAT!!!!
 		} elseif ((empty($eventLocationLat)) === false) {
 			//is this how i would want to get Event location???
 			$point = new Point(null, $eventLocationLat, $eventLocationLng);
@@ -76,6 +79,7 @@ try {
 			if($event !== null) {
 				$reply->data = $event;
 			}
+			//TODO: event end and event start together because they were put together in the class
 		} elseif ((empty($event)) === false) {
 			$event = Event::getEventByEventEndAndEventStart ($pdo);
 			if($event !== null) {
