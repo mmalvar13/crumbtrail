@@ -214,8 +214,7 @@ try {
 
 				$company = Company::getCompanyByCompanyId($pdo, $id);
 				if($company === null) {
-					throw(new RuntimeException("This company does not exist", 404));
-				}
+					throw(new RuntimeException("This company does not exist",
 				//put the new company name into the company and update
 				$company->setCompanyName($requestObject->companyName);
 				$company->setCompanyEmail($requestObject->companyEmail);

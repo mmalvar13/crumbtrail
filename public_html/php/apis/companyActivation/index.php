@@ -70,7 +70,7 @@ try {
 			$message->setFrom(['kkirk4@cnm.edu' => 'Crumbtrail Admin']);
 
 //attach recipients to the message. you can add
-			$recipients = ['companyEmail' => $company->getCompanyEmail()];  //TODO Need 'companyEmail' ???
+			$recipients = ['companyEmail' => $company->getCompanyEmail()];
 //$message->setTo($recipients);	//we will just send to one person.
 
 //attach a subject line to the message
