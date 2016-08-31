@@ -138,7 +138,7 @@ try {
 		$hash = hash_pbkdf2("sha512", $requestObject->profilePassword, $salt, 262144);
 
 		//create a new profile and insert it into the databases
-		$profile = new Profile(null, $requestObject->profileName, $requestObject->profileEmail, $requestObject->profilePhone, $profileAccessToken = null, $profileActivationToken, $requestObject->profileType, $hash, $salt);
+		$profile = new Profile(null, $requestObject->profileName, $requestObject->profileEmail, $requestObject->profilePhone, null, $profileActivationToken, $requestObject->profileType, $hash, $salt);
 
 		$profile->insert($pdo);
 
@@ -192,7 +192,7 @@ try {
 
 			//add alternative parts with addPart() for those who can only read plaintext or dont wwant to view in html
 		$message->addPart('Thanks for signing your company up with Crumbtrail. Please confirm your email by clicking on this link. Once you have confirmed your email, Crumbtrail admins can get to work on verifying your business and approving you to use the app. You will receive an email when you have been approved.  ', 'text/plain');
-		$message->setReturnPath('bounces@address.tld');//return path address specifies where bounce notifications should be sent todo what is thiss for?
+		$message->setReturnPath('malvarez30@cnm.edu');//return path address specifies where bounce notifications should be sent todo what is thiss for?
 
 
 		//building the profile activation link. this is the link that will be clicked on to confirm the companyAccountCreators email address and set their profileActivationToken to null. This triggers an email (over in profileActivation API) to be send to crumbtrail admins to check out this businesses credentials.
@@ -206,9 +206,6 @@ try {
 
 		//Send the message
 		$numSent = $mailer->send($message);
-
-		printf("Sent %d messages\n", $numSent);
-
 		/**
 		 * the send method returns the number of recipients that accepted the Email
 		 * so if the number attempted is not the number accepted, this is the exception (number attempted should only be one at a time)
