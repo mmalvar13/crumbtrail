@@ -19,6 +19,13 @@ use Edu\Cnm\Crumbtrail\{
 	Company
 };
 
+/**
+ * TODO Does this need:
+ * 		redirect API ?
+ *		scriptpath ?
+ * 		linkpath ?
+ */
+
 // Verify the session, start a session if not active.
 if(session_status() !== PHP_SESSION_ACTIVE) {
 	session_start();
