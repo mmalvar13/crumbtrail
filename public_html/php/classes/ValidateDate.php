@@ -6,7 +6,7 @@
  * Time: 11:24 AM
  */
 
-namespace Edu\Cnm\Crumbtrail;
+namespace Edu\Cnm\CrumbTrail;
 
 
 /**
