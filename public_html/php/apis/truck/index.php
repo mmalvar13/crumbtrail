@@ -90,7 +90,7 @@ try {
 
 			if($method === "POST") {
 				//create a new truck and insert it into the database
-				$truck = new Truck(null, $requestObject->truckCompanyId);
+				$truck = new Truck(null, $requestObject->truckCompanyId); //TODO what information does $requestObject-> give you??
 				$truck->insert($pdo);
 
 				//update reply
@@ -108,7 +108,7 @@ try {
 					throw(new RuntimeException("The truck does not exist", 404));
 				}
 
-				//delete the company
+				//delete the truck
 			$truck->delete($pdo);
 
 				//update the reply
