@@ -13,7 +13,7 @@ require_once(dirname(__DIR__, 2) . "/lib/xsrf.php");
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
 
-use Edu\Cnm\{Profile};
+use Edu\Cnm\Crumbtrail\{Profile};
 
 // Verify the session, start a session if not active.
 if(session_status() !== PHP_SESSION_ACTIVE) {
@@ -48,7 +48,7 @@ try {
 	 * Make the profile information confidential.
 	 * If it's not your profile, you can't see it, modify it, or delete it.
 	 **/
-	if((empty($_SESSION["profile"]) === false) && (($_SESSION["profile"]->getProfileId()) === $id)) {
+	if((empty($_SESSION["profile"]) === false) && (($_SESSION["profile"]->getProfileId()) === $id)) {  // TODO ???
 
 // --------------------------- GET --------------------------------
 		if($method === "GET") {
@@ -104,7 +104,7 @@ try {
 			if(empty($requestObject->profileType) === true) {
 				throw(new \InvalidArgumentException ("No content for Profile type.", 405));
 			}
-			// Make sure profileSalt is available (required field).
+			// Make sure profileSalt is available (required field).   // TODO Put for password/confirm, salt/hash ???
 			if(empty($requestObject->profileSalt) === true) {
 				throw(new \InvalidArgumentException ("No content for Profile salt.", 405));
 			}
