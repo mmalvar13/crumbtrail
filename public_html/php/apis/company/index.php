@@ -42,7 +42,7 @@ try {
 	//I think this takes the URL we are given, and strips the id out of the URL so we know which primary key we have
 
 
-	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
+	$id = filter_input(INPUT_GET, "companyId", FILTER_VALIDATE_INT);  //should this be "id" or "companyId" TODO
 	$companyAccountCreatorId = filter_input(INPUT_GET, "companyAccountCreatorId", FILTER_VALIDATE_INT);
 	$companyName = filter_input(INPUT_GET, "companyName", FILTER_SANITIZE_STRING);
 	$companyMenuText = filter_input(INPUT_GET, "companyMenuText", FILTER_SANITIZE_STRING);

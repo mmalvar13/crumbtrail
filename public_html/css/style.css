@@ -195,6 +195,29 @@ p {
 }
 
 
+/*--------------------------------------CSS FOR TRUCK LOGIN/REGISTER---------------------------*/
+
+.truck-login-hr{
+	width: 50%;
+	margin-top:0.25rem;
+}
+
+.truck-login-body{
+	text-align: center;
+	margin: 1rem;
+}
+
+
+.truck-login-register-btn{
+	margin-top: 2rem;
+	background: none;
+	border: 0.1rem solid orange;
+
+}
+
+
+
+
 /*----------------------------------------CSS FOR FOOTER-------------------------------------------------*/
 /*Sticky footer*/
 /***
