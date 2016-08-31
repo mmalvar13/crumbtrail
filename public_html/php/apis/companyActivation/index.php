@@ -82,7 +82,7 @@ try {
 				$message->addPart('Welcome to CrumbTrail! Your company account has been approved. Please go to crumbtrail.com to add the description and menu of your food truck company.', 'text/plain');
 			} else {
 				$message->setBody('CrumbTrail has been unable to verify your business license and/or health permit.', 'text/html');
-				$message->setBody('CrumbTrail has been unable to verify your business license and/or health permit.', 'text/plain');
+				$message->addPart('CrumbTrail has been unable to verify your business license and/or health permit.', 'text/plain');
 			}
 
 //Send the message
