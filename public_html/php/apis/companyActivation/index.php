@@ -61,9 +61,9 @@ try {
 			}
 		}
 
-		$companyApproved = 1;  // TODO take this out.
 
-		if($requestObject->companyApproved === null) {
+		$companyApproved = Company::getCompanyByCompanyApproved($pdo, $companyApproved);
+		if($companyApproved === null) {
 			throw(new \RuntimeException('Company has not been approved yet'));
 		} else {
 
