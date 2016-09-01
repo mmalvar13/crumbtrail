@@ -651,8 +651,12 @@ class Company implements \JsonSerializable {
 			return;
 		}
 		// Is $newCompanyActivationToken positive?  If not, then throw an exception.
-		if($newCompanyActivationToken <= 0) {
+		if(strlen($newCompanyActivationToken) === 0) {
 			throw(new \RangeException("The company ActivationToken is not positive."));
+		}
+
+		if(strlen($newCompanyActivationToken)> 32){
+			throw(new \RangeException("Activation token is too long!"));
 		}
 		// Assign $newCompanyActivationToken to companyActivationToken, then store in SQL.
 		$this->companyActivationToken = $newCompanyActivationToken;

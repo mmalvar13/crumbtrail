@@ -98,7 +98,7 @@ try {
 
 
 		//ensure the person making changes is admin or owner and owns that account
-	} elseif((empty($_SESSION["profile"]) === false) && (($_SESSION["profile"]->getProfileId()) === $profileId????) && (($_SESSION["profile"]->getProfileType()) === "a") || (($_SESSION["profile"]->getProfileType())) === "o") {
+	} elseif((empty($_SESSION["profile"]) === false) && (($_SESSION["profile"]->getProfileId()) === $profileId) && (($_SESSION["profile"]->getProfileType()) === "a") || (($_SESSION["profile"]->getProfileType())) === "o") {
 
 		if(($method === "PUT" || $method === "POST")) { //TODO do we need a POST at all
 			verifyXsrf();
@@ -214,7 +214,8 @@ try {
 
 				$company = Company::getCompanyByCompanyId($pdo, $id);
 				if($company === null) {
-					throw(new RuntimeException("This company does not exist",
+					throw(new RuntimeException("This company does not exist"));
+				}
 				//put the new company name into the company and update
 				$company->setCompanyName($requestObject->companyName);
 				$company->setCompanyEmail($requestObject->companyEmail);
