@@ -56,8 +56,8 @@ try {
 
 	if($method === "POST") {
 		//set XSRF cookie
-		setXsrfCookie(); //do we need this?
-		verifyXsrf();
+//		setXsrfCookie(); //do we need this?
+//		verifyXsrf(); //todo what is the deal with this?
 
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
@@ -78,6 +78,9 @@ try {
 		if(empty($requestObject->confirmProfilePassword)=== true){
 			throw(new \InvalidArgumentException("Must confirm your password", 405));
 		}
+//		if(empty($requestObject->profileAccessToken) === true){
+//			$requestObject->profileAccessToken = null; //todo type hinting wants this a string, i want it a null
+////		}
 		if(empty($requestObject->profileType)=== true){
 			$requestObject->profileType = "O";
 		}
@@ -103,7 +106,7 @@ try {
 			throw(new \InvalidArgumentException("Must provide company address", 405));
 		}
 		if(empty($requestObject->companyStreet2)=== true){
-			$requestObject->companyStreet2 = null;
+			$requestObject->companyStreet2 = "company street"; //todo type hinting wants this a string, i  want it null
 		}
 		if(empty($requestObject->companyCity)=== true){
 			throw(new \InvalidArgumentException("Must provide city", 405));
@@ -115,18 +118,18 @@ try {
 			throw(new \InvalidArgumentException("Must provide zip code", 405));
 		}
 		if(empty($requestObject->companyDescription) === true){
-			$requestObject->companyDescription = null;
+			$requestObject->companyDescription = "Tell everyone who you are!"; //todo type hinting wants this a string, i want it null. Company Line 593
 		}
 		if(empty($requestObject->companyMenuText) === true){
-			$requestObject->companyMenuText = null;
+			$requestObject->companyMenuText = "What do you serve?";//todo type hinting wants this a string, i want it null
 		}
 
 		//sanitize the email. Make sure there is not already an account attached to this email
-		$profileEmail = filter_var($requestObject->profileEmail, FILTER_SANITIZE_EMAIL);
-		$profile = Profile::getProfileByProfileEmail($pdo, $profileEmail);
-		if(empty($profile) === false){ //correct?? or set to not null?
-			throw(new \InvalidArgumentException("this email already has an account",422));
-		}
+//		$profileEmail = filter_var($requestObject->profileEmail, FILTER_SANITIZE_EMAIL);
+//		$profile = Profile::getProfileByProfileEmail($pdo, $profileEmail);
+//		if(empty($profile) === false){ //correct?? or set to not null?
+//			throw(new \InvalidArgumentException("this email already has an account",422));
+//		}//todo lines 128-132, keeps throwing this exception. por que?
 
 
 		//create a new salt and email activation
@@ -140,17 +143,18 @@ try {
 		//create profile and company activation tokens
 		$profileActivationToken = bin2hex(random_bytes(16));
 		$companyActivationToken = bin2hex(random_bytes(16)); //do i need company activation token.
+		$profileAccessToken = bin2hex(random_bytes(32)); //todo do i need this? it wont let me set it to null. should i just make this random thing?
 
 		//create the hash
 		$hash = hash_pbkdf2("sha512", $requestObject->profilePassword, $salt, 262144);
 
 		//create a new profile and insert it into the databases
-		$profile = new Profile(null, $requestObject->profileName, $requestObject->profileEmail, $requestObject->profilePhone, null, $profileActivationToken, $requestObject->profileType, $hash, $salt);
-
+		$profile = new Profile(null, $requestObject->profileName, $requestObject->profileEmail, $requestObject->profilePhone, $profileAccessToken, $profileActivationToken, $requestObject->profileType, $hash, $salt);
+//todo type hinting profileAccessToken
 		$profile->insert($pdo);
 
 		//create a new company and insert it into the database
-		$company = new Company(null, $profile->getProfileId(), $requestObject->companyName, $requestObject->companyEmail, $requestObject->companyPhone, $requestObject->companyPermit, $requestObject->companyLicense, $requestObject->companyAttn, $requestObject->companyStreet1, $requestObject->companyStreet2, $requestObject->companyCity, $requestObject->companyState, $requestObject->companyZip, $requestObject->companyDescription , $requestObject->companyMenuText, $companyActivationToken, $companyApproved = null);
+		$company = new Company(null, $profile->getProfileId(), $requestObject->companyName, $requestObject->companyEmail, $requestObject->companyPhone, $requestObject->companyPermit, $requestObject->companyLicense, $requestObject->companyAttn, $requestObject->companyStreet1, $requestObject->companyStreet2, $requestObject->companyCity, $requestObject->companyState, $requestObject->companyZip, $requestObject->companyDescription , $requestObject->companyMenuText, $companyActivationToken, null);
 
 		$company->insert($pdo);
 
