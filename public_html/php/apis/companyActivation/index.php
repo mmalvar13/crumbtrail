@@ -43,24 +43,28 @@ try {
 	// Determine which HTTP method was used.
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
+	$companyId = filter_input(INPUT_GET, "companyId", FILTER_VALIDATE_INT);
 	$companyActivationToken = filter_input(INPUT_GET, "companyActivationToken", FILTER_SANITIZE_STRING);
 
-	if($method === "PUT") {
-		verifyXsrf();
-		$requestContent = file_get_contents("php://input");
-		$requestObject = json_decode($requestContent);
+	if($method === "GET") {
+		setXsrfCookie();
 
-		$company = Company::getCompanyByCompanyActivationToken($pdo, $companyActivationToken);
+		// $requestContent = file_get_contents("php://input");
+		// $requestObject = json_decode($requestContent);
+		// $company = Company::getCompanyByCompanyActivationToken($pdo, $companyActivationToken);
 
-		if($companyActivationToken !== null) {
-			$company->setCompanyActivationToken(null);
-			$company->update($pdo);
-		} else {
-			throw(new InvalidArgumentException("company has already been activated", 404));
+		if((empty($companyId))=== false){
+			$company = Company::getCompanyByCompanyId($pdo, $companyId);
+			if($companyActivationToken !== null){
+				$company->setCompanyActivationToken(null);
+				$company->update($pdo);
+			} else {
+				throw(new InvalidArgumentException("Company account has already been activated", 404));
+			}
 		}
 
 		if($requestObject->companyApproved === null) {
-			throw(new \RuntimeException('company has not been approved yet'));
+			throw(new \RuntimeException('Company has not been approved yet'));
 		} else {
 
 // ------------ SwiftMailer: send Approve or Deny email to companyAccountCreator ------------
