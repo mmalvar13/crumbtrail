@@ -28,6 +28,7 @@ $reply->data = null;
 
 try {
 	//grab the mySQL connection
+
 	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/crumbtrail.ini");
 
 	//determine which HTTP method was used
