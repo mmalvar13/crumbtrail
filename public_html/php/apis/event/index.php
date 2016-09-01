@@ -2,16 +2,18 @@
 
 //Api for the Event class
 
-require_once (dirname(__DIR__, 2) . "classes/autoload.php");
-require_once (dirname(__DIR__, 2) . "/lib/xsrf.php");
+require_once(dirname(__DIR__, 2) . "/classes/autoload.php");
+require_once(dirname(__DIR__, 2) . "/lib/xsrf.php");
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
-use Edu\Cnm\CrumbTrail\ {Event, Truck, Point};
+use Edu\Cnm\CrumbTrail\ {
+	Event, Point
+};
 
 /**
  * api for the Event class
  *
- *@author Victoria Chacon <victoriousdesignco@gmail.com>
+ * @author Victoria Chacon <victoriousdesignco@gmail.com>
  **/
 
 //verify the session start if not active
@@ -34,8 +36,8 @@ try {
 	$method = array_key_exists("HTTP_X_HTTP METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
 	//sanitize input
-	$id = filter_input(INPUT_GET, "eventId", FILTER_VALIDATE_INT);
-	//$eventId = filter_input(INPUT_GET, "eventId", FILTER_VALIDATE_INT);// 39
+	$eventId = filter_input(INPUT_GET, "eventId", FILTER_VALIDATE_INT);
+	//$eventId = filter_input(INPUT_GET, "eventId", FILTER_VALIDATE_INT);//
 	$eventTruckId = filter_input(INPUT_GET, "eventTruckId", FILTER_VALIDATE_INT);
 	$eventLocationLat = filter_input(INPUT_GET, "eventLocationLat", FILTER_VALIDATE_FLOAT);
 	$eventLocationLng = filter_input(INPUT_GET, "eventLocationLng", FILTER_VALIDATE_FLOAT);
@@ -45,31 +47,31 @@ try {
 		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
 	}
 
-	//copy from here...so far no issues in PHPstrom
+	//copy from here...so far no issues in PHPstorm
 	//handle the GET request- if id is present, that event is returned. Otherwise, all Events are returned
 	if($method === "GET") {
 		//set xsrf cookie
 		setXsrfCookie();
 
 		//get a specific event or all events and update reply
-		if(empty($id) === false && empty($eventTruckId) === false) {
-			$event = Event::getEventByEventIdAndEventTruckId($pdo, $id, $eventTruckId);
+		if(empty($EventId) === false && empty($eventTruckId) === false) {
+			$event = Event::getEventByEventIdAndEventTruckId($pdo, $eventId, $eventTruckId);
 			if($event !== null) {
 				$reply->data = $event;
 			}
-		} elseif ((empty($truckId)) === false) {
+		} elseif((empty($truckId)) === false) {
 			$event = Event::getEventByEventTruckId($pdo, $eventTruckId);
 			if($event !== null) {
 				$reply->data = $event;
 			}
 			//TODO: WAT!!!!
-		} elseif ((empty($id)) === false) {
-			$event = Event::getEventByEventId ($pdo, $id);
+		} elseif((empty($id)) === false) {
+			$event = Event::getEventByEventId($pdo, $eventId);
 			if($event !== null) {
 				$reply->data = $event;
 			}
-		} elseif ((empty($event)) === false) {
-			$event = Event::getEventByEventEndAndEventStart ($pdo);
+		} elseif((empty($event)) === false) {
+			$event = Event::getEventByEventEndAndEventStart($pdo);
 			if($event !== null) {
 				$reply->data = $event;
 			}
@@ -79,9 +81,7 @@ try {
 				$reply->data = $events;
 			}
 		}
-	}
-
-//elseif here? Since there is no PUT
+	} //elseif here? Since there is no PUT
 	elseif(($method === "POST")) {
 		//what does "verifyXsrf" and the "php://input" do again?
 		verifyXsrf();
@@ -106,7 +106,7 @@ try {
 //Perform actual PUT
 	if($method === "PUT") {
 		//retrieve the event to update
-		$event = Event::getEventByEventId($pdo, $id);
+		$event = Event::getEventByEventId($pdo, $eventId);
 		if($event === null) {
 			throw (new RuntimeException("Event does not exist.", 404));
 		}
@@ -121,21 +121,21 @@ try {
 		//update reply
 		$reply->message = "Event end time updated successfully.";
 
-	} elseif ($method === "POST") {
+	} elseif($method === "POST") {
 		if(empty($requestObject->eventId) === true) {
 			throw(new \InvalidArgumentException("No Event Id.", 405));
 		}
 		//because this is how angular will send the associate array.......
 		$point = new Point($requestObject->location->lat, $requestObject->location->lng);
-		$event = new Event(null, $requestObject->eventId, $requestObject->eventEnd, $requestObject->eventStart,$requestObject->eventLocation, null);
+		$event = new Event(null, $requestObject->eventId, $requestObject->eventEnd, $requestObject->eventStart, $requestObject->eventLocation, null);
 		$event->insert($pdo);;
 		//update reply
 		$reply->message = "Event created successfully.";
-	//TODO Do i need a delete block???
-	} elseif ($method === "DELETE") {
+		//TODO Do i need a delete block???
+	} elseif($method === "DELETE") {
 		verifyXsrf();
 		//retrieve event to be deleted
-		$event = Event::getEventByEventId($pdo, $id);
+		$event = Event::getEventByEventId($pdo, $eventId);
 		if($event === null) {
 			throw(new RuntimeException("Event does not exist.", 404));
 		}
@@ -145,7 +145,7 @@ try {
 		//update the reply
 		$reply->message = "Event deleted successfully.";
 
-	}else {
+	} else {
 		throw (new InvalidArgumentException("Invalid HTTP method request"));
 	}
 	//update the reply with exception information

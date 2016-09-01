@@ -4,7 +4,7 @@ namespace Edu\Cnm\CrumbTrail;  /*LOOK INTO THIS FOR ACCURACY */
 require_once("autoload.php");
 
 /**
- * class Profile for entity profile in crumbtrail application
+ * class Profile for entity profile in crumbTrail application
  * this class contains all state variables, constructor, mutators, accessors, PDOs, and getFooByBar methods
  * @author Loren Baca
  */

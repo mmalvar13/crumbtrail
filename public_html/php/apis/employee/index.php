@@ -7,8 +7,8 @@
 //do i need my cnm user id for "use"
 
 
-require_once(dirname(__DIR__, 2) . "/classes/autoloader.php");
-require_once(dirname(__DIR__, 2) . "/lib/xsrf.php");
+require_once(dirname(__DIR__,2) . "/classes/autoload.php");
+require_once(dirname(__DIR__,2) . "/lib/xsrf.php");
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 require_once(dirname(__DIR__, 4) . "/vendor/autoload.php");
 
@@ -83,17 +83,17 @@ try {
 		//make sure employ profile is available
 		//request object...whatever is on the angular form....
 		if(empty($requestObject->profileName) === true) {
-			throw(new InvalidArgumentException("Need to input employee name.", 405));
+			throw(new \InvalidArgumentException("Need to input employee name.", 405));
 		}
 		if(empty($requestObject->profileType) === true) {
-			throw(new InvalidArgumentException("Need to input the owner or employee status.", 405));
+			throw(new \InvalidArgumentException("Need to input the owner or employee status.", 405));
 		}
 		if(empty($requestObject->profileEmail) === true) {
-			throw(new InvalidArgumentException("Need to insert employee email.", 405));
+			throw(new \InvalidArgumentException("Need to insert employee email.", 405));
 		}
-		//put what company they are in...if only one company...no option for employeer to select...dropdown with all companies that they own.
+		//put what company they are in...if only one company...no option for employer to select...dropdown with all companies that they own.
 		if(empty($requestObject->companyId) === true) {
-			throw(new InvalidArgumentException("No company Id exists.", 405));
+			throw(new \InvalidArgumentException("No company Id exists.", 405));
 		}
 		//Todo----GET COMPANY BY COMPANYEMAIL....POSSIBLY....IF WE NEED TO LINK BACK TO COMPANY/ YES, noted in above if block...employee works for a company employer can either choose company of angular defaults it to the one company if an owner only has one company!
 		//-----here im making Salt, DummyPassword, profile activation token and hash---//
