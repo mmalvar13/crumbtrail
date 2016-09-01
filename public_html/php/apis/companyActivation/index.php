@@ -15,7 +15,7 @@ require_once(dirname(__DIR__, 2) . "/lib/xsrf.php");
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 require_once(dirname(__DIR__, 4) . "/vendor/autoload.php");
 
-use Edu\Cnm\CrumbTrail\{
+use Edu\Cnm\Crumbtrail\{
 	Company
 };
 
@@ -57,7 +57,7 @@ try {
 			}
 			$companyApproved = $company->getCompanyApproved();
 			if($companyApproved === null) {
-				throw(new \RunTimeException('COmpany has not been approved yet'));
+				throw(new \RunTimeException('Company has not been approved yet'));
 			} else {
 
 // ---- SwiftMailer: send Approve or Deny email to companyAccountCreator ------
@@ -78,19 +78,17 @@ try {
 
 				$numSent = $mailer->send($message);
 				if($numSent !== count($recipients)) {
+					throw(new RuntimeException("unable to send email"));
 				}
-				throw(new RuntimeException("unable to send email"));
 			}
 
 		} else {
 			throw (new InvalidArgumentException("there is no company id"));
-
 		}
 
-		}	else {
+	} else {
 		throw (new InvalidArgumentException("Invalid HTTP method request"));
-	}
-	/*---------SwiftMailer Code Ends Here-------------------*/
+		}
 
 } catch(Exception $exception) {
 	$reply->status = $exception->getCode();
@@ -100,7 +98,6 @@ try {
 	$reply->status = $typeError->getCode();
 	$reply->message = $typeError->getMessage();
 }
-
 
 // Encode and return reply to front end caller.
 echo json_encode($reply);
