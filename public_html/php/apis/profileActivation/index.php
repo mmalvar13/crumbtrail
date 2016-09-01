@@ -72,6 +72,8 @@ try {
 //		} else {
 //			throw(new InvalidArgumentException("Account has already been activated", 404));
 //		}
+
+
 		if(empty($companyId) === false) {
 			$employ = Employ::getEmployByEmployCompanyIdAndEmployProfileId($pdo, $employCompanyId, $employProfileId);
 			if($employ === null) {
