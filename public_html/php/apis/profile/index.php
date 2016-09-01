@@ -13,7 +13,7 @@ require_once(dirname(__DIR__, 2) . "/lib/xsrf.php");
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
 
-use Edu\Cnm\Crumbtrail\{Profile};
+use Edu\Cnm\CrumbTrail\{Profile};
 
 // Verify the session, start a session if not active.
 if(session_status() !== PHP_SESSION_ACTIVE) {
