@@ -13,18 +13,11 @@
 require_once(dirname(__DIR__, 2) . "/classes/autoload.php");
 require_once(dirname(__DIR__, 2) . "/lib/xsrf.php");
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
-require_once (dirname(__DIR__,4) . "/vendor/autoload.php");
+require_once(dirname(__DIR__, 4) . "/vendor/autoload.php");
 
 use Edu\Cnm\Crumbtrail\{
 	Company
 };
-
-/**
- * TODO Does this need:
- * 		redirect API ?
- *		scriptpath ?
- * 		linkpath ?
- */
 
 // Verify the session, start a session if not active.
 if(session_status() !== PHP_SESSION_ACTIVE) {
@@ -50,79 +43,63 @@ try {
 	if($method === "GET") {
 		setXsrfCookie();
 
-		$company = Company::getCompanyByCompanyId($pdo, $companyId);
-		if((empty($companyId))=== false) {
-			// $company = Company::getCompanyByCompanyId($pdo, $companyId);
-
+		if((empty($companyId)) === false) {
+			$company = Company::getCompanyByCompanyId($pdo, $companyId);
+			if($company === null) {
+				throw(new \InvalidArgumentException("this company does not exist"));
+			}
+			$companyActivationToken = $company->getCompanyActivationToken();
 			if($companyActivationToken !== null) {
 				$company->setCompanyActivationToken(null);
 				$company->update($pdo);
 			} else {
-				throw(new InvalidArgumentException("Company account has already been activated", 404));
+				throw(new \InvalidArgumentException("Company account has already been activated", 404));
+			}
+			$companyApproved = $company->getCompanyApproved();
+			if($companyApproved === null) {
+				throw(new \RunTimeException('COmpany has not been approved yet'));
+			} else {
 
-			} elseif {
-				$companyApproved = $company->getCompanyApproved();
-				if($companyApproved === null) {
-					throw(new \RuntimeException('Company has not been approved yet'));
+// ---- SwiftMailer: send Approve or Deny email to companyAccountCreator ------
+				$transport = Swift_SmtpTransport::newInstance('localhost', 25);
+				$mailer = Swift_Mailer::newInstance($transport);
+				$message = Swift_Message::newInstance();
+				$message->setFrom(['kkirk4@cnm.edu' => 'Crumbtrail Admin']);
+				$recipients = ['companyEmail' => $company->getCompanyEmail()];
+				$message->setSubject("Message from CrumbTrail");
+
+				if($company->getCompanyApproved() === 1) {
+					$message->setBody('Welcome to CrumbTrail! Your company account has been approved. Please go to crumbtrail.com to add the description and menu of your food truck company.', 'text/html');
+					$message->addPart('Welcome to CrumbTrail! Your company account has been approved. Please go to crumbtrail.com to add the description and menu of your food truck company.', 'text/plain');
+				} else {
+					$message->setBody('CrumbTrail has been unable to verify your business license and/or health permit.', 'text/html');
+					$message->addPart('CrumbTrail has been unable to verify your business license and/or health permit.', 'text/plain');
 				}
 
-		} else {
-
-// ------------ SwiftMailer: send Approve or Deny email to companyAccountCreator ------------
-//Create the Transport
-			$transport = Swift_SmtpTransport::newInstance('localhost', 25);
-
-//Create the Mailer using your created Transport
-			$mailer = Swift_Mailer::newInstance($transport);
-
-//Create a message
-			$message = Swift_Message::newInstance();
-
-//attach a sender to the message
-			$message->setFrom(['kkirk4@cnm.edu' => 'Crumbtrail Admin']);
-
-//attach recipients to the message. you can add
-			$recipients = ['companyEmail' => $company->getCompanyEmail()];
-//$message->setTo($recipients);	//we will just send to one person.
-
-//attach a subject line to the message
-			$message->setSubject("Message from CrumbTrail");
-
-//the body of the message-seen when the user opens the message
-			if($company->getCompanyApproved() === 1) {
-				$message->setBody('Welcome to CrumbTrail! Your company account has been approved. Please go to crumbtrail.com to add the description and menu of your food truck company.', 'text/html');
-				$message->addPart('Welcome to CrumbTrail! Your company account has been approved. Please go to crumbtrail.com to add the description and menu of your food truck company.', 'text/plain');
-			} else {
-				$message->setBody('CrumbTrail has been unable to verify your business license and/or health permit.', 'text/html');
-				$message->addPart('CrumbTrail has been unable to verify your business license and/or health permit.', 'text/plain');
-			}
-
-//Send the message
-			$numSent = $mailer->send($message);
-
-			printf("Sent %d messages\n", $numSent);
-
-			if($numSent !== count($recipients)) {
-				//the $failedRecipients parameter passed in the send() method now contains an array of the Emails that failed
+				$numSent = $mailer->send($message);
+				if($numSent !== count($recipients)) {
+				}
 				throw(new RuntimeException("unable to send email"));
 			}
+
+		} else {
+			throw (new InvalidArgumentException("there is no company id"));
+
 		}
-
-	} else {
-		throw(new InvalidArgumentException("Invalid HTTP method request"));
+	else {
+		throw (new InvalidArgumentException("Invalid HTTP method request"));
 		}
-
-	/*----------------------------------SwiftMailer Code Ends Here------------------------------------------*/
-
+	}
+	/*---------SwiftMailer Code Ends Here-------------------*/
 
 } catch(Exception $exception) {
-		$reply->status = $exception->getCode();
-		$reply->message = $exception->getMessage();
+	$reply->status = $exception->getCode();
+	$reply->message = $exception->getMessage();
 
-	} catch(TypeError $typeError) {
-		$reply->status = $typeError->getCode();
-		$reply->message = $typeError->getMessage();
-	}
+} catch(TypeError $typeError) {
+	$reply->status = $typeError->getCode();
+	$reply->message = $typeError->getMessage();
+}
 
 
 // Encode and return reply to front end caller.
