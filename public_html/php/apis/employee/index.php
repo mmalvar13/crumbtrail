@@ -91,6 +91,7 @@ try {
 		$hash = hash_pbkdf2("sha512", $dummyPassword, $salt, 262144);
 		$company = Company::getCompanyByCompanyId($pdo, $requestObject->companyId);
 		if($company === null) {
+			$reply->numTacos = PHP_INT_MAX;
 			throw(new InvalidArgumentException("No company Id exists.", 405));
 		}
 		// ?? :D will try first, if its null it will go to the second...if null...will go to the third WootWoot!
