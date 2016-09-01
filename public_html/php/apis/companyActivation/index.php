@@ -86,9 +86,9 @@ try {
 			throw (new InvalidArgumentException("there is no company id"));
 
 		}
-	else {
+
+		}	else {
 		throw (new InvalidArgumentException("Invalid HTTP method request"));
-		}
 	}
 	/*---------SwiftMailer Code Ends Here-------------------*/
 
