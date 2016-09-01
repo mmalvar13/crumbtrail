@@ -6,7 +6,7 @@ require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 require_once(dirname(__DIR__, 4) . "/vendor/autoload.php");
 //do i add something here for swiftmailer?
 
-use Edu\Cnm\Crumbtrail\{
+use Edu\Cnm\CrumbTrail\{
 	Company, Employ, Profile
 };
 
