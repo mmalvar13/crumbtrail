@@ -38,21 +38,40 @@ try {
 	$profileId = filter_input(INPUT_GET, "profileId", FILTER_VALIDATE_INT);
 	$companyApproved = filter_input(INPUT_GET, "companyApproved", FILTER_VALIDATE_BOOLEAN);
 	$companyId = filter_input(INPUT_GET, "companyId", FILTER_VALIDATE_INT); //todo so where do we get this companyId from?? is it in the url?
+	$profileActivationToken = filter_input(INPUT_GET, "profileActivationToken", FILTER_SANITIZE_STRING);
 
 
 	/*You can get here one of two ways. First way: a food truck owner is signing up for the first time, via SignUp API. They have clicked the link to activate their profile. Second way: an employee or co-owner was invited to join a pre-existing company. They have clicked the link to activate their profile*/
 	if($method === "GET") {
 		//set XSRF cookie
 		setXsrfCookie();
-
-		if($profileActivationToken !== null) {
-			$profile = Profile::getProfileByProfileActivationToken($pdo, $profileActivationToken);
-			//verify that the profile itself is not null. what if its an invalid activation token. if profile === null throw exception.
-			$profile->setProfileActivationToken(null);
-			$profile->update($pdo);
-		} else {
-			throw(new InvalidArgumentException("Account has already been activated", 404));
+		if((empty($profileId))=== false){
+			$profile = Profile::getProfileByProfileId($pdo, $profileId);
+			if($profileActivationToken !== null){
+				$profile->setProfileActivationToken(null);
+				$profile->update($pdo);
+			}else{
+				throw(new InvalidArgumentException("Account has already been activated", 404));
+			}
 		}
+//		if((empty($profileActivationToken))===false){
+//			$profile = Profile::getProfileActivationToken($pdo, $profileActivationToken);
+//			if($profileActivationToken !== null){
+//				$profile->setProfileActivationToken(null);
+//				$profile->update($pdo);
+//			}else{
+//				throw(new InvalidArgumentException("account has already been activated", 404));
+//			}
+//		}
+//todo: this is how i originally had it. getting error "call to method function setProfileActivationToken on null.
+//		if($profileActivationToken !== null) {
+//			$profile = Profile::getProfileByProfileActivationToken($pdo, $profileActivationToken);
+//			//verify that the profile itself is not null. what if its an invalid activation token. if profile === null throw exception.
+//			$profile->setProfileActivationToken(null);
+//			$profile->update($pdo);
+//		} else {
+//			throw(new InvalidArgumentException("Account has already been activated", 404));
+//		}
 		if(empty($companyId) === false) {
 			$employ = Employ::getEmployByEmployCompanyIdAndEmployProfileId($pdo, $employCompanyId, $employProfileId);
 			if($employ === null) {
@@ -102,7 +121,7 @@ try {
 
 					//add alternative parts with addPart() for those who can only read plaintext or dont wwant to view in html
 					$message->addPart('Crumbtrail  Admin, a user has confirmed their emai and activated their profile. Please take a look at their business license and health permit to verify their business. One you have made the decision to confirm or deny them, click on this link. This link will set their companyActivationToken to null, and allow you to choose whether you confirm or deny ', 'text/plain');
-					$message->setReturnPath('bounces@address.tld');//return path address specifies where bounce notifications should be sent
+					$message->setReturnPath('mmalvar13@gmail.com');//return path address specifies where bounce notifications should be sent
 
 
 					//building the activation link that can travel to another server and still work. this is the link that will be clicked on to confirm. maybe this is not actually h ere, but in companyActivation/ProfileActivation/EmployeeActivation.
@@ -118,9 +137,6 @@ try {
 
 					//Send the message
 					$numSent = $mailer->send($message);
-
-					printf("Sent %d messages\n", $numSent);
-
 					/**
 					 * the send method returns the number of recipients that accepted the Email
 					 * so if the number attempted is not the number accepted, this is the exception (number attempted should only be one at a time)
