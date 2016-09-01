@@ -75,7 +75,7 @@ try {
 				$reply->data = $employ;
 			}
 		}
-	} elseif(($method === "POST")) {
+	} elseif($method === "POST") {
 		//verify Xsrf
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
