@@ -1,45 +1,33 @@
 <?php
-
 //Api for the employee class
-
 //POST a new employee?
 //GET employee?
 //do i need my cnm user id for "use"
-
-
 require_once(dirname(__DIR__, 2) . "/classes/autoload.php");
 require_once(dirname(__DIR__, 2) . "/lib/xsrf.php");
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 require_once(dirname(__DIR__, 4) . "/vendor/autoload.php");
-
-
 use Edu\Cnm\CrumbTrail\ {
 	Employ, Profile, Company
 };
-
 /**
  * api for the Employee class
  *
  * @author Victoria Chacon <victoriousdesignco@gmail.com>
  **/
-
 //verify the session, start if not active
 if(session_status() !== PHP_SESSION_ACTIVE) {
 	session_start();
-
 }
 //prepare and empty reply
 $reply = new stdClass();
 $reply->status = 200;
 $reply->data = null;
-
 try {
 	//grab mySQL connection
 	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/crumbtrail.ini");
-
 	//determine which HTTP method was used
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP-METHOD"] : $_SERVER["REQUEST_METHOD"];
-
 	//sanitize input
 	//using the Get method here...so I am not writing the "employ class" but a bridge between employ and profile?
 //we wouldn't need an Id since this wouldn't be tracked right, this is destroyed once the employee verifies that they are part of the profile?
@@ -50,9 +38,8 @@ try {
 	//make sure the id is valid for methods that require it
 	//TODO: if an owner takes an employee of their profile how does that work? DO i need the delete method, maybe set profile type to null, and possibly a PUT method if we wanted to disrupt the connection between employee and company profile....DELETE $employ, in the delete method?"//
 	if(($method === "DELETE") && (empty($id) === true || $id < 0)) {
-		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
+		throw(new \InvalidArgumentException("id cannot be empty or negative", 405));
 	}
-
 	//handle GET request - if id is present, that employee is returned, otherwise all employees get returned???
 	if($method === "GET") {
 		//set XSRF cookie
@@ -79,7 +66,6 @@ try {
 		//verify Xsrf
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
-
 		//make sure employ profile is available
 		//request object...whatever is on the angular form....
 		if(empty($requestObject->profileName) === true) {
@@ -111,52 +97,38 @@ try {
 		$profilePhone = $requestObject->profilePhone ?? $company->getCompanyPhone() ?? "555-555-5555";
 		//created new profile and insert into database
 		$profile = new Profile(null, $requestObject->profileName, $requestObject->profileEmail, $profilePhone, $profileAccessToken, $profileActivationToken, $requestObject->profileType, $hash, $salt);
-
 		$profile->insert($pdo);
 		//new employ
 		$employ = new Employ($requestObject->companyId, $profile->getProfileId());
 		$employ->insert($pdo);
 		//update reply
 		$reply->message = "A link has been sent to your employee/CoOwner for verification.";
-
 //-----------------------------adding in swiftmailer------------------------------------//
 		//sends email between owner and employee??
 		$transport = Swift_SmtpTransport::newInstance('localhost', 25);
-
 		//Create the Mailer using your created Transport
 		$mailer = Swift_Mailer::newInstance($transport);
-
 		//Create a message
 		$message = Swift_Message::newInstance();//to set a subject line you can pass it as a parameter in newInstance or set it afterwards. I chose to set it afterwards. Same with body.
-
 		//attach a sender to the message
 		$message->setFrom(['vchacon8@cnm.edu' => 'Crumbtrail Admin']);//is this the same as setFrom(array('someaddress'=>'name'));
-
 		//attach recipients to the message. you can add
 		$recipients = [$profile->getProfileEmail() => $profile->getProfileName()];
 		$message->setTo($recipients);//we will just send to one person.
 		//include owner and employee name here???
 		//attach a subject line to the message
 		$message->setSubject('You have been invited to join crumbtrail. Please verify your email.');
-
 		//the body of the message-seen when the user opens the message
 		$message->setBody('Thank you for joining crumbtrail. Please confirm your email by clicking on this link.', 'text/html');
-
 		//add alternative parts with addPart() meant for those who cannot read in html???
 		$message->addPart('Thank you for joining crumbtrail. Please confirm your email by clicking on this link. ', 'text/plain');
 		$message->setReturnPath('vchacon8@cnm.edu');//return path address specifies where bounce notifications should be sent
-
-
 		//Link that will be clicked on to confirm the employess email address? and set their profileActivationToken to null. This triggers an email (over in profileActivation API)
-
 		//you should use $_SERVER["SCRIPT_NAME"]
 		$scriptPath = $_SERVER["SCRIPT_NAME"];
 		$linkPath = dirname($scriptPath, 2) . "/profileActivation/?profileActivationToken=$profileActivationToken";
-
-
 		//Send the message
 		$numSent = $mailer->send($message);
-
 		/**
 		 * the send method returns the number of recipients that accepted the Email
 		 * so if the number attempted is not the number accepted, this is the exception (number attempted should only be one at a time)
@@ -178,11 +150,9 @@ try {
 		$employ->delete($pdo);
 		//update reply
 		$reply->message = "Employee or CoOwner deleted successfully";
-
 	} else {
 		throw (new InvalidArgumentException("Invalid HTTP method Request"));
 	}
-
 	//update reply with exception information
 } catch(Exception $exception) {
 	$reply->status = $exception->getCode();
@@ -192,12 +162,12 @@ try {
 	$reply->status = $typeError->getCode();
 	$reply->message = $typeError->getMessage();
 }
-
 header("Content-type: application.json");
 if($reply->data === null) {
 	unset($reply->data);
 }
 //encode and return reply to front end caller
 echo json_encode($reply);
+
 
 
