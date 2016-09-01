@@ -47,24 +47,25 @@ try {
 	$companyActivationToken = filter_input(INPUT_GET, "companyActivationToken", FILTER_SANITIZE_STRING);
 	$companyApproved = filter_input(INPUT_GET, "companyApproved", FILTER_VALIDATE_INT);
 
-
 	if($method === "GET") {
 		setXsrfCookie();
 
+		$company = Company::getCompanyByCompanyId($pdo, $companyId);
 		if((empty($companyId))=== false) {
-			$company = Company::getCompanyByCompanyId($pdo, $companyId);
+			// $company = Company::getCompanyByCompanyId($pdo, $companyId);
+
 			if($companyActivationToken !== null) {
 				$company->setCompanyActivationToken(null);
 				$company->update($pdo);
 			} else {
 				throw(new InvalidArgumentException("Company account has already been activated", 404));
-			}
-		}
 
+			} elseif {
+				$companyApproved = $company->getCompanyApproved();
+				if($companyApproved === null) {
+					throw(new \RuntimeException('Company has not been approved yet'));
+				}
 
-		$companyApproved = Company::getCompanyByCompanyApproved($pdo, $companyApproved);
-		if($companyApproved === null) {
-			throw(new \RuntimeException('Company has not been approved yet'));
 		} else {
 
 // ------------ SwiftMailer: send Approve or Deny email to companyAccountCreator ------------
@@ -106,6 +107,7 @@ try {
 				throw(new RuntimeException("unable to send email"));
 			}
 		}
+
 	} else {
 		throw(new InvalidArgumentException("Invalid HTTP method request"));
 		}
