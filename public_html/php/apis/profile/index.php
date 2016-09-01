@@ -28,7 +28,7 @@ $reply->data = null;
 
 try {
 	// Connect to mySQL.
-	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/profile.ini");
+	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/crumbtrail.ini");
 
 	// Determine which HTTP method was used: GET, (POST), PUT, or DELETE.
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
