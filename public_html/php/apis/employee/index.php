@@ -7,8 +7,8 @@
 //do i need my cnm user id for "use"
 
 
-require_once(dirname(__DIR__,2) . "/classes/autoload.php");
-require_once(dirname(__DIR__,2) . "/lib/xsrf.php");
+require_once(dirname(__DIR__, 2) . "/classes/autoload.php");
+require_once(dirname(__DIR__, 2) . "/lib/xsrf.php");
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 require_once(dirname(__DIR__, 4) . "/vendor/autoload.php");
 
@@ -100,6 +100,7 @@ try {
 		$salt = bin2hex(random_bytes(16));
 		$dummyPassword = bin2hex(random_bytes(16));
 		$profileActivationToken = bin2hex(random_bytes(16));
+		$profileAccessToken = bin2hex(random_bytes(16));
 		//what is the number at the end of the hash??
 		$hash = hash_pbkdf2("sha512", $dummyPassword, $salt, 262144);
 		$company = Company::getCompanyByCompanyId($pdo, $requestObject->companyId);
@@ -109,7 +110,7 @@ try {
 		// ?? :D will try first, if its null it will go to the second...if null...will go to the third WootWoot!
 		$profilePhone = $requestObject->profilePhone ?? $company->getCompanyPhone() ?? "555-555-5555";
 		//created new profile and insert into database
-		$profile = new Profile(null, $requestObject->profileName, $requestObject->profileEmail, $profilePhone, null, $profileActivationToken, $requestObject->profileType, $hash, $salt);
+		$profile = new Profile(null, $requestObject->profileName, $requestObject->profileEmail, $profilePhone, $profileAccessToken, $profileActivationToken, $requestObject->profileType, $hash, $salt);
 
 		$profile->insert($pdo);
 		//new employ
