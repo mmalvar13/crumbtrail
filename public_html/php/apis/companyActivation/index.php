@@ -53,9 +53,9 @@ try {
 		// $requestObject = json_decode($requestContent);
 		// $company = Company::getCompanyByCompanyActivationToken($pdo, $companyActivationToken);
 
-		if((empty($companyId))=== false){
+		if((empty($companyId))=== false) {
 			$company = Company::getCompanyByCompanyId($pdo, $companyId);
-			if($companyActivationToken !== null){
+			if($companyActivationToken !== null) {
 				$company->setCompanyActivationToken(null);
 				$company->update($pdo);
 			} else {
