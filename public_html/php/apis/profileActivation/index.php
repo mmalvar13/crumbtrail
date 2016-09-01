@@ -150,7 +150,11 @@ try {
 					/*----------------------------------SwiftMailer Code Ends Here--------------------------------------*/
 				}
 			}
+		}else{
+			throw(new \InvalidArgumentException("There is no companyId"));
 		}
+	}else{
+		throw (new InvalidArgumentException("Invalid HTTP method request"));
 	}
 } catch(Exception $exception) {
 	$reply->status = $exception->getCode();

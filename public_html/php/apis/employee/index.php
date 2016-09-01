@@ -91,7 +91,7 @@ try {
 		if(empty($requestObject->profileEmail) === true) {
 			throw(new \InvalidArgumentException("Need to insert employee email.", 405));
 		}
-		//put what company they are in...if only one company...no option for employer to select...dropdown with all companies that they own.
+//		put what company they are in...if only one company...no option for employer to select...dropdown with all companies that they own.
 		if(empty($requestObject->companyId) === true) {
 			throw(new \InvalidArgumentException("No company Id exists.", 405));
 		}
