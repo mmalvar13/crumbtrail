@@ -45,6 +45,8 @@ try {
 
 	$companyId = filter_input(INPUT_GET, "companyId", FILTER_VALIDATE_INT);
 	$companyActivationToken = filter_input(INPUT_GET, "companyActivationToken", FILTER_SANITIZE_STRING);
+	$companyApproved = filter_input(INPUT_GET, "companyApproved", FILTER_VALIDATE_INT);
+
 
 	if($method === "GET") {
 		setXsrfCookie();
@@ -62,6 +64,8 @@ try {
 				throw(new InvalidArgumentException("Company account has already been activated", 404));
 			}
 		}
+
+		// $companyApproved = 1;  // TODO take this out.
 
 		if($requestObject->companyApproved === null) {
 			throw(new \RuntimeException('Company has not been approved yet'));
