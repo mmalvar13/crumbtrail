@@ -51,10 +51,6 @@ try {
 	if($method === "GET") {
 		setXsrfCookie();
 
-		// $requestContent = file_get_contents("php://input");
-		// $requestObject = json_decode($requestContent);
-		// $company = Company::getCompanyByCompanyActivationToken($pdo, $companyActivationToken);
-
 		if((empty($companyId))=== false) {
 			$company = Company::getCompanyByCompanyId($pdo, $companyId);
 			if($companyActivationToken !== null) {
@@ -65,7 +61,7 @@ try {
 			}
 		}
 
-		// $companyApproved = 1;  // TODO take this out.
+		$companyApproved = 1;  // TODO take this out.
 
 		if($requestObject->companyApproved === null) {
 			throw(new \RuntimeException('Company has not been approved yet'));
