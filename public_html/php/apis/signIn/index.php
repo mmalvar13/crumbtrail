@@ -65,11 +65,11 @@ try {
 		//create the hash
 		$confirmHash = hash_pbkdf2("sha512", $requestObject->confirmProfilePassword, $salt, 262144); //TODO is this the correct requestObject to be put in here?
 
-//		//todo is this how i check for profile activation token? on the test i get this error, but thats because in the database no PAT have been set to null
-//		$profile->getProfileActivationToken();
-//		if($profile->getProfileActivationToken() !== null){
-//			throw(new InvalidArgumentException("your account has not been activated yet", 404));
-//		}
+		//todo is this how i check for profile activation token? on the test i get this error, but thats because in the database no PAT have been set to null
+		$profile->getProfileActivationToken();
+		if($profile->getProfileActivationToken() !== null){
+			throw(new InvalidArgumentException("your account has not been activated yet", 404));
+		}
 
 		//matches hashes
 		//put profile into session
