@@ -55,9 +55,8 @@ try {
 
 
 	if($method === "POST") {
-		//set XSRF cookie
-		setXsrfCookie(); //do we need this?
-		verifyXsrf(); //todo what is the deal with this?
+		//verify XSRF cookie
+		verifyXsrf();
 
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
