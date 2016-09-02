@@ -92,7 +92,7 @@ private $profileName;
 	 * @throws \TypeError if data types violate type hints
 	 * @throws \Exception if some other exception occurs
 	 */
-	public function __construct(int $newProfileId = null, string $newProfileName, string $newProfileEmail, string $newProfilePhone, string $newProfileAccessToken, string $newProfileActivationToken, string $newProfileType, string $newProfileHash, string $newProfileSalt) {
+	public function __construct(int $newProfileId = null, string $newProfileName, string $newProfileEmail, string $newProfilePhone, string $newProfileAccessToken, string $newProfileActivationToken = null, string $newProfileType, string $newProfileHash, string $newProfileSalt) {
 
 		//try statements
 		try{
@@ -623,12 +623,16 @@ public function getProfileId(){
 	 * @throws \RangeException if $newProfileActivationToken is longer than 32 char
 	 * @throws \TypeError if $newProfileActivationToken is not a string
 	 */
-	public function setProfileActivationToken(string $newProfileActivationToken){
+	public function setProfileActivationToken(string $newProfileActivationToken = null){
 		// first take out any white space on $newProfileActivationToken
 		$newProfileActivationToken = trim($newProfileActivationToken);
 		//next ensure that $newProfileAccessToken is sanitized
 		$newProfileActivationToken = filter_var($newProfileActivationToken, FILTER_SANITIZE_STRING);
-
+		// Base case, for a new profile.
+		if($newProfileActivationToken === null) {
+			$this->profileActivationToken = null;
+			return;
+		}
 		//ensure that $newProfileActivationToken isnt empty ***CHECK ON THIS ONE!!!!!!!!!!!!!!!, How should it be????
 		if(strlen($newProfileActivationToken)=== 0){
 			throw(new \RangeException("The activation token is too short"));
