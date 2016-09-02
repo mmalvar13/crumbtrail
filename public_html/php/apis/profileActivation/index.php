@@ -45,34 +45,37 @@ try {
 	if($method === "GET") {
 		//set XSRF cookie
 		setXsrfCookie();
+		//todo: this one had worked before
 //		if((empty($profileId))=== false){
 //			$profile = Profile::getProfileByProfileId($pdo, $profileId);
 //			if($profileActivationToken !== null){
-//				$profile->getProfileActivationToken();
 //				$profile->setProfileActivationToken(null);
 //				$profile->update($pdo);
 //			}else{
 //				throw(new InvalidArgumentException("Account has already been activated", 404));
 //			}
 //		}
-//		if((empty($profileActivationToken))===false){
-//			$profile = Profile::getProfileActivationToken($pdo, $profileActivationToken);
-//			if($profileActivationToken !== null){
-//				$profile->setProfileActivationToken(null);
-//				$profile->update($pdo);
-//			}else{
-//				throw(new InvalidArgumentException("account has already been activated", 404));
-//			}
-//		}
-//todo: this is how i originally had it. getting error "call to method function setProfileActivationToken on null.
-		if($profileActivationToken !== null) {
+//todo this is another idea i had.
+		if((empty($profileActivationToken))=== false){
 			$profile = Profile::getProfileByProfileActivationToken($pdo, $profileActivationToken);
-			//verify that the profile itself is not null. what if its an invalid activation token. if profile === null throw exception.
-			$profile->setProfileActivationToken(null);
-			$profile->update($pdo);
-		} else {
-			throw(new InvalidArgumentException("Account has already been activated", 404));
+			if($profileActivationToken !== null){
+				$profile->setProfileActivationToken(null);
+				$profile->update($pdo);
+			}else{
+				throw(new InvalidArgumentException("Account has already been activated", 404));
+			}
+		}else{
+			throw (new InvalidArgumentException("no profile activation token", 404));
 		}
+////todo: this is how i originally had it. getting error "call to method function setProfileActivationToken on null.
+//		if($profileActivationToken !== null) {
+//			$profile = Profile::getProfileByProfileActivationToken($pdo, $profileActivationToken);
+//			//verify that the profile itself is not null. what if its an invalid activation token. if profile === null throw exception.
+//			$profile->setProfileActivationToken(null);
+//			$profile->update($pdo);
+//		} else {
+//			throw(new InvalidArgumentException("Account has already been activated", 404));
+//		}
 
 
 		if(empty($companyId) === false) {
