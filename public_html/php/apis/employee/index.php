@@ -19,6 +19,7 @@ use Edu\Cnm\CrumbTrail\ {
 if(session_status() !== PHP_SESSION_ACTIVE) {
 	session_start();
 }
+
 //prepare and empty reply
 $reply = new stdClass();
 $reply->status = 200;
@@ -37,8 +38,7 @@ try {
 	//may possible write in GET to link to company------OUR LINK TO COMPANY IS THE EMPLOYCOMPANYID//
 	//make sure the id is valid for methods that require it
 	//TODO: if an owner takes an employee of their profile how does that work? DO i need the delete method, maybe set profile type to null, and possibly a PUT method if we wanted to disrupt the connection between employee and company profile....DELETE $employ, in the delete method?"//
-	if(($method === "DELETE") && (empty($id) === true || $id < 0)) {
-		throw(new \InvalidArgumentException("id cannot be empty or negative", 405));
+	if(($method === "DELETE") && ($employCompanyId === null || $employCompanyId < 0 || $employProfileId < 0 || $employProfileId === null)) {
 	}
 	//handle GET request - if id is present, that employee is returned, otherwise all employees get returned???
 	if($method === "GET") {
@@ -64,8 +64,11 @@ try {
 		}
 	} elseif($method === "POST") {
 		//verify Xsrf
+		verifyXsrf();
+
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
+
 		//make sure employ profile is available
 		//request object...whatever is on the angular form....
 		if(empty($requestObject->profileName) === true) {
@@ -91,7 +94,7 @@ try {
 		$hash = hash_pbkdf2("sha512", $dummyPassword, $salt, 262144);
 		$company = Company::getCompanyByCompanyId($pdo, $requestObject->companyId);
 		if($company === null) {
-			$reply->numTacos = PHP_INT_MAX;
+			//$reply->numTacos = PHP_INT_MAX;//
 			throw(new InvalidArgumentException("No company Id exists.", 405));
 		}
 		// ?? :D will try first, if its null it will go to the second...if null...will go to the third WootWoot!
@@ -141,9 +144,12 @@ try {
 //-----------------------------------------------SWIFTMAILER END-----------------------------------------------//
 	} elseif($method === "DELETE") {
 		verifyXsrf();
-		//retrieve employ to be deleted
-		//would I want employ by company and profile id, in the case that a worker/co owner is part of many companies??
+		//retrieve employ to be deleted - getEmployByEmployCompanyIdAndEmployProfileId
+
+		//would I want employ by company and profile id, in the case that a worker/co owner is part of many companies?? Y
+
 		$employ = Employ::getEmployByEmployCompanyIdAndEmployProfileId($pdo, $employCompanyId, $employProfileId);
+
 		if($employ === null) {
 			throw(new RuntimeException("No employ Company Id and employ Profile Id combination exists.", 404));
 		}
