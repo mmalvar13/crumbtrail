@@ -36,11 +36,12 @@ try {
 	$method = array_key_exists("HTTP_X_HTTP METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
 	//sanitize input
-	$eventId = filter_input(INPUT_GET, "eventId", FILTER_VALIDATE_INT);
-	//$eventId = filter_input(INPUT_GET, "eventId", FILTER_VALIDATE_INT);// TODO: I had a seperate "id" that is the same as eventId correct? or do i need to put in one with "id"???
+	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
+	//keep as id........keep an eye out for event id....switch to id.....
 	$eventTruckId = filter_input(INPUT_GET, "eventTruckId", FILTER_VALIDATE_INT);
-	//TODO: Sure this is totally wrong, how do i work with event start time and event end time...Getting event start and end time would be seperate things here, even though they are together on line 76?
-	//$eventStart = filter_input(INPUT_GET, "eventStart", DATE_ATOM);
+	// Sure this is totally wrong, how do i work with event start time and event end time...Getting event start and end time would be seperate things here, even though they are together on line 76? FIXED BELOW having these seperate is fine, fixed on line 76
+	$eventStart = filter_input(INPUT_GET, "eventStart", FILTER_VALIDATE_INT);
+	$eventEnd = filter_input(INPUT_GET, "eventEnd", FILTER_VALIDATE_INT);
 	$eventLocationLat = filter_input(INPUT_GET, "eventLocationLat", FILTER_VALIDATE_FLOAT);
 	$eventLocationLng = filter_input(INPUT_GET, "eventLocationLng", FILTER_VALIDATE_FLOAT);
 
@@ -66,26 +67,21 @@ try {
 			if($event !== null) {
 				$reply->data = $event;
 			}
-			//TODO: Would I need to have an elseif for event location, no right? if that were the case we would need to know the exact location? unecessesary?? "
+			// Would I need to have an elseif for event location, no right? if that were the case we would need to know the exact location? unecessesary?? We dont need it this statement is correct"
 		} elseif((empty($id)) === false) {
-			$event = Event::getEventByEventId($pdo, $eventId);
+			$event = Event::getEventByEventId($pdo, $id);
 			if($event !== null) {
 				$reply->data = $event;
 			}
-		} elseif((empty($event)) === false) {
-			$event = Event::getEventByEventEndAndEventStart($pdo);
-			if($event !== null) {
-				$reply->data = $event;
+		} // do we need to have a get all Events?? event end and event start get all active events which is waht we want.....having every event that was ever made would be  a disaster to have stored in the database right?
+		else {
+			//gets all active events.....
+			$events = Event::getEventByEventEndAndEventStart($pdo);
+			if($events !== null) {
+				$reply->data = $events;
 			}
-		} //TODO: do we need to have a get all Events?? event end and event start get all active events which is waht we want.....having every event that was ever made would be  a disaster to have stored in the database right?
-		//else {
-			//$events = Event::getAllEvents($pdo);
-			//if($events !== null) {
-				//$reply->data = $events;
-			//}
-		//}
-	} //
-	elseif($method === "PUT" || $method === "POST") {
+		}
+	} elseif($method === "PUT" || $method === "POST") {
 
 		verifyXsrf();
 		$requestContent = file_get_contents("php://input");
@@ -101,60 +97,55 @@ try {
 		}
 		//make sure event location is available
 		//since all are used to find a location should all be used to ensure that a location is available??
-		//TODO: location lat and long?? explanation
-		if(empty($requestObject->eventLocationLat->eventLocationLng->point) === true) {
-			throw(new \InvalidArgumentException("No event location exists.", 405));
+		//location lat and long?? explanation...Angular will be aware of location, angular's representation will be different...Angular will have an object with two state varaibles 0) sate variable :lat (latitude) 1) lng (longitude) fixed on lines below....yay
+		if(empty($requestObject->eventLocation->lat) === true) {
+			throw(new \InvalidArgumentException("No event latitude exists.", 405));
 		}
-		//ToDO: is this correct??????? Event start time defaults to current correct?
+		if(empty($requestObject->eventLocation->lng) === true) {
+			throw(new \InvalidArgumentException("No event longitude exists.", 405));
+		}
+		// is this correct??????? Event start time defaults to current correct? YES WooHoo!!!!
+
 		if(empty($requestObject->eventStart) === true) {
 			throw(new InvalidArgumentException("No event start time found", 405));
 		}
 		if(empty($requestObject->eventEnd) === true) {
 			throw(new InvalidArgumentException("No event end time set", 405));
 		}
-	}
+		//angular event end and start.....milliseconds since the beginning of time.... 01, 01, 1970 12:00am UTC
+		$ngEventStart = filter_var($requestObject->eventStart, FILTER_VALIDATE_INT);
+		$ngEventEnd = filter_var($requestObject->eventEnd, FILTER_VALIDATE_INT);
+		//floor? rounds a number down to the nearest integer......
+		$eventStart = DateTime::createFromFormat("U", floor($ngEventStart / 1000));
+		$eventEnd = DateTime::createFromFormat("U", floor($ngEventEnd / 1000));
+
 //Perform actual PUT
-	if($method === "PUT") {
-		//retrieve the event to update
-		$event = Event::getEventByEventId($pdo, $eventId);
-		if($event === null) {
-			throw (new RuntimeException("Event does not exist.", 404));
-		}
-		//put new event content into the event and update
-		//TODO: why isnt this $requestObject working???
-		$point = new Point(null, $requestObject->location->lat, $requestObject->location->lng);
-		$event->setEventLocation($point);
-		//TODO: Do we need event start...this is done as current, but the user still set it???
-		$event->setEventStart($requestObject->eventStart);
-		$event->setEventEnd($requestObject->eventEnd);
-		$event->update($pdo);
-		//update reply
-		$reply->message = "Event end time updated successfully.";
+		if($method === "PUT") {
+			//retrieve the event to update
+			$event = Event::getEventByEventId($pdo, $id);
+			if($event === null) {
+				throw (new RuntimeException("Event does not exist.", 404));
+			}
+			//put new event content into the event and update
+			$point = new Point($requestObject->location->lat, $requestObject->location->lng);
+			$event->setEventLocation($point);
+			$event->setEventStart($requestObject->eventStart);
+			$event->setEventEnd($requestObject->eventEnd);
+			$event->update($pdo);
+			//update reply
+			$reply->message = "Event end time updated successfully.";
 
-	} elseif($method === "POST") {
-		if(empty($requestObject->eventId) === true) {
-			throw(new \InvalidArgumentException("No Event Id.", 405));
+		} elseif($method === "POST") {
+			if(empty($id) === true) {
+				throw(new \InvalidArgumentException("No Event Id.", 405));
+			}
+			//because this is how angular will send the associate array.......
+			$point = new Point($requestObject->location->lat, $requestObject->location->lng);
+			$event = new Event(null, $requestObject->Id, $requestObject->eventEnd, $requestObject->eventStart, $requestObject->eventLocation, null);
+			$event->insert($pdo);;
+			//update reply
+			$reply->message = "Event created successfully.";
 		}
-		//because this is how angular will send the associate array.......
-		$point = new Point($requestObject->location->lat, $requestObject->location->lng);
-		$event = new Event(null, $requestObject->eventId, $requestObject->eventEnd, $requestObject->eventStart, $requestObject->eventLocation, null);
-		$event->insert($pdo);;
-		//update reply
-		$reply->message = "Event created successfully.";
-		//TODO Do i need a delete block???
-	} elseif($method === "DELETE") {
-		verifyXsrf();
-		//retrieve event to be deleted
-		$event = Event::getEventByEventId($pdo, $eventId);
-		if($event === null) {
-			throw(new RuntimeException("Event does not exist.", 404));
-		}
-		//delete the Event
-		$event->delete($pdo);
-
-		//update the reply
-		$reply->message = "Event deleted successfully.";
-
 	} else {
 		throw (new InvalidArgumentException("Invalid HTTP method request"));
 	}
