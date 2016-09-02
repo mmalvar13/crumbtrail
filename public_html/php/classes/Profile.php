@@ -633,13 +633,9 @@ public function getProfileId(){
 			$this->profileActivationToken = null;
 			return;
 		}
-		//ensure that $newProfileActivationToken isnt empty ***CHECK ON THIS ONE!!!!!!!!!!!!!!!, How should it be????
-		if(strlen($newProfileActivationToken)=== 0){
-			throw(new \RangeException("The activation token is too short"));
-		}
 
 		//ensure $newProfileActivationToken isn't too long
-		if(strlen($newProfileActivationToken) > 32){
+		if(strlen($newProfileActivationToken) !== 32){
 			throw(new \RangeException("Activation token is too long"));
 		}
 
