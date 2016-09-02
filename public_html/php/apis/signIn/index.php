@@ -30,24 +30,19 @@ try {
 	$method = array_key_exists("HTTP_x_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
 	//sanitize input deleted
-	//todo do i put all the input sanitization up here? like $profileEmail = filter_input(INPUT_GET...etc...
+	//todo do i put all the input sanitization up here? this is stuff from the URL, and at this point there is nothing, so i guess not
 
 	//handle POST request
 	if($method === "POST") { //todo why a post? because its a temporary?
 		//set XSRF cookie
-		setXsrfCookie(); //TODO do i set this here?
+//		setXsrfCookie(); //TODO do i set this here?
+//		verifyXsrf();
 
-		verifyXsrf();
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
 
-		/*-----checking and sanitizing activation token, profileEmail, profilePassword--------------*/
-		//check that profile activation token is null. if not, throw an exception.
-		if($requestObject->profileActivationToken !== null) {
-			throw(new InvalidArgumentException("Your account has not been activated or does not exist"));
-		}
-
-		//check that email and password fields are not empty, and sanitize that filthy input
+		/*-----checking and sanitizing profileEmail, profilePassword--------------*/
+		//check that email and password fields are not empty, and sanitize that input
 		if(empty($requestObject->profileEmail) === true) {
 			throw(new \InvalidArgumentException("You must enter your email address", 405));
 		} else {
@@ -58,7 +53,7 @@ try {
 		if(empty($requestObject->profilePassword) === true) { //TODO profile password, do i also have confirm profile password?
 			throw(new \InvalidArgumentException("Please enter your password", 405));
 		} else {
-			$password = filter_input($requestObject->profilePassword, FILTER_SANITIZE_STRING);
+			$password = filter_input(INPUT_POST, $requestObject->profilePassword, FILTER_SANITIZE_STRING);
 		}
 
 		//retrieve the data for profileEmail
@@ -69,6 +64,12 @@ try {
 
 		//create the hash
 		$confirmHash = hash_pbkdf2("sha512", $requestObject->confirmProfilePassword, $salt, 262144); //TODO is this the correct requestObject to be put in here?
+
+//		//todo is this how i check for profile activation token? on the test i get this error, but thats because in the database no PAT have been set to null
+//		$profile->getProfileActivationToken();
+//		if($profile->getProfileActivationToken() !== null){
+//			throw(new InvalidArgumentException("your account has not been activated yet", 404));
+//		}
 
 		//matches hashes
 		//put profile into session
