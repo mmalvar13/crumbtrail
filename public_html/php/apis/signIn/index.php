@@ -24,7 +24,7 @@ $reply->data = null;
 
 try {
 	//grab the mySQL connection
-	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/signin.ini");
+	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/crumbtrail.ini");
 
 	//determine which HTTP method was used
 	$method = array_key_exists("HTTP_x_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
@@ -41,7 +41,7 @@ try {
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
 
-		/*---------------checking and sanitizing activation token, profileEmail, profilePassword------------------------------*/
+		/*-----checking and sanitizing activation token, profileEmail, profilePassword--------------*/
 		//check that profile activation token is null. if not, throw an exception.
 		if($requestObject->profileActivationToken !== null) {
 			throw(new InvalidArgumentException("Your account has not been activated or does not exist"));
