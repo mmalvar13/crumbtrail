@@ -96,7 +96,7 @@ private $profileName;
 
 		//try statements
 		try{
-			//WHY ARE ALL OF THESE RED? SAYING THEY AREN'T DEFINED? WILL THEY BE FIXED ONCE WE MAKE THE PDO?
+
 			$this->setProfileId($newProfileId);
 			$this->setProfileName($newProfileName);
 			$this->setProfileEmail($newProfileEmail);

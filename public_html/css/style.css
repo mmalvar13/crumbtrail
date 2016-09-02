@@ -1,4 +1,4 @@
-/*CSS FOR NAVBAR*/
+/*----------------CSS FOR NAVBAR----------------------------------*/
 /*When the screen is small (phone) search bar will be visible at 185px*/
 @media(max-width:767px) {
 	.navbar .navbar-form {
@@ -16,7 +16,7 @@
 
 /*add padding to body so content isnt stuck behind navbar when on small screen*/
 @media (max-width: 768px){
-	body{padding-top:70px;
+	body{padding-top:60px;
 	}
 }
 
@@ -232,6 +232,19 @@ p {
 	color: orange;
 	border: 0.1rem solid orange;
 }
+
+
+/*-------------------------------------TRUCK MAP----------------------------------------------*/
+.truck-map-serving-btn{
+	/*margin-top: -1.5rem;*/
+}
+
+.truck-map-hr{
+	width: 50%;
+	margin-top:0.25rem;
+}
+
+
 
 
 
