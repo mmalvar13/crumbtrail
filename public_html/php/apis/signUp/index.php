@@ -209,7 +209,7 @@ try {
 		$message->setBody('Thanks for signing your company up with Crumbtrail. Please confirm your email by clicking on this link. Once you have confirmed your email, Crumbtrail admins can get to work on verifying your business and approving you to use the app. You will receive an email when you have been approved.  '."<a href=\"$linkPath\">Click Here To Activate</a>", 'text/html');
 
 			//add alternative parts with addPart() for those who can only read plaintext or dont wwant to view in html
-		$message->addPart('Thanks for signing your company up with Crumbtrail. Please confirm your email by clicking on this link. Once you have confirmed your email, Crumbtrail admins can get to work on verifying your business and approving you to use the app. You will receive an email when you have been approved.  '. $linkPath, 'text/plain');
+		$message->addPart('Thanks for signing your company up with Crumbtrail. Please confirm your email by clicking on this link. Once you have confirmed your email, Crumbtrail admins can get to work on verifying your business and approving you to use the app. You will receive an email when you have been approved.  '."<a href=\"$linkPath\">Click Here To Activate</a>", 'text/plain');
 		$message->setReturnPath('mmalvar13@gmail.com');//return path address specifies where bounce notifications should be sent todo what is thiss for?
 
 

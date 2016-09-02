@@ -633,11 +633,11 @@ public function getProfileId(){
 			$this->profileActivationToken = null;
 			return;
 		}
-
+//todo we commented this out to test
 		//ensure $newProfileActivationToken isn't too long
-		if(strlen($newProfileActivationToken) !== 32){
-			throw(new \RangeException("Activation token is too long"));
-		}
+//		if(strlen($newProfileActivationToken) !== 32){
+//			throw(new \RangeException("Activation token is too long"));
+//		}
 
 		//assign new activation token to $profileActivationToken and enter it in mySQL
 		$this->profileActivationToken = $newProfileActivationToken;
