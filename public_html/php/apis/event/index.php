@@ -30,15 +30,17 @@ try {
 	//grab mySQL connection
 	//capital SQL???
 	//lowercase c in crumbtrail???
-	$pdo = connectToEncryptedMySql("/etc/apache2/capstone-mysql/crumbtrail.ini");
+	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/crumbtrail.ini");
 
 	//determine which HTTP method was used
 	$method = array_key_exists("HTTP_X_HTTP METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
 	//sanitize input
 	$eventId = filter_input(INPUT_GET, "eventId", FILTER_VALIDATE_INT);
-	//$eventId = filter_input(INPUT_GET, "eventId", FILTER_VALIDATE_INT);//
+	//$eventId = filter_input(INPUT_GET, "eventId", FILTER_VALIDATE_INT);// TODO: I had a seperate "id" that is the same as eventId correct? or do i need to put in one with "id"???
 	$eventTruckId = filter_input(INPUT_GET, "eventTruckId", FILTER_VALIDATE_INT);
+	//TODO: Sure this is totally wrong, how do i work with event start time and event end time...Getting event start and end time would be seperate things here, even though they are together on line 76?
+	//$eventStart = filter_input(INPUT_GET, "eventStart", DATE_ATOM);
 	$eventLocationLat = filter_input(INPUT_GET, "eventLocationLat", FILTER_VALIDATE_FLOAT);
 	$eventLocationLng = filter_input(INPUT_GET, "eventLocationLng", FILTER_VALIDATE_FLOAT);
 
@@ -64,7 +66,7 @@ try {
 			if($event !== null) {
 				$reply->data = $event;
 			}
-			//TODO: WAT!!!!
+			//TODO: Would I need to have an elseif for event location, no right? if that were the case we would need to know the exact location? unecessesary?? "
 		} elseif((empty($id)) === false) {
 			$event = Event::getEventByEventId($pdo, $eventId);
 			if($event !== null) {
@@ -75,15 +77,16 @@ try {
 			if($event !== null) {
 				$reply->data = $event;
 			}
-		} else {
-			$events = Event::getAllEvents($pdo);
-			if($events !== null) {
-				$reply->data = $events;
-			}
-		}
-	} //elseif here? Since there is no PUT
-	elseif(($method === "POST")) {
-		//what does "verifyXsrf" and the "php://input" do again?
+		} //TODO: do we need to have a get all Events?? event end and event start get all active events which is waht we want.....having every event that was ever made would be  a disaster to have stored in the database right?
+		//else {
+			//$events = Event::getAllEvents($pdo);
+			//if($events !== null) {
+				//$reply->data = $events;
+			//}
+		//}
+	} //
+	elseif($method === "PUT" || $method === "POST") {
+
 		verifyXsrf();
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
@@ -102,6 +105,13 @@ try {
 		if(empty($requestObject->eventLocationLat->eventLocationLng->point) === true) {
 			throw(new \InvalidArgumentException("No event location exists.", 405));
 		}
+		//ToDO: is this correct??????? Event start time defaults to current correct?
+		if(empty($requestObject->eventStart) === true) {
+			throw(new InvalidArgumentException("No event start time found", 405));
+		}
+		if(empty($requestObject->eventEnd) === true) {
+			throw(new InvalidArgumentException("No event end time set", 405));
+		}
 	}
 //Perform actual PUT
 	if($method === "PUT") {
@@ -111,7 +121,7 @@ try {
 			throw (new RuntimeException("Event does not exist.", 404));
 		}
 		//put new event content into the event and update
-		//TODO: why isnt this working???
+		//TODO: why isnt this $requestObject working???
 		$point = new Point(null, $requestObject->location->lat, $requestObject->location->lng);
 		$event->setEventLocation($point);
 		//TODO: Do we need event start...this is done as current, but the user still set it???

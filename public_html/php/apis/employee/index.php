@@ -24,6 +24,7 @@ if(session_status() !== PHP_SESSION_ACTIVE) {
 $reply = new stdClass();
 $reply->status = 200;
 $reply->data = null;
+
 try {
 	//grab mySQL connection
 	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/crumbtrail.ini");
@@ -39,6 +40,7 @@ try {
 	//make sure the id is valid for methods that require it
 	//TODO: if an owner takes an employee of their profile how does that work? DO i need the delete method, maybe set profile type to null, and possibly a PUT method if we wanted to disrupt the connection between employee and company profile....DELETE $employ, in the delete method?"//
 	if(($method === "DELETE") && ($employCompanyId === null || $employCompanyId < 0 || $employProfileId < 0 || $employProfileId === null)) {
+		throw(new InvalidArgumentException("No company Id and profile Id combination exists."));
 	}
 	//handle GET request - if id is present, that employee is returned, otherwise all employees get returned???
 	if($method === "GET") {
