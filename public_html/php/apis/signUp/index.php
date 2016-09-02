@@ -188,7 +188,7 @@ try {
 		$message = Swift_Message::newInstance();//to set a subject line you can pass it as a parameter in newInstance or set it afterwards. I chose to set it afterwards. Same with body.
 
 		//attach a sender to the message
-		$message->setFrom(['malvarez30@cnm.edu'=> 'Crumbtrail Admin']);//is this the same as setFrom(array('someaddress'=>'name'));
+		$message->setFrom(['mmalvar13@gmail.com'=> 'Crumbtrail Admin']);//is this the same as setFrom(array('someaddress'=>'name'));
 
 		//attach recipients to the message. you can add
 		$recipients = [$company->getCompanyEmail() => $company->getCompanyName()]; //TODO is this the correct way to attach email to name?
@@ -202,7 +202,7 @@ try {
 
 			//add alternative parts with addPart() for those who can only read plaintext or dont wwant to view in html
 		$message->addPart('Thanks for signing your company up with Crumbtrail. Please confirm your email by clicking on this link. Once you have confirmed your email, Crumbtrail admins can get to work on verifying your business and approving you to use the app. You will receive an email when you have been approved.  ', 'text/plain');
-		$message->setReturnPath('malvarez30@cnm.edu');//return path address specifies where bounce notifications should be sent todo what is thiss for?
+		$message->setReturnPath('mmalvar13@gmail.com');//return path address specifies where bounce notifications should be sent todo what is thiss for?
 
 
 		//building the profile activation link. this is the link that will be clicked on to confirm the companyAccountCreators email address and set their profileActivationToken to null. This triggers an email (over in profileActivation API) to be send to crumbtrail admins to check out this businesses credentials.
