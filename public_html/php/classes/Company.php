@@ -151,7 +151,7 @@ class Company implements \JsonSerializable {
 										 string $newCompanyLicense,
 										 string $newCompanyAttn,
 										 string $newCompanyStreet1,
-										 string $newCompanyStreet2,
+										 string $newCompanyStreet2 = null,
 										 string $newCompanyCity,
 										 string $newCompanyState,
 										 string $newCompanyZip,
@@ -457,11 +457,18 @@ class Company implements \JsonSerializable {
 	 * @throw \InvalidArgumentException if $newCompanyStreet2 is not a string
 	 * @throw \TypeError if $newCompanyStreet2 is not a string
 	 **/
-	public function setCompanyStreet2(string $newCompanyStreet2) {
+	public function setCompanyStreet2(string $newCompanyStreet2 = null) {
 		// Strip out the white space on either end of the string.
+
+		if($newCompanyStreet2 === null) {
+			$this-> companyStreet2 = null;
+			return;
+		}
+
 		$newCompanyStreet2 = trim($newCompanyStreet2);
 		// Sanitize $newCompanyStreet2.
 		$newCompanyStreet2 = filter_var($newCompanyStreet2, FILTER_SANITIZE_STRING);
+
 		// If $newCompanyStreet2 is empty or too long, then throw an exception.
 		if(strlen($newCompanyStreet2) === 0) {
 			throw(new \RangeException("company Street2 is too short."));

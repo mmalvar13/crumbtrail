@@ -180,7 +180,7 @@ try {
 			//perform the actual PUT or POST
 
 			//I will need 2 sections of PUT, one for ADMINS & Owners, and 1 for JUST ADMINS to change things like permits/license etc
-			if($method === "PUT" && ($_SESSION["profile"]->getProfileType()) === "a") {
+//			if($method === "PUT" && ($_SESSION["profile"]->getProfileType()) === "a") {
 				//retrieve the company to update
 
 				$company = Company::getCompanyByCompanyId($pdo, $companyId);
@@ -208,61 +208,62 @@ try {
 				//update reply
 				$reply->message = "Company updated A-OK";
 
-			} elseif($method === "PUT" && ($_SESSION["profile"]->getProfileType()) === "o") {
-				//retrieve the company to update
-
-				$company = Company::getCompanyByCompanyId($pdo, $companyId);
-				if($company === null) {
-					throw(new RuntimeException("This company does not exist"));
-				}
-				//put the new company name into the company and update
-				$company->setCompanyName($requestObject->companyName);
-				$company->setCompanyEmail($requestObject->companyEmail);
-				$company->setCompanyPhone($requestObject->companyPhone);
-				$company->setCompanyAttn($requestObject->companyAttn);
-				$company->setCompanyStreet1($requestObject->companyStreet1);
-				$company->setCompanyStreet2($requestObject->companyStreet2);
-				$company->setCompanyCity($requestObject->companyCity);
-				$company->setCompanyState($requestObject->companyState);
-				$company->setCompanyZip($requestObject->companyZip);
-				$company->setCompanyDescription($requestObject->companyDescription);
-				$company->setCompanyMenuText($requestObject->companyMenuText);
-
-
-				$company->update($pdo);
-
-				//update reply
-				$reply->message = "Company updated A-OK";
-			}
+//			} elseif($method === "PUT" && ($_SESSION["profile"]->getProfileType()) === "o") {
+//				//retrieve the company to update
+//
+//				$company = Company::getCompanyByCompanyId($pdo, $companyId);
+//				if($company === null) {
+//					throw(new RuntimeException("This company does not exist"));
+//				}
+//				//put the new company name into the company and update
+//				$company->setCompanyName($requestObject->companyName);
+//				$company->setCompanyEmail($requestObject->companyEmail);
+//				$company->setCompanyPhone($requestObject->companyPhone);
+//				$company->setCompanyAttn($requestObject->companyAttn);
+//				$company->setCompanyStreet1($requestObject->companyStreet1);
+//				$company->setCompanyStreet2($requestObject->companyStreet2);
+//				$company->setCompanyCity($requestObject->companyCity);
+//				$company->setCompanyState($requestObject->companyState);
+//				$company->setCompanyZip($requestObject->companyZip);
+//				$company->setCompanyDescription($requestObject->companyDescription);
+//				$company->setCompanyMenuText($requestObject->companyMenuText);
+//
+//
+//				$company->update($pdo);
+//
+//				//update reply
+//				$reply->message = "Company updated A-OK";
+//			}
 //		}***********put back in when you add wrapper
 //	} elseif((empty($_SESSION["profile"]) === false) && (($_SESSION["profile"]->getProfileId()) === $companyId) && (($_SESSION["profile"]->getProfileType()) === "a") || (($_SESSION["profile"]->getProfileType())) === "o") {
 
-		} elseif($method === "DELETE") {
-			verifyXsrf();
+			} elseif($method === "DELETE") {
+				verifyXsrf();
 
-			$requestContent = file_get_contents("php://input");
-			$requestObject = json_decode($requestContent);
+				$requestContent = file_get_contents("php://input");
+				$requestObject = json_decode($requestContent);
 
-			//retrieve the company to be deleted
-			$company = Company::getCompanyByCompanyId($pdo, $companyId);
+				//retrieve the company to be deleted
+				$company = Company::getCompanyByCompanyId($pdo, $companyId);
 
-			//check if empty
-			if($company === null) {
-				throw(new RuntimeException("The company does not exist", 404));
+				//check if empty
+				if($company === null) {
+					throw(new RuntimeException("The company does not exist", 404));
+				}
+
+				//delete the company
+				$company->delete($pdo);
+
+				//update the reply
+				$reply->message = "Company deleted A-OK";
+			} else {
+				throw (new InvalidArgumentException("Invalid HTTP method request"));
 			}
 
-			//delete the company
-			$company->delete($pdo);
-
-			//update the reply
-			$reply->message = "Company deleted A-OK";
 		} else {
-			throw (new InvalidArgumentException("Invalid HTTP method request"));
+			throw(new \InvalidArgumentException("Employee is not authorized to make changes"));
 		}
-
-	}else{
-		throw(new \InvalidArgumentException("Employee is not authorized to make changes"));
-	}
+	 //**take this out at some point
 	//update the reply with exception information
 } catch(Exception $exception) {
 	$reply->status = $exception->getCode();
