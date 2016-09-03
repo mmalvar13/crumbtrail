@@ -395,7 +395,7 @@ class Company implements \JsonSerializable {
 	 * @throw \InvalidArgumentException if $newCompanyAttn is not a string
 	 * @throw \TypeError if $newCompanyAttn is not a string
 	 **/
-	public function setCompanyAttn(string $newCompanyAttn) {
+	public function setCompanyAttn(string $newCompanyAttn = null) {
 
 		if($newCompanyAttn === null) {
 			$this-> companyAttn = null;
