@@ -37,7 +37,7 @@ try {
 	$method = array_key_exists("HTTP_X_HTTP-METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
 	//sanitize input(Explain this) Where is the input coming from??
-	$id = filter_input(INPUT_GET, "truckId", FILTER_VALIDATE_INT);
+	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
 	$truckCompanyId = filter_input(INPUT_GET, "truckCompanyId", FILTER_VALIDATE_INT);
 
 
@@ -71,7 +71,7 @@ try {
 		}
 
 	//TODO need to ensure person adding/deleting trucks links back to the right company AND profile
-	} elseif(isEmployeeAuthorized($pdo, $companyId) === true) {
+	} elseif(isEmployeeAuthorized($pdo, $id) === true) {
 
 		if($method === "PUT" || $method === "POST") {
 			verifyXsrf();

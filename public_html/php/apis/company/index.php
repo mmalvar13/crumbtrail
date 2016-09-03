@@ -2,6 +2,7 @@
 
 require_once(dirname(__DIR__, 2) . "/classes/autoload.php");//need to add these
 require_once(dirname(__DIR__, 2) . "/lib/xsrf.php");
+require_once(dirname(__DIR__, 2) . "/lib/authorization.php");
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 require_once(dirname(__DIR__, 4) . "/vendor/autoload.php");
 
@@ -96,7 +97,7 @@ try {
 
 
 //		ensure the person making changes is admin or owner and owns that account
-	} elseif(isEmployeeAuthorized($pdo, $companyId) === true) {
+	} elseif(isEmployeeAuthorized($pdo, $id) === true) {
 
 		if(($method === "PUT")) { //TODO do we need a POST at all
 			verifyXsrf();

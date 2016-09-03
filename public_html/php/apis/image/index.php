@@ -81,7 +81,7 @@ try {
 
 		//this is a check to make sure only a profile type of ADMIN or OWNER can make changes
 		//could also check for the reverse and throw an exception in that case
-	} elseif(isEmployeeAuthorized($pdo, $companyId) === true) {
+	} elseif(isEmployeeAuthorized($pdo, $id) === true) {
 
 		if($method === "POST") {
 			verifyXsrf();

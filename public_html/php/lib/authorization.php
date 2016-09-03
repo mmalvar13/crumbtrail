@@ -15,7 +15,8 @@ function isEmployeeAuthorized($pdo, $employCompanyId) {
 
 
 	foreach($employees as $individual) {
-		if(($individual->getEmployCompanyId() === $employCompanyId) && ($individual->getProfileType() === 'a' || $individual->getProfileType() === 'o')) {
+		$profile = Profile::getProfileByProfileId($pdo, $individual->getEmployProfileId());
+		if(($individual->getEmployCompanyId() === $employCompanyId) && ($profile->getProfileType() === 'a' || $profile->getProfileType() === 'o')) {
 			$authorized = true;
 			break;
 		}
