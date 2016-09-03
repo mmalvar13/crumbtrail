@@ -114,6 +114,13 @@ try {
 					//Create a message
 					$message = Swift_Message::newInstance();//to set a subject line you can pass it as a parameter in newInstance or set it afterwards. I chose to set it afterwards. Same with body.
 
+					/*new stuff dylan sent*/
+
+					//you should use $_SERVER["SCRIPT_NAME"] insteead
+					$scriptPath = $_SERVER["SCRIPT_NAME"];
+					$linkPath = dirname($scriptPath, 2) . "/companyActivation/?companyActivationToken=$companyActivationToken";
+					/*end of stuff dylan sent*/
+
 					//attach a sender to the message
 					$message->setFrom(['mmalvar13@gmail.com' => 'Crumbtrail Admin']);//is this the same as setFrom(array('someaddress'=>'name'));
 
@@ -135,12 +142,7 @@ try {
 					//building the activation link that can travel to another server and still work. this is the link that will be clicked on to confirm. maybe this is not actually h ere, but in companyActivation/ProfileActivation/EmployeeActivation.
 					//this is from breadbasket. must be changed to reflect crumbtrail stuff.
 
-					/*new stuff dylan sent*/
 
-					//you should use $_SERVER["SCRIPT_NAME"] insteead
-					$scriptPath = $_SERVER["SCRIPT_NAME"];
-					$linkPath = dirname($scriptPath, 2) . "/companyActivation/?companyActivationToken=$companyActivationToken";
-					/*end of stuff dylan sent*/
 
 
 					//Send the message
