@@ -123,7 +123,9 @@ try {
 				throw (new InvalidArgumentException("Invalid HTTP method request"));
 			}
 
-		}
+		}else{
+		throw(new \InvalidArgumentException("Employee is not authorized to make changes"));
+	}
 
 	//end of try, begging of catches
 } catch(Exception $exception) {

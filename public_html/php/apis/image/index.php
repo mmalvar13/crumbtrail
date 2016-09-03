@@ -173,6 +173,8 @@ try {
 			throw (new InvalidArgumentException("Invalid HTTP method request"));
 		}
 
+	}else{
+		throw(new \InvalidArgumentException("Employee is not authorized to make changes"));
 	}
 } catch(Exception $exception) {
 	$reply->status = $exception->getCode();
