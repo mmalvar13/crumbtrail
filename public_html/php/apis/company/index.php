@@ -133,9 +133,9 @@ try {
 			}
 
 			//make sure the company Attn is available (required field)
-			if(empty($requestObject->companyAttn) === true) {
-				throw(new \InvalidArgumentException("No Attn for company", 405));
-			}
+//			if(empty($requestObject->companyAttn) === true) {
+//				throw(new \InvalidArgumentException("No Attn for company", 405));
+//			}
 
 			//make sure the company street1 is available (required field)
 			if(empty($requestObject->companyStreet1) === true) {
