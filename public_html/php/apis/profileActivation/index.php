@@ -1,7 +1,7 @@
 <?php
 
-require_once (dirname(__DIR__, 2) . "/classes/autoload.php");
-require_once (dirname(__DIR__,2) . "/lib/xsrf.php");
+require_once(dirname(__DIR__, 2) . "/classes/autoload.php");
+require_once(dirname(__DIR__, 2) . "/lib/xsrf.php");
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 require_once(dirname(__DIR__, 4) . "/vendor/autoload.php");
 //do i add something here for swiftmailer?
@@ -56,17 +56,18 @@ try {
 //			}
 //		}
 //todo this is another idea i had.
-		if((empty($profileActivationToken))=== false){
+		if((empty($profileActivationToken)) === false) {
 			$profile = Profile::getProfileByProfileActivationToken($pdo, $profileActivationToken);
-			if($profile->getProfileActivationToken() !== null){
+			if($profile->getProfileActivationToken() !== null) {
 				$profile->setProfileActivationToken(null);
 				$profile->update($pdo);
-			}else{
+			} else {
 				throw(new InvalidArgumentException("Account has already been activated", 404));
 			}
-		}else{
+		} else {
 			throw (new InvalidArgumentException("no profile activation token", 404));
 		}
+
 ////todo: this is how i originally had it. getting error "call to method function setProfileActivationToken on null.
 //		if($profileActivationToken !== null) {
 //			$profile = Profile::getProfileByProfileActivationToken($pdo, $profileActivationToken);
@@ -76,6 +77,7 @@ try {
 //		} else {
 //			throw(new InvalidArgumentException("Account has already been activated", 404));
 //		}
+		$reply->message = "Thanks for activating your account! You're my best friend! Crumbtrail needs to confirm your company information. Please keep an eye out for an email from us in the next 48 hours to find out if you've been approved to use Crumbtrail. Have the best day ever!";
 
 
 		if(empty($companyId) === false) {
@@ -123,10 +125,10 @@ try {
 					$message->setSubject("Someone has activated their profile and need you to verify their business credentials");
 
 					//the body of the message-seen when the user opens the message
-					$message->setBody('Hi Crumbtrail Admin, a user has confirmed their email and activated their profile. Please take a look at their business license and health permit to verify their business. Once you have made the decision to confirm or deny them, click on this link. This link will set their companyActivationToken to null, and allow you to choose whether you confirm or deny'. "<a href=\"$linkPath\">Click Here To Activate Company</a>", 'text/html');
+					$message->setBody('Hi Crumbtrail Admin, a user has confirmed their email and activated their profile. Please take a look at their business license and health permit to verify their business. Once you have made the decision to confirm or deny them, click on this link. This link will set their companyActivationToken to null, and allow you to choose whether you confirm or deny' . "<a href=\"$linkPath\">Click Here To Activate Company</a>", 'text/html');
 
 					//add alternative parts with addPart() for those who can only read plaintext or dont wwant to view in html
-					$message->addPart('Crumbtrail  Admin, a user has confirmed their emai and activated their profile. Please take a look at their business license and health permit to verify their business. One you have made the decision to confirm or deny them, click on this link. This link will set their companyActivationToken to null, and allow you to choose whether you confirm or deny '."<a href=\"$linkPath\">Click Here To Activate Company</a>", 'text/plain');
+					$message->addPart('Crumbtrail  Admin, a user has confirmed their emai and activated their profile. Please take a look at their business license and health permit to verify their business. One you have made the decision to confirm or deny them, click on this link. This link will set their companyActivationToken to null, and allow you to choose whether you confirm or deny ' . "<a href=\"$linkPath\">Click Here To Activate Company</a>", 'text/plain');
 					$message->setReturnPath('mmalvar13@gmail.com');//return path address specifies where bounce notifications should be sent
 
 
@@ -152,12 +154,13 @@ try {
 						throw(new RuntimeException("unable to send email"));
 					}
 					/*----------------------------------SwiftMailer Code Ends Here--------------------------------------*/
+
 				}
 			}
-		}else{
+		} else {
 			throw(new \InvalidArgumentException("There is no companyId"));
 		}
-	}else{
+	} else {
 		throw (new InvalidArgumentException("Invalid HTTP method request"));
 	}
 } catch(Exception $exception) {
