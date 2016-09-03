@@ -7,7 +7,7 @@ require_once(dirname(__DIR__, 2) . "/lib/xsrf.php");
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
 use Edu\Cnm\CrumbTrail\ {
-	Event, Point, Truck
+	Event, Point, Truck, Company
 };
 
 /**
@@ -44,6 +44,7 @@ try {
 	$eventEnd = filter_input(INPUT_GET, "eventEnd", FILTER_VALIDATE_INT);
 	$eventLocationLat = filter_input(INPUT_GET, "eventLocationLat", FILTER_VALIDATE_FLOAT);
 	$eventLocationLng = filter_input(INPUT_GET, "eventLocationLng", FILTER_VALIDATE_FLOAT);
+	$companyId = filter_input(INPUT_GET, "companyId", FILTER_VALIDATE_INT);
 
 	//make sure the id is valid for methods that require it
 	if(($method === "PUT") && (empty($id) === true || $id < 0)) {
@@ -153,7 +154,7 @@ try {
 
 			//because this is how angular will send the associate array.......null given->consistency
 			$reply->start = $eventStart;
-			$truck = new Truck(null, $truckCompanyId);
+			$truck = new Truck(null, $requestObject->companyId);
 			$point = new Point($requestObject->eventLocation->lat, $requestObject->eventLocation->lng);
 			$event = new Event(null, $truck->getTruckId(), $eventEnd, $point, $eventStart);
 			$event->insert($pdo);;
