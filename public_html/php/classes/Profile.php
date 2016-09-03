@@ -624,20 +624,21 @@ public function getProfileId(){
 	 * @throws \TypeError if $newProfileActivationToken is not a string
 	 */
 	public function setProfileActivationToken(string $newProfileActivationToken = null){
-		// first take out any white space on $newProfileActivationToken
-		$newProfileActivationToken = trim($newProfileActivationToken);
-		//next ensure that $newProfileAccessToken is sanitized
-		$newProfileActivationToken = filter_var($newProfileActivationToken, FILTER_SANITIZE_STRING);
 		// Base case, for a new profile.
 		if($newProfileActivationToken === null) {
 			$this->profileActivationToken = null;
 			return;
 		}
+
+		// first take out any white space on $newProfileActivationToken
+		$newProfileActivationToken = trim($newProfileActivationToken);
+		//next ensure that $newProfileAccessToken is sanitized
+		$newProfileActivationToken = filter_var($newProfileActivationToken, FILTER_SANITIZE_STRING);
 //todo we commented this out to test
 		//ensure $newProfileActivationToken isn't too long
-//		if(strlen($newProfileActivationToken) !== 32){
-//			throw(new \RangeException("Activation token is too long"));
-//		}
+		if(strlen($newProfileActivationToken) !== 32){
+			throw(new \RangeException("Activation token is too long"));
+		}
 
 		//assign new activation token to $profileActivationToken and enter it in mySQL
 		$this->profileActivationToken = $newProfileActivationToken;
