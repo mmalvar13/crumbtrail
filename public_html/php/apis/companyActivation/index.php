@@ -70,12 +70,13 @@ try {
 				$message->setSubject("Message from CrumbTrail");
 
 				// If we approved the company, send this email:
-				// if($company->getCompanyApproved() === 1) {
+				// $companyApproved is used directly, below:
 
+
+				$companyApproved = $company->getCompanyApproved();
 				if($companyApproved === 1) {
-				$message->setBody('Welcome to CrumbTrail! Your company account has been approved. Please go to crumbtrail.com to add the description and menu of your food truck company.', 'text/html');
+					$message->setBody('Welcome to CrumbTrail! Your company account has been approved. Please go to crumbtrail.com to add the description and menu of your food truck company.', 'text/html');
 					$message->addPart('Welcome to CrumbTrail! Your company account has been approved. Please go to crumbtrail.com to add the description and menu of your food truck company.', 'text/plain');
-
 				// If we could not approve the company, send this email:
 				} else {
 					$message->setBody('CrumbTrail has been unable to verify your business license and/or health permit.', 'text/html');
