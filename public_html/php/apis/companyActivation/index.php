@@ -53,6 +53,7 @@ try {
 			} else {
 				throw(new \InvalidArgumentException("Company account has already been activated", 404));
 			}
+
 			$companyApproved = $company->getCompanyApproved();
 			if($companyApproved === null) {
 				throw(new \RunTimeException('Company has not been approved yet'));
@@ -64,12 +65,15 @@ try {
 				$message = Swift_Message::newInstance();
 
 				$message->setFrom(['kkirk4@cnm.edu' => 'Crumbtrail Admin']);
-				$recipients = ['companyEmail' => $company->getCompanyEmail()];
+				$recipients = [$company->getCompanyEmail() => $company->getCompanyName()];
+				$message->setTo($recipients);
 				$message->setSubject("Message from CrumbTrail");
 
 				// If we approved the company, send this email:
-				if($company->getCompanyApproved() === 1) {
-					$message->setBody('Welcome to CrumbTrail! Your company account has been approved. Please go to crumbtrail.com to add the description and menu of your food truck company.', 'text/html');
+				// if($company->getCompanyApproved() === 1) {
+
+				if($companyApproved === 1) {
+				$message->setBody('Welcome to CrumbTrail! Your company account has been approved. Please go to crumbtrail.com to add the description and menu of your food truck company.', 'text/html');
 					$message->addPart('Welcome to CrumbTrail! Your company account has been approved. Please go to crumbtrail.com to add the description and menu of your food truck company.', 'text/plain');
 
 				// If we could not approve the company, send this email:
@@ -80,13 +84,13 @@ try {
 
 				$numSent = $mailer->send($message);
 				if($numSent !== count($recipients)) {
-					throw(new RuntimeException("unable to send email"));
+					throw(new RuntimeException("Unable to send email"));
 				}
 			}
 // ------------------  End of SwiftMailer code -----------------------
 
 		} else {
-			throw (new InvalidArgumentException("there is no company id"));
+			throw (new InvalidArgumentException("There is no company id"));
 		}
 
 	} else {
