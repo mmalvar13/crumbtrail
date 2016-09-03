@@ -134,9 +134,6 @@ try {
 		$message->addPart('Thank you for joining crumbtrail. Please confirm your email by clicking on this link. '. "<a href=\"$linkPath\">Click Here To Confirm Email</a>", 'text/plain');
 		$message->setReturnPath('vchacon8@cnm.edu');//return path address specifies where bounce notifications should be sent
 		//Link that will be clicked on to confirm the employess email address? and set their profileActivationToken to null. This triggers an email (over in profileActivation API)
-		//you should use $_SERVER["SCRIPT_NAME"]
-		$scriptPath = $_SERVER["SCRIPT_NAME"];
-		$linkPath = dirname($scriptPath, 2) . "/profileActivation/?profileActivationToken=$profileActivationToken";
 		//Send the message
 		$numSent = $mailer->send($message);
 		/**

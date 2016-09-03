@@ -87,16 +87,16 @@ try {
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
 		//make sure the event is available
-		if(empty($requestObject->id) === true) {
-			throw(new \InvalidArgumentException("No event exists.", 405));
-		}
+		//if(empty($requestObject->id) === true) {
+			//throw(new \InvalidArgumentException("No event exists.", 405));
+		//}
 		//make sure event truck id is available
 		if(empty($requestObject->eventTruckId) === true) {
 			throw(new \InvalidArgumentException("No event truck id exists.", 405));
 		}
 		//make sure event location is available
 		//since all are used to find a location should all be used to ensure that a location is available??
-		//location lat and long?? explanation...Angular will be aware of location, angular's representation will be different...Angular will have an object with two state varaibles 0) sate variable :lat (latitude) 1) lng (longitude) fixed on lines below....yay
+		//location lat and long?? explanation...Angular will be aware of location, angular's representation will be different...Angular will have an object with two state variables 0) sate variable :lat (latitude) 1) lng (longitude) fixed on lines below....yay
 		if(empty($requestObject->eventLocation->lat) === true) {
 			throw(new \InvalidArgumentException("No event latitude exists.", 405));
 		}
@@ -141,9 +141,9 @@ try {
 
 			//because this is how angular will send the associate array.......null given->consistency
 			$reply->start = $eventStart;
-			$truckId = new Truck(null, $truckCompanyId);
+			$truck = new Truck(null, $truckCompanyId);
 			$point = new Point($requestObject->eventLocation->lat, $requestObject->eventLocation->lng);
-			$event = new Event(null, $truckId->getTruckId(), $eventEnd, $point, $eventStart);
+			$event = new Event(null, $truck->getTruckId(), $eventEnd, $point, $eventStart);
 			$event->insert($pdo);;
 			//update reply
 			$reply->message = "Event created successfully.";
