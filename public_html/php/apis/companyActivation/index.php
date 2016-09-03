@@ -44,7 +44,7 @@ try {
 		if((empty($id)) === false) {
 			$company = Company::getCompanyByCompanyId($pdo, $id);
 			if($company === null) {
-				throw(new \InvalidArgumentException("this company does not exist"));
+				throw(new \InvalidArgumentException("This company does not exist"));
 			}
 			$companyActivationToken = $company->getCompanyActivationToken();
 			if($companyActivationToken !== null) {
@@ -58,9 +58,7 @@ try {
 				throw(new \RunTimeException('Company has not been approved yet'));
 			} else {
 
-
-				// ---- SwiftMailer: send Approve or Deny email to companyAccountCreator ------
-
+// ------------------  Start of SwiftMailer code -----------------------
 				$transport = Swift_SmtpTransport::newInstance('localhost', 25);
 				$mailer = Swift_Mailer::newInstance($transport);
 				$message = Swift_Message::newInstance();
@@ -74,8 +72,7 @@ try {
 					$message->setBody('Welcome to CrumbTrail! Your company account has been approved. Please go to crumbtrail.com to add the description and menu of your food truck company.', 'text/html');
 					$message->addPart('Welcome to CrumbTrail! Your company account has been approved. Please go to crumbtrail.com to add the description and menu of your food truck company.', 'text/plain');
 
-				// If we could not approved the company, send this email:
-				
+				// If we could not approve the company, send this email:
 				} else {
 					$message->setBody('CrumbTrail has been unable to verify your business license and/or health permit.', 'text/html');
 					$message->addPart('CrumbTrail has been unable to verify your business license and/or health permit.', 'text/plain');
@@ -86,6 +83,7 @@ try {
 					throw(new RuntimeException("unable to send email"));
 				}
 			}
+// ------------------  End of SwiftMailer code -----------------------
 
 		} else {
 			throw (new InvalidArgumentException("there is no company id"));
