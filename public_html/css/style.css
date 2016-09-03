@@ -235,13 +235,32 @@ p {
 
 
 /*-------------------------------------TRUCK MAP----------------------------------------------*/
-.truck-map-serving-btn{
-	/*margin-top: -1.5rem;*/
+.truck-map-serving-h4{
+	margin-left: 1rem;
 }
 
 .truck-map-hr{
 	width: 50%;
 	margin-top:0.25rem;
+}
+
+.truck-map-time-field{
+	margin: 0 auto;
+}
+.truck-map-time-text{
+	margin-left: 1rem;
+	/*transform: translateY(17.5%);*/
+}
+
+.truck-map-close-modal{
+	margin-top:1rem;
+	margin-right: 1rem;
+}
+
+.truck-map-location{
+	border: 0.15rem solid slategrey;
+	height: 3rem;
+	width:80%;
 }
 
 

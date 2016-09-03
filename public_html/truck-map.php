@@ -86,30 +86,58 @@
 			<main class="container">
 				<div class="row">
 					<div class="col-md-8 col-md-offset-2">
-						<button type="button" class="btn btn-outline-warning btn-lg btn-block truck-map-serving-btn" data-toggle="modal" data-target=".bd-example-modal-lg">START SERVING</button>
+						<button type="button" class="btn btn-outline-warning btn-lg btn-block truck-map-serving-btn"
+								  data-toggle="modal" data-target=".bd-example-modal-lg">START SERVING
+						</button>
 					</div>
 				</div>
 
 				<!--------Modal------->
-				<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+				<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+					  aria-hidden="true">
 					<div class="modal-dialog modal-lg">
 						<div class="modal-content">
-							<h4 class="text-center">Start Serving</h4>
+							<button type="button" class="close truck-map-close-modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							</button>
+							<h4 class="text-center truck-map-serving-h4">Start Serving</h4>
 							<hr class="truck-map-hr">
 							<div class="form-group row">
-								<label for="example-time-input" class="col-xs-3 col-form-label">Stop Serving:</label>
-								<div class="col-xs-5 col-offset-2">
-									<input class="form-control" type="time" value="13:45:00" id="example-time-input">
+								<div class="col-xs-4 text-center">
+<!--									<label for="time-input" class="col-form-label truck-map-time-text">Stop Serving:</label>-->
+									<h4>End Time:</h4>
+								</div>
+								<div class="col-xs-7 truck-map-time-field">
+									<input class="form-control" type="time" value="13:45:00" id="time-input">
 								</div>
 							</div>
+							<div class="row">
+								<div class="col-xs-4 text-center">
+									<h4>Select a truck:</h4>
+								</div>
+								<div class="col-xs-6">
+									<select class="form-control">
+										<option value="one">Truck 1</option>
+										<option value="two">Truck 2</option>
+										<option value="three">Truck 3</option>
+										<option value="four">Truck 4</option>
+										<option value="five">Truck 5</option>
+									</select>
+							</div>
 						</div>
+							<div class="row">
+								<h4 class="text-center">Your Location</h4>
+							</div>
+							<div class="row">
+								<div class="truck-map-location"></div>
+							</div>
 					</div>
 				</div>
+		</div>
 
-			</main>
+		</main>
 
 
-			<footer class="bfoot">
-			</footer>
+		<footer class="bfoot">
+		</footer>
 		</div>
 	</body>
