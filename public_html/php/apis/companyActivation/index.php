@@ -74,7 +74,7 @@ try {
 
 
 				$companyApproved = $company->getCompanyApproved();
-				if($companyApproved === 1) {
+				if($companyApproved == 1) {
 					$message->setBody('Welcome to CrumbTrail! Your company account has been approved. Please go to crumbtrail.com to add the description and menu of your food truck company.', 'text/html');
 					$message->addPart('Welcome to CrumbTrail! Your company account has been approved. Please go to crumbtrail.com to add the description and menu of your food truck company.', 'text/plain');
 				// If we could not approve the company, send this email:
