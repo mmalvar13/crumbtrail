@@ -117,6 +117,10 @@ try {
 		//Create a message
 		$message = Swift_Message::newInstance();//to set a subject line you can pass it as a parameter in newInstance or set it afterwards. I chose to set it afterwards. Same with body.
 		//attach a sender to the message
+
+		$scriptPath = $_SERVER["SCRIPT_NAME"];
+		$linkPath = dirname($scriptPath, 2) . "/profileActivation/?profileActivationToken=$profileActivationToken";
+
 		$message->setFrom(['vchacon8@cnm.edu' => 'Crumbtrail Admin']);//is this the same as setFrom(array('someaddress'=>'name'));
 		//attach recipients to the message. you can add
 		$recipients = [$profile->getProfileEmail() => $profile->getProfileName()];
@@ -125,9 +129,9 @@ try {
 		//attach a subject line to the message
 		$message->setSubject('You have been invited to join crumbtrail. Please verify your email.');
 		//the body of the message-seen when the user opens the message
-		$message->setBody('Thank you for joining crumbtrail. Please confirm your email by clicking on this link.', 'text/html');
+		$message->setBody('Thank you for joining crumbtrail. Please confirm your email by clicking on this link.'."<a href=\"$linkPath\">Click Here To Confirm Email</a>", 'text/html');
 		//add alternative parts with addPart() meant for those who cannot read in html???
-		$message->addPart('Thank you for joining crumbtrail. Please confirm your email by clicking on this link. ', 'text/plain');
+		$message->addPart('Thank you for joining crumbtrail. Please confirm your email by clicking on this link. '. "<a href=\"$linkPath\">Click Here To Confirm Email</a>", 'text/plain');
 		$message->setReturnPath('vchacon8@cnm.edu');//return path address specifies where bounce notifications should be sent
 		//Link that will be clicked on to confirm the employess email address? and set their profileActivationToken to null. This triggers an email (over in profileActivation API)
 		//you should use $_SERVER["SCRIPT_NAME"]
