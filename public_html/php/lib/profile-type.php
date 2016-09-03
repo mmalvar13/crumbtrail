@@ -16,8 +16,10 @@ function profileType($pdo, $employCompanyId) {
 		if($profile->getProfileType() === "o") {
 
 			$type = "o";
+			break;
 		} elseif($profile->getProfileType() === "a") {
 			$type = "a";
+			break;
 		} else {
 			throw(new \InvalidArgumentException("Not allowed to make changes"));
 		}
