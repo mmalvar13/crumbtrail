@@ -82,11 +82,11 @@ try {
 			$requestContent = file_get_contents("php://input");
 			$requestObject = json_decode($requestContent);
 
-			if(empty($requestObject->truckCompanyId) === true) {
-				throw(new \InvalidArgumentException("No truckCompanyId", 405));
+			if(empty($requestObject->companyId) === true) {
+				throw(new \InvalidArgumentException("No companyId", 405));
 			}
 			//create a new truck and insert it into the database
-			$truck = new Truck(null, $requestObject->truckCompanyId); //TODO what information does $requestObject-> give you??
+			$truck = new Truck(null, $requestObject->companyId); //TODO what information does $requestObject-> give you??
 			$truck->insert($pdo);
 
 			//update reply
