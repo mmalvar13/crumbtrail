@@ -80,8 +80,8 @@ try {
 			$requestContent = file_get_contents("php://input");
 			$requestObject = json_decode($requestContent);
 
-
-			if($requestObject->profileType !== 'a' || 'o') { //TODO is this the right way to reference profileType????!
+//todo i changed from $requestObject->profileType to $requestObject->profile->getProfileType
+			if($requestObject->profile->getProfileType !== 'a' || 'o') { //TODO is this the right way to reference profileType????!
 				throw(new \InvalidArgumentException("profile type must be admin('a') or owner('o') in order to make changes to a truck"));
 			}
 
