@@ -80,10 +80,10 @@ try {
 			$requestContent = file_get_contents("php://input");
 			$requestObject = json_decode($requestContent);
 
-//todo i changed from $requestObject->profileType to $requestObject->profile->getProfileType
-			if($requestObject->profile->getProfileType !== 'a' || 'o') { //TODO is this the right way to reference profileType????!
-				throw(new \InvalidArgumentException("profile type must be admin('a') or owner('o') in order to make changes to a truck"));
-			}
+////todo i changed from $requestObject->profileType to $requestObject->profile->getProfileType
+//			if($profile["profileType"] !== 'a' || 'o') { //TODO is this the right way to reference profileType????!
+//				throw(new \InvalidArgumentException("profile type must be admin('a') or owner('o') in order to make changes to a truck"));
+//			}
 
 			//make sure the truck foreign key is available (required field)
 			if(empty($requestObject->truckCompanyId) === true) {
