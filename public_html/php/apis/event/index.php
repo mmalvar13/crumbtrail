@@ -154,9 +154,8 @@ try {
 
 			//because this is how angular will send the associate array.......null given->consistency
 			$reply->start = $eventStart;
-			$truck = new Truck(null, $requestObject->companyId);
 			$point = new Point($requestObject->eventLocation->lat, $requestObject->eventLocation->lng);
-			$event = new Event(null, $truck->getTruckId(), $eventEnd, $point, $eventStart);
+			$event = new Event(null, $requestObject ->truckId, $eventEnd, $point, $eventStart);
 			$event->insert($pdo);;
 			//update reply
 			$reply->message = "Event created successfully.";
