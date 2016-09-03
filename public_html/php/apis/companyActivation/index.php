@@ -5,9 +5,9 @@
  *
  * This API gets information from the profileActivation API,
  * via the secret Approve or Deny page for admins only.
- * This company's id.
- * This company has been approved or not.
- * This company's activation token === null (whether approved or not).
+ *    This company's id.
+ *    This company has been approved or not.
+ *    This company's activation token === null (whether approved or not).
  **/
 
 require_once(dirname(__DIR__, 2) . "/classes/autoload.php");
@@ -58,17 +58,27 @@ try {
 				throw(new \RunTimeException('Company has not been approved yet'));
 			} else {
 
-// ---- SwiftMailer: send Approve or Deny email to companyAccountCreator ------
+
+				// ---- SwiftMailer: send Approve or Deny email to companyAccountCreator ------
+
 				$transport = Swift_SmtpTransport::newInstance('localhost', 25);
 				$mailer = Swift_Mailer::newInstance($transport);
 				$message = Swift_Message::newInstance();
+
+				$scriptPath = $_SERVER["SCRIPT_NAME"];
+				$linkPath = dirname($scriptPath, 2) . "/companyActivation/?companyActivationToken=$companyActivationToken";
+
 				$message->setFrom(['kkirk4@cnm.edu' => 'Crumbtrail Admin']);
 				$recipients = ['companyEmail' => $company->getCompanyEmail()];
 				$message->setSubject("Message from CrumbTrail");
 
+				// TODO Check the wacks, in the messages and linkPaths, below:
+				// If we approved the company, send this email:
 				if($company->getCompanyApproved() === 1) {
-					$message->setBody('Welcome to CrumbTrail! Your company account has been approved. Please go to crumbtrail.com to add the description and menu of your food truck company.', 'text/html');
-					$message->addPart('Welcome to CrumbTrail! Your company account has been approved. Please go to crumbtrail.com to add the description and menu of your food truck company.', 'text/plain');
+					$message->setBody('Welcome to CrumbTrail! Your company account has been approved. Please go to crumbtrail.com to add the description and menu of your food truck company. '. "<a href=\"$linkPath\">crumbtrail.com</a>", 'text/html');
+					$message->addPart('Welcome to CrumbTrail! Your company account has been approved. Please go to crumbtrail.com to add the description and menu of your food truck company.'. "<a href=\"$linkPath\">crumbtrail.com</a>", 'text/plain');
+
+				// If we could not approved the company, send this email:
 				} else {
 					$message->setBody('CrumbTrail has been unable to verify your business license and/or health permit.', 'text/html');
 					$message->addPart('CrumbTrail has been unable to verify your business license and/or health permit.', 'text/plain');
