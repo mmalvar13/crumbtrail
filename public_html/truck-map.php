@@ -97,20 +97,21 @@
 					  aria-hidden="true">
 					<div class="modal-dialog modal-lg">
 						<div class="modal-content">
-							<button type="button" class="close truck-map-close-modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<button type="button" class="close truck-map-close-modal" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span></button>
 							</button>
 							<h4 class="text-center truck-map-serving-h4">Start Serving</h4>
 							<hr class="truck-map-hr">
 							<div class="form-group row">
 								<div class="col-xs-4 text-center">
-<!--									<label for="time-input" class="col-form-label truck-map-time-text">Stop Serving:</label>-->
+									<!--									<label for="time-input" class="col-form-label truck-map-time-text">Stop Serving:</label>-->
 									<h4>End Time:</h4>
 								</div>
 								<div class="col-xs-7 truck-map-time-field">
 									<input class="form-control" type="time" value="13:45:00" id="time-input">
 								</div>
 							</div>
-							<div class="row">
+							<div class="form-group row">
 								<div class="col-xs-4 text-center">
 									<h4>Select a truck:</h4>
 								</div>
@@ -122,22 +123,20 @@
 										<option value="four">Truck 4</option>
 										<option value="five">Truck 5</option>
 									</select>
+								</div>
 							</div>
-						</div>
 							<div class="row">
 								<h4 class="text-center">Your Location</h4>
+								<div class="truck-map-location">You are currently located at: ____</div>
 							</div>
-							<div class="row">
-								<div class="truck-map-location"></div>
-							</div>
+						</div>
 					</div>
 				</div>
-		</div>
 
-		</main>
+			</main>
 
 
-		<footer class="bfoot">
-		</footer>
+			<footer class="bfoot">
+			</footer>
 		</div>
 	</body>

@@ -180,7 +180,7 @@ try {
 			//perform the actual PUT or POST
 
 			//I will need 2 sections of PUT, one for ADMINS & Owners, and 1 for JUST ADMINS to change things like permits/license etc
-//			if($method === "PUT" && ($_SESSION["profile"]->getProfileType()) === "a") {
+			if($requestObject->profileType === "a") {
 				//retrieve the company to update
 
 				$company = Company::getCompanyByCompanyId($pdo, $companyId);
@@ -208,32 +208,32 @@ try {
 				//update reply
 				$reply->message = "Company updated A-OK";
 
-//			} elseif($method === "PUT" && ($_SESSION["profile"]->getProfileType()) === "o") {
+			}elseif($requestObject->profileType === "o") {
 //				//retrieve the company to update
 //
-//				$company = Company::getCompanyByCompanyId($pdo, $companyId);
-//				if($company === null) {
-//					throw(new RuntimeException("This company does not exist"));
-//				}
-//				//put the new company name into the company and update
-//				$company->setCompanyName($requestObject->companyName);
-//				$company->setCompanyEmail($requestObject->companyEmail);
-//				$company->setCompanyPhone($requestObject->companyPhone);
-//				$company->setCompanyAttn($requestObject->companyAttn);
-//				$company->setCompanyStreet1($requestObject->companyStreet1);
-//				$company->setCompanyStreet2($requestObject->companyStreet2);
-//				$company->setCompanyCity($requestObject->companyCity);
-//				$company->setCompanyState($requestObject->companyState);
-//				$company->setCompanyZip($requestObject->companyZip);
-//				$company->setCompanyDescription($requestObject->companyDescription);
-//				$company->setCompanyMenuText($requestObject->companyMenuText);
-//
-//
-//				$company->update($pdo);
-//
-//				//update reply
-//				$reply->message = "Company updated A-OK";
-//			}
+				$company = Company::getCompanyByCompanyId($pdo, $companyId);
+				if($company === null) {
+					throw(new RuntimeException("This company does not exist"));
+				}
+				//put the new company name into the company and update
+				$company->setCompanyName($requestObject->companyName);
+				$company->setCompanyEmail($requestObject->companyEmail);
+				$company->setCompanyPhone($requestObject->companyPhone);
+				$company->setCompanyAttn($requestObject->companyAttn);
+				$company->setCompanyStreet1($requestObject->companyStreet1);
+				$company->setCompanyStreet2($requestObject->companyStreet2);
+				$company->setCompanyCity($requestObject->companyCity);
+				$company->setCompanyState($requestObject->companyState);
+				$company->setCompanyZip($requestObject->companyZip);
+				$company->setCompanyDescription($requestObject->companyDescription);
+				$company->setCompanyMenuText($requestObject->companyMenuText);
+
+
+				$company->update($pdo);
+
+				//update reply
+				$reply->message = "Company updated A-OK";
+			}
 //		}***********put back in when you add wrapper
 //	} elseif((empty($_SESSION["profile"]) === false) && (($_SESSION["profile"]->getProfileId()) === $companyId) && (($_SESSION["profile"]->getProfileType()) === "a") || (($_SESSION["profile"]->getProfileType())) === "o") {
 

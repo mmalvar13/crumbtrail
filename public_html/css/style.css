@@ -258,9 +258,9 @@ p {
 }
 
 .truck-map-location{
+	box-sizing: border-box;
 	border: 0.15rem solid slategrey;
-	height: 3rem;
-	width:80%;
+
 }
 
 

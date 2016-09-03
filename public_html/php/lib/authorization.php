@@ -21,6 +21,7 @@ function isEmployeeAuthorized($pdo, $employCompanyId) {
 
 		if(($individual->getEmployCompanyId() === $employCompanyId) && ( $profile->getProfileType() === 'o') || $profile->getProfileType() === 'a') {
 			$authorized = true;
+
 			break;
 		}
 	}

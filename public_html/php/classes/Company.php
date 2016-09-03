@@ -149,7 +149,7 @@ class Company implements \JsonSerializable {
 										 string $newCompanyPhone,
 										 string $newCompanyPermit,
 										 string $newCompanyLicense,
-										 string $newCompanyAttn,
+										 string $newCompanyAttn = null,
 										 string $newCompanyStreet1,
 										 string $newCompanyStreet2 = null,
 										 string $newCompanyCity,
@@ -396,6 +396,13 @@ class Company implements \JsonSerializable {
 	 * @throw \TypeError if $newCompanyAttn is not a string
 	 **/
 	public function setCompanyAttn(string $newCompanyAttn) {
+
+		if($newCompanyAttn === null) {
+			$this-> companyAttn = null;
+			return;
+		}
+
+
 		// Strip out the white space on either end of the string.
 		$newCompanyAttn = trim($newCompanyAttn);
 		// Sanitize $newCompanyAttn.
