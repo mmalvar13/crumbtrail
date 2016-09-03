@@ -15,9 +15,7 @@ require_once(dirname(__DIR__, 2) . "/lib/xsrf.php");
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 require_once(dirname(__DIR__, 4) . "/vendor/autoload.php");
 
-use Edu\Cnm\CrumbTrail\{
-	Company
-};
+use Edu\Cnm\CrumbTrail\{Company};
 
 // Verify the session, start a session if not active.
 if(session_status() !== PHP_SESSION_ACTIVE) {
@@ -36,15 +34,15 @@ try {
 	// Determine which HTTP method was used.
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
-	$companyId = filter_input(INPUT_GET, "companyId", FILTER_VALIDATE_INT);
+	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
 	$companyActivationToken = filter_input(INPUT_GET, "companyActivationToken", FILTER_SANITIZE_STRING);
 	$companyApproved = filter_input(INPUT_GET, "companyApproved", FILTER_VALIDATE_INT);
 
 	if($method === "GET") {
 		setXsrfCookie();
 
-		if((empty($companyId)) === false) {
-			$company = Company::getCompanyByCompanyId($pdo, $companyId);
+		if((empty($id)) === false) {
+			$company = Company::getCompanyByCompanyId($pdo, $id);
 			if($company === null) {
 				throw(new \InvalidArgumentException("this company does not exist"));
 			}
