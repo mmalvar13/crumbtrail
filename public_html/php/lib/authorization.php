@@ -25,6 +25,6 @@ function isEmployeeAuthorized($pdo, $employCompanyId) {
 			break;
 		}
 	}
-	return ($authorized);
+	return $authorized;
 
 }

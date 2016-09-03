@@ -180,7 +180,7 @@ try {
 			//perform the actual PUT or POST
 
 			//I will need 2 sections of PUT, one for ADMINS & Owners, and 1 for JUST ADMINS to change things like permits/license etc
-			if($requestObject->profileType === "a") {
+			if(profileType($pdo, $companyId) === "a") {
 				//retrieve the company to update
 
 				$company = Company::getCompanyByCompanyId($pdo, $companyId);
@@ -208,7 +208,7 @@ try {
 				//update reply
 				$reply->message = "Company updated A-OK";
 
-			}elseif($requestObject->profileType === "o") {
+			}elseif(profileType($pdo, $companyId) === "o") {
 //				//retrieve the company to update
 //
 				$company = Company::getCompanyByCompanyId($pdo, $companyId);
