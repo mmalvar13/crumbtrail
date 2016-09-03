@@ -3,7 +3,7 @@
 require_once(dirname(__DIR__, 2) . "/classes/autoload.php");//need to add these
 require_once(dirname(__DIR__, 2) . "/lib/xsrf.php");
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
-require_once (dirname(__DIR__,4) . "/vendor/autoload.php");
+require_once(dirname(__DIR__, 4) . "/vendor/autoload.php");
 require_once(dirname(__DIR__, 2) . "/lib/authorization.php");
 
 
@@ -41,6 +41,7 @@ try {
 	//sanitize input(Explain this) Where is the input coming from??
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
 	$truckCompanyId = filter_input(INPUT_GET, "truckCompanyId", FILTER_VALIDATE_INT);
+	$companyId = filter_input(INPUT_GET, "companyId", FILTER_VALIDATE_INT);//todo i just added this today 9/3
 
 
 	//make sure the id is valid for methods that require it, Remember that $id is the primary key!
@@ -72,58 +73,44 @@ try {
 			}
 		}
 
-	//TODO need to ensure person adding/deleting trucks links back to the right company AND profile
-	} elseif(isEmployeeAuthorized($pdo, $id) === true) {
+		//TODO need to ensure person adding/deleting trucks links back to the right company AND profile
+		//todo i changed $pdo, $id to $pdo, $companyId
+	} elseif(isEmployeeAuthorized($pdo, $companyId) === true) {
 
-		if($method === "PUT" || $method === "POST") {
+		if($method === "POST") {
 			verifyXsrf();
 			$requestContent = file_get_contents("php://input");
 			$requestObject = json_decode($requestContent);
 
-////todo i changed from $requestObject->profileType to $requestObject->profile->getProfileType
-//			if($profile["profileType"] !== 'a' || 'o') { //TODO is this the right way to reference profileType????!
-//				throw(new \InvalidArgumentException("profile type must be admin('a') or owner('o') in order to make changes to a truck"));
-//			}
-
-			//make sure the truck foreign key is available (required field)
 			if(empty($requestObject->truckCompanyId) === true) {
-				throw(new \InvalidArgumentException("No foreign Id for truck", 405));
+				throw(new \InvalidArgumentException("No truckCompanyId", 405));
 			}
+			//create a new truck and insert it into the database
+			$truck = new Truck(null, $requestObject->truckCompanyId); //TODO what information does $requestObject-> give you??
+			$truck->insert($pdo);
 
-			if($method === "POST") {
-
-				if(empty($requestObject->truckCompanyId)===true){
-					throw(new \InvalidArgumentException("No truckCompanyId", 405));
-				}
-				//create a new truck and insert it into the database
-				$truck = new Truck(null, $requestObject->truckCompanyId); //TODO what information does $requestObject-> give you??
-				$truck->insert($pdo);
-
-				//update reply
-				$reply->message = "Truck created A-OK";
-			}
-
-			//delete section here
+			//update reply
+			$reply->message = "Truck created A-OK";
 		} elseif($method === "DELETE") {
-				verifyXsrf();
-				//retrieve the company to be deleted
-				$truck = Truck::getTruckByTruckId($pdo, $id);
+			verifyXsrf();
+			//retrieve the company to be deleted
+			$truck = Truck::getTruckByTruckId($pdo, $id);
 
-				//check if empty
-				if($truck === null) {
-					throw(new RuntimeException("The truck does not exist", 404));
-				}
+			//check if empty
+			if($truck === null) {
+				throw(new RuntimeException("The truck does not exist", 404));
+			}
 
-				//delete the truck
+			//delete the truck
 			$truck->delete($pdo);
 
-				//update the reply
-				$reply->message = "Truck deleted A-OK";
-			} else {
-				throw (new InvalidArgumentException("Invalid HTTP method request"));
-			}
+			//update the reply
+			$reply->message = "Truck deleted A-OK";
+		} else {
+			throw (new InvalidArgumentException("Invalid HTTP method request"));
+		}
 
-		}else{
+	} else {
 		throw(new \InvalidArgumentException("Employee is not authorized to make changes"));
 	}
 
