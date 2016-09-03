@@ -12,3 +12,4 @@ if(session_status() !== PHP_SESSION_ACTIVE){
 
 // here we are setting the session to an empty array in order to clear the values of the session.
 $_SESSION = [];
+

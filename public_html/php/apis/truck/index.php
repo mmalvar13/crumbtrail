@@ -89,6 +89,10 @@ try {
 			}
 
 			if($method === "POST") {
+
+				if(empty($requestObject->truckCompanyId)===true){
+					throw(new \InvalidArgumentException("No truckCompanyId", 405));
+				}
 				//create a new truck and insert it into the database
 				$truck = new Truck(null, $requestObject->truckCompanyId); //TODO what information does $requestObject-> give you??
 				$truck->insert($pdo);
