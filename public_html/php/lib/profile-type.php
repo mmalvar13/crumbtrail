@@ -3,10 +3,16 @@
 require_once(dirname(__DIR__) . "/classes/autoload.php");
 
 use Edu\Cnm\CrumbTrail\{
-	Profile, Employ
+	Profile, Company, Employ
 };
 
-function profileType($pdo, $employCompanyId) {
+function typeCheck($pdo, $employCompanyId) {
+
+	if((empty($_SESSION["profile"]) === false)) {
+		throw(new \InvalidArgumentException("Session is not active"));
+	}
+
+	$type = "";
 
 	$employees = Employ::getEmployByEmployCompanyId($pdo, $employCompanyId);
 
@@ -15,11 +21,14 @@ function profileType($pdo, $employCompanyId) {
 
 		if($profile->getProfileType() === "o") {
 
-			$type = "o";
+			$type = $profile->getProfileType();
 			break;
+
 		} elseif($profile->getProfileType() === "a") {
-			$type = "a";
+
+			$type = $profile->getProfileType();
 			break;
+
 		} else {
 			throw(new \InvalidArgumentException("Not allowed to make changes"));
 		}

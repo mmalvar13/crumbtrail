@@ -3,6 +3,7 @@
 require_once(dirname(__DIR__, 2) . "/classes/autoload.php");//need to add these
 require_once(dirname(__DIR__, 2) . "/lib/xsrf.php");
 require_once(dirname(__DIR__, 2) . "/lib/authorization.php");
+require_once(dirname(__DIR__, 2) . "/lib/profile-type.php");
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 require_once(dirname(__DIR__, 4) . "/vendor/autoload.php");
 
@@ -177,10 +178,8 @@ try {
 				throw(new \InvalidArgumentException("No company account creator ID for company", 405));
 			}
 
-			//perform the actual PUT or POST
 
-			//I will need 2 sections of PUT, one for ADMINS & Owners, and 1 for JUST ADMINS to change things like permits/license etc
-			if(profileType($pdo, $companyId) === "a") {
+			if(typeCheck($pdo, $companyId) === "a") {
 				//retrieve the company to update
 
 				$company = Company::getCompanyByCompanyId($pdo, $companyId);
@@ -208,7 +207,7 @@ try {
 				//update reply
 				$reply->message = "Company updated A-OK";
 
-			}elseif(profileType($pdo, $companyId) === "o") {
+			}elseif(typeCheck($pdo, $companyId) === "o") {
 //				//retrieve the company to update
 //
 				$company = Company::getCompanyByCompanyId($pdo, $companyId);

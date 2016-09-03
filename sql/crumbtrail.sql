@@ -53,7 +53,7 @@ CREATE TABLE company (
 	companyPhone VARCHAR(32) NOT NULL,
 	companyPermit VARCHAR(32) NOT NULL,
 	companyLicense VARCHAR(32) NOT NULL,
-	companyAttn VARCHAR(128) NOT NULL,
+	companyAttn VARCHAR(128),
 	companyStreet1 VARCHAR(128) NOT NULL,
 	companyStreet2 VARCHAR(128),
 	companyCity VARCHAR(128) NOT NULL,

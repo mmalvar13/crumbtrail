@@ -398,7 +398,7 @@ class Company implements \JsonSerializable {
 	public function setCompanyAttn(string $newCompanyAttn = null) {
 
 		if($newCompanyAttn === null) {
-			$this-> companyAttn = null;
+			$this->companyAttn = null;
 			return;
 		}
 
