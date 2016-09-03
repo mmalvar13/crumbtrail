@@ -48,7 +48,7 @@ try {
 	 * Make the profile information confidential.
 	 * If it's not your profile, you can't see it, modify it, or delete it.
 	 **/
-	if((empty($_SESSION["profile"]) === false) && (($_SESSION["profile"]->getProfileId()) === $profileId)) {  // TODO ???
+	if((empty($_SESSION["profile"]) === false) && (($_SESSION["profile"]->getProfileId()) === $profileId)) {
 
 // --------------------------- GET --------------------------------
 		if($method === "GET") {
@@ -60,7 +60,7 @@ try {
 				if($profile !== null) {
 					$reply->data = $profile;
 				}
-			} elseif(empty($profileName) === false) {							// TODO Check these elseif() lines.
+			} elseif(empty($profileName) === false) {
 				$profile = Profile::getProfileByProfileName($pdo, $profileName);
 				if($profile !== null) {
 					$reply->data = $profile;
@@ -104,7 +104,7 @@ try {
 			if(empty($requestObject->profileType) === true) {
 				throw(new \InvalidArgumentException ("No content for Profile type.", 405));
 			}
-			// Make sure profileSalt is available (required field).   // TODO Put for password/confirm, salt/hash ???
+			// Make sure profileSalt is available (required field).
 			if(empty($requestObject->profileSalt) === true) {
 				throw(new \InvalidArgumentException ("No content for Profile salt.", 405));
 			}
