@@ -123,10 +123,10 @@ try {
 					$message->setSubject("Someone has activated their profile and need you to verify their business credentials");
 
 					//the body of the message-seen when the user opens the message
-					$message->setBody('Hi Crumbtrail Admin, a user has confirmed their email and activated their profile. Please take a look at their business license and health permit to verify their business. Once you have made the decision to confirm or deny them, click on this link. This link will set their companyActivationToken to null, and allow you to choose whether you confirm or deny', 'text/html');
+					$message->setBody('Hi Crumbtrail Admin, a user has confirmed their email and activated their profile. Please take a look at their business license and health permit to verify their business. Once you have made the decision to confirm or deny them, click on this link. This link will set their companyActivationToken to null, and allow you to choose whether you confirm or deny'. "<a href=\"$linkPath\">Click Here To Activate Company</a>", 'text/html');
 
 					//add alternative parts with addPart() for those who can only read plaintext or dont wwant to view in html
-					$message->addPart('Crumbtrail  Admin, a user has confirmed their emai and activated their profile. Please take a look at their business license and health permit to verify their business. One you have made the decision to confirm or deny them, click on this link. This link will set their companyActivationToken to null, and allow you to choose whether you confirm or deny ', 'text/plain');
+					$message->addPart('Crumbtrail  Admin, a user has confirmed their emai and activated their profile. Please take a look at their business license and health permit to verify their business. One you have made the decision to confirm or deny them, click on this link. This link will set their companyActivationToken to null, and allow you to choose whether you confirm or deny '."<a href=\"$linkPath\">Click Here To Activate Company</a>", 'text/plain');
 					$message->setReturnPath('mmalvar13@gmail.com');//return path address specifies where bounce notifications should be sent
 
 
