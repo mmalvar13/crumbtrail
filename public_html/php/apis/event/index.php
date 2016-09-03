@@ -7,7 +7,7 @@ require_once(dirname(__DIR__, 2) . "/lib/xsrf.php");
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
 use Edu\Cnm\CrumbTrail\ {
-	Event, Point
+	Event, Point, Truck
 };
 
 /**
@@ -46,7 +46,7 @@ try {
 	$eventLocationLng = filter_input(INPUT_GET, "eventLocationLng", FILTER_VALIDATE_FLOAT);
 
 	//make sure the id is valid for methods that require it
-	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
+	if(($method === "PUT") && (empty($id) === true || $id < 0)) {
 		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
 	}
 
@@ -57,8 +57,8 @@ try {
 		setXsrfCookie();
 
 		//get a specific event or all events and update reply
-		if(empty($EventId) === false && empty($eventTruckId) === false) {
-			$event = Event::getEventByEventIdAndEventTruckId($pdo, $eventId, $eventTruckId);
+		if(empty($id) === false && empty($eventTruckId) === false) {
+			$event = Event::getEventByEventIdAndEventTruckId($pdo, $id, $eventTruckId);
 			if($event !== null) {
 				$reply->data = $event;
 			}
@@ -86,9 +86,8 @@ try {
 		verifyXsrf();
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
-
 		//make sure the event is available
-		if(empty($requestObject->eventId) === true) {
+		if(empty($requestObject->id) === true) {
 			throw(new \InvalidArgumentException("No event exists.", 405));
 		}
 		//make sure event truck id is available
@@ -107,10 +106,10 @@ try {
 		// is this correct??????? Event start time defaults to current correct? YES WooHoo!!!!
 
 		if(empty($requestObject->eventStart) === true) {
-			throw(new InvalidArgumentException("No event start time found", 405));
+			throw(new \InvalidArgumentException("No event start time found", 405));
 		}
 		if(empty($requestObject->eventEnd) === true) {
-			throw(new InvalidArgumentException("No event end time set", 405));
+			throw(new \InvalidArgumentException("No event end time set", 405));
 		}
 		//angular event end and start.....milliseconds since the beginning of time.... 01, 01, 1970 12:00am UTC
 		$ngEventStart = filter_var($requestObject->eventStart, FILTER_VALIDATE_INT);
@@ -137,14 +136,19 @@ try {
 
 		} elseif($method === "POST") {
 			if(empty($id) === true) {
-				throw(new \InvalidArgumentException("No Event Id.", 405));
+				throw(new InvalidArgumentException("No id exists.", 405));
 			}
-			//because this is how angular will send the associate array.......
-			$point = new Point($requestObject->location->lat, $requestObject->location->lng);
-			$event = new Event(null, $requestObject->Id, $requestObject->eventEnd, $requestObject->eventStart, $requestObject->eventLocation, null);
+
+			//because this is how angular will send the associate array.......null given->consistency
+			$reply->start = $eventStart;
+			$truckId = new Truck(null, $truckCompanyId);
+			$point = new Point($requestObject->eventLocation->lat, $requestObject->eventLocation->lng);
+			$event = new Event(null, $truckId->getTruckId(), $eventEnd, $point, $eventStart);
 			$event->insert($pdo);;
 			//update reply
 			$reply->message = "Event created successfully.";
+
+
 		}
 	} else {
 		throw (new InvalidArgumentException("Invalid HTTP method request"));
