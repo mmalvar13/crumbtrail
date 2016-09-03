@@ -34,13 +34,13 @@ try {
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
 	// Sanitize the input.
-	$id = filter_input(INPUT_GET, "profileId", FILTER_VALIDATE_INT);
+	$profileId = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
 	$profileName = filter_input(INPUT_GET, "profileName", FILTER_SANITIZE_STRING);
 	$profileEmail = filter_input(INPUT_GET, "profileEmail", FILTER_SANITIZE_EMAIL);
 	$profilePhone = filter_input(INPUT_GET, "profilePhone", FILTER_SANITIZE_STRING);
 
 	// Make sure the id (primary key) is valid for the methods that require it.
-	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
+	if(($method === "DELETE" || $method === "PUT") && (empty($profileId) === true || $profileId < 0)) {
 		throw(new InvalidArgumentException("ID cannot be empty or negative", 405));
 	}
 
@@ -48,15 +48,15 @@ try {
 	 * Make the profile information confidential.
 	 * If it's not your profile, you can't see it, modify it, or delete it.
 	 **/
-	if((empty($_SESSION["profile"]) === false) && (($_SESSION["profile"]->getProfileId()) === $id)) {  // TODO ???
+	if((empty($_SESSION["profile"]) === false) && (($_SESSION["profile"]->getProfileId()) === $profileId)) {  // TODO ???
 
 // --------------------------- GET --------------------------------
 		if($method === "GET") {
 			setXsrfCookie();
 
 			// Get a specific profile, or all profiles, then update the reply.
-			if(empty($id) === false) {
-				$profile = Profile::getProfileByProfileId($pdo, $id);
+			if(empty($profileId) === false) {
+				$profile = Profile::getProfileByProfileId($pdo, $profileId);
 				if($profile !== null) {
 					$reply->data = $profile;
 				}
@@ -114,7 +114,7 @@ try {
 			}
 
 			// Retrieve the profile that will be updated in this PUT.
-			$profile = Profile::getProfileByProfileId($pdo, $id);
+			$profile = Profile::getProfileByProfileId($pdo, $profileId);
 			if($profile === null) {
 				throw(new RuntimeException("The profile does not exist", 404));
 			}
@@ -137,7 +137,7 @@ try {
 			verifyXsrf();
 
 			// Retrieve the Profile that will be deleted.
-			$profile = Profile::getProfileByProfileId($pdo, $id);
+			$profile = Profile::getProfileByProfileId($pdo, $profileId);
 			if($profile === null) {
 				throw(new RuntimeException("Profile does not exist", 404));
 			}

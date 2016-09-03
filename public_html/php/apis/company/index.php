@@ -42,7 +42,7 @@ try {
 	//I think this takes the URL we are given, and strips the id out of the URL so we know which primary key we have
 
 
-	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);  //should this be "id" or "companyId" TODO
+	$companyId = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);  //should this be "id" or "companyId" TODO
 	$companyAccountCreatorId = filter_input(INPUT_GET, "companyAccountCreatorId", FILTER_VALIDATE_INT);
 	$companyName = filter_input(INPUT_GET, "companyName", FILTER_SANITIZE_STRING);
 	$companyMenuText = filter_input(INPUT_GET, "companyMenuText", FILTER_SANITIZE_STRING);
@@ -52,7 +52,7 @@ try {
 
 
 	//make sure the id is valid for methods that require it
-//	if(($method === "DELETE" || $method === "PUT") && (((empty($id)) === true) || $id < 0)) {
+//	if(($method === "DELETE" || $method === "PUT") && (((empty($companyId)) === true) || $companyId < 0)) {
 //		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
 //	}
 
@@ -63,8 +63,8 @@ try {
 
 
 		//get a specific company or all companies and update reply
-		if((empty($id)) === false) {
-			$company = Company::getCompanyByCompanyId($pdo, $id);
+		if((empty($companyId)) === false) {
+			$company = Company::getCompanyByCompanyId($pdo, $companyId);
 			if($company !== null) {
 				$reply->data = $company;
 			}
@@ -97,7 +97,7 @@ try {
 
 
 //		ensure the person making changes is admin or owner and owns that account
-	} elseif(isEmployeeAuthorized($pdo, $id) === true) {
+	} elseif(isEmployeeAuthorized($pdo, $companyId) === true) {
 
 		if(($method === "PUT")) { //TODO do we need a POST at all
 			verifyXsrf();
@@ -183,7 +183,7 @@ try {
 			if($method === "PUT" && ($_SESSION["profile"]->getProfileType()) === "a") {
 				//retrieve the company to update
 
-				$company = Company::getCompanyByCompanyId($pdo, $id);
+				$company = Company::getCompanyByCompanyId($pdo, $companyId);
 				if($company === null) {
 					throw(new RuntimeException("This company does not exist", 404));
 				}
@@ -211,7 +211,7 @@ try {
 			} elseif($method === "PUT" && ($_SESSION["profile"]->getProfileType()) === "o") {
 				//retrieve the company to update
 
-				$company = Company::getCompanyByCompanyId($pdo, $id);
+				$company = Company::getCompanyByCompanyId($pdo, $companyId);
 				if($company === null) {
 					throw(new RuntimeException("This company does not exist"));
 				}
@@ -235,7 +235,7 @@ try {
 				$reply->message = "Company updated A-OK";
 			}
 //		}***********put back in when you add wrapper
-//	} elseif((empty($_SESSION["profile"]) === false) && (($_SESSION["profile"]->getProfileId()) === $id) && (($_SESSION["profile"]->getProfileType()) === "a") || (($_SESSION["profile"]->getProfileType())) === "o") {
+//	} elseif((empty($_SESSION["profile"]) === false) && (($_SESSION["profile"]->getProfileId()) === $companyId) && (($_SESSION["profile"]->getProfileType()) === "a") || (($_SESSION["profile"]->getProfileType())) === "o") {
 
 		} elseif($method === "DELETE") {
 			verifyXsrf();
@@ -244,7 +244,7 @@ try {
 			$requestObject = json_decode($requestContent);
 
 			//retrieve the company to be deleted
-			$company = Company::getCompanyByCompanyId($pdo, $id);
+			$company = Company::getCompanyByCompanyId($pdo, $companyId);
 
 			//check if empty
 			if($company === null) {
