@@ -40,7 +40,7 @@ try {
 	$method = array_key_exists("HTTP_X_HTTP-METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
 	//sanitize input(Explain this) Where is the input coming from??
-	$id = filter_input(INPUT_GET, "imageId", FILTER_VALIDATE_INT);
+	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
 	$imageCompanyId = filter_input(INPUT_GET, "imageCompanyId", FILTER_VALIDATE_INT);
 	$imageFileName = filter_input(INPUT_GET, "imageFileName", FILTER_SANITIZE_STRING);
 	$imageFileType = filter_input(INPUT_GET, "imageFileType", FILTER_SANITIZE_STRING);
@@ -81,7 +81,7 @@ try {
 
 		//this is a check to make sure only a profile type of ADMIN or OWNER can make changes
 		//could also check for the reverse and throw an exception in that case
-	} elseif((empty($_SESSION["profile"]) === false) && (($_SESSION["profile"]->getProfileId()) === $id) && (($_SESSION["profile"]->getProfileType()) === "a") || (($_SESSION["profile"]->getProfileType())) === "o") {
+	} elseif(isEmployeeAuthorized($pdo, $companyId) === true) {
 
 		if($method === "POST") {
 			verifyXsrf();
@@ -138,6 +138,8 @@ try {
 			} elseif($userFileExtension === ".png") {
 				//I think we may need to add a path to the second argument of imagepng()
 				$createdProperly = imagepng($sanitizedUserImage, $newImageFileName);
+			}else{
+				throw(new InvalidArgumentException("The image could not be created"));
 			}
 
 			//put new image into the database

@@ -71,7 +71,7 @@ try {
 		}
 
 	//TODO need to ensure person adding/deleting trucks links back to the right company AND profile
-	} elseif((empty($_SESSION["profile"]) === false) && (($_SESSION["profile"]->getProfileId()) === $id) && (($_SESSION["profile"]->getProfileType()) === "a") || (($_SESSION["profile"]->getProfileType())) === "o") {
+	} elseif(isEmployeeAuthorized($pdo, $companyId) === true) {
 
 		if($method === "PUT" || $method === "POST") {
 			verifyXsrf();
