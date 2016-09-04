@@ -125,8 +125,8 @@ try {
 
 
 		//angular event end and start.....milliseconds since the beginning of time.... 01, 01, 1970 12:00am UTC
-		$ngEventStart = filter_var($requestObject->eventStart, FILTER_VALIDATE_INT);
 		$ngEventEnd = filter_var($requestObject->eventEnd, FILTER_VALIDATE_INT);
+		$ngEventStart = filter_var($requestObject->eventStart, FILTER_VALIDATE_INT);
 		//floor? rounds a number down to the nearest integer......
 		$eventStart = DateTime::createFromFormat("U", floor($ngEventStart / 1000));
 		$eventEnd = DateTime::createFromFormat("U", floor($ngEventEnd / 1000));
