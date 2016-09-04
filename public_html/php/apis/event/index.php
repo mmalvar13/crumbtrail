@@ -140,9 +140,9 @@ try {
 				throw (new RuntimeException("Event does not exist.", 404));
 			}
 			//put new event content into the event and update
-//			$point = new Point($requestObject->location->lat, $requestObject->location->lng);
-//			$event->setEventLocation($point);
-//			$event->setEventStart($requestObject->eventStart);
+			$point = new Point($requestObject->location->lat, $requestObject->location->lng);
+			$event->setEventLocation($point);
+			$event->setEventStart($requestObject->eventStart);
 			$event->setEventEnd($requestObject->eventEnd);
 			$event->update($pdo);
 			//update reply
