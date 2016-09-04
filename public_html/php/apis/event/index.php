@@ -88,18 +88,18 @@ try {
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
 		//make sure the event is available
-		//if(empty($requestObject->id) === true) {
-			//throw(new \InvalidArgumentException("No event exists.", 405));
-		//}
+		if(empty($requestObject->id) === true) {
+			throw(new \InvalidArgumentException("No event exists.", 405));
+		}
 		//make sure event truck id is available
 		//todo I just commented these two lines out to test. 9/3
-//		if(empty($requestObject->eventTruckId) === true) {
-//			throw(new \InvalidArgumentException("No event truck id exists.", 405));
-//		}
+		if(empty($requestObject->eventTruckId) === true) {
+			throw(new \InvalidArgumentException("No event truck id exists.", 405));
+		}
 
 		//make sure eventEnd is available
-
-		if(empty($requestObject->eventEnd)=== true){
+//todo i moved lines 102-104 downt o line 133
+		if(empty($requestObject->eventEnd) === true) {
 			throw(new \InvalidArgumentException("no event end time", 405));
 		}
 
@@ -108,20 +108,20 @@ try {
 		//location lat and long?? explanation...Angular will be aware of location, angular's representation will be different...Angular will have an object with two state variables 0) sate variable :lat (latitude) 1) lng (longitude) fixed on lines below....yay
 
 		//todo commented out lines 110-123
-//		if(empty($requestObject->eventLocation->lat) === true) {
-//			throw(new \InvalidArgumentException("No event latitude exists.", 405));
-//		}
-//		if(empty($requestObject->eventLocation->lng) === true) {
-//			throw(new \InvalidArgumentException("No event longitude exists.", 405));
-//		}
-//		// is this correct??????? Event start time defaults to current correct? YES WooHoo!!!!
-//
-//		if(empty($requestObject->eventStart) === true) {
-//			throw(new \InvalidArgumentException("No event start time found", 405));
-//		}
-//		if(empty($requestObject->eventEnd) === true) {
-//			throw(new \InvalidArgumentException("No event end time set", 405));
-//		}
+		if(empty($requestObject->eventLocation->lat) === true) {
+			throw(new \InvalidArgumentException("No event latitude exists.", 405));
+		}
+		if(empty($requestObject->eventLocation->lng) === true) {
+			throw(new \InvalidArgumentException("No event longitude exists.", 405));
+		}
+		// is this correct??????? Event start time defaults to current correct? YES WooHoo!!!!
+
+		if(empty($requestObject->eventStart) === true) {
+			throw(new \InvalidArgumentException("No event start time found", 405));
+		}
+		if(empty($requestObject->eventEnd) === true) {
+			throw(new \InvalidArgumentException("No event end time set", 405));
+		}
 
 
 		//angular event end and start.....milliseconds since the beginning of time.... 01, 01, 1970 12:00am UTC
@@ -131,6 +131,7 @@ try {
 		$eventStart = DateTime::createFromFormat("U", floor($ngEventStart / 1000));
 		$eventEnd = DateTime::createFromFormat("U", floor($ngEventEnd / 1000));
 
+
 //Perform actual PUT
 		if($method === "PUT") {
 			//retrieve the event to update
@@ -139,9 +140,9 @@ try {
 				throw (new RuntimeException("Event does not exist.", 404));
 			}
 			//put new event content into the event and update
-			//$point = new Point($requestObject->location->lat, $requestObject->location->lng);
-			//$event->setEventLocation($point);
-			//$event->setEventStart($requestObject->eventStart);
+//			$point = new Point($requestObject->location->lat, $requestObject->location->lng);
+//			$event->setEventLocation($point);
+//			$event->setEventStart($requestObject->eventStart);
 			$event->setEventEnd($requestObject->eventEnd);
 			$event->update($pdo);
 			//update reply
@@ -155,7 +156,7 @@ try {
 			//because this is how angular will send the associate array.......null given->consistency
 			$reply->start = $eventStart;
 			$point = new Point($requestObject->eventLocation->lat, $requestObject->eventLocation->lng);
-			$event = new Event(null, $requestObject ->truckId, $eventEnd, $point, $eventStart);
+			$event = new Event(null, $requestObject->truckId, $eventEnd, $point, $eventStart);
 			$event->insert($pdo);;
 			//update reply
 			$reply->message = "Event created successfully.";
