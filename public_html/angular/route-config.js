@@ -32,6 +32,18 @@ app.config(function($routeProvider, $locationProvider) {
 			templateUrl: 'angular/views/truck-map.php'
 		})
 
+		// route for the truck map page
+		.when('/profile', {
+			controller: 'truckProfileController',
+			templateUrl: 'angular/views/truck-profile.php'
+		})
+
+		// route for the truck map page
+		.when('/registration', {
+			controller: 'truckRegistrationController',
+			templateUrl: 'angular/views/truck-registration.php'
+		})
+
 
 		// otherwise redirect to home
 		.otherwise({
