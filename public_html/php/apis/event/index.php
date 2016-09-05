@@ -76,9 +76,7 @@ try {
 		$requestObject = json_decode($requestContent);
 		//make sure event truck id is available
 		//todo I just commented these two lines out to test. 9/3
-		if(empty($requestObject->eventTruckId) === true) {
-			throw(new \InvalidArgumentException("No event truck id exists.", 405));
-		}
+
 		//make sure eventEnd is available
 		if(empty($requestObject->eventEnd)=== true){
 			throw(new \InvalidArgumentException("no event end time", 405));
@@ -87,29 +85,12 @@ try {
 		//since all are used to find a location should all be used to ensure that a location is available??
 		//location lat and long?? explanation...Angular will be aware of location, angular's representation will be different...Angular will have an object with two state variables 0) sate variable :lat (latitude) 1) lng (longitude) fixed on lines below....yay
 		//todo commented out lines 110-123
-		if(empty($requestObject->eventLocation->lat) === true) {
-			throw(new \InvalidArgumentException("No event latitude exists.", 405));
-		}
-		if(empty($requestObject->eventLocation->lng) === true) {
-			throw(new \InvalidArgumentException("No event longitude exists.", 405));
-		}
-		// is this correct??????? Event start time defaults to current correct? YES WooHoo!!!!
-
-		if(empty($requestObject->eventStart) === true) {
-			throw(new \InvalidArgumentException("No event start time found", 405));
-		}
-		if(empty($requestObject->eventEnd) === true) {
-			throw(new \InvalidArgumentException("No event end time set", 405));
-		}
 		//angular event end and start.....milliseconds since the beginning of time.... 01, 01, 1970 12:00am UTC
-		$ngEventStart = filter_var($requestObject->eventStart, FILTER_VALIDATE_INT);
 		$ngEventEnd = filter_var($requestObject->eventEnd, FILTER_VALIDATE_INT);
 		//floor? rounds a number down to the nearest integer......
-		$eventStart = DateTime::createFromFormat("U", floor($ngEventStart / 1000));
 		$eventEnd = DateTime::createFromFormat("U", floor($ngEventEnd / 1000));
 //Perform actual PUT
 		if($method === "PUT") {
-			$reply->message = "inside put";
 			//retrieve the event to update
 			$event = Event::getEventByEventId($pdo, $id);
 			if($event === null) {
@@ -119,11 +100,29 @@ try {
 			//$point = new Point($requestObject->location->lat, $requestObject->location->lng);//
 			//$event->setEventLocation($point);
 			//$event->setEventStart($requestObject->eventStart);
-			$event->setEventEnd($requestObject->eventEnd);
+			$event->setEventEnd($eventEnd);
 			$event->update($pdo);
 			//update reply
 			$reply->message = "Event end time updated successfully.";
 		} elseif($method === "POST") {
+
+			if(empty($requestObject->eventTruckId) === true) {
+				throw(new \InvalidArgumentException("No event truck id exists.", 405));
+			}
+			if(empty($requestObject->eventLocation->lat) === true) {
+				throw(new \InvalidArgumentException("No event latitude exists.", 405));
+			}
+			if(empty($requestObject->eventLocation->lng) === true) {
+				throw(new \InvalidArgumentException("No event longitude exists.", 405));
+			}
+			// is this correct??????? Event start time defaults to current correct? YES WooHoo!!!!
+
+			if(empty($requestObject->eventStart) === true) {
+				throw(new \InvalidArgumentException("No event start time found", 405));
+			}
+			$ngEventStart = filter_var($requestObject->eventStart, FILTER_VALIDATE_INT);
+			$eventStart = DateTime::createFromFormat("U", floor($ngEventStart / 1000));
+
 
 			//because this is how angular will send the associate array.......null given->consistency
 			$reply->start = $eventStart;
