@@ -35,7 +35,7 @@ class Truck implements \JsonSerializable {
 	 * @throws \exception when errors need to be called in the code
 	 **/
 
-public function __construct(int $newTruckId =null, int $newTruckCompanyId) {
+public function __construct(int $newTruckId = null, int $newTruckCompanyId) {
 	try {
 	$this->setTruckId($newTruckId);
 	$this->setTruckCompanyId($newTruckCompanyId);
