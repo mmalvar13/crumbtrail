@@ -4,26 +4,32 @@ app.config(function($routeProvider, $locationProvider) {
 
 	// route for the home page
 		.when('/', {
-			controller  : 'eaterMapController',
-			templateUrl : 'angular/views/eater-map.php'
+			controller: 'eaterMapController',
+			templateUrl: 'angular/views/eater-map.php'
 		})
 
 		// route for the foodTruckSignIn page
 		.when('/signin', {
-			controller  : 'foodTruckSignin',
-			templateUrl : 'angular/views/food-truck-signin.php'
+			controller: 'foodTruckSignin',
+			templateUrl: 'angular/views/food-truck-signin.php'
 		})
 
 		// route for the sign up page
 		.when('/settings', {
-			controller  : 'settingsController',
-			templateUrl : 'angular/views/settings.php'
+			controller: 'settingsController',
+			templateUrl: 'angular/views/settings.php'
 		})
 
 		// route for the truck list page
 		.when('/trucklisting', {
-			controller  : 'truckListController',
-			templateUrl : 'angular/views/truck-list.php'
+			controller: 'truckListController',
+			templateUrl: 'angular/views/truck-list.php'
+		})
+
+		// route for the truck map page
+		.when('/truckmap', {
+			controller: 'truckMapController',
+			templateUrl: 'angular/views/truck-map.php'
 		})
 
 
