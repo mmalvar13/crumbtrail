@@ -9,39 +9,39 @@ app.config(function($routeProvider, $locationProvider) {
 		})
 
 		// route for the foodTruckSignIn page
-		.when('/signin', {
+		.when('/sign-in', {
 			controller: 'foodTruckSignin',
-			templateUrl: 'angular/views/food-truck-signin.php'
+			templateUrl: 'angular/pages/food-truck-signin.php'
 		})
 
 		// route for the sign up page
 		.when('/settings', {
 			controller: 'settingsController',
-			templateUrl: 'angular/views/settings.php'
+			templateUrl: 'angular/pages/settings.php'
 		})
 
 		// route for the truck list page
-		.when('/trucklisting', {
+		.when('/truck-listing', {
 			controller: 'truckListController',
-			templateUrl: 'angular/views/truck-list.php'
+			templateUrl: 'angular/pages/truck-list.php'
 		})
 
 		// route for the truck map page
-		.when('/truckmap', {
+		.when('/truck-map', {
 			controller: 'truckMapController',
-			templateUrl: 'angular/views/truck-map.php'
+			templateUrl: 'angular/pages/truck-map.php'
 		})
 
 		// route for the truck map page
 		.when('/profile', {
 			controller: 'truckProfileController',
-			templateUrl: 'angular/views/truck-profile.php'
+			templateUrl: 'angular/pages/truck-profile.php'
 		})
 
 		// route for the truck map page
 		.when('/registration', {
 			controller: 'truckRegistrationController',
-			templateUrl: 'angular/views/truck-registration.php'
+			templateUrl: 'angular/pages/truck-registration.php'
 		})
 
 
