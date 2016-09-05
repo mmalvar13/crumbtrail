@@ -1,40 +1,31 @@
 <?php
-
 //Api for the Event class
-
 require_once(dirname(__DIR__, 2) . "/classes/autoload.php");
 require_once(dirname(__DIR__, 2) . "/lib/xsrf.php");
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
-
 use Edu\Cnm\CrumbTrail\ {
 	Event, Point, Truck, Company
 };
-
 /**
  * api for the Event class
  *
  * @author Victoria Chacon <victoriousdesignco@gmail.com>
  **/
-
 //verify the session start if not active
 if(session_status() !== PHP_SESSION_ACTIVE) {
 	session_start();
 }
-
 //prepare and empty reply
 $reply = new stdClass();
 $reply->status = 200;
 $reply->data = null;
-
 try {
 	//grab mySQL connection
 	//capital SQL???
 	//lowercase c in crumbtrail???
 	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/crumbtrail.ini");
-
 	//determine which HTTP method was used
 	$method = array_key_exists("HTTP_X_HTTP METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
-
 	//sanitize input
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
 	//keep as id........keep an eye out for event id....switch to id.....
@@ -45,18 +36,15 @@ try {
 	$eventLocationLat = filter_input(INPUT_GET, "eventLocationLat", FILTER_VALIDATE_FLOAT);
 	$eventLocationLng = filter_input(INPUT_GET, "eventLocationLng", FILTER_VALIDATE_FLOAT);
 	$companyId = filter_input(INPUT_GET, "companyId", FILTER_VALIDATE_INT);
-
 	//make sure the id is valid for methods that require it
 	if(($method === "PUT") && (empty($id) === true || $id < 0)) {
 		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
 	}
-
 	//copy from here...so far no issues in PHPstorm
 	//handle the GET request- if id is present, that event is returned. Otherwise, all Events are returned
 	if($method === "GET") {
 		//set xsrf cookie
 		setXsrfCookie();
-
 		//get a specific event or all events and update reply
 		if(empty($id) === false && empty($eventTruckId) === false) {
 			$event = Event::getEventByEventIdAndEventTruckId($pdo, $id, $eventTruckId);
@@ -83,30 +71,21 @@ try {
 			}
 		}
 	} elseif($method === "PUT" || $method === "POST") {
-
 		verifyXsrf();
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
-		//make sure the event is available
-		if(empty($requestObject->id) === true) {
-			throw(new \InvalidArgumentException("No event exists.", 405));
-		}
 		//make sure event truck id is available
 		//todo I just commented these two lines out to test. 9/3
 		if(empty($requestObject->eventTruckId) === true) {
 			throw(new \InvalidArgumentException("No event truck id exists.", 405));
 		}
-
 		//make sure eventEnd is available
-//todo i moved lines 102-104 downt o line 133
-		if(empty($requestObject->eventEnd) === true) {
+		if(empty($requestObject->eventEnd)=== true){
 			throw(new \InvalidArgumentException("no event end time", 405));
 		}
-
 		//make sure event location is available
 		//since all are used to find a location should all be used to ensure that a location is available??
 		//location lat and long?? explanation...Angular will be aware of location, angular's representation will be different...Angular will have an object with two state variables 0) sate variable :lat (latitude) 1) lng (longitude) fixed on lines below....yay
-
 		//todo commented out lines 110-123
 		if(empty($requestObject->eventLocation->lat) === true) {
 			throw(new \InvalidArgumentException("No event latitude exists.", 405));
@@ -122,16 +101,12 @@ try {
 		if(empty($requestObject->eventEnd) === true) {
 			throw(new \InvalidArgumentException("No event end time set", 405));
 		}
-
-
 		//angular event end and start.....milliseconds since the beginning of time.... 01, 01, 1970 12:00am UTC
-		$ngEventEnd = filter_var($requestObject->eventEnd, FILTER_VALIDATE_INT);
 		$ngEventStart = filter_var($requestObject->eventStart, FILTER_VALIDATE_INT);
+		$ngEventEnd = filter_var($requestObject->eventEnd, FILTER_VALIDATE_INT);
 		//floor? rounds a number down to the nearest integer......
 		$eventStart = DateTime::createFromFormat("U", floor($ngEventStart / 1000));
 		$eventEnd = DateTime::createFromFormat("U", floor($ngEventEnd / 1000));
-
-
 //Perform actual PUT
 		if($method === "PUT") {
 			//retrieve the event to update
@@ -147,27 +122,22 @@ try {
 			$event->update($pdo);
 			//update reply
 			$reply->message = "Event end time updated successfully.";
-
 		} elseif($method === "POST") {
 			if(empty($id) === true) {
 				throw(new InvalidArgumentException("No id exists.", 405));
 			}
-
 			//because this is how angular will send the associate array.......null given->consistency
 			$reply->start = $eventStart;
 			$point = new Point($requestObject->eventLocation->lat, $requestObject->eventLocation->lng);
-			$event = new Event(null, $requestObject->truckId, $eventEnd, $point, $eventStart);
+			$event = new Event(null, $requestObject ->truckId, $eventEnd, $point, $eventStart);
 			$event->insert($pdo);;
 			//update reply
 			$reply->message = "Event created successfully.";
-
-
 		}
 	} else {
 		throw (new InvalidArgumentException("Invalid HTTP method request"));
 	}
 	//update the reply with exception information
-
 } catch
 (Exception $exception) {
 	$reply->status = $exception->getCode();
@@ -183,7 +153,3 @@ if($reply->data === null) {
 }
 //encode and return reply to front end caller
 echo json_encode($reply);
-
-
-
-
