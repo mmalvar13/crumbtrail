@@ -867,7 +867,7 @@ class Company implements \JsonSerializable {
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @param int $companyAccountCreatorId  The company account creator we want to find
-	 * @return company|null  Returns the company found, or null if not found
+	 * @return \SplFixedArray SplFixedArray of companies found
 	 * @throws \PDOException  When mySQL related errors occur
 	 * @throws \TypeError  When variables are not the correct data type
 	 **/

@@ -244,11 +244,20 @@ try {
 
 				//retrieve the company to be deleted
 				$company = Company::getCompanyByCompanyId($pdo, $companyId);
-
+				$companyAccountCreatorId = $company->getCompanyAccountCreatorId();
+				$profile = Profile::getProfileByProfileId($pdo, $companyAccountCreatorId);
+				$employees = Employ::getEmployByEmployCompanyId($pdo, $companyId);
 				//check if empty
-				if($company === null) {
-					throw(new RuntimeException("The company does not exist", 404));
-				}
+
+			if($company === null) {
+				throw(new RuntimeException("The company does not exist", 404));
+			}
+
+			foreach($employees as $employee){
+
+				$employee->delete($pdo);
+			}
+
 
 				//delete the company
 				$company->delete($pdo);
