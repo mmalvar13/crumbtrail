@@ -109,27 +109,26 @@ try {
 		$eventEnd = DateTime::createFromFormat("U", floor($ngEventEnd / 1000));
 //Perform actual PUT
 		if($method === "PUT") {
+			$reply->message = "inside put";
 			//retrieve the event to update
 			$event = Event::getEventByEventId($pdo, $id);
 			if($event === null) {
 				throw (new RuntimeException("Event does not exist.", 404));
 			}
 			//put new event content into the event and update
-			$point = new Point($requestObject->location->lat, $requestObject->location->lng);
-			$event->setEventLocation($point);
-			$event->setEventStart($requestObject->eventStart);
+			//$point = new Point($requestObject->location->lat, $requestObject->location->lng);//
+			//$event->setEventLocation($point);
+			//$event->setEventStart($requestObject->eventStart);
 			$event->setEventEnd($requestObject->eventEnd);
 			$event->update($pdo);
 			//update reply
 			$reply->message = "Event end time updated successfully.";
 		} elseif($method === "POST") {
-			if(empty($id) === true) {
-				throw(new InvalidArgumentException("No id exists.", 405));
-			}
+
 			//because this is how angular will send the associate array.......null given->consistency
 			$reply->start = $eventStart;
 			$point = new Point($requestObject->eventLocation->lat, $requestObject->eventLocation->lng);
-			$event = new Event(null, $requestObject ->truckId, $eventEnd, $point, $eventStart);
+			$event = new Event(null, $requestObject ->eventTruckId, $eventEnd, $point, $eventStart);
 			$event->insert($pdo);;
 			//update reply
 			$reply->message = "Event created successfully.";
