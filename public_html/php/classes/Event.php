@@ -146,15 +146,17 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 		if($newEventEnd === null) {
 			throw(new \InvalidArgumentException("Must enter the time length of the event"));
 		}
-		if($newEventEnd <= $this->eventStart) {
-			throw(new \RangeException("end time cannot be less than start time"));
-		}
+
 		try {
 			$newEventEnd = self::validateDateTime($newEventEnd);
 		} catch(\InvalidArgumentException $invalidArgument) {
 			throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
 		} catch(\RangeException $range) {
 			throw(new \RangeException($range->getMessage(), 0, $range));
+		}
+
+		if($newEventEnd <= $this->eventStart) {
+			throw(new \RangeException("end time cannot be less than start time"));
 		}
 		$this->eventEnd = $newEventEnd;
 	}
@@ -315,7 +317,6 @@ class Event implements \JsonSerializable { //implement JsonSerializable??
 			if($row !== false) {
 				$point = new Point($row["eventLocationLong"], $row["eventLocationLat"]);
 				$event = new Event($row["eventId"], $row["eventTruckId"], $row["eventEnd"], $point, $row["eventStart"]);
-				print_r($row);
 			}
 		} catch(\Exception $exception) {
 			//if the row couldn't be converted, rethrow it

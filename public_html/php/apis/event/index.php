@@ -26,6 +26,7 @@ try {
 	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/crumbtrail.ini");
 	//determine which HTTP method was used
 	$method = array_key_exists("HTTP_X_HTTP METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
+	$reply->method = $method;
 	//sanitize input
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
 	//keep as id........keep an eye out for event id....switch to id.....
@@ -88,7 +89,8 @@ try {
 		//angular event end and start.....milliseconds since the beginning of time.... 01, 01, 1970 12:00am UTC
 		$ngEventEnd = filter_var($requestObject->eventEnd, FILTER_VALIDATE_INT);
 		//floor? rounds a number down to the nearest integer......
-		$eventEnd = DateTime::createFromFormat("U", floor($ngEventEnd / 1000));
+		$eventEnd = DateTime::createFromFormat("U", floor($ngEventEnd / 1000), new DateTimeZone("UTC"));
+
 //Perform actual PUT
 		if($method === "PUT") {
 			//retrieve the event to update
@@ -121,7 +123,7 @@ try {
 				throw(new \InvalidArgumentException("No event start time found", 405));
 			}
 			$ngEventStart = filter_var($requestObject->eventStart, FILTER_VALIDATE_INT);
-			$eventStart = DateTime::createFromFormat("U", floor($ngEventStart / 1000));
+			$eventStart = DateTime::createFromFormat("U", floor($ngEventStart / 1000), new DateTimeZone("UTC"));
 
 
 			//because this is how angular will send the associate array.......null given->consistency
