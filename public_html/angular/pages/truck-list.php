@@ -29,7 +29,7 @@
 
 
 		<!---------------Custom CSS here----------------------->
-		<link href="css/style.css" rel="stylesheet" type="text/css"/>
+		<link href="../../css/style.css" rel="stylesheet" type="text/css"/>
 
 
 		<!-------------------GOOGLE FONTS------------------>
@@ -41,7 +41,7 @@
 	</head>
 
 	<!-----------------------Beginning of user content--------------------------------->
-	<body class="">
+	<body class="truck-body">
 		<div class="sfooter-content">
 			<header>
 				<div class="navbar navbar-default navbar-fixed-top">
@@ -77,41 +77,76 @@
 				</div>
 			</header>
 
-			<!--------------------------------MAIN BODY----------------------------------->
-			<div class="container">
+			<!----MAIN BODY --->
+			<div class="container-fluid">
 				<div class="row">
-					<h1 class="text-center">Food Truck Login</h1>
-					<hr class="truck-login-hr">
-					</div>
-					<!-----------LOGIN FORM------------------->
-					<div class="col-md-4 col-md-offset-4">
-					<form>
-						<label for="inputEmail" class="sr-only">Email address</label>
-						<input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
-						<label for="inputPassword" class="sr-only">Password</label>
-						<input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
-						<div class="checkbox">
-							<label>
-								<input type="checkbox" value="remember-me"> Remember me
-							</label>
+					<div class="container">
+						<div class="truck-list-box truck-image">
+							<div class="truck-list-serving-icon"></div>
+							<h3 class="truck-h3">Company Name</h3>
+							<hr class="truck-list-hr">
+							<ul class="truck-list-ul">
+								<li>asdfasdfasdf</li>
+								<li>asdfasdfasdf</li>
+								<li>asdfasdfasdf</li>
+								<li>asdfasdfasdf</li>
+							</ul>
+
 						</div>
-						<button class="btn btn-lg btn-warning btn-block" type="submit">Sign in</button>
-					</form>
-				</div>
+					</div>
 				</div>
 
-				<!----------NEED TO REGISTER SECTION-------->
-			<div class="row">
-			<div class="col-md-8 col-md-offset-2">
-				<button type="button" class="btn btn-outline-warning btn-lg btn-block truck-login-register-btn">Need to register your company?</button>
-			</div>
+				<div class="row">
+					<div class="container">
+						<div class="truck-list-box truck-image">
+							<div class="truck-list-serving-icon"></div>
+							<h3 class="truck-h3">Company Name</h3>
+							<hr class="truck-list-hr">
+							<p class="truck-list-text">We make the best damn tacos in the whole damn world!</p>
+							<ul class="truck-list-ul">
+								<li>Tacos</li>
+								<li>Burritos</li>
+								<li>Nachos</li>
+								<li>People-meat</li>
+							</ul>
+						</div>
+					</div>
+				</div>
 
-			</div>
+				<div class="row">
+					<div class="container">
+						<div class="truck-list-box truck-image">
+							<div class="truck-list-serving-icon"></div>
+							<h3 class="truck-h3">Company Name</h3>
+							<hr class="truck-list-hr">
+							<ul class="truck-list-ul">
+								<li>asdfasdfasdf</li>
+								<li>asdfasdfasdf</li>
+								<li>asdfasdfasdf</li>
+								<li>asdfasdfasdf</li>
+							</ul>
+						</div>
+					</div>
+				</div>
 
+				<div class="row">
+					<div class="container">
+						<div class="truck-list-box truck-image">
+							<div class="truck-list-serving-icon"></div>
+							<h3 class="truck-h3">Company Name</h3>
+							<hr class="truck-list-hr">
+							<ul class="truck-list-ul">
+								<li>asdfasdfasdf</li>
+								<li>asdfasdfasdf</li>
+								<li>asdfasdfasdf</li>
+								<li>asdfasdfasdf</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
 			<footer class="bfoot">
+
 			</footer>
 		</div>
 	</body>
-
-
-
