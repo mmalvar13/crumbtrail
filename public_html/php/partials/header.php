@@ -24,7 +24,10 @@
 					<li class="active"><a href="index">Home</a></li>
 					<li><a href="truck-listing">See All Trucks</a></li>
 					<li><a href="settings">Settings</a></li>
-					<li><a href="truck-map">Signout</a></li>
+					<li><a href="sign-in">Sign In</a></li>
+					<li><a href="truck-map">Truck Map</a></li>
+					<li><a href="profile">Profile</a></li>
+					<li><a href="registration">Register Your Truck</a></li>
 				</ul>
 			</div>
 			<!--/.navbar-collapse -->
