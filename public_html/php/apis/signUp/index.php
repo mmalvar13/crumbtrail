@@ -192,7 +192,8 @@ try {
 
 		//you should use $_SERVER["SCRIPT_NAME"] insteead
 		$scriptPath = $_SERVER["SCRIPT_NAME"];
-		$linkPath = dirname($scriptPath, 2) . "/profileActivation/?profileActivationToken=$profileActivationToken";
+//		$linkPath = dirname($scriptPath, 2) . "/profileActivation/?profileActivationToken=$profileActivationToken";
+		$linkPath = dirname($scriptPath, 2) . "/profileActivation/?profileActivationToken=" . $profileActivationToken . "?companyId=" . $company->getCompanyId();
 		/*end of stuff dylan sent*/
 
 		//attach a sender to the message

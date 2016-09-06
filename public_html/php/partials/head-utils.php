@@ -41,14 +41,16 @@
 		<!--Directives come before controllers-->
 		<script src="angular/directives/mainDirective.js"></script>
 		<!--Load controllers-->
-		<script src="angular/controllers/eater-map.js"></script>
+		<script src="angular/controllers/eater-map-controller.js"></script>
 		<script src="angular/controllers/mainController.js"></script>
-		<script src="angular/controllers/settings.js"></script>
-		<script src="angular/controllers/truck-list.js"></script>
-		<script src="angular/controllers/truck-map.js"></script>
-		<script src="angular/controllers/truck-profile.js"></script>
-		<script src="angular/controllers/truck-registration.js"></script>
-		<script src="angular/controllers/truck-signin.js"></script>
+		<script src="angular/controllers/nav-controller.js"></script>
+
+		<script src="angular/controllers/settings-controller.js"></script>
+		<script src="angular/controllers/truck-list-controller.js"></script>
+		<script src="angular/controllers/truck-map-controller.js"></script>
+		<script src="angular/controllers/truck-profile-controller.js"></script>
+		<script src="angular/controllers/truck-registration-controller.js"></script>
+		<script src="angular/controllers/truck-signin-controller.js"></script>
 
 
 

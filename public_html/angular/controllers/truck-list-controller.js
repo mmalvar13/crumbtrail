@@ -1,3 +1,3 @@
-app.controller('eaterMapController', function($scope){
+app.controller('truckListController', function($scope){
 
 });

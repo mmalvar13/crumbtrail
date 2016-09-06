@@ -36,7 +36,6 @@ try {
 
 	//sanitize input
 	$profileId = filter_input(INPUT_GET, "profileId", FILTER_VALIDATE_INT);
-	$companyApproved = filter_input(INPUT_GET, "companyApproved", FILTER_VALIDATE_BOOLEAN);
 	$companyId = filter_input(INPUT_GET, "companyId", FILTER_VALIDATE_INT); //todo so where do we get this companyId from?? is it in the url?
 	$profileActivationToken = filter_input(INPUT_GET, "profileActivationToken", FILTER_SANITIZE_STRING);
 
@@ -122,6 +121,7 @@ try {
 					//you should use $_SERVER["SCRIPT_NAME"] insteead
 					$scriptPath = $_SERVER["SCRIPT_NAME"];
 					$linkPath = dirname($scriptPath, 2) . "/companyActivation/?companyActivationToken=$companyActivationToken";
+
 					/*end of stuff dylan sent*/
 
 					//attach a sender to the message
