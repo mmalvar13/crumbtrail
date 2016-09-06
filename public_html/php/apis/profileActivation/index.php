@@ -58,6 +58,9 @@ try {
 //todo this is another idea i had.
 		if((empty($profileActivationToken)) === false) {
 			$profile = Profile::getProfileByProfileActivationToken($pdo, $profileActivationToken);
+
+
+//			if($profileActivationToken !== null){
 			if($profile->getProfileActivationToken() !== null) {
 				$profile->setProfileActivationToken(null);
 				$profile->update($pdo);

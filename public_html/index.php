@@ -1,11 +1,9 @@
-<?php require_once("php/partials/head-utils.php");?>
+<?php require_once("php/partials/head-utils.php"); ?>
 <body class="sfooter">
 	<div class="sfooter-content">
 
 		<!-------------BEGIN HEADER----------------->
-		<?php require_once("php/partials/header.php")?>
-
-
+		<?php require_once("php/partials/header.php") ?>
 
 
 		<!---------------BEGIN MAIN CONTENT----------------->
@@ -19,9 +17,8 @@
 	</div>
 
 	<!--------------------BEGIN FOOTER-------------------------->
-	<?php require_once("php/partials/footer.php");?>
-
-</body>
+	<?php require_once("php/partials/footer.php"); ?>
+	</body>
 </html>
 
 
