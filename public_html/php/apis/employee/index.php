@@ -119,7 +119,10 @@ try {
 		//attach a sender to the message
 
 		$scriptPath = $_SERVER["SCRIPT_NAME"];
-		$linkPath = dirname($scriptPath, 2) . "/profileActivation/?profileActivationToken=$profileActivationToken";
+		//$linkPath = dirname($scriptPath, 2) . "/profileActivation/?profileActivationToken=$profileActivationToken";
+		$linkPath = dirname($scriptPath, 2) . "/profileActivation/?profileActivationToken=" . $profileActivationToken . "&companyId=" . $company->getCompanyId() . "&profileId=" . $profile->getProfileId();
+
+
 
 		$message->setFrom(['vchacon8@cnm.edu' => 'Crumbtrail Admin']);//is this the same as setFrom(array('someaddress'=>'name'));
 		//attach recipients to the message. you can add
