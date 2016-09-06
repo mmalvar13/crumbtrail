@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="Crumbtrail">
 	<head>
-
 		<!-- The 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 		<meta charset="utf-8"/>
 		<meta http-equiv="X-UA-COMPATIBLE" content="IE=edge"/>
@@ -9,7 +8,6 @@
 
 		<!-- set base for relative links - to enable pretty URLs -->
 		<base href="<?php echo dirname($_SERVER["PHP_SELF"]) . "/";?>">
-
 
 		<!-------------Bootstrap links all here---------->
 		<!-- Latest compiled and minified CSS -->
@@ -22,24 +20,11 @@
 				integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
 				crossorigin="anonymous"/>
 
-		<!---------------jQuery------------------------>
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-
-		<!-- Latest compiled and minified JavaScript -->
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-				  integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-				  crossorigin="anonymous"></script>
-
-		<!---------------Font Awesome Links------------------->
-		<link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
-
+		<!-------------------GOOGLE FONTS------------------>
+		<link href="https://fonts.googleapis.com/css?family=Fascinate+Inline|Nixie+One|Roboto" rel="stylesheet">
 
 		<!---------------Custom CSS here----------------------->
 		<link href="css/style.css" rel="stylesheet" type="text/css"/>
-
-
-		<!-------------------GOOGLE FONTS------------------>
-		<link href="https://fonts.googleapis.com/css?family=Fascinate+Inline|Nixie+One|Roboto" rel="stylesheet">
 
 
 		<!--Angular JS Libraries-->
