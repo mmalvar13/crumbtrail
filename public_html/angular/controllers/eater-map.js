@@ -1,3 +1,3 @@
-/**
- * Created by mmalv on 9/5/2016.
- */
+app.controller('truckListController', function($scope){
+
+});

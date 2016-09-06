@@ -10,8 +10,8 @@ app.config(function($routeProvider, $locationProvider) {
 
 		// route for the foodTruckSignIn page
 		.when('/sign-in', {
-			controller: 'foodTruckSignin',
-			templateUrl: 'angular/views/food-truck-signin.php'
+			controller: 'truckSigninController',
+			templateUrl: 'angular/views/truck-signin.php'
 		})
 
 		// route for the sign up page
