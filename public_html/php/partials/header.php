@@ -1,4 +1,9 @@
-<header >
+<header ng-controller="navController">
+
+	<!-- bootstrap breakpoint directive to control collapse behavior -->
+	<bootstrap-breakpoint></bootstrap-breakpoint>
+
+
 	<div class="navbar navbar-default navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
