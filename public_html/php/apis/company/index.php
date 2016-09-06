@@ -134,9 +134,9 @@ try {
 			}
 
 			//make sure the company Attn is available (required field)
-//			if(empty($requestObject->companyAttn) === true) {
-//				throw(new \InvalidArgumentException("No Attn for company", 405));
-//			}
+			if(empty($requestObject->companyAttn) === true) {
+				$requestObject->companyAttn = null;
+			}
 
 			//make sure the company street1 is available (required field)
 			if(empty($requestObject->companyStreet1) === true) {
@@ -144,9 +144,9 @@ try {
 			}
 
 			//make sure the company street2 is available (required field)
-//			if(empty($requestObject->companyStreet2) === true) {
-//				throw(new \InvalidArgumentException("No street2 for company", 405));
-//			} TODO can we remove this exception throw?
+			if(empty($requestObject->companyStreet2) === true) {
+				$requestObject->companyStreet2 = null;
+			}
 
 			//make sure the company city is available (required field)
 			if(empty($requestObject->companyCity) === true) {

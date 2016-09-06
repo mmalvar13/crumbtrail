@@ -60,27 +60,29 @@ try {
 				if($profile !== null) {
 					$reply->data = $profile;
 				}
-			} elseif(empty($profileName) === false) {
-				$profile = Profile::getProfileByProfileName($pdo, $profileName);
-				if($profile !== null) {
-					$reply->data = $profile;
-				}
-			} elseif(empty($profileEmail) === false) {
-				$profile = Profile::getProfileByProfileEmail($pdo, $profileEmail);
-				if($profile !== null) {
-					$reply->data = $profile;
-				}
-			} elseif(empty($profilePhone) === false) {
-				$profile = Profile::getProfileByProfilePhone($pdo, $profilePhone);
-				if($profile !== null) {
-					$reply->data = $profile;
-				}
-			} else {
-				$profiles = Profile::getAllProfiles($pdo);
-				if($profiles !== null) {
-					$reply->data = $profiles;
-				}
 			}
+//			elseif(empty($profileName) === false) {
+//				$profile = Profile::getProfileByProfileName($pdo, $profileName);
+//				if($profile !== null) {
+//					$reply->data = $profile;
+//				}
+//			} elseif(empty($profileEmail) === false) {
+//				var_dump($profileEmail);
+//				$profile = Profile::getProfileByProfileEmail($pdo, $profileEmail);
+//				if($profile !== null) {
+//					$reply->data = $profile;
+//				}
+//			} elseif(empty($profilePhone) === false) {
+//				$profile = Profile::getProfileByProfilePhone($pdo, $profilePhone);
+//				if($profile !== null) {
+//					$reply->data = $profile;
+//				}
+//			} else {
+//				$profiles = Profile::getAllProfiles($pdo);
+//				if($profiles !== null) {
+//					$reply->data = $profiles;
+//				}
+//			}
 
 // --------------------------- PUT  --------------------------------
 		} elseif($method === "PUT") {
