@@ -26,8 +26,12 @@
 
 		<!---------------Font Awesome Links------------------->
 		<link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+
+
 		<!---------------Custom CSS here----------------------->
-		<link href="css/style.css" rel="stylesheet" type="text/css"/>
+		<link href="../../css/style.css" rel="stylesheet" type="text/css"/>
+
+
 		<!-------------------GOOGLE FONTS------------------>
 		<link href="https://fonts.googleapis.com/css?family=Fascinate+Inline|Nixie+One|Roboto" rel="stylesheet">
 
@@ -35,8 +39,8 @@
 			CrumbTrail   <!----add cool icon for tabs here ------->
 		</title>
 	</head>
-	<!-----------------------Beginning of user content--------------------------------->
-	<body class="">
+	<!--	---------------------Beginning of user content--------------------------------->
+	<body class="sfooter">
 		<div class="sfooter-content">
 			<header>
 				<div class="navbar navbar-default navbar-fixed-top">
@@ -49,6 +53,8 @@
 							</button>
 							<a class="navbar-brand hidden-xs" href="#">CrumbTrail</a>
 							<a class="navbar-brand visible-xs" href="#">CT</a>
+
+							<!-------search form--------->
 							<form class="navbar-form pull-left" role="search">
 								<div class="input-group">
 									<input type="text" class="form-control" placeholder="Search">
@@ -58,6 +64,9 @@
 									</div>
 								</div>
 							</form>
+
+							<!--------search form-------->
+
 						</div>
 						<div class="navbar-collapse collapse">
 							<ul class="nav navbar-nav navbar-right">
@@ -71,6 +80,7 @@
 					</div>
 				</div>
 			</header>
+			<!---------------COMMENT OUT-------------->
 
 			<!--------------------------------MAIN BODY----------------------------------->
 			<div class="container">
@@ -82,8 +92,7 @@
 				<div class="col-md-4 col-md-offset-4">
 					<form>
 						<label for="inputEmail" class="sr-only">Email address</label>
-						<input type="email" id="inputEmail" class="form-control" placeholder="Email address" required=""
-								 autofocus="">
+						<input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
 						<label for="inputPassword" class="sr-only">Password</label>
 						<input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
 						<div class="checkbox">
@@ -98,14 +107,12 @@
 			<!----------NEED TO REGISTER SECTION-------->
 			<div class="row">
 				<div class="col-md-8 col-md-offset-2">
-					<button type="button" class="btn btn-outline-warning btn-lg btn-block truck-login-register-btn">Need to
-						register your company?
-					</button>
+					<button type="button" class="btn btn-outline-warning btn-lg btn-block truck-login-register-btn">Need to register your company?</button>
 				</div>
 
 			</div>
-
+		</div>
 			<footer class="bfoot">
 			</footer>
-		</div>
-	</body>
+		</body>
+

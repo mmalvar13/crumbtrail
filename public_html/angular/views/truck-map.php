@@ -212,10 +212,11 @@
 				</div>
 
 			</div>
-
+		</div>
 			<!---------------COMMENT OUT-------------->
 			<footer class="bfoot">
 			</footer>
+
 
 	</body>
 </html>
