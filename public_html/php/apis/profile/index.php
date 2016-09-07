@@ -30,7 +30,7 @@ try {
 	// Connect to mySQL.
 	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/crumbtrail.ini");
 
-	// Determine which HTTP method was used: GET, (POST), PUT, or DELETE.
+	// Determine which HTTP method was used: GET, PUT, or DELETE.
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
 	// Sanitize the input.
@@ -40,7 +40,7 @@ try {
 	$profilePhone = filter_input(INPUT_GET, "profilePhone", FILTER_SANITIZE_STRING);
 
 	// Make sure the id (primary key) is valid for the methods that require it.
-	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
+	if(empty($id) === true || $id < 0) {
 		throw(new InvalidArgumentException("profile id cannot be empty or negative", 405));
 	}
 
