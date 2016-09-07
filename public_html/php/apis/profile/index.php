@@ -119,8 +119,6 @@ try {
 			$profile->setProfileEmail($requestObject->profileEmail);
 			$profile->setProfilePhone($requestObject->profilePhone);
 			$profile->setProfileType($requestObject->profileType);
-			$profile->setProfileSalt($requestObject->profileSalt);
-			$profile->setProfileHash($requestObject->profileHash);
 
 			$profile->update($pdo);
 
