@@ -124,23 +124,10 @@ try {
 
 			// Update the reply message.
 			$reply->message = "The profile was updated OK";
-
-// --------------------------- DELETE --------------------------------
-		} elseif($method === "DELETE") {
-			verifyXsrf();
-
-			// Retrieve the Profile that will be deleted.
-			$profile = Profile::getProfileByProfileId($pdo, $id);
-			if($profile === null) {
-				throw(new RuntimeException("Profile does not exist", 404));
-			}
-
-			// Delete the profile, then update the reply message.
-			$profile->delete($pdo);
-			$reply->message = "Profile deleted OK";
+		}
 
 // ------------ Throw exception if no valid HTTP method request has been made. ---------
-		} else {
+	 else {
 			throw (new InvalidArgumentException("Invalid HTTP method request"));
 		}
 	}
