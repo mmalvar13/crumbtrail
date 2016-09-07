@@ -107,14 +107,6 @@ try {
 			if(empty($requestObject->profileType) === true) {
 				throw(new \InvalidArgumentException ("No content for Profile type.", 405));
 			}
-			// Make sure profileSalt is available (required field).
-			if(empty($requestObject->profileSalt) === true) {
-				throw(new \InvalidArgumentException ("No content for Profile salt.", 405));
-			}
-			// Make sure profileHash is available (required field).
-			if(empty($requestObject->profileHash) === true) {
-				throw(new \InvalidArgumentException ("No content for Profile hash.", 405));
-			}
 
 			// Retrieve the profile that will be updated in this PUT.
 			$profile = Profile::getProfileByProfileId($pdo, $id);
