@@ -39,10 +39,11 @@ try {
 	$profileEmail = filter_input(INPUT_GET, "profileEmail", FILTER_SANITIZE_EMAIL);
 	$profilePhone = filter_input(INPUT_GET, "profilePhone", FILTER_SANITIZE_STRING);
 
+	// TODO What the heck is going on in the next 4 lines?
 	// Make sure the id (primary key) is valid for the methods that require it.
-	if(empty($id) === true || $id < 0) {
-		throw(new InvalidArgumentException("profile id cannot be empty or negative", 405));
-	}
+	 if(empty($id) === true || $id < 0) {
+	 	throw(new InvalidArgumentException("profile id cannot be empty or negative", 405));
+	 }
 
 	/**
 	 * Make the profile information confidential.
@@ -54,7 +55,7 @@ try {
 		if($method === "GET") {
 			setXsrfCookie();
 
-			// Get a specific profile, or all profiles, then update the reply.
+			// Get a specific profile, by profileId, then update the reply.
 			if(empty($id) === false) {
 				$profile = Profile::getProfileByProfileId($pdo, $id);
 				if($profile !== null) {

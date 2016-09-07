@@ -866,6 +866,8 @@ public function getProfileId(){
 	 **/
 	public function jsonSerialize() {
 		$fields = get_object_vars($this);
+		unset($fields["profileHash"]);
+		unset($fields["profileSalt"]);
 		return($fields);
 	}
 }
