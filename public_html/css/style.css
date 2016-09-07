@@ -238,10 +238,20 @@ p {
 .truck-map-serving-h4{
 	margin-left: 1rem;
 }
+.truck-map-start-serving-btn{
+	background-color: green;
+	color: black;
+}
+
+.truck-map-stop-serving-btn{
+	background-color: red;
+	color: black;
+}
 
 .truck-map-hr{
 	width: 50%;
 	margin-top:0.25rem;
+	font-weight: bolder;
 }
 
 .truck-map-time-field{
@@ -253,15 +263,38 @@ p {
 }
 
 .truck-map-close-modal{
-	margin-top:1rem;
-	margin-right: 1rem;
+	margin-top:2rem;
+	margin-right: 4rem;
 }
 
 .truck-map-location{
-	box-sizing: border-box;
+	/*box-sizing: border-box;*/
 	border: 0.15rem solid slategrey;
+	min-height: 3.5rem;
 
 }
+
+.truck-map-submit-btn{
+	min-width: 30%;
+	margin: 3rem auto;
+}
+
+.truck-map-end-time{
+	border: 0.15rem solid slategrey;
+	min-height: 4rem;
+}
+
+
+.truck-map-update-btn{
+	min-width: 30%;
+	margin: 1.5rem auto;
+}
+
+.truck-map-stop-btn{
+	min-width: 70%;
+	margin: 2rem auto;
+}
+
 
 
 
