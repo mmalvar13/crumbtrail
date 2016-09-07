@@ -41,7 +41,7 @@ try {
 	//sanitize input(Explain this) Where is the input coming from??
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
 	$truckCompanyId = filter_input(INPUT_GET, "truckCompanyId", FILTER_VALIDATE_INT);
-	$companyId = filter_input(INPUT_GET, "companyId", FILTER_VALIDATE_INT);//todo i just added this today 9/3
+//	$companyId = filter_input(INPUT_GET, "companyId", FILTER_VALIDATE_INT);//todo i just added this today 9/3
 
 
 	//make sure the id is valid for methods that require it, Remember that $id is the primary key!
@@ -75,44 +75,53 @@ try {
 
 		//TODO need to ensure person adding/deleting trucks links back to the right company AND profile
 		//todo i changed $pdo, $id to $pdo, $companyId
-	} elseif(isEmployeeAuthorized($pdo, $companyId) === true) {
+	} elseif($method === "POST") {
+		verifyXsrf();
+		$requestContent = file_get_contents("php://input");
+		$requestObject = json_decode($requestContent);
 
-		if($method === "POST") {
-			verifyXsrf();
-			$requestContent = file_get_contents("php://input");
-			$requestObject = json_decode($requestContent);
-
-			if(empty($companyId) === true) {
-				throw(new \InvalidArgumentException("No companyId", 405));
-			}
-			//create a new truck and insert it into the database
-			$truck = new Truck(null, $companyId); //TODO what information does $requestObject-> give you??
-			$truck->insert($pdo);
-
-			//update reply
-			$reply->message = "Truck created A-OK";
-		} elseif($method === "DELETE") {
-			verifyXsrf();
-			//retrieve the company to be deleted
-			$truck = Truck::getTruckByTruckId($pdo, $id);
-
-			//check if empty
-			if($truck === null) {
-				throw(new RuntimeException("The truck does not exist", 404));
-			}
-
-			//delete the truck
-			$truck->delete($pdo);
-
-			//update the reply
-			$reply->message = "Truck deleted A-OK";
-		} else {
-			throw (new InvalidArgumentException("Invalid HTTP method request"));
+		$companyId = $requestObject->truckCompanyId;
+		if(empty($companyId) === true) {
+			throw(new \InvalidArgumentException("No companyId", 405));
 		}
 
+		if(isEmployeeAuthorized($pdo, $companyId) === false) {
+			throw(new \InvalidArgumentException("You are not authorized to modify a truck", 405));
+		}
+
+		//create a new truck and insert it into the database
+		$truck = new Truck(null, $companyId); //TODO what information does $requestObject-> give you??
+		$truck->insert($pdo);
+
+		//update reply
+		$reply->message = "Truck created A-OK";
+	} elseif($method === "DELETE") {
+		verifyXsrf();
+
+		//retrieve the company to be deleted
+		$truck = Truck::getTruckByTruckId($pdo, $id);
+
+		//check if empty
+		if($truck === null) {
+			throw(new RuntimeException("The truck does not exist", 404));
+		}
+
+		if(isEmployeeAuthorized($pdo, $truck->getTruckCompanyId()) === false) {
+			throw(new \InvalidArgumentException("You are not authorized to delete a truck", 405));
+		}
+
+		//delete the truck
+		$truck->delete($pdo);
+
+		//update the reply
+		$reply->message = "Truck deleted A-OK";
 	} else {
-		throw(new \InvalidArgumentException("Employee is not authorized to make changes"));
+		throw (new InvalidArgumentException("Invalid HTTP method request"));
 	}
+
+//		else {
+//		throw(new \InvalidArgumentException("Employee is not authorized to make changes"));
+//	}
 
 	//end of try, begging of catches
 } catch(Exception $exception) {

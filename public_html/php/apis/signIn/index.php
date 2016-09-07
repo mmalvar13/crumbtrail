@@ -4,7 +4,7 @@ require_once (dirname(__DIR__, 2) ."/classes/autoload.php");
 require_once (dirname(__DIR__,2) . "/lib/xsrf.php");
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 require_once (dirname(__DIR__,4) . "/vendor/autoload.php");
-use Edu\Cnm\CrumbTrail\{Profile};
+use Edu\Cnm\CrumbTrail\{Company, Employ, Profile};
 
 /**
  * api for sign in
@@ -75,6 +75,15 @@ try {
 		//put profile into session
 		if($confirmHash === $profile->getProfileHash()) {
 			$_SESSION["profile"] = $profile;
+
+			$_SESSION["companies"] = [];
+			if($_SESSION["profile"]->getProfileType() === "a" || $_SESSION["profile"]->getProfileType() === "o") {
+				$whoIWorkFor = Employ::getEmployByEmployProfileId($pdo, $_SESSION["profile"]->getProfileId());
+				foreach($whoIWorkFor as $employ) {
+					$_SESSION["companies"][] = Company::getCompanyByCompanyId($pdo, $employ->getEmployCompanyId());
+				}
+			}
+
 			$reply->status = 200;
 			$reply->message = "Successfully logged in";
 		} else {

@@ -6,25 +6,23 @@ use Edu\Cnm\CrumbTrail\{Profile, Employ};
 
 function isEmployeeAuthorized($pdo, $employCompanyId) {
 
-	if((empty($_SESSION["profile"]) === false)){
+	if(session_status() !== PHP_SESSION_ACTIVE) {
+		session_start();
+	}
+
+	if((empty($_SESSION["profile"]) === true)){
 		throw(new \InvalidArgumentException("Session is not active"));
 	}
 
 	$authorized = false;
 	$employees = Employ::getEmployByEmployCompanyId($pdo, $employCompanyId);
 
-
 	foreach($employees as $individual) {
-
 		$profile = Profile::getProfileByProfileId($pdo, $individual->getEmployProfileId());
-//		$employ = Employ::getEmployByEmployCompanyIdAndEmployProfileId($pdo, $employCompanyId, $profile->getProfileId());
-
-		if(($individual->getEmployCompanyId() === $employCompanyId) && ( $profile->getProfileType() === 'o') || $profile->getProfileType() === 'a') {
+		if($_SESSION["profile"] === $profile->getProfileId() && ($profile->getProfileType() === 'o' || $profile->getProfileType() === 'a')) {
 			$authorized = true;
-
 			break;
 		}
 	}
 	return $authorized;
-
 }

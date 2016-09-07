@@ -241,11 +241,13 @@ p {
 .truck-map-start-serving-btn{
 	background-color: green;
 	color: black;
+	min-height: 6rem;
 }
 
 .truck-map-stop-serving-btn{
 	background-color: red;
 	color: black;
+	min-height: 6rem;
 }
 
 .truck-map-hr{
@@ -259,7 +261,7 @@ p {
 }
 .truck-map-time-text{
 	margin-left: 1rem;
-	/*transform: translateY(17.5%);*/
+
 }
 
 .truck-map-close-modal{
