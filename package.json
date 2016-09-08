@@ -1,0 +1,33 @@
+{
+	"name": "crumbtrail",
+	"version": "1.0.0",
+	"license": "Apache-2.0",
+	"author": {
+		"name": "Monica Alvarez",
+		"email": "mmalvar13@gmail.com",
+		"url": "https://www.malvardevelopment.com/"
+	},
+	"scripts": {
+		"build": "rimraf public_html/angular/vendor && webpack --config webpack/webpack.live.js --progress --profile --bail"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/mmalvar13/crumbtrail.git"
+	},
+	"dependencies": {
+		"angular": "^1.5.8",
+		"angular-animate": "^1.5.8",
+		"angular-messages": "^1.5.8",
+		"angular-route": "^1.5.8",
+		"angular-google-maps": "^2.3.4",
+		"html-loader": "^0.4.3",
+		"html-webpack-plugin": "^2.15.0",
+		"extract-text-webpack-plugin": "^1.0.1",
+		"file-loader": "^0.8.5",
+		"resolve-url-loader": "^1.5.0",
+		"rimraf": "^2.5.2",
+		"url-loader": "^0.5.7",
+		"webpack": "^1.13.0",
+		"webpack-merge": "^0.14.0"
+	}
+}
