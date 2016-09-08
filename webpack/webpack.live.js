@@ -14,10 +14,6 @@ module.exports = webpackMerge(commonConfig, {
 		filename: '[name].js'
 	},
 
-	htmlLoader: {
-		minimize: false
-	},
-
 	plugins: [
 		new webpack.NoErrorsPlugin(),
 		new webpack.optimize.DedupePlugin(),

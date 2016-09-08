@@ -24,16 +24,11 @@
 		<link href="https://fonts.googleapis.com/css?family=Fascinate+Inline|Nixie+One|Roboto" rel="stylesheet">
 
 		<!---------------Custom CSS here----------------------->
-		<link href="css/style.css" rel="stylesheet" type="text/css"/>
+<!--		<link href="css/style.css" rel="stylesheet" type="text/css"/>-->
 
 
 		<!--Angular JS Libraries-->
-		<?php $ANGULAR_VERSION = "1.5.8";?>
-		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/<?php echo $ANGULAR_VERSION;?>/angular.min.js"></script>
-		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/<?php echo $ANGULAR_VERSION;?>/angular-messages.min.js"></script>
-		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/<?php echo $ANGULAR_VERSION;?>/angular-route.js"></script>
-		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/<?php echo $ANGULAR_VERSION;?>/angular-animate.js"></script>
-		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.3/ui-bootstrap-tpls.min.js"></script>
+		<script type="text/javascript" src="angular/vendor/vendor.js"></script>
 
 		<!--Load OUR Angular files-->
 		<script src="angular/crumbtrail.js"></script>
