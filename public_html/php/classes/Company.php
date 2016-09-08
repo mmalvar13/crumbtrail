@@ -669,7 +669,7 @@ class Company implements \JsonSerializable {
 			throw(new \RangeException("The company ActivationToken is not positive."));
 		}
 
-		if(strlen($newCompanyActivationToken)> 32){
+		if(strlen($newCompanyActivationToken) !== 32){
 			throw(new \RangeException("Activation token is too long!"));
 		}
 		// Assign $newCompanyActivationToken to companyActivationToken, then store in SQL.

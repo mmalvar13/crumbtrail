@@ -24,6 +24,22 @@
 				  integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
 				  crossorigin="anonymous"></script>
 
+
+		<!---------FOR ANGULAR GOOGLE MAPS API-------------->
+		<script src="javascript/angular-maps.js"></script>
+		<script src='/path/to/lodash[.min].js'></script>
+		<script src='/path/to/angular[.min].js'></script>
+		<script src='/path/to/angular-simple-logger/angular-simple-logger[.min].js'></script>
+		<script src='/path/to/angular-google-maps[.min].js'></script>
+
+
+		<!----------------GOOGLE MAPS API---------------->
+
+<!--		<script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>-->
+		<script src="/public_html/javascript/map-api.js" type="text/javascript"></script>
+
+
+
 		<!---------------Font Awesome Links------------------->
 		<link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
 
@@ -86,8 +102,9 @@
 
 			<!--------------------------------MAIN BODY----------------------------------->
 			<div class="container">
-
-
+				<div id="map"></div>
+				<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwGxzLKd5waiJFHo5nsZqZl3xJN64JxIc&callback=initMap"
+						  async defer></script>
 
 			</div>
 		</div>
