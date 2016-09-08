@@ -45,9 +45,9 @@ try {
 
 
 	//make sure the id is valid for methods that require it, Remember that $id is the primary key!
-	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
-		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
-	}
+//	if(($method === "DELETE") && (empty($id) === true || $id < 0)) {
+//		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
+//	}
 
 	//handle GET request. if a truckId is present that truck is returned, otherwise all trucks are returned
 
@@ -81,6 +81,7 @@ try {
 		$requestObject = json_decode($requestContent);
 
 		$companyId = $requestObject->truckCompanyId;
+
 		if(empty($companyId) === true) {
 			throw(new \InvalidArgumentException("No companyId", 405));
 		}
