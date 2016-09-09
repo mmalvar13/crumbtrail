@@ -47,9 +47,9 @@ try {
 
 
 	//make sure the id is valid for methods that require it, Remember that $id is the primary key!
-	if(($method === "DELETE") && (empty($id) === true || $id < 0)) {
-		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
-	}
+//	if(($method === "DELETE") && (empty($id) === true || $id < 0)) {
+//		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
+//	}
 
 	//handle GET request. if a imageId is present, that image is returned, otherwise all images are returned
 	if($method === "GET") {
@@ -81,9 +81,9 @@ try {
 
 		//this is a check to make sure only a profile type of ADMIN or OWNER can make changes
 		//could also check for the reverse and throw an exception in that case
-	} elseif(isEmployeeAuthorized($pdo, $id) === true) {
+//	} elseif(isEmployeeAuthorized($pdo, $id) === true) {
 
-		if($method === "POST") {
+	}elseif($method === "POST") {
 			verifyXsrf();
 			$requestContent = file_get_contents("php://input");
 			$requestObject = json_decode($requestContent); //request object will only contain the metadata
@@ -173,9 +173,9 @@ try {
 			throw (new InvalidArgumentException("Invalid HTTP method request"));
 		}
 
-	}else{
-		throw(new \InvalidArgumentException("Employee is not authorized to make changes"));
-	}
+//	}else{
+//		throw(new \InvalidArgumentException("Employee is not authorized to make changes"));
+
 } catch(Exception $exception) {
 	$reply->status = $exception->getCode();
 	$reply->message = $exception->getMessage();
