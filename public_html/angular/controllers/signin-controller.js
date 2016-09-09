@@ -1,4 +1,4 @@
-app.controller("truckSignInController", ["$scope", "signinService", function($scope, SigninService){
+app.controller("SigninController", ["$scope", "signinService", function($scope, SigninService){
 	$scope.alerts = [];
 
 
