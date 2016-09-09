@@ -147,7 +147,7 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 	};
 
 
-//how do we do puts/posts/deletes for multiple services
+//how do we do puts/posts/deletes for multiple services. what variable do we use for function(map, validated). is map ok??
 	$scope.mapCreate = function(map, validated) {
 		if(validated === true) {
 			EventService.create(event)
@@ -173,7 +173,7 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 
 	$scope.mapUpdate = function(map, validated) {
 		if(validated === true) {
-			EventService.update(event)
+			EventService.update(map)
 				.then(function(result) {
 					if(result.data.status === 200) {
 						$scope.alerts[0] = {type: "success", msg: result.data.message};
@@ -182,7 +182,7 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 					}
 				});
 
-			ProfileService.update(profile)
+			ProfileService.update(map)
 				.then(function(result) {
 					if(result.data.status === 200) {
 						$scope.alerts[0] = {type: "success", msg: result.data.message};
@@ -191,7 +191,7 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 					}
 				});
 
-			TruckService.update(truck)
+			TruckService.update(map)
 				.then(function(result) {
 					if(result.data.status === 200) {
 						$scope.alerts[0] = {type: "success", msg: result.data.message};
@@ -200,7 +200,7 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 					}
 				});
 
-			CompanyService.update(company)
+			CompanyService.update(map)
 				.then(function(result) {
 					if(result.data.status === 200) {
 						$scope.alerts[0] = {type: "success", msg: result.data.message};
@@ -212,17 +212,29 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 	};
 
 
-
-	$scope.delete = function(beer, validated) {
+//first parameter map??
+	$scope.delete = function(map, validated) {
 		if(validated === true) {
-			BeerService.destroy(beer)
+			TruckService.delete(map)
 				.then(function(result) {
 					if(result.data.status === 200) {
 						$scope.alerts[0] = {type: "success", msg: result.data.message};
 					} else {
 						$scope.alerts[0] = {type: "danger", msg: result.data.message};
 					}
-				})
+				});
+
+			CompanyService.delete(map)
+				.then(function(result) {
+					if(result.data.status === 200) {
+						$scope.alerts[0] = {type: "success", msg: result.data.message};
+					} else {
+						$scope.alerts[0] = {type: "danger", msg: result.data.message};
+					}
+				});
+
+
+
 		}
 	};
 
