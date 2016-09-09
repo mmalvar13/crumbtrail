@@ -39,9 +39,9 @@ app.config(function($routeProvider, $locationProvider) {
 		})
 
 		// route for the truck map page
-		.when('/registration', {
-			controller: 'truckRegistrationController',
-			templateUrl: 'angular/views/truck-registration.php'
+		.when('/sign-up', {
+			controller: 'SignupController',
+			templateUrl: 'angular/views/signup.php'
 		})
 
 

@@ -17,7 +17,7 @@ app.controller("truckSignInController", ["$scope", "signinService", function($sc
 				.then(function(result){
 					if(result.data.status === 200){
 						$scope.alerts[0] = {type: "success", msg: result.data.message};
-						console.log("good status");
+						console.log("good status");//user? below. is t
 						$window.location.href = "user/"
 					}else{
 						console.log("bad status");
