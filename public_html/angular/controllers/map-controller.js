@@ -3,6 +3,8 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 	$scope.alerts = [];
 	$scope.mapData = [];
 
+
+	/*-------------------------CompanyService methods--------------------------------------------------------*/
 	$scope.getCompanyByCompanyId = function(companyId) {
 		CompanyService.fetchCompanyById(companyId)
 			.then(function(result) {
@@ -52,24 +54,102 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 
 	/*----------------eventService methods------------------------*/
 
-	$scope.getEventByEventId = function(eventId){
+	$scope.getEventByEventId = function(eventId) {
 		EventService.fetchEventByEventId(eventId)
-	}
+			.then(function(result) {
+				if(result.status.data === 200) {
+					$scope.mapData = result.data.data;
+				} else {
+					$scope.alerts[0] = {type: "danger", msg: result.data.message};
 
+				}
+			})
+	};
+
+
+	$scope.getEventByEventEndAndEventStart = function(eventEnd, eventStart) {
+		EventService.fetchEventByEventEndAndEventStart(eventEnd, eventStart)
+			.then(function(result) {
+				if(result.status.data === 200) {
+					$scope.mapData = result.data.data;
+				} else {
+					$scope.alerts[0] = {type: "danger", msg: result.data.message};
+
+				}
+			})
+	};
+
+	$scope.getEventByEventTruckId = function(eventTruckId) {
+		EventService.fetchEventByEventTruckId(eventTruckId)
+			.then(function(result) {
+				if(result.status.data === 200) {
+					$scope.mapData = result.data.data;
+				} else {
+					$scope.alerts[0] = {type: "danger", msg: result.data.message};
+
+				}
+			})
+	};
+
+
+	$scope.getEventByEventIdAndEventTruckId = function(eventId, eventTruckId) {
+		EventService.fetchEventByEventIdAndEventTruckId(eventTruckId)
+			.then(function(result) {
+				if(result.status.data === 200) {
+					$scope.mapData = result.data.data;
+				} else {
+					$scope.alerts[0] = {type: "danger", msg: result.data.message};
+
+				}
+			})
+	};
+
+
+
+	/*-----------------------------TruckService Methods-----------------------------------------*/
+	$scope.getTruckByTruckId = function(truckId) {
+		EventService.fetchTruckByTruckId(truckId)
+			.then(function(result) {
+				if(result.status.data === 200) {
+					$scope.mapData = result.data.data;
+				} else {
+					$scope.alerts[0] = {type: "danger", msg: result.data.message};
+
+				}
+			})
+	};
+
+	$scope.getTruckByTruckCompanyId = function(truckCompanyId) {
+		EventService.fetchTruckByTruckCompanyId(truckCompanyId)
+			.then(function(result) {
+				if(result.status.data === 200) {
+					$scope.mapData = result.data.data;
+				} else {
+					$scope.alerts[0] = {type: "danger", msg: result.data.message};
+
+				}
+			})
+	};
+
+
+	/*------------------------------------ProfileService Methods--------------------------------------*/
+
+	$scope.getProfileByProfileId = function(profileId) {
+		EventService.fetchProfileByProfileId(profileId)
+			.then(function(result) {
+				if(result.status.data === 200) {
+					$scope.mapData = result.data.data;
+				} else {
+					$scope.alerts[0] = {type: "danger", msg: result.data.message};
+
+				}
+			})
+	};
 
 
 //how do we do puts/posts/deletes for multiple services
 	$scope.mapCreate = function(map, validated) {
 		if(validated === true) {
-			CompanyService.create(company)
-				.then(function(result) {
-					if(result.data.status === 200) {
-						$scope.alerts[0] = {type: "success", msg: result.data.message};
-					} else {
-						$scope.alerts[0] = {type: "danger", msg: result.data.message};
-					}
-				})
-
 			EventService.create(event)
 				.then(function(result) {
 					if(result.data.status === 200) {
@@ -77,9 +157,72 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 					} else {
 						$scope.alerts[0] = {type: "danger", msg: result.data.message};
 					}
+				});
+			TruckService.create(truck)
+				.then(function(result) {
+					if(result.data.status === 200) {
+						$scope.alerts[0] = {type: "success", msg: result.data.message};
+					} else {
+						$scope.alerts[0] = {type: "danger", msg: result.data.message};
+					}
+				});
+		}
+	};
+
+
+
+	$scope.mapUpdate = function(map, validated) {
+		if(validated === true) {
+			EventService.update(event)
+				.then(function(result) {
+					if(result.data.status === 200) {
+						$scope.alerts[0] = {type: "success", msg: result.data.message};
+					} else {
+						$scope.alerts[0] = {type: "danger", msg: result.data.message};
+					}
+				});
+
+			ProfileService.update(profile)
+				.then(function(result) {
+					if(result.data.status === 200) {
+						$scope.alerts[0] = {type: "success", msg: result.data.message};
+					} else {
+						$scope.alerts[0] = {type: "danger", msg: result.data.message};
+					}
+				});
+
+			TruckService.update(truck)
+				.then(function(result) {
+					if(result.data.status === 200) {
+						$scope.alerts[0] = {type: "success", msg: result.data.message};
+					} else {
+						$scope.alerts[0] = {type: "danger", msg: result.data.message};
+					}
+				});
+
+			CompanyService.update(company)
+				.then(function(result) {
+					if(result.data.status === 200) {
+						$scope.alerts[0] = {type: "success", msg: result.data.message};
+					} else {
+						$scope.alerts[0] = {type: "danger", msg: result.data.message};
+					}
+				});
+		}
+	};
+
+
+
+	$scope.delete = function(beer, validated) {
+		if(validated === true) {
+			BeerService.destroy(beer)
+				.then(function(result) {
+					if(result.data.status === 200) {
+						$scope.alerts[0] = {type: "success", msg: result.data.message};
+					} else {
+						$scope.alerts[0] = {type: "danger", msg: result.data.message};
+					}
 				})
-
-
 		}
 	};
 
