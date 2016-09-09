@@ -34,8 +34,8 @@ app.config(function($routeProvider, $locationProvider) {
 
 		// route for the truck map page
 		.when('/profile', {
-			controller: 'TruckProfileController',
-			templateUrl: 'angular/views/truck-profile.php'
+			controller: 'ProfileController',
+			templateUrl: 'angular/views/profile-view.php'
 		})
 
 		// route for the truck map page
