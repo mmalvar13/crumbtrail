@@ -1,6 +1,7 @@
-//service for sign up api
-//@author Monica Alvarez
-
+/*service for sign up api
+*@author Monica Alvarez
+*
+*/
 
 app.constant("SIGNUP_ENDPOINT", "php/apis/signUp/");
 app.service("SignupService", function($http, SIGNUP_ENDPOINT){
