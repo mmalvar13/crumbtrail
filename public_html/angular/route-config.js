@@ -4,7 +4,7 @@ app.config(function($routeProvider, $locationProvider) {
 
 	// route for the home page
 		.when('/', {
-			controller: 'EaterMapController',
+			controller: 'MapController',
 			templateUrl: 'angular/views/eater-map.php'
 		})
 
@@ -28,7 +28,7 @@ app.config(function($routeProvider, $locationProvider) {
 
 		// route for the truck map page
 		.when('/truck-map', {
-			controller: 'TruckMapController',
+			controller: 'MapController',
 			templateUrl: 'angular/views/truck-map.php'
 		})
 
