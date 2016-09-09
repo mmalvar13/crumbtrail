@@ -1,5 +1,5 @@
 app.controller('EventController', ["$scope", "$location", "EventService", function($scope, $location, EventService) {
-	$scope.eventId = null;
+	// what do i do here????? BrewCew has a beer Profile....we have a truck map or eater map//
 	$scope.alerts = [];
 	$scope.eventData = [];
 
@@ -25,6 +25,7 @@ app.controller('EventController', ["$scope", "$location", "EventService", functi
 	};
 	$scope.getEventByTruckId = function(eventTruckId) {
 		EventService.getEventByTruckId(eventTruckId)
+		// Is the . then where the promise lives.....promise is accepted, or rejected
 			.then(function(result) {
 				if(result.status.data === 200) {
 					$scope.eventData = result.data.data;
@@ -53,7 +54,15 @@ app.controller('EventController', ["$scope", "$location", "EventService", functi
 				} else {
 					$scope.alerts[0] = {type: "danger", msg: result.data.message};
 				}
-				})
+			});
+		/**
+		 * when this is related to truck Map view??
+		 * when event is selected...it goes to the event on the truck map??
+		 */
+
+		$scope.getTruckMap = function(eventId) {
+			$location.path("truckMap/" + eventId);
+		};
 
 	};
 

@@ -19,10 +19,10 @@ app.service("eventService", function(http, EVENT_ENDPOINT) {
 		return($http.get(getUrl() + "?eventTruckId=" + eventTruckId));
 	};
 	this.getEventByStart = function(eventStart) {
-		return($http.get(getUrl() + "?eventStart" + eventStart));
+		return($http.get(getUrl() + "?eventStart=" + eventStart));
 	};
 	this.getEventByEnd = function(eventEnd) {
-		return($http.get(getUrl() + "eventEnd" + eventEnd));
+		return($http.get(getUrl() + "?eventEnd=" + eventEnd));
 	};
 	this.eventUpdate = function(eventId, event) {
 		return($http.put(getUrlForId(eventId, event)));
