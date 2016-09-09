@@ -1,3 +1,4 @@
-app.controller("truckSignInController", function($scope){
+app.controller("truckSignInController", ["$scope", function($scope){
+
 
 });
