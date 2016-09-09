@@ -1,3 +1,3 @@
-app.controller('settingsController', function($scope){
+app.controller('SettingsController', function($scope){
 
 });

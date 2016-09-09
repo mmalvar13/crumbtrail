@@ -4,7 +4,7 @@ app.config(function($routeProvider, $locationProvider) {
 
 	// route for the home page
 		.when('/', {
-			controller: 'eaterMapController',
+			controller: 'EaterMapController',
 			templateUrl: 'angular/views/eater-map.php'
 		})
 
@@ -16,25 +16,25 @@ app.config(function($routeProvider, $locationProvider) {
 
 		// route for the sign up page
 		.when('/settings', {
-			controller: 'settingsController',
+			controller: 'SettingsController',
 			templateUrl: 'angular/views/settings.php'
 		})
 
 		// route for the truck list page
 		.when('/truck-listing', {
-			controller: 'truckListController',
+			controller: 'TruckListController',
 			templateUrl: 'angular/views/truck-list.php'
 		})
 
 		// route for the truck map page
 		.when('/truck-map', {
-			controller: 'truckMapController',
+			controller: 'TruckMapController',
 			templateUrl: 'angular/views/truck-map.php'
 		})
 
 		// route for the truck map page
 		.when('/profile', {
-			controller: 'truckProfileController',
+			controller: 'TruckProfileController',
 			templateUrl: 'angular/views/truck-profile.php'
 		})
 

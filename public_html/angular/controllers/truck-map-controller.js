@@ -1,3 +1,3 @@
-app.controller('truckMapController', function($scope){
+app.controller('TruckMapController', function($scope){
 
 });
