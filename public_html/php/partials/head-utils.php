@@ -28,24 +28,37 @@
 
 
 		<!--Angular JS Libraries-->
+
+		<?php $ANGULAR_VERSION = "1.5.8";?>
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/<?php echo $ANGULAR_VERSION;?>/angular.min.js"></script>
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/<?php echo $ANGULAR_VERSION;?>/angular-messages.min.js"></script>
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/<?php echo $ANGULAR_VERSION;?>/angular-route.js"></script>
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/<?php echo $ANGULAR_VERSION;?>/angular-animate.js"></script>
+		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.3/ui-bootstrap-tpls.min.js"></script>
+
+<!--I just added the ng libraries above. we had taken them out because webpack, but our views weren't working. the one below is what dylan put in in place of the ones above 9/9 MA-->
 		<script type="text/javascript" src="angular/vendor/vendor.js"></script>
+
 
 		<!--Load OUR Angular files-->
 		<script src="angular/crumbtrail.js"></script>
 		<script src="angular/route-config.js"></script>
 		<!--Directives come before controllers-->
 		<script src="angular/directives/mainDirective.js"></script>
+		<script src="angular/directives/bootstrap-breakpoint.js"></script>
+
 		<!--Load controllers-->
-		<script src="angular/controllers/eater-map-controller.js"></script>
+		<script src="angular/controllers/map-controller.js"></script>
 		<script src="angular/controllers/mainController.js"></script>
 		<script src="angular/controllers/nav-controller.js"></script>
 
 		<script src="angular/controllers/settings-controller.js"></script>
-		<script src="angular/controllers/truck-list-controller.js"></script>
-		<script src="angular/controllers/truck-map-controller.js"></script>
-		<script src="angular/controllers/truck-profile-controller.js"></script>
-		<script src="angular/controllers/truck-registration-controller.js"></script>
-		<script src="angular/controllers/truck-signin-controller.js"></script>
+		<script src="angular/controllers/list-controller.js"></script>
+		<script src="angular/controllers/profile-controller.js"></script>
+		<script src="angular/controllers/signup-controller.js"></script>
+		<script src="angular/controllers/signin-controller.js"></script>
+		<script src="angular/controllers/signout-controller.js"></script>
+
 
 
 
