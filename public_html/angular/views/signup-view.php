@@ -12,7 +12,7 @@
 			<form name="profileSignupForm" id="profileSignupForm" ng-controller="SignupController" ng-submit="submit(formData, profileSignupForm.$valid);" novalidate>
 
 				<!----form groups start here----->
-				<div class="form-group text-center">
+				<div class="form-group text-center" ng-class="{'has-error': profileSignupForm">
 					<label for="firstName">First name</label>
 					<input type="text" class="form-control registration-input" id="exampleInputEmail1"
 							 aria-describedby="emailHelp" placeholder="First Name">
