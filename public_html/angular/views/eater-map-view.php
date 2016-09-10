@@ -15,13 +15,12 @@
 	<body>
 		<div id="map_canvas" ng-controller="map-controller">
 
-			// TODO We want the center of the map to be the hungry eater's current location.
-			// Does 'map.center' get this from map-controller.js?
+			<!-- TODO We want the center of the map to be the hungry eater's current location. -->
+			<!-- Does 'map.center' get this from map-controller.js? -->
 			<ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
 
-			// TODO I think "marker.id" = eventId, for each specific event.
-			// An "event" is an active food truck, i.e. a truck that is serving now.
-			// So I'll need an ng-repeat for the ui-gmap-marker thing?
+			<!-- TODO I think "marker.id" = eventId, for each specific event. -->
+			<!-- So I'll need an ng-repeat for the ui-gmap-marker thing? -->
 			<ui-gmap-marker coords="marker.coords" idkey="marker.id"></ui-gmap-marker>
 
 		</div>

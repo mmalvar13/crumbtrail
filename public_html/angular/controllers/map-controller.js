@@ -6,6 +6,7 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 	$scope.markers = [];		// These mark the locations of the active trucks.
 									// But markers is also shown below.
 
+	// need a $scope here ?????
 	navigator.geolocation.getCurrentPosition(function(position) {
 		$scope.map = {
 			center: {

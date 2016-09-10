@@ -246,4 +246,8 @@ app.controller('ProfileController', ["$scope", "CompanyService", "EventService",
 			}
 		};
 
+		$scope.
+
+
+
 	}]);
