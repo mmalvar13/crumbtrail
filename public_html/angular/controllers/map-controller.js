@@ -1,10 +1,31 @@
-app.controller('MapController', ["$scope", "CompanyService", "EventService", "ProfileService", "TruckService", function($scope, CompanyService, EventService, ProfileService) {
+app.controller('MapController', ["$scope", "CompanyService", "EventService", "ProfileService", "TruckService", "uiGmapGoogleMapApi"
+	function($scope, CompanyService, EventService, ProfileService, uiGmapGoogleMapApi) {
 	//what do we add here on top?
 	$scope.alerts = [];
-	$scope.mapData = [];
 
-	// TODO center = current location ?
-	$scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
+	$scope.markers = [];		// These mark the locations of the active trucks.
+
+	navigator.geolocation.getCurrentPosition(function(position) {
+		$scope.map = {
+			center: {
+				latitude: position.coords.latitude,
+				longitude: position.coords.longitude
+			},
+			zoom: 8,
+			markers: [],	// TODO Each marker is the location of an active food truck.
+
+			window: {
+				marker: {},
+				show: true,
+			},
+		};
+	};
+
+
+		// uiGmapGoogleMapApi is a promise.
+		// The "then" callback function provides the google.maps object.
+		// uiGmapGoogleMapApi.then(function(maps) { ...
+
 
 
 	/*-------------------------CompanyService methods-------------------------------------------------------*/
