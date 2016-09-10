@@ -23,8 +23,8 @@
 		<!-------------------GOOGLE FONTS------------------>
 		<link href="https://fonts.googleapis.com/css?family=Fascinate+Inline|Nixie+One|Roboto" rel="stylesheet">
 
-		<!---------------Custom CSS here----------------------->
-<!--		<link href="css/style.css" rel="stylesheet" type="text/css"/>-->
+		<!---------------Custom CSS here---------------------why was this commented out? 9/9 MA-->
+		<link href="css/style.css" rel="stylesheet" type="text/css"/>
 
 
 		<!--Angular JS Libraries-->
@@ -37,7 +37,7 @@
 		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.3/ui-bootstrap-tpls.min.js"></script>
 
 <!--I just added the ng libraries above. we had taken them out because webpack, but our views weren't working. the one below is what dylan put in in place of the ones above 9/9 MA-->
-		<script type="text/javascript" src="angular/vendor/vendor.js"></script>
+<!--		<script type="text/javascript" src="angular/vendor/vendor.js"></script>-->
 
 
 		<!--Load OUR Angular files-->
