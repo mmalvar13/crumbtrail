@@ -8,100 +8,100 @@
 app.controller('ProfileController', ["$scope", "CompanyService", "EventService", "ImageService", "ProfileService",
 	function($scope, CompanyService, EventService, ImageService, ProfileService) {
 
-	$scope.alerts = [];
+		$scope.alerts = [];
 
-	/* ---------------------- Read stuff: getFooByBars -------------------------------------------------------- */
-	/* ------------------------- CompanyService methods ------------------------------------------------------ */
-	$scope.getCompanyByCompanyId = function(companyId) {
-		CompanyService.fetchCompanyById(companyId)
-			.then(function(result) {
-				if(result.status.data === 200) {
-					$scope.profileData = result.data.data;
-				} else {
-					$scope.alerts[0] = {type: "danger", msg: result.data.message};
-				}
-			})
-	};
+		/* ---------------------- Read stuff: getFooByBars -------------------------------------------------------- */
+		/* ------------------------- CompanyService methods ------------------------------------------------------ */
+		$scope.getCompanyByCompanyId = function(companyId) {
+			CompanyService.fetchCompanyById(companyId)
+				.then(function(result) {
+					if(result.status.data === 200) {
+						$scope.profileData = result.data.data;
+					} else {
+						$scope.alerts[0] = {type: "danger", msg: result.data.message};
+					}
+				})
+		};
 
-	$scope.getCompanyByCompanyName = function(companyName) {
-		CompanyService.fetchCompanyByCompanyName(companyName)
-			.then(function(result) {
-				if(result.status.data === 200) {
-					$scope.profileData = result.data.data;
-				} else {
-					$scope.alerts[0] = {type: "danger", msg: result.data.message};
-				}
-			})
-	};
+		$scope.getCompanyByCompanyName = function(companyName) {
+			CompanyService.fetchCompanyByCompanyName(companyName)
+				.then(function(result) {
+					if(result.status.data === 200) {
+						$scope.profileData = result.data.data;
+					} else {
+						$scope.alerts[0] = {type: "danger", msg: result.data.message};
+					}
+				})
+		};
 
-	$scope.getCompanyByCompanyMenuText = function(companyMenuText) {
-		CompanyService.fetchCompanyByCompanyMenuText(companyMenuText)
-			.then(function(result) {
-				if(result.status.data === 200) {
-					$scope.profileData = result.data.data;
-				} else {
-					$scope.alerts[0] = {type: "danger", msg: result.data.message};
-				}
-			})
-	};
+		$scope.getCompanyByCompanyMenuText = function(companyMenuText) {
+			CompanyService.fetchCompanyByCompanyMenuText(companyMenuText)
+				.then(function(result) {
+					if(result.status.data === 200) {
+						$scope.profileData = result.data.data;
+					} else {
+						$scope.alerts[0] = {type: "danger", msg: result.data.message};
+					}
+				})
+		};
 
-	$scope.getCompanyByCompanyDescription = function(companyDescription) {
-		CompanyService.fetchCompanyByCompanyDescription(companyDescription)
-			.then(function(result) {
-				if(result.status.data === 200) {
-					$scope.profileData = result.data.data;
-				} else {
-					$scope.alerts[0] = {type: "danger", msg: result.data.message};
-				}
-			})
-	};
+		$scope.getCompanyByCompanyDescription = function(companyDescription) {
+			CompanyService.fetchCompanyByCompanyDescription(companyDescription)
+				.then(function(result) {
+					if(result.status.data === 200) {
+						$scope.profileData = result.data.data;
+					} else {
+						$scope.alerts[0] = {type: "danger", msg: result.data.message};
+					}
+				})
+		};
 
-	/*-------------------- EventService methods ----------------------------*/
-	$scope.getEventByEventId = function(eventId) {
-		EventService.fetchEventByEventId(eventId)
-			.then(function(result) {
-				if(result.status.data === 200) {
-					$scope.profileData = result.data.data;
-				} else {
-					$scope.alerts[0] = {type: "danger", msg: result.data.message};
-				}
-			})
-	};
+		/*-------------------- EventService methods ----------------------------*/
+		$scope.getEventByEventId = function(eventId) {
+			EventService.fetchEventByEventId(eventId)
+				.then(function(result) {
+					if(result.status.data === 200) {
+						$scope.profileData = result.data.data;
+					} else {
+						$scope.alerts[0] = {type: "danger", msg: result.data.message};
+					}
+				})
+		};
 
-	$scope.getEventByEventEndAndEventStart = function(eventEnd, eventStart) {
-		EventService.fetchEventByEventEndAndEventStart(eventEnd, eventStart)
-			.then(function(result) {
-				if(result.status.data === 200) {
-					$scope.profileData = result.data.data;
-				} else {
-					$scope.alerts[0] = {type: "danger", msg: result.data.message};
-				}
-			})
-	};
+		$scope.getEventByEventEndAndEventStart = function(eventEnd, eventStart) {
+			EventService.fetchEventByEventEndAndEventStart(eventEnd, eventStart)
+				.then(function(result) {
+					if(result.status.data === 200) {
+						$scope.profileData = result.data.data;
+					} else {
+						$scope.alerts[0] = {type: "danger", msg: result.data.message};
+					}
+				})
+		};
 
-	$scope.getEventByEventTruckId = function(eventTruckId) {
-		EventService.fetchEventByEventTruckId(eventTruckId)
-			.then(function(result) {
-				if(result.status.data === 200) {
-					$scope.profileData = result.data.data;
-				} else {
-					$scope.alerts[0] = {type: "danger", msg: result.data.message};
-				}
-			})
-	};
+		$scope.getEventByEventTruckId = function(eventTruckId) {
+			EventService.fetchEventByEventTruckId(eventTruckId)
+				.then(function(result) {
+					if(result.status.data === 200) {
+						$scope.profileData = result.data.data;
+					} else {
+						$scope.alerts[0] = {type: "danger", msg: result.data.message};
+					}
+				})
+		};
 
-	$scope.getEventByEventIdAndEventTruckId = function(eventId, eventTruckId) {
-		EventService.fetchEventByEventIdAndEventTruckId(eventTruckId)
-			.then(function(result) {
-				if(result.status.data === 200) {
-					$scope.profileData = result.data.data;
-				} else {
-					$scope.alerts[0] = {type: "danger", msg: result.data.message};
-				}
-			})
-	};
+		$scope.getEventByEventIdAndEventTruckId = function(eventId, eventTruckId) {
+			EventService.fetchEventByEventIdAndEventTruckId(eventTruckId)
+				.then(function(result) {
+					if(result.status.data === 200) {
+						$scope.profileData = result.data.data;
+					} else {
+						$scope.alerts[0] = {type: "danger", msg: result.data.message};
+					}
+				})
+		};
 
-	/*--------------------------- ImageService Methods --------------------------------------*/
+		/*--------------------------- ImageService Methods --------------------------------------*/
 		$scope.getImageByImageId = function(imageId) {
 			ImageService.fetchImageByImageId(imageId)
 				.then(function(result) {
@@ -135,20 +135,20 @@ app.controller('ProfileController', ["$scope", "CompanyService", "EventService",
 				})
 		};
 
-	/*-------------------------- ProfileService Methods --------------------------------------*/
-	$scope.getProfileByProfileId = function(profileId) {
-		EventService.fetchProfileByProfileId(profileId)
-			.then(function(result) {
-				if(result.status.data === 200) {
-					$scope.profileData = result.data.data;
-				} else {
-					$scope.alerts[0] = {type: "danger", msg: result.data.message};
-				}
-			})
-	};
+		/*-------------------------- ProfileService Methods --------------------------------------*/
+		$scope.getProfileByProfileId = function(profileId) {
+			EventService.fetchProfileByProfileId(profileId)
+				.then(function(result) {
+					if(result.status.data === 200) {
+						$scope.profileData = result.data.data;
+					} else {
+						$scope.alerts[0] = {type: "danger", msg: result.data.message};
+					}
+				})
+		};
 
-	/* ---------------------- Create, Update, Delete stuff ------------------------------------- */
-	/* --------------------------- Create ------------------------------------------------------ */
+		/* ---------------------- Create, Update, Delete stuff ------------------------------------- */
+		/* --------------------------- Create ------------------------------------------------------ */
 		$scope.profileCreate = function(profile, validated) {
 			if(validated === true) {
 				CompanyService.create(company)			// TODO  Or should this be (profile) ???
