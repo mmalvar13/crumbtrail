@@ -108,7 +108,7 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 
 	/*-----------------------------TruckService Methods-----------------------------------------*/
 	$scope.getTruckByTruckId = function(truckId) {
-		EventService.fetchTruckByTruckId(truckId)
+		TruckService.fetchTruckByTruckId(truckId)
 			.then(function(result) {
 				if(result.status.data === 200) {
 					$scope.mapData = result.data.data;
@@ -120,7 +120,7 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 	};
 
 	$scope.getTruckByTruckCompanyId = function(truckCompanyId) {
-		EventService.fetchTruckByTruckCompanyId(truckCompanyId)
+		TruckService.fetchTruckByTruckCompanyId(truckCompanyId)
 			.then(function(result) {
 				if(result.status.data === 200) {
 					$scope.mapData = result.data.data;
@@ -135,7 +135,7 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 	/*------------------------------------ProfileService Methods--------------------------------------*/
 
 	$scope.getProfileByProfileId = function(profileId) {
-		EventService.fetchProfileByProfileId(profileId)
+		ProfileService.fetchProfileByProfileId(profileId)
 			.then(function(result) {
 				if(result.status.data === 200) {
 					$scope.mapData = result.data.data;
