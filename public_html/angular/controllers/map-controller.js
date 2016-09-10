@@ -1,9 +1,10 @@
-app.controller('MapController', ["$scope", "CompanyService", "EventService", "ProfileService", "TruckService", "uiGmapGoogleMapApi"
+app.controller('MapController', ["$scope", "CompanyService", "EventService", "ProfileService", "TruckService", "uiGmapGoogleMapApi",
 	function($scope, CompanyService, EventService, ProfileService, uiGmapGoogleMapApi) {
 	//what do we add here on top?
 	$scope.alerts = [];
 
 	$scope.markers = [];		// These mark the locations of the active trucks.
+									// But markers is also shown below.
 
 	navigator.geolocation.getCurrentPosition(function(position) {
 		$scope.map = {
@@ -16,10 +17,10 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 
 			window: {
 				marker: {},
-				show: true,
-			},
-		};
-	};
+				show: true
+			}
+		}
+	});
 
 
 		// uiGmapGoogleMapApi is a promise.
@@ -28,7 +29,7 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 
 
 
-	/*-------------------------CompanyService methods-------------------------------------------------------*/
+	/*-------------------------CompanyService methods--------------------------------*/
 	$scope.getCompanyByCompanyId = function(companyId) {
 		CompanyService.fetchCompanyById(companyId)
 			.then(function(result) {
