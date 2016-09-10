@@ -4,7 +4,7 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 	$scope.mapData = [];
 
 
-	/*-------------------------CompanyService methods--------------------------------------------------------*/
+	/*-------------------------CompanyService methods-------------------------------------------------------*/
 	$scope.getCompanyByCompanyId = function(companyId) {
 		CompanyService.fetchCompanyById(companyId)
 			.then(function(result) {
