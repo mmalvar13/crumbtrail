@@ -8,7 +8,7 @@
 	<div class="col-md-4 col-md-offset-4">
 
 		<!--Beginning of the form. names the form and adds in the forms controller (still have not made controller)-->
-		<form name="signinForm" id="signinForm" class="form-horizontal well" ng-controller="SigninFormController"
+		<form name="signinForm" id="signinForm" ng-controller="SigninFormController"
 				ng-submit="submit(formData, signinForm.$valid);" novalidate>
 
 
@@ -20,6 +20,12 @@
 					<input type="email" id="inputEmail" name="inputEmail" class="form-control" ng-model="formData.inputEmail"
 							 placeholder="Email address" ng-required="true" autofocus=""/>
 				</div>
+
+				<div class="alert alert-danger" role="alert" ng-messages="signinForm.inputEmail.$error"
+					  ng-if="signinForm.inputEmail.$touched" ng-hide="signinForm.inputEmail.$valid">
+					<p ng-message="required">Please enter your email</p>
+				</div>
+
 			</div>
 
 			<!--			<div class="alert alert-danger" role="alert" ng-messages="signinForm."-->
