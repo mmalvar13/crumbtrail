@@ -1,6 +1,4 @@
 
-			<!---------------COMMENT OUT-------------->
-
 
 			<!--------------------------------MAIN BODY----------------------------------->
 			<div class="container">
@@ -8,6 +6,8 @@
 				<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwGxzLKd5waiJFHo5nsZqZl3xJN64JxIc&callback=initMap"
 						  async defer></script>
 
-			</div>
-		</div>
-		<!---------------COMMENT OUT-------------->
+	</div>
+		<ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
+
+
+	</div>

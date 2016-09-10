@@ -3,6 +3,9 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 	$scope.alerts = [];
 	$scope.mapData = [];
 
+	// TODO center = current location ?
+	$scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
+
 
 	/*-------------------------CompanyService methods-------------------------------------------------------*/
 	$scope.getCompanyByCompanyId = function(companyId) {
