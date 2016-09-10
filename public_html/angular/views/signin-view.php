@@ -10,7 +10,7 @@
 				ng-submit="submit(formData, signinForm.$valid);" novalidate>
 			<div class="form-group" ng-class="{'has-error':signinForm.inputEmail.$touched && signinForm.inputEmail.$invalid}">
 				<label for="inputEmail" class="sr-only">Email address</label>
-				<input type="email" id="inputEmail" name="inputEmail" class="form-control" ng-model="formData.inputEmail" placeholder="Email address" required="true" autofocus=""/>
+				<input type="email" id="inputEmail" name="inputEmail" class="form-control" ng-model="formData.inputEmail" placeholder="Email address" ng-required="true" autofocus=""/>
 			</div>
 			<div class
 			<label for="inputPassword" class="sr-only">Password</label>
