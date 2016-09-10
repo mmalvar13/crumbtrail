@@ -6,21 +6,41 @@
 	</div>
 	<!-----------LOGIN FORM------------------->
 	<div class="col-md-4 col-md-offset-4">
+
+		<!--Beginning of the form. names the form and adds in the forms controller (still have not made controller)-->
 		<form name="signinForm" id="signinForm" class="form-horizontal well" ng-controller="SigninFormController"
 				ng-submit="submit(formData, signinForm.$valid);" novalidate>
-			<div class="form-group" ng-class="{'has-error':signinForm.inputEmail.$touched && signinForm.inputEmail.$invalid}">
+
+
+			<!--first form group. Email Address-->
+			<div class="form-group"
+				  ng-class="{'has-error':signinForm.inputEmail.$touched && signinForm.inputEmail.$invalid}">
 				<label for="inputEmail" class="sr-only">Email address</label>
-				<input type="email" id="inputEmail" name="inputEmail" class="form-control" ng-model="formData.inputEmail" placeholder="Email address" ng-required="true" autofocus=""/>
+				<div class="input-group">
+					<input type="email" id="inputEmail" name="inputEmail" class="form-control" ng-model="formData.inputEmail"
+							 placeholder="Email address" ng-required="true" autofocus=""/>
+				</div>
 			</div>
-			<div class
-			<label for="inputPassword" class="sr-only">Password</label>
-			<input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+
+			<!--			<div class="alert alert-danger" role="alert" ng-messages="signinForm."-->
+			<!--Second form group. password-->
+			<div class="form-group">
+				<label for="inputPassword" class="sr-only">Password</label>
+				<div class="input-group">
+					<input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+				</div>
+			</div>
+
+			<!--checkbox-->
 			<div class="checkbox">
 				<label>
 					<input type="checkbox" value="remember-me"> Remember me
 				</label>
 			</div>
-			<button class="btn btn-lg btn-warning btn-block" type="submit">Sign in</button>
+
+			<!--button-->
+			<button class="btn btn-lg btn-info btn-warning btn-block" type="submit">Sign in</button>
+			<!--can add reset button here-->
 		</form>
 	</div>
 
