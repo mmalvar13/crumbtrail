@@ -240,3 +240,4 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 
 
 }]);
+
