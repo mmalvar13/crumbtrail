@@ -9,9 +9,11 @@
 	<hr class="registration-hr">
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2">
-			<form>
+			<form name="profileSignupForm" id="profileSignupForm" ng-controller="SignupController" ng-submit="submit(formData, profileSignupForm.$valid);" novalidate>
+
+				<!----form groups start here----->
 				<div class="form-group text-center">
-					<label for="first name">First name</label>
+					<label for="firstName">First name</label>
 					<input type="text" class="form-control registration-input" id="exampleInputEmail1"
 							 aria-describedby="emailHelp" placeholder="First Name">
 					<!--								<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>-->
