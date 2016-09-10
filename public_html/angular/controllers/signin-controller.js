@@ -29,4 +29,40 @@ app.controller("SigninController", ["$scope", "SigninService", function($scope, 
 	};
 
 
+	/*
+	* state variable to keep track of the data entered into the form fields
+	*
+	* @type{Object}
+	* */
+	$scope.formData = {"inputEmail":null, "inputPassword":null};
+
+	/*
+	* method to reset form data when the submit and cancel buttons are pressed
+	* */
+	$scope.reset = function(){
+		$scope.formData = {inputEmail: null, inputPassword: null};
+		$scope.signinForm.$setUntouched();
+		$scope.signingForm.$setPristine();
+	};
+
+	/*
+	* method to process the action from the submit button
+	* @param formData object containing submitted form data
+	* @param validated true if passed validation, false if not
+	* */
+
+	$scope.submit = function(formData, validated){
+		if(validated === true){
+			$scope.alerts[0] = {
+				type: "success",
+				msg: "Well done"
+			};
+		}else{
+			$scope.alerts[0] ={
+				type:"danger",
+				msg: "The form has invalid data. Please enter all required fields"
+			};
+		}
+		$scope.reset();
+	};
 }]);

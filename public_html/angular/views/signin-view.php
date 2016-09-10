@@ -8,7 +8,7 @@
 	<div class="col-md-4 col-md-offset-4">
 
 		<!--Beginning of the form. names the form and adds in the forms controller (still have not made controller)-->
-		<form name="signinForm" id="signinForm" ng-controller="SigninFormController"
+		<form name="signinForm" id="signinForm" ng-controller="SigninController"
 				ng-submit="submit(formData, signinForm.$valid);" novalidate>
 
 
@@ -54,13 +54,16 @@
 
 			<!--button-->
 			<button class="btn btn-lg btn-info btn-warning btn-block" type="submit">Sign in</button>
-			<!--can add reset button here-->
+			<button class="btn btn-lg btn-warning" type="reset" ng-click="reset();">Reset</button>
+			<!--can reset button needs CSSing-->
 
-			<h5>angular form data</h5> <!--this is just for testing-->
-			<p ng-show="signinForm.$valid"><em>Form data is valid</em></p>
-			<p ng-hide="signinForm.$valid"><em>Form data is invalid</em></p>
-			<pre>{{formData | json}}</pre>
-			<uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="alerts.length=0;">{{alert.msg}}</uib-alert>
+			<hr />
+			<h5>Angular Form Data</h5>
+			<p ng-show="sampleForm.$valid"><em>Form data is valid!</em></p>
+			<p ng-hide="sampleForm.$valid"><em>Form data is invalid!</em></p>
+			<pre></pre>
+			<uib-alert ng-repeat="alert in alerts" type="" close="alerts.length = 0;"></uib-alert>
+
 		</form>
 	</div>
 
@@ -68,9 +71,9 @@
 	<!----------NEED TO REGISTER SECTION-------->
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2">
-			<button type="button" class="btn btn-outline-warning btn-lg btn-block truck-login-register-btn">Need
+			<button type="button" class="btn btn-outline-warning btn-lg btn-block truck-login-register-btn"><a href="sign-up">Need
 				to register your company?
-			</button>
+			</a></button>
 		</div>
 	</div>
 </div>
