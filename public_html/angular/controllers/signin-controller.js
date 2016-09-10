@@ -9,11 +9,11 @@ app.controller("SigninController", ["$scope", "SigninService", function($scope, 
 	*
 	* references this.signin function in signin-service
 	* */
-	$scope.signin = function(signInData, validated){ //references this.signin function in signin-service. signIn or signInData? does it matter?
+	$scope.signin = function(signinData, validated){ //references this.signin function in signin-service. signIn or signInData? does it matter?
 		console.log("inside signincontroller signin");
-		console.log(signInData); //what is this for?
+		console.log(signinData); //what is this for?
 		if(validated === true){
-			SigninService.signin(signInData)//should this be signInData?
+			SigninService.signin(signinData)//should this be signInData?
 				.then(function(result){
 					if(result.data.status === 200){
 						$scope.alerts[0] = {type: "success", msg: result.data.message};
@@ -34,24 +34,24 @@ app.controller("SigninController", ["$scope", "SigninService", function($scope, 
 	*
 	* @type{Object}
 	* */
-	$scope.formData = {"inputEmail":null, "inputPassword":null};
+	$scope.signinData = {"inputEmail":null, "inputPassword":null};
 
 	/*
 	* method to reset form data when the submit and cancel buttons are pressed
 	* */
 	$scope.reset = function(){
-		$scope.formData = {inputEmail: null, inputPassword: null};
+		$scope.signinData = {inputEmail: null, inputPassword: null};
 		$scope.signinForm.$setUntouched();
-		$scope.signingForm.$setPristine();
+		$scope.signinForm.$setPristine();
 	};
 
 	/*
 	* method to process the action from the submit button
-	* @param formData object containing submitted form data
+	* @param signinData object containing submitted form data
 	* @param validated true if passed validation, false if not
 	* */
 
-	$scope.submit = function(formData, validated){
+	$scope.submit = function(signinData, validated){
 		if(validated === true){
 			$scope.alerts[0] = {
 				type: "success",

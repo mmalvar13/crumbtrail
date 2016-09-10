@@ -9,7 +9,7 @@
 
 		<!--Beginning of the form. names the form and adds in the forms controller (still have not made controller)-->
 		<form name="signinForm" id="signinForm" ng-controller="SigninController"
-				ng-submit="submit(formData, signinForm.$valid);" novalidate>
+				ng-submit="submit(signinData, signinForm.$valid);" novalidate>
 
 
 			<!--first form group. Email Address-->
@@ -17,7 +17,7 @@
 				  ng-class="{'has-error':signinForm.inputEmail.$touched && signinForm.inputEmail.$invalid}">
 				<label for="inputEmail" class="sr-only">Email address</label>
 				<div class="input-group">
-					<input type="email" id="inputEmail" name="inputEmail" class="form-control" ng-model="formData.inputEmail"
+					<input type="email" id="inputEmail" name="inputEmail" class="form-control" ng-model="signinData.inputEmail"
 							 placeholder="Email address" ng-required="true" autofocus=""/>
 				</div>
 
@@ -34,7 +34,7 @@
 				<label for="inputPassword" class="sr-only">Password</label>
 				<div class="input-group">
 					<input type="password" id="inputPassword" name="inputPassword" class="form-control"
-							 ng-model="formData.inputPassword" placeholder="Password" ng-required="true"/>
+							 ng-model="signinData.inputPassword" placeholder="Password" ng-required="true"/>
 				</div>
 
 				<div class="alert alert-danger" role="alert" ng-messages="signinForm.inputPassword.$error"
@@ -59,8 +59,8 @@
 
 			<hr />
 			<h5>Angular Form Data</h5>
-			<p ng-show="sampleForm.$valid"><em>Form data is valid!</em></p>
-			<p ng-hide="sampleForm.$valid"><em>Form data is invalid!</em></p>
+			<p ng-show="signinForm.$valid"><em>Form data is valid!</em></p>
+			<p ng-hide="signinForm.$valid"><em>Form data is invalid!</em></p>
 			<pre></pre>
 			<uib-alert ng-repeat="alert in alerts" type="" close="alerts.length = 0;"></uib-alert>
 
