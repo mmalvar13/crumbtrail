@@ -32,7 +32,7 @@ app.service("TruckService", function($http, TRUCK_ENDPOINT){
 	}
 
 /*
-* Builds a URL for getting a truck by ID (example: "apis/truck/3")
+* Builds a URL for getting a truck by ID (example: "php/apis/truck/3")
 * */
 	function getUrlForId(truckId){
 		return(getUrl() + truckId);
