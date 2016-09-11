@@ -4,7 +4,7 @@
 		<div class="container-fluid">
 			<!--			title row-->
 			<div class="row">
-				<h1 class="company-name">Company Name here</h1>
+				<h1 class="company-name">{{profileData[0].companyName}}Company Name here</h1>
 			</div>
 			<div class="container">
 				<div class="row">
@@ -26,15 +26,16 @@
 			<!--------------company description-------------->
 			<div class="container description-box">
 				<div class="row text-center">
-					<p>Buccaneer hail-shot haul wind gaff chase guns driver Sink me wherry barque Spanish Main. Driver prow
-						Blimey bowsprit reef grog blossom weigh anchor lad Plate Fleet rope's end. Deadlights interloper
-						rigging booty clipper lateen sail Privateer rum execution dock bounty.</p>
-					<p>Brigantine tender hail-shot gun interloper trysail tack starboard hardtack rigging. Man-of-war yawl
-						sutler skysail brig driver square-rigged barque rope's end bowsprit. Sea Legs keelhaul pinnace ho
-						Spanish Main six pounders overhaul chase gibbet lanyard.</p>
-					<p>Gibbet jib Corsair Privateer pinnace chase guns tack ahoy come about haul wind. Reef six pounders
-						crow's nest Spanish Main scurvy warp schooner Barbary Coast spanker topsail. Wherry fluke Shiver me
-						timbers boatswain quarter topsail Jack Ketch coxswain topmast belay.</p>
+					{{getCompanyByCompanyDescription}}
+<!--					<p>Buccaneer hail-shot haul wind gaff chase guns driver Sink me wherry barque Spanish Main. Driver prow-->
+<!--						Blimey bowsprit reef grog blossom weigh anchor lad Plate Fleet rope's end. Deadlights interloper-->
+<!--						rigging booty clipper lateen sail Privateer rum execution dock bounty.</p>-->
+<!--					<p>Brigantine tender hail-shot gun interloper trysail tack starboard hardtack rigging. Man-of-war yawl-->
+<!--						sutler skysail brig driver square-rigged barque rope's end bowsprit. Sea Legs keelhaul pinnace ho-->
+<!--						Spanish Main six pounders overhaul chase gibbet lanyard.</p>-->
+<!--					<p>Gibbet jib Corsair Privateer pinnace chase guns tack ahoy come about haul wind. Reef six pounders-->
+<!--						crow's nest Spanish Main scurvy warp schooner Barbary Coast spanker topsail. Wherry fluke Shiver me-->
+<!--						timbers boatswain quarter topsail Jack Ketch coxswain topmast belay.</p>-->
 					<hr>
 
 					<!---------days of the week "loose" schedule------------>

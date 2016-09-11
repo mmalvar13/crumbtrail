@@ -1,3 +1,5 @@
+/*Directive for profile-directive.js*/
+
 var profileDirective = angular.module("profileDirective", []);
 
 app.directive('details', function(){

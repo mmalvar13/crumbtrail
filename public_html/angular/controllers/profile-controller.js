@@ -5,10 +5,29 @@
 //    Image service
 //    Profile service
 
-app.controller('ProfileController', ["$scope", "CompanyService", "EventService", "ImageService", "ProfileService",
-	function($scope, CompanyService, EventService, ImageService, ProfileService) {
+app.controller('ProfileController', ["$routeParams","$scope", "CompanyService", "EventService", "ImageService", "ProfileService",
+	function($routeParams, $scope, CompanyService, EventService, ImageService, ProfileService) {
 
+		$scope.profileData = null;
 		$scope.alerts = [];
+
+		/*i just made this 9/11 MA*/
+		$scope.loadCompanyProfile = function(){
+			CompanyService.fetchCompanyByCompanyId($routeParams.id)
+				.then(function(result){
+					if(result.data.status === 200){
+						$scope.profileData = result.data.data;
+						console.log($scope.profileData);
+					}else{
+						$scope.alerts[0] = {type:"danger", msg: result.data.message};
+					}
+				})
+				};
+				if($scope.profileData === null){
+					$scope.loadCompanyProfile();
+				}
+
+		/*end of what i mad*/
 
 		/* ---------------------- Read stuff: getFooByBars -------------------------------------------------------- */
 		/* ------------------------- CompanyService methods ------------------------------------------------------ */
