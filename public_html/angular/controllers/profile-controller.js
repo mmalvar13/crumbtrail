@@ -13,7 +13,7 @@ app.controller('ProfileController', ["$routeParams","$scope", "CompanyService", 
 
 		/*i just made this 9/11 MA*/
 		$scope.loadCompanyProfile = function(){
-			CompanyService.fetchCompanyByCompanyId($routeParams.id)
+			CompanyService.fetchCompanyByCompanyId($routeParams.companyId)
 				.then(function(result){
 					if(result.data.status === 200){
 						$scope.companyData = result.data.data;
