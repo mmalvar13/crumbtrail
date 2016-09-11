@@ -8,7 +8,7 @@
 app.controller('ProfileController', ["$routeParams","$scope", "CompanyService", "EventService", "ImageService", "ProfileService",
 	function($routeParams, $scope, CompanyService, EventService, ImageService, ProfileService) {
 
-		$scope.profileData = null;
+		$scope.companyData = null;
 		$scope.alerts = [];
 
 		/*i just made this 9/11 MA*/
@@ -16,8 +16,8 @@ app.controller('ProfileController', ["$routeParams","$scope", "CompanyService", 
 			CompanyService.fetchCompanyByCompanyId($routeParams.id)
 				.then(function(result){
 					if(result.data.status === 200){
-						$scope.profileData = result.data.data;
-						console.log($scope.profileData);
+						$scope.companyData = result.data.data;
+						console.log($scope.companyData);
 					}else{
 						$scope.alerts[0] = {type:"danger", msg: result.data.message};
 					}
@@ -32,7 +32,7 @@ app.controller('ProfileController', ["$routeParams","$scope", "CompanyService", 
 			CompanyService.fetchCompanyByCompanyId(companyId)
 				.then(function(result) {
 					if(result.status.data === 200) {
-						$scope.profileData = result.data.data;
+						$scope.companyData = result.data.data;
 					} else {
 						$scope.alerts[0] = {type: "danger", msg: result.data.message};
 					}
@@ -43,7 +43,7 @@ app.controller('ProfileController', ["$routeParams","$scope", "CompanyService", 
 			CompanyService.fetchCompanyByCompanyName(companyName)
 				.then(function(result) {
 					if(result.status.data === 200) {
-						$scope.profileData = result.data.data;
+						$scope.companyData = result.data.data;
 					} else {
 						$scope.alerts[0] = {type: "danger", msg: result.data.message};
 					}
@@ -54,7 +54,7 @@ app.controller('ProfileController', ["$routeParams","$scope", "CompanyService", 
 			CompanyService.fetchCompanyByCompanyMenuText(companyMenuText)
 				.then(function(result) {
 					if(result.status.data === 200) {
-						$scope.profileData = result.data.data;
+						$scope.companyData = result.data.data;
 					} else {
 						$scope.alerts[0] = {type: "danger", msg: result.data.message};
 					}
@@ -65,7 +65,7 @@ app.controller('ProfileController', ["$routeParams","$scope", "CompanyService", 
 			CompanyService.fetchCompanyByCompanyDescription(companyDescription)
 				.then(function(result) {
 					if(result.status.data === 200) {
-						$scope.profileData = result.data.data;
+						$scope.companyData = result.data.data;
 					} else {
 						$scope.alerts[0] = {type: "danger", msg: result.data.message};
 					}
@@ -77,7 +77,7 @@ app.controller('ProfileController', ["$routeParams","$scope", "CompanyService", 
 			EventService.fetchEventByEventId(eventId)
 				.then(function(result) {
 					if(result.status.data === 200) {
-						$scope.profileData = result.data.data;
+						$scope.companyData = result.data.data;
 					} else {
 						$scope.alerts[0] = {type: "danger", msg: result.data.message};
 					}
@@ -88,7 +88,7 @@ app.controller('ProfileController', ["$routeParams","$scope", "CompanyService", 
 			EventService.fetchEventByEventEndAndEventStart(eventEnd, eventStart)
 				.then(function(result) {
 					if(result.status.data === 200) {
-						$scope.profileData = result.data.data;
+						$scope.companyData = result.data.data;
 					} else {
 						$scope.alerts[0] = {type: "danger", msg: result.data.message};
 					}
@@ -99,7 +99,7 @@ app.controller('ProfileController', ["$routeParams","$scope", "CompanyService", 
 			EventService.fetchEventByEventTruckId(eventTruckId)
 				.then(function(result) {
 					if(result.status.data === 200) {
-						$scope.profileData = result.data.data;
+						$scope.companyData = result.data.data;
 					} else {
 						$scope.alerts[0] = {type: "danger", msg: result.data.message};
 					}
@@ -110,7 +110,7 @@ app.controller('ProfileController', ["$routeParams","$scope", "CompanyService", 
 			EventService.fetchEventByEventIdAndEventTruckId(eventTruckId)
 				.then(function(result) {
 					if(result.status.data === 200) {
-						$scope.profileData = result.data.data;
+						$scope.companyData = result.data.data;
 					} else {
 						$scope.alerts[0] = {type: "danger", msg: result.data.message};
 					}
@@ -122,7 +122,7 @@ app.controller('ProfileController', ["$routeParams","$scope", "CompanyService", 
 			ImageService.fetchImageByImageId(imageId)
 				.then(function(result) {
 					if(result.status.data === 200) {
-						$scope.profileData = result.data.data;
+						$scope.companyData = result.data.data;
 					} else {
 						$scope.alerts[0] = {type: "danger", msg: result.data.message};
 					}
@@ -133,7 +133,7 @@ app.controller('ProfileController', ["$routeParams","$scope", "CompanyService", 
 			ImageService.fetchImageByImageCompanyId(imageCompanyId)
 				.then(function(result) {
 					if(result.status.data === 200) {
-						$scope.profileData = result.data.data;
+						$scope.companyData = result.data.data;
 					} else {
 						$scope.alerts[0] = {type: "danger", msg: result.data.message};
 					}
@@ -144,7 +144,7 @@ app.controller('ProfileController', ["$routeParams","$scope", "CompanyService", 
 			ImageService.fetchImageByImageFileName(imageFileName)
 				.then(function(result) {
 					if(result.status.data === 200) {
-						$scope.profileData = result.data.data;
+						$scope.companyData = result.data.data;
 					} else {
 						$scope.alerts[0] = {type: "danger", msg: result.data.message};
 					}
@@ -156,7 +156,7 @@ app.controller('ProfileController', ["$routeParams","$scope", "CompanyService", 
 			EventService.fetchProfileByProfileId(profileId)
 				.then(function(result) {
 					if(result.status.data === 200) {
-						$scope.profileData = result.data.data;
+						$scope.companyData = result.data.data;
 					} else {
 						$scope.alerts[0] = {type: "danger", msg: result.data.message};
 					}
@@ -261,6 +261,10 @@ app.controller('ProfileController', ["$routeParams","$scope", "CompanyService", 
 					});
 			}
 		};
+
+		if($scope.companyData === null){
+			$scope.loadCompanyProfile()
+		}
 
 
 	}]);
