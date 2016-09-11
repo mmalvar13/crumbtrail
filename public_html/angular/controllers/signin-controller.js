@@ -17,7 +17,7 @@ app.controller("SigninController", ["$scope","$window", "SigninService", functio
 					if(result.data.status === 200){
 						$scope.alerts[0] = {type: "success", msg: result.data.message};
 						console.log("good status");//user? below. is t. take these out of final product.
-						$window.location.href = "";
+						$window.location.href = "truck-map";
 					}else{
 						console.log("bad status");
 						console.log(result.data);
