@@ -4,7 +4,7 @@
 		<div class="container-fluid">
 			<!--			title row-->
 			<div class="row">
-				<h1 class="company-name">{{profileData[0].companyName}}Company Name here</h1>
+				<h1 class="company-name">{{ profileData[0].companyName }}Company Name here</h1>
 			</div>
 			<div class="container">
 				<div class="row">

@@ -22,10 +22,10 @@ app.controller('ProfileController', ["$routeParams","$scope", "CompanyService", 
 						$scope.alerts[0] = {type:"danger", msg: result.data.message};
 					}
 				})
-				};
-				if($scope.profileData === null){
-					$scope.loadCompanyProfile();
-				}
+		};
+		if($scope.profileData === null){
+			$scope.loadCompanyProfile();
+		}
 
 		/*end of what i mad*/
 
