@@ -3,6 +3,12 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 	//what do we add here on top?
 	$scope.alerts = [];
 
+/*
+	Order of events, for the eater map:
+		1. Find the user's current location.
+		2. Display the map, with the center = the user's current location.
+		3. Show the locations of active food trucks as markers.
+*/
 	$scope.markers = [];		// These mark the locations of the active trucks.
 									// But markers is also shown below.
 
@@ -14,7 +20,7 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 				longitude: position.coords.longitude
 			},
 			zoom: 8,
-			markers: [],	// TODO Each marker is the location of an active food truck.
+			markers: [],	// Each marker is the location of an active food truck.
 
 			window: {
 				marker: {},
@@ -23,10 +29,38 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 		}
 	});
 
+	// navigator.geolocation.getCurrentPosition(function (pos) { ...
+
+	// Google Geolocation API, obtains user's location with a single call to:
+	// getCurrentPosition()
+
+		// The geolocation API offers a simple ‘one-shot’ method to obtain the user’s location getCurrentPosition(). A call to this method will asynchronously report on the user’s current location.
+
+/*
+		 window.onload = function() {
+			var startPos;
+		 	var geoSuccess = function(position) {
+		 		startPos = position;
+		 		document.getElementById('startLat').innerHTML = startPos.coords.latitude;
+		 		document.getElementById('startLon').innerHTML = startPos.coords.longitude;
+		 	};
+		 	navigator.geolocation.getCurrentPosition(geoSuccess);
+		 };
+*/
+
+
+/*
+		navigator.geolocation.getCurrentPosition(function(position) {
+			do_something(position.coords.latitude, position.coords.longitude);
+		});
+		The above example will cause the do_something() function to execute when the location is obtained.
+*/
 
 		// uiGmapGoogleMapApi is a promise.
 		// The "then" callback function provides the google.maps object.
 		// uiGmapGoogleMapApi.then(function(maps) { ...
+
+
 
 
 
