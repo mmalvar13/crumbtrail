@@ -87,15 +87,7 @@
 				<div class="row text-center">
 					<h3>Menu</h3>
 					<hr class="menu-hr">
-					<ul class="menu-ul">
-						<li>tacos: $2 each</li>
-						<li>burrito: $5</li>
-						<li>nachos: $99 (they are that good)</li>
-						<li>lemonade: $2</li>
-						<li>chile: $3</li>
-						<li>mead: $4</li>
-						<li>"The Finest Grool": $8</li>
-					</ul>
+					{{companyData.companyMenuText}}
 
 				</div>
 			</div>
