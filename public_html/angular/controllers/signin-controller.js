@@ -1,6 +1,6 @@
 app.controller("SigninController", ["$scope", "SigninService", function($scope, SigninService){
 	$scope.alerts = [];
-
+$scope.signinData = {};
 
 	/*
 	* creates a sign in?? sends it to sign in api
@@ -18,7 +18,7 @@ app.controller("SigninController", ["$scope", "SigninService", function($scope, 
 					if(result.data.status === 200){
 						$scope.alerts[0] = {type: "success", msg: result.data.message};
 						console.log("good status");//user? below. is t
-						$window.location.href = "user/"
+						$window.location.href = ""
 					}else{
 						console.log("bad status");
 						console.log(result.data);
