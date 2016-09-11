@@ -29,10 +29,8 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 		}
 	});
 
-	// navigator.geolocation.getCurrentPosition(function (pos) { ...
-
 	// Google Geolocation API, obtains user's location with a single call to:
-	// getCurrentPosition()
+	//     getCurrentPosition()
 
 		// The geolocation API offers a simple ‘one-shot’ method to obtain the user’s location getCurrentPosition(). A call to this method will asynchronously report on the user’s current location.
 
@@ -55,6 +53,12 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 		});
 		The above example will cause the do_something() function to execute when the location is obtained.
 */
+
+	// See eater-map-view.php; it needs something like this?
+	// map.center = navigator.geolocation.getCurrentPosition();
+
+
+
 
 		// uiGmapGoogleMapApi is a promise.
 		// The "then" callback function provides the google.maps object.
