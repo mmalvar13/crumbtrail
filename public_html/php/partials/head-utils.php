@@ -39,6 +39,24 @@
 		<script src="angular/directives/mainDirective.js"></script>
 		<script src="angular/directives/bootstrap-breakpoint.js"></script>
 
+		<!--Load services-->
+
+		<script src="angular/services/company-service.js"></script>
+		<script src="angular/services/companyactivation-service.js"></script>
+		<script src="angular/services/companyapproved-service.js"></script>
+		<script src="angular/services/employee-service.js"></script>
+		<script src="angular/services/event-service.js"></script>
+		<script src="angular/services/image-service.js"></script>
+		<script src="angular/services/profile-service.js"></script>
+		<script src="angular/services/profileactivation-service.js"></script>
+		<script src="angular/services/signin-service.js"></script>
+		<script src="angular/services/signout-service.js"></script>
+		<script src="angular/services/signup-service.js"></script>
+		<script src="angular/services/truck-service.js"></script>
+
+
+
+
 		<!--Load controllers-->
 		<script src="angular/controllers/map-controller.js"></script>
 		<script src="angular/controllers/mainController.js"></script>
