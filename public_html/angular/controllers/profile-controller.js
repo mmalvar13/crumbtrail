@@ -263,7 +263,7 @@ app.controller('ProfileController', ["$routeParams","$scope", "CompanyService", 
 		};
 
 		if($scope.companyData === null){
-			$scope.loadCompanyProfile()
+			$scope.loadCompanyProfile();
 		}
 
 
