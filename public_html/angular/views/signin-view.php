@@ -14,15 +14,15 @@
 
 			<!--first form group. Email Address-->
 			<div class="form-group"
-				  ng-class="{'has-error':signinForm.inputEmail.$touched && signinForm.inputEmail.$invalid}">
-				<label for="inputEmail" class="sr-only">Email address</label>
+				  ng-class="{'has-error':signinForm.profileEmail.$touched && signinForm.profileEmail.$invalid}">
+				<label for="profileEmail" class="sr-only">Email address</label>
 				<div class="input-group">
-					<input type="email" id="inputEmail" name="inputEmail" class="form-control" ng-model="signinData.inputEmail"
+					<input type="email" id="profileEmail" name="profileEmail" class="form-control" ng-model="signinData.profileEmail"
 							 placeholder="Email address" ng-required="true" autofocus=""/>
 				</div>
 
-				<div class="alert alert-danger" role="alert" ng-messages="signinForm.inputEmail.$error"
-					  ng-if="signinForm.inputEmail.$touched" ng-hide="signinForm.inputEmail.$valid">
+				<div class="alert alert-danger" role="alert" ng-messages="signinForm.profileEmail.$error"
+					  ng-if="signinForm.profileEmail.$touched" ng-hide="signinForm.profileEmail.$valid">
 					<p ng-message="required">Please enter your email</p>
 				</div>
 			</div>
@@ -30,15 +30,15 @@
 			<!--			<div class="alert alert-danger" role="alert" ng-messages="signinForm."-->
 			<!--Second form group. password-->
 			<div class="form-group"
-				  ng-class="{'has-error':signinForm.inputPassword.$touched && signinForm.inputPassword.$invalid}">
-				<label for="inputPassword" class="sr-only">Password</label>
+				  ng-class="{'has-error':signinForm.profilePassword.$touched && signinForm.profilePassword.$invalid}">
+				<label for="profilePassword" class="sr-only">Password</label>
 				<div class="input-group">
-					<input type="password" id="inputPassword" name="inputPassword" class="form-control"
-							 ng-model="signinData.inputPassword" placeholder="Password" ng-required="true"/>
+					<input type="password" id="profilePassword" name="profilePassword" class="form-control"
+							 ng-model="signinData.profilePassword" placeholder="Password" ng-required="true"/>
 				</div>
 
-				<div class="alert alert-danger" role="alert" ng-messages="signinForm.inputPassword.$error"
-					  ng-if="signinForm.inputPassword.$touched" ng-hide="signinForm.inputPassword.$valid">
+				<div class="alert alert-danger" role="alert" ng-messages="signinForm.profilePassword.$error"
+					  ng-if="signinForm.profilePassword.$touched" ng-hide="signinForm.profilePassword.$valid">
 					<p ng-message="required">Please enter your password</p>
 				</div>
 			</div>
