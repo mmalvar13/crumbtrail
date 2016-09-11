@@ -13,7 +13,7 @@
 	</head>
 
 	<body>
-		<div id="map_canvas" ng-controller="map-controller">
+		<div id="map_canvas" ng-controller="MapController">
 
 			<!-- The center of the map = hungry eater's current location. -->
 			<!-- Does 'map.center' get this from map-controller.js? -->
