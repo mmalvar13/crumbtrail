@@ -9,7 +9,7 @@
 
 		<!--Beginning of the form. names the form and adds in the forms controller (still have not made controller)-->
 		<form name="signinForm" id="signinForm" ng-controller="SigninController"
-				ng-submit="submit(signinData, signinForm.$valid);" novalidate>
+				ng-submit="signin(signinData, signinForm.$valid);" novalidate>
 
 
 			<!--first form group. Email Address-->
@@ -61,7 +61,7 @@
 			<h5>Angular Form Data</h5>
 			<p ng-show="signinForm.$valid"><em>Form data is valid!</em></p>
 			<p ng-hide="signinForm.$valid"><em>Form data is invalid!</em></p>
-			<pre></pre>
+			<pre>{{signinData}}</pre>
 			<uib-alert ng-repeat="alert in alerts" type="" close="alerts.length = 0;"></uib-alert>
 
 		</form>

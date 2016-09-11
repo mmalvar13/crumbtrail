@@ -1,6 +1,5 @@
 app.controller("SigninController", ["$scope", "SigninService", function($scope, SigninService){
 	$scope.alerts = [];
-$scope.signinData = {};
 
 	/*
 	* creates a sign in?? sends it to sign in api
@@ -51,18 +50,4 @@ $scope.signinData = {};
 	* @param validated true if passed validation, false if not
 	* */
 
-	$scope.submit = function(signinData, validated){
-		if(validated === true){
-			$scope.alerts[0] = {
-				type: "success",
-				msg: "Well done"
-			};
-		}else{
-			$scope.alerts[0] ={
-				type:"danger",
-				msg: "The form has invalid data. Please enter all required fields"
-			};
-		}
-		$scope.reset();
-	};
 }]);
