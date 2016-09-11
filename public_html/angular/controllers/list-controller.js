@@ -1,13 +1,15 @@
 app.controller('ListController', ["$scope", "CompanyService", "EventService", "ImageService", function($scope, CompanyService, EventService, ImageService) {
 	$scope.alerts = [];
-	$scope.listData = [];
+	$scope.companyData = [];
+	$scope.eventData = [];
+	$scope.imageData = [];
 
 	/*-------------------------------CompanyService---------------------------------*/
 	$scope.getCompanyByCompanyId = function(companyId) {
 		CompanyService.fetchCompanyById(companyId)
 			.then(function(result) {
 				if(result.status.data === 200) {
-					$scope.listData = result.data.data;
+					$scope.companyData = result.data.data;
 				} else {
 					$scope.alerts[0] = {type: "danger", msg: result.data.message};
 				}
@@ -18,7 +20,7 @@ app.controller('ListController', ["$scope", "CompanyService", "EventService", "I
 		CompanyService.fetchCompanyByCompanyName(companyName)
 			.then(function(result) {
 				if(result.status.data === 200) {
-					$scope.listData = result.data.data;
+					$scope.companyData = result.data.data;
 				} else {
 					$scope.alerts[0] = {type: "danger", msg: result.data.message};
 
@@ -30,7 +32,7 @@ app.controller('ListController', ["$scope", "CompanyService", "EventService", "I
 		CompanyService.fetchCompanyByCompanyMenuText(companyMenuText)
 			.then(function(result) {
 				if(result.status.data === 200) {
-					$scope.listData = result.data.data;
+					$scope.companyData = result.data.data;
 				} else {
 					$scope.alerts[0] = {type: "danger", msg: result.data.message};
 
@@ -42,7 +44,7 @@ app.controller('ListController', ["$scope", "CompanyService", "EventService", "I
 		CompanyService.fetchCompanyByCompanyDescription(companyDescription)
 			.then(function(result) {
 				if(result.status.data === 200) {
-					$scope.listData = result.data.data;
+					$scope.companyData = result.data.data;
 				} else {
 					$scope.alerts[0] = {type: "danger", msg: result.data.message};
 
@@ -55,7 +57,7 @@ app.controller('ListController', ["$scope", "CompanyService", "EventService", "I
 		EventService.fetchEventByEventId(eventId)
 			.then(function(result) {
 				if(result.status.data === 200) {
-					$scope.listData = result.data.data;
+					$scope.eventData = result.data.data;
 				} else {
 					$scope.alerts[0] = {type: "danger", msg: result.data.message};
 
@@ -68,7 +70,7 @@ app.controller('ListController', ["$scope", "CompanyService", "EventService", "I
 		EventService.fetchEventByEventEndAndEventStart(eventEnd, eventStart)
 			.then(function(result) {
 				if(result.status.data === 200) {
-					$scope.listData = result.data.data;
+					$scope.eventData = result.data.data;
 				} else {
 					$scope.alerts[0] = {type: "danger", msg: result.data.message};
 
@@ -80,7 +82,7 @@ app.controller('ListController', ["$scope", "CompanyService", "EventService", "I
 		EventService.fetchEventByEventTruckId(eventTruckId)
 			.then(function(result) {
 				if(result.status.data === 200) {
-					$scope.listData = result.data.data;
+					$scope.eventData = result.data.data;
 				} else {
 					$scope.alerts[0] = {type: "danger", msg: result.data.message};
 
@@ -93,7 +95,7 @@ app.controller('ListController', ["$scope", "CompanyService", "EventService", "I
 		EventService.fetchEventByEventIdAndEventTruckId(eventTruckId)
 			.then(function(result) {
 				if(result.status.data === 200) {
-					$scope.listData = result.data.data;
+					$scope.eventData = result.data.data;
 				} else {
 					$scope.alerts[0] = {type: "danger", msg: result.data.message};
 
@@ -107,7 +109,7 @@ app.controller('ListController', ["$scope", "CompanyService", "EventService", "I
 		ImageService.fetchImageByImageId(imageId)
 			.then(function(result) {
 				if(result.status.data === 200) {
-					$scope.listData = result.data.data;
+					$scope.imageData = result.data.data;
 				} else {
 					$scope.alerts[0] = {type: "danger", msg: result.data.message};
 
@@ -120,7 +122,7 @@ app.controller('ListController', ["$scope", "CompanyService", "EventService", "I
 		ImageService.fetchImageByImageCompanyId(imageCompanyId)
 			.then(function(result) {
 				if(result.status.data === 200) {
-					$scope.listData = result.data.data;
+					$scope.imageData = result.data.data;
 				} else {
 					$scope.alerts[0] = {type: "danger", msg: result.data.message};
 
@@ -133,7 +135,7 @@ app.controller('ListController', ["$scope", "CompanyService", "EventService", "I
 		ImageService.fetchImageByImageFileName(imageFileName)
 			.then(function(result) {
 				if(result.status.data === 200) {
-					$scope.listData = result.data.data;
+					$scope.imageData = result.data.data;
 				} else {
 					$scope.alerts[0] = {type: "danger", msg: result.data.message};
 

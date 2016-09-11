@@ -5,7 +5,7 @@
 				<div class="container">
 					<div class="truck-list-box truck-image">
 						<div class="truck-list-serving-icon"></div>
-						<h3 class="truck-h3">Company Name</h3>
+						<h3 class="truck-h3">{{companyData:companyName}}</h3>
 						<hr class="truck-list-hr">
 						<p class="truck-list-text">We make the best damn tacos in the whole damn world!</p>
 						<ul class="truck-list-ul">
