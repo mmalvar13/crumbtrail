@@ -1,4 +1,4 @@
-app.controller("SigninController", ["$scope", "SigninService", function($scope, SigninService){
+app.controller("SigninController", ["$scope","$window", "SigninService", function($scope, $window, SigninService){
 	$scope.alerts = [];
 
 	/*
@@ -16,8 +16,8 @@ app.controller("SigninController", ["$scope", "SigninService", function($scope, 
 				.then(function(result){
 					if(result.data.status === 200){
 						$scope.alerts[0] = {type: "success", msg: result.data.message};
-						console.log("good status");//user? below. is t
-						$window.location.href = ""
+						console.log("good status");//user? below. is t. take these out of final product.
+						$window.location.reload();
 					}else{
 						console.log("bad status");
 						console.log(result.data);
@@ -33,13 +33,13 @@ app.controller("SigninController", ["$scope", "SigninService", function($scope, 
 	*
 	* @type{Object}
 	* */
-	$scope.signinData = {"inputEmail":null, "inputPassword":null};
+	$scope.signinData = {"profileEmail":null, "profilePassword":null};
 
 	/*
 	* method to reset form data when the submit and cancel buttons are pressed
 	* */
 	$scope.reset = function(){
-		$scope.signinData = {inputEmail: null, inputPassword: null};
+		$scope.signinData = {profileEmail: null, profilePassword: null};
 		$scope.signinForm.$setUntouched();
 		$scope.signinForm.$setPristine();
 	};
