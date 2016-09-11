@@ -187,51 +187,85 @@
 				</div>
 
 
-				
-				
-
-
-				<div class="form-group text-center">
-					<label for="street">Street 2</label>
-					<input type="text" class="form-control registration-input" id="exampleInputEmail1"
-							 aria-describedby="emailHelp" placeholder="Street address continued...">
+				<!----form groups start here----->
+				<!-----company city ----->
+				<div class="form-group text-center"
+					  ng-class="{'has-error': companySignupForm.companyCity.$touched && companySignupForm.companyCity">
+					<label for="companyCity">Company City</label>
+					<input type="text" id="companyCity" name="companyCity" ng-model="formData.companyCity" ng-required="true"
+							 class="form-control registration-input"
+							 placeholder="Company City">
+					<!-----form alerts----->
+					<div class="alert alert-danger" role="alert" ng-messages="companySignupForm.companyCity.$error" ng-if="companySignupForm.companyCity.$touched" ng-hide="companySignupForm.companyCity.$valid">
+						<p ng-message="required">Please Enter Your Company City</p>
+					</div>
 				</div>
 
-				<div class="form-group text-center">
-					<label for="city">City</label>
-					<input type="text" class="form-control registration-input" id="exampleInputEmail1"
-							 aria-describedby="emailHelp" placeholder="Albuquerque">
+
+				<!----form groups start here----->
+				<!-----company State ----->
+				<div class="form-group text-center"
+					  ng-class="{'has-error': companySignupForm.companyState.$touched && companySignupForm.companyState">
+					<label for="companyState">Company State</label>
+					<input type="text" id="companyState" name="companyState" ng-model="formData.companyState" ng-required="true"
+							 class="form-control registration-input"
+							 placeholder="Company State">
+					<!-----form alerts----->
+					<div class="alert alert-danger" role="alert" ng-messages="companySignupForm.companyState.$error" ng-if="companySignupForm.companyState.$touched" ng-hide="companySignupForm.companyState.$valid">
+						<p ng-message="required">Please Enter Your Company State</p>
+					</div>
 				</div>
 
-				<div class="form-group text-center">
-					<label for="state">State</label>
-					<input type="text" class="form-control registration-input" id="exampleInputEmail1"
-							 aria-describedby="emailHelp" placeholder="NM">
+
+
+				<!----form groups start here----->
+				<!-----company Zip ----->
+				<div class="form-group text-center"
+					  ng-class="{'has-error': companySignupForm.companyZip.$touched && companySignupForm.companyZip">
+					<label for="companyZip">Company Zip</label>
+					<input type="text" id="companyZip" name="companyZip" ng-model="formData.companyZip" ng-required="true"
+							 class="form-control registration-input"
+							 placeholder="Company Zip">
+					<!-----form alerts----->
+					<div class="alert alert-danger" role="alert" ng-messages="companySignupForm.companyZip.$error" ng-if="companySignupForm.companyZip.$touched" ng-hide="companySignupForm.companyZip.$valid">
+						<p ng-message="required">Please Enter Your Company Zip</p>
+					</div>
 				</div>
 
-				<div class="form-group text-center">
-					<label for="zip">Zip</label>
-					<input type="text" class="form-control registration-input" id="exampleInputEmail1"
-							 aria-describedby="emailHelp" placeholder="12345">
+				<!----form groups start here----->
+				<!-----company License ----->
+				<div class="form-group text-center"
+					  ng-class="{'has-error': companySignupForm.companyLicense.$touched && companySignupForm.companyLicense">
+					<label for="companyLicense">Company License</label>
+					<input type="text" id="companyLicense" name="companyLicense" ng-model="formData.companyLicense" ng-minlength="9" ng-maxlength="9" ng-required="true"
+							 class="form-control registration-input"
+							 placeholder="Company License">
+					<!-----form alerts----->
+					<div class="alert alert-danger" role="alert" ng-messages="companySignupForm.companyLicense.$error" ng-if="companySignupForm.companyLicense.$touched" ng-hide="companySignupForm.companyLicense.$valid">
+						<p ng-message="required">Please enter your city issued, 9-digit
+							business license number</p>
+						<p ng-minlength="required">Please enter your city issued, 9-digit
+							business license number</p>
+						<p ng-maxlength="required">Please enter your city issued, 9-digit
+							business license number</p>
+					</div>
 				</div>
 
-				<div class="form-group text-center">
-					<label for="businessLicense">Business License #</label>
-					<input type="text" class="form-control registration-input" id="exampleInputEmail1"
-							 aria-describedby="emailHelp" placeholder="123456789">
-					<small id="businessLicense" class="form-text text-muted">Please enter your city issued, 9-digit
-						business license number
-					</small>
+				<!----form groups start here----->
+				<!-----company Health Permit ----->
+				<div class="form-group text-center"
+					  ng-class="{'has-error': companySignupForm.companyHealthPermit.$touched && companySignupForm.companyHealthPermit">
+					<label for="companyHealthPermit">Company Health Permit</label>
+					<input type="text" id="companyHealthPermit" name="companyHealthPermit" ng-model="formData.companyHealthPermit" ng-minlength="9" ng-maxlength="9" ng-required="true"
+							 class="form-control registration-input"
+							 placeholder="Company Health Permit">
+					<!-----form alerts----->
+					<div class="alert alert-danger" role="alert" ng-messages="companySignupForm.companyHealthPermit.$error" ng-if="companySignupForm.companyHealthPermit.$touched" ng-hide="companySignupForm.companyHealthPermit.$valid">
+						<p ng-message="required">Please enter your city issued, 9-digit
+							business Health Permit number</p>
+					</div>
 				</div>
 
-				<div class="form-group text-center">
-					<label for="healthPermit">Health Permit #</label>
-					<input type="text" class="form-control registration-input" id="exampleInputEmail1"
-							 aria-describedby="emailHelp" placeholder="123456789">
-					<small id="healthPermit" class="form-text text-muted">Please enter your city issued health
-						permit number
-					</small>
-				</div>
 			</form>
 			<button type="button" class="btn btn-secondary btn-lg registration-submit-button">Submit</button>
 		</div>
