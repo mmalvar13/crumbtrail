@@ -31,7 +31,7 @@ app.controller('ProfileController', ["$routeParams","$scope", "CompanyService", 
 
 		/* ---------------------- Read stuff: getFooByBars -------------------------------------------------------- */
 		/* ------------------------- CompanyService methods ------------------------------------------------------ */
-		$scope.getCompanyByCompanyId = function(companyId) {
+		$scope.fetchCompanyByCompanyId = function(companyId) {
 			CompanyService.fetchCompanyById(companyId)
 				.then(function(result) {
 					if(result.status.data === 200) {
@@ -42,7 +42,7 @@ app.controller('ProfileController', ["$routeParams","$scope", "CompanyService", 
 				})
 		};
 
-		$scope.getCompanyByCompanyName = function(companyName) {
+		$scope.fetchCompanyByCompanyName = function(companyName) {
 			CompanyService.fetchCompanyByCompanyName(companyName)
 				.then(function(result) {
 					if(result.status.data === 200) {
@@ -53,7 +53,7 @@ app.controller('ProfileController', ["$routeParams","$scope", "CompanyService", 
 				})
 		};
 
-		$scope.getCompanyByCompanyMenuText = function(companyMenuText) {
+		$scope.fetchCompanyByCompanyMenuText = function(companyMenuText) {
 			CompanyService.fetchCompanyByCompanyMenuText(companyMenuText)
 				.then(function(result) {
 					if(result.status.data === 200) {
@@ -64,7 +64,7 @@ app.controller('ProfileController', ["$routeParams","$scope", "CompanyService", 
 				})
 		};
 
-		$scope.getCompanyByCompanyDescription = function(companyDescription) {
+		$scope.fetchCompanyByCompanyDescription = function(companyDescription) {
 			CompanyService.fetchCompanyByCompanyDescription(companyDescription)
 				.then(function(result) {
 					if(result.status.data === 200) {
@@ -76,7 +76,7 @@ app.controller('ProfileController', ["$routeParams","$scope", "CompanyService", 
 		};
 
 		/*-------------------- EventService methods ----------------------------*/
-		$scope.getEventByEventId = function(eventId) {
+		$scope.fetchEventByEventId = function(eventId) {
 			EventService.fetchEventByEventId(eventId)
 				.then(function(result) {
 					if(result.status.data === 200) {
@@ -87,7 +87,7 @@ app.controller('ProfileController', ["$routeParams","$scope", "CompanyService", 
 				})
 		};
 
-		$scope.getEventByEventEndAndEventStart = function(eventEnd, eventStart) {
+		$scope.fetchEventByEventEndAndEventStart = function(eventEnd, eventStart) {
 			EventService.fetchEventByEventEndAndEventStart(eventEnd, eventStart)
 				.then(function(result) {
 					if(result.status.data === 200) {
@@ -98,7 +98,7 @@ app.controller('ProfileController', ["$routeParams","$scope", "CompanyService", 
 				})
 		};
 
-		$scope.getEventByEventTruckId = function(eventTruckId) {
+		$scope.fetchEventByEventTruckId = function(eventTruckId) {
 			EventService.fetchEventByEventTruckId(eventTruckId)
 				.then(function(result) {
 					if(result.status.data === 200) {
@@ -109,7 +109,7 @@ app.controller('ProfileController', ["$routeParams","$scope", "CompanyService", 
 				})
 		};
 
-		$scope.getEventByEventIdAndEventTruckId = function(eventId, eventTruckId) {
+		$scope.fetchEventByEventIdAndEventTruckId = function(eventId, eventTruckId) {
 			EventService.fetchEventByEventIdAndEventTruckId(eventTruckId)
 				.then(function(result) {
 					if(result.status.data === 200) {
@@ -121,7 +121,7 @@ app.controller('ProfileController', ["$routeParams","$scope", "CompanyService", 
 		};
 
 		/*--------------------------- ImageService Methods --------------------------------------*/
-		$scope.getImageByImageId = function(imageId) {
+		$scope.fetchImageByImageId = function(imageId) {
 			ImageService.fetchImageByImageId(imageId)
 				.then(function(result) {
 					if(result.status.data === 200) {
@@ -132,7 +132,7 @@ app.controller('ProfileController', ["$routeParams","$scope", "CompanyService", 
 				})
 		};
 
-		$scope.getImageByImageCompanyId = function(imageCompanyId) {
+		$scope.fetchImageByImageCompanyId = function(imageCompanyId) {
 			ImageService.fetchImageByImageCompanyId(imageCompanyId)
 				.then(function(result) {
 					if(result.status.data === 200) {
@@ -143,7 +143,7 @@ app.controller('ProfileController', ["$routeParams","$scope", "CompanyService", 
 				})
 		};
 
-		$scope.getImageByImageFileName = function(imageFileName) {
+		$scope.fetchImageByImageFileName = function(imageFileName) {
 			ImageService.fetchImageByImageFileName(imageFileName)
 				.then(function(result) {
 					if(result.status.data === 200) {
@@ -155,7 +155,7 @@ app.controller('ProfileController', ["$routeParams","$scope", "CompanyService", 
 		};
 
 		/*-------------------------- ProfileService Methods --------------------------------------*/
-		$scope.getProfileByProfileId = function(profileId) {
+		$scope.fetchProfileByProfileId = function(profileId) {
 			EventService.fetchProfileByProfileId(profileId)
 				.then(function(result) {
 					if(result.status.data === 200) {
@@ -265,7 +265,7 @@ app.controller('ProfileController', ["$routeParams","$scope", "CompanyService", 
 			}
 		};
 
-		$scope.
+		// $scope.
 
 
 
