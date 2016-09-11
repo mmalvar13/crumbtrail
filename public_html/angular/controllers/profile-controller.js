@@ -23,16 +23,13 @@ app.controller('ProfileController', ["$routeParams","$scope", "CompanyService", 
 					}
 				})
 		};
-		if($scope.profileData === null){
-			$scope.loadCompanyProfile();
-		}
 
 		/*end of what i mad*/
 
 		/* ---------------------- Read stuff: getFooByBars -------------------------------------------------------- */
 		/* ------------------------- CompanyService methods ------------------------------------------------------ */
 		$scope.fetchCompanyByCompanyId = function(companyId) {
-			CompanyService.fetchCompanyById(companyId)
+			CompanyService.fetchCompanyByCompanyId(companyId)
 				.then(function(result) {
 					if(result.status.data === 200) {
 						$scope.profileData = result.data.data;

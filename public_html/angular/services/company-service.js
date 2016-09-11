@@ -17,7 +17,7 @@ app.service("CompanyService", function($http, COMPANY_ENDPOINT){
 		return($http.get(getUrl()));
 	};
 
-	this.fetch = function(companyId){
+	this.fetchCompanyByCompanyId = function(companyId){
 		return($http.get(getUrlForId(companyId)));
 	};
 

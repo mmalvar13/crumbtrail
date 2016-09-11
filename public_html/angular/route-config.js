@@ -33,7 +33,7 @@ app.config(function($routeProvider, $locationProvider) {
 		})
 
 		// route for the truck map page
-		.when('/profile', {
+		.when('/profile/:companyId', {
 			controller: 'ProfileController',
 			templateUrl: 'angular/views/profile-view.php'
 		})
