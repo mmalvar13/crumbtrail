@@ -26,7 +26,7 @@
 			<!--------------company description-------------->
 			<div class="container description-box">
 				<div class="row text-center">
-					{{getCompanyByCompanyDescription}}
+					{{companyData.companyDescription}}
 <!--					<p>Buccaneer hail-shot haul wind gaff chase guns driver Sink me wherry barque Spanish Main. Driver prow-->
 <!--						Blimey bowsprit reef grog blossom weigh anchor lad Plate Fleet rope's end. Deadlights interloper-->
 <!--						rigging booty clipper lateen sail Privateer rum execution dock bounty.</p>-->
