@@ -265,8 +265,5 @@ app.controller('ProfileController', ["$routeParams","$scope", "CompanyService", 
 			}
 		};
 
-		// $scope.
-
-
 
 	}]);
