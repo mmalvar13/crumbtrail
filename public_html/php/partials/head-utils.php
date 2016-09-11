@@ -38,6 +38,7 @@
 		<!--Directives come before controllers-->
 		<script src="angular/directives/mainDirective.js"></script>
 		<script src="angular/directives/bootstrap-breakpoint.js"></script>
+		
 
 		<!--Load services-->
 

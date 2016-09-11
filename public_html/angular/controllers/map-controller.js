@@ -303,5 +303,23 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 	};
 
 
+// 		$scope.startServing = function() {
+//
+// 			ModalService.showModal({
+// 				templateUrl: "public_html/angular/views/start-serving-modal.php",
+// 				controller: "ModalController",
+// 				inputs: {
+// 					title: "Modal Controller"
+// 				}
+// 			}).then(function(modal) {
+// 				modal.element.modal();
+// 				modal.close.then(function(result) {
+//
+// 				});
+// 			});
+//
+// 		};
+//
+//
 }]);
 
