@@ -18,27 +18,31 @@ app.service("CompanyService", function($http, COMPANY_ENDPOINT){
 		return($http.get(getUrl()));
 	};
 
+
 	this.fetchCompanyByCompanyId = function(companyId){
 		return($http.get(getUrlForId(companyId)));
 	};
-
 
 
 	this.fetchCompanyByCompanyAccountCreatorId = function(companyAccountCreatorId){
 		return($http.get(getUrl() + "?companyAccountCreatorId=" + companyAccountCreatorId));
 	};
 
+
 	this.fetchCompanyByCompanyName = function(companyName){
 		return($http.get(getUrl() + "?companyName=" + companyName));
 	};
+
 
 	this.fetchCompanyMenuText = function(companyMenuText){
 		return($http.get(getUrl() + "?companyMenuText=" + companyMenuText));
 	};
 
+
 	this.fetchCompanyDescription = function(companyDescription){
 		return($http.get(getUrl() + "?companyDescription=" + companyDescription));
 	};
+
 
 	this.updateCompany = function(companyId, company){
 		return($http.put(getUrlforId(companyId, company)));

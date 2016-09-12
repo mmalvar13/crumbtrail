@@ -2,6 +2,17 @@
 app.config(function($routeProvider, $locationProvider) {
 	$routeProvider
 
+
+
+	//route for the company profile
+		.when("/company/:id", {
+			controller: "MisquoteController",
+			templateUrl: "angular/views/list-view.php"
+		})
+
+
+
+
 	// route for the home page
 		.when('/', {
 			controller: 'MapController',

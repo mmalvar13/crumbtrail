@@ -13,12 +13,15 @@
 				<div class="row">
 					<div class="col-md-8 col-md-offset-2">
 						<button type="button" class="btn btn-lg btn-block truck-map-start-serving-btn"
-								  data-toggle="modal" data-target="#startServing" ng-click="showStartServing()">START SERVING
+								  data-toggle="modal" data-target="#startServing" ng-click="showStartServing()" ng-hide="serving">START SERVING
+						</button>
+						<button type="button" class="btn btn-lg btn-block truck-map-stop-serving-btn"
+								  data-toggle="modal" data-target="#stopServing" ng-show="serving">STOP SERVING
 						</button>
 					</div>
 				</div>
 
-				<!--------Modal------->
+				<!--------START Modal------->
 				<div class="modal fade bd-example-modal-lg" id="startServing" tabindex="-1" role="dialog"
 					  aria-labelledby="myLargeModalLabel"
 					  aria-hidden="true">
@@ -74,17 +77,7 @@
 					</div>
 				</div>
 
-
-				<!---------------STOP SERVING------------------------------------->
-				<div class="row">
-					<div class="col-md-8 col-md-offset-2">
-						<button type="button" class="btn btn-lg btn-block truck-map-stop-serving-btn"
-								  data-toggle="modal" data-target="#stopServing">STOP SERVING
-						</button>
-					</div>
-				</div>
-
-				<!--------Modal------->
+				<!--------STOP Modal------->
 				<div class="modal fade bd-example-modal-lg" id="stopServing" tabindex="-1" role="dialog"
 					  aria-labelledby="myLargeModalLabel"
 					  aria-hidden="true">
@@ -132,6 +125,8 @@
 						</div>
 					</div>
 				</div>
+
+				<ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
 
 			</div>
 		</div>

@@ -32,6 +32,8 @@ app.controller('ListController', ["$routeParams","$location","$scope", "CompanyS
 
 	/*-------------------------------CompanyService---------------------------------*/
 
+
+
 	// Scope function to get all companies
 	$scope.getAllCompanys = function() {
 		console.log("in fetch all companies");

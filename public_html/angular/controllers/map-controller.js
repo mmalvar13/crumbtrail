@@ -1,13 +1,15 @@
-app.controller('MapController', ["$routeParams", "$scope", "CompanyService", "EventService", "ProfileService", "TruckService", "uiGmapGoogleMapApi",
-	function($routeParams, $scope, CompanyService, EventService, ProfileService, uiGmapGoogleMapApi) {
-
-	$scope.alerts = [];
+app.controller('MapController', ["$scope", "CompanyService", "EventService", "ProfileService", "TruckService", "uiGmapGoogleMapApi",
+	function($scope, CompanyService, EventService, ProfileService, uiGmapGoogleMapApi) {
+	//what do we add here on top?
+	$scope.serving = null;
 	$scope.map = {
-		center: { latitude: 35.0853, longitude: -106.6056},
-		zoom: 14
+		center: {
+			latitude: 35.0853,
+			longitude: -106.6056
+		},
+		zoom: 8
 	};
-
-
+	$scope.alerts = [];
 
 
 
@@ -246,23 +248,23 @@ app.controller('MapController', ["$routeParams", "$scope", "CompanyService", "Ev
 	};
 
 
-// 		$scope.startServing = function() {
-//
-// 			ModalService.showModal({
-// 				templateUrl: "public_html/angular/views/start-serving-modal.php",
-// 				controller: "ModalController",
-// 				inputs: {
-// 					title: "Modal Controller"
-// 				}
-// 			}).then(function(modal) {
-// 				modal.element.modal();
-// 				modal.close.then(function(result) {
-//
-// 				});
-// 			});
-//
-// 		};
-//
+		// $scope.showStartServing = function() {
+		//
+		// 	ModalService.showModal({
+		// 		templateUrl:
+		// 		controller: "ModalController",
+		// 		inputs: {
+		// 			title: "Modal Controller"
+		// 		}
+		// 	}).then(function(modal) {
+		// 		modal.element.modal();
+		// 		modal.close.then(function(result) {
+		//
+		// 		});
+		// 	});
+		//
+		// };
+
 //
 }]);
 
