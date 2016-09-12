@@ -1,5 +1,5 @@
-app.controller('MapController', ["$scope", "CompanyService", "EventService", "ProfileService", "TruckService", "uiGmapGoogleMapApi",
-	function($scope, CompanyService, EventService, ProfileService, uiGmapGoogleMapApi) {
+app.controller('MapController', ["$scope", "CompanyService", "EventService", "ProfileService", "TruckService", "GeoLocationService", "uiGmapGoogleMapApi",
+	function($scope, CompanyService, EventService, ProfileService, TruckService, GeoLocationService, uiGmapGoogleMapApi) {
 	//what do we add here on top?
 	$scope.serving = null;
 	$scope.map = {
@@ -16,9 +16,15 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 			longitude: -106.6056
 		}
 	};
+	$scope.geolocation = null;
 	$scope.alerts = [];
 
-
+	$scope.getGeolocation = function() {
+		GeoLocationService.getCurrentPosition()
+			.then(function(result) {
+				$scope.geolocation = result;
+			});
+	};
 
 		/*-------------------------CompanyService methods--------------------------------*/
 	$scope.getCompanyByCompanyId = function(companyId) {
@@ -228,7 +234,7 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 	};
 
 
-//first parameter map??
+	//first parameter map??
 	$scope.delete = function(map, validated) {
 		if(validated === true) {
 			TruckService.delete(map)
@@ -254,24 +260,9 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 		}
 	};
 
+	if ($scope.geolocation === null) {
+		$scope.getGeolocation();
+	}
 
-		// $scope.showStartServing = function() {
-		//
-		// 	ModalService.showModal({
-		// 		templateUrl:
-		// 		controller: "ModalController",
-		// 		inputs: {
-		// 			title: "Modal Controller"
-		// 		}
-		// 	}).then(function(modal) {
-		// 		modal.element.modal();
-		// 		modal.close.then(function(result) {
-		//
-		// 		});
-		// 	});
-		//
-		// };
-
-//
 }]);
 
