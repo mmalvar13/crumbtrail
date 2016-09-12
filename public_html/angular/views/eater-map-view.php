@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+
+<html ng-app="Crumbtrail">
 	<head>
 		<title>Eater Map View</title>
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
