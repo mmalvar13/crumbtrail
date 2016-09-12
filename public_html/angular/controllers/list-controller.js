@@ -1,9 +1,34 @@
-app.controller('ListController', ["$scope", "CompanyService", "EventService", "ImageService", function($scope, CompanyService, EventService, ImageService) {
+app.controller('ListController', ["$location","$scope", "CompanyService", "EventService", "ImageService", function($location, $scope, CompanyService, EventService, ImageService) {
 	$scope.alerts = [];
 	$scope.companyData = [];
 	$scope.eventData = [];
 	$scope.imageData = [];
+	$scope.companys = [];
 	console.log("at the beginning");
+
+
+
+
+	/*todo i just made this tonight 9/11 MA*/
+	$scope.loadCompanys = function(){
+		CompanyService.fetchAllCompanys()
+			.then(function(result){
+				if(result.data.status === 200){
+					$scope.companyData = result.data.data;
+					console.log($scope.companyData);
+				}else{
+					$scope.alerts[0] = {type:"danger", msg: result.data.message};
+				}
+			})
+	};
+
+	//reroute the page to the specified company
+	$scope.loadCompany = function(companyId){
+		$location.path("profile/" + companyId);
+	};
+
+	/*end of what i made tonight 9/11*/
+
 
 	/*-------------------------------CompanyService---------------------------------*/
 
@@ -234,5 +259,13 @@ app.controller('ListController', ["$scope", "CompanyService", "EventService", "I
 
 		}
 	};
+
+
+
+/*todo i added this based off of what we had in profile-controller*/
+
+	if($scope.companyData === null){
+		$scope.loadCompanys();
+	}
 
 }]);

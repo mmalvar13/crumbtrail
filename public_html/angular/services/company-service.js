@@ -14,7 +14,7 @@ app.service("CompanyService", function($http, COMPANY_ENDPOINT){
 	}
 
 	this.fetchAllCompanys = function(){
-		return($http.get(getUrl()));
+		return($http.get(getUrl())); //this was blank, added companyId to params
 	};
 
 	this.fetchCompanyByCompanyId = function(companyId){
