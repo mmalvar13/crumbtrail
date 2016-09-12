@@ -27,10 +27,12 @@
 		<link href="css/style.css" rel="stylesheet" type="text/css"/>
 
 
-		<!--Angular JS Libraries-->
+		<!--Google Maps API-->
+		<script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
 
+
+		<!-- Angular -->
 		<script type="text/javascript" src="angular/vendor/vendor.js"></script>
-
 
 		<!--Load OUR Angular files-->
 		<script src="angular/crumbtrail.js"></script>

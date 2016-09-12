@@ -1,3 +1,6 @@
+
+// <ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
+
 		<div id="map"></div>
 
 		<script async defer

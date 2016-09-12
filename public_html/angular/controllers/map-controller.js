@@ -1,7 +1,13 @@
-app.controller('MapController', ["$scope", "CompanyService", "EventService", "ProfileService", "TruckService", "uiGmapGoogleMapApi",
-	function($scope, CompanyService, EventService, ProfileService, uiGmapGoogleMapApi) {
-	//what do we add here on top?
+app.controller('MapController', ["$routeParams", "$scope", "CompanyService", "EventService", "ProfileService", "TruckService", "uiGmapGoogleMapApi",
+	function($routeParams, $scope, CompanyService, EventService, ProfileService, uiGmapGoogleMapApi) {
+
 	$scope.alerts = [];
+	$scope.map = {
+		center: { latitude: 35.0853, longitude: -106.6056},
+		zoom: 14
+	};
+
+
 
 
 
