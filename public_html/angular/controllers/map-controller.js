@@ -5,19 +5,18 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 
 /*
 	Order of events, for the eater map:
-		1. Find the user's current location.
+		1. Find the user's current location (getCurrentPosition).
 		2. Display the map, with the center = the user's current location.
 		3. Show the locations of active food trucks as markers.
 */
 	$scope.markers = [];		// These mark the locations of the active trucks.
 									// But markers is also shown below.
 
-	// need a $scope here ?????
 	navigator.geolocation.getCurrentPosition(function(position) {
 		$scope.map = {
 			center: {
-				latitude: position.coords.latitude,
-				longitude: position.coords.longitude
+				latitude: 45.0000,  //        position.coords.latitude,
+				longitude: 45.0000 //        position.coords.longitude
 			},
 			zoom: 8,
 			markers: [],	// Each marker is the location of an active food truck.
@@ -46,7 +45,6 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 		 };
 */
 
-
 /*
 		navigator.geolocation.getCurrentPosition(function(position) {
 			do_something(position.coords.latitude, position.coords.longitude);
@@ -57,18 +55,7 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 	// See eater-map-view.php; it needs something like this?
 	// map.center = navigator.geolocation.getCurrentPosition();
 
-
-
-
-		// uiGmapGoogleMapApi is a promise.
-		// The "then" callback function provides the google.maps object.
-		// uiGmapGoogleMapApi.then(function(maps) { ...
-
-
-
-
-
-	/*-------------------------CompanyService methods--------------------------------*/
+		/*-------------------------CompanyService methods--------------------------------*/
 	$scope.getCompanyByCompanyId = function(companyId) {
 		CompanyService.fetchCompanyById(companyId)
 			.then(function(result) {

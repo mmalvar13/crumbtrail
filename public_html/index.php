@@ -12,13 +12,11 @@
 			<!-------INSERT MAIN CONTENT------------>
 			<div ng-view></div>
 
-
 		</main>
 	</div>
+
 
 	<!--------------------BEGIN FOOTER-------------------------->
 	<?php require_once("php/partials/footer.php"); ?>
 	</body>
 </html>
-
-
