@@ -7,10 +7,7 @@
 			<hr class="truck-list-hr">
 			<p class="truck-list-text" >{{company.companyDescription}}</p>
 			<ul class="truck-list-ul">
-				<li>Tacos</li>
-				<li>Burritos</li>
-				<li>Nachos</li>
-				<li>People-meat</li>
+				<li>{{company.companyMenuText}}</li>
 			</ul>
 		</div>
 	</div>
