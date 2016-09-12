@@ -4,8 +4,8 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 	$scope.serving = null;
 	$scope.map = {
 		center: {
-			latitude: 35.0853,
-			longitude: -106.6056
+			latitude: 0,
+			longitude: 0
 		},
 		zoom: 14
 	};
@@ -16,13 +16,14 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 			longitude: -106.6056
 		}
 	};
-	$scope.geolocation = null;
+	$scope.geoLocation = null;
 	$scope.alerts = [];
 
-	$scope.getGeolocation = function() {
+	$scope.getGeoLocation = function() {
 		GeoLocationService.getCurrentPosition()
 			.then(function(result) {
-				$scope.geolocation = result;
+				$scope.geoLocation = result;
+				$scope.map.center = result.coords;
 			});
 	};
 
@@ -260,8 +261,8 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 		}
 	};
 
-	if ($scope.geolocation === null) {
-		$scope.getGeolocation();
+	if ($scope.geoLocation === null) {
+		$scope.getGeoLocation();
 	}
 
 }]);
