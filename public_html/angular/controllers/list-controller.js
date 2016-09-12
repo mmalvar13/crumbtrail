@@ -3,13 +3,35 @@ app.controller('ListController', ["$scope", "CompanyService", "EventService", "I
 	$scope.companyData = [];
 	$scope.eventData = [];
 	$scope.imageData = [];
+	console.log("at the beginning");
 
 	/*-------------------------------CompanyService---------------------------------*/
+
+	// Scope function to get all companies
+	$scope.getAllCompanys = function() {
+		console.log("in fetch all companies");
+		CompanyService.fetchAllCompanys()
+			.then(function(result) {
+
+
+				if(result.status.data === 200) {
+					$scope.companyData = result.data.data;
+
+				} else {
+					console.log("dafasdfasdf");
+					$scope.alerts[0] = {type: "danger", msg: result.data.message};
+				}
+			})
+	};
+
+
 	$scope.getCompanyByCompanyId = function(companyId) {
 		CompanyService.fetchCompanyById(companyId)
 			.then(function(result) {
+
 				if(result.status.data === 200) {
 					$scope.companyData = result.data.data;
+
 				} else {
 					$scope.alerts[0] = {type: "danger", msg: result.data.message};
 				}

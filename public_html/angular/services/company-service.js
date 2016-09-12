@@ -13,13 +13,15 @@ app.service("CompanyService", function($http, COMPANY_ENDPOINT){
 		return(getUrl() + companyId);
 	}
 
-	this.all = function(){
+	this.fetchAllCompanys = function(){
 		return($http.get(getUrl()));
 	};
 
 	this.fetchCompanyByCompanyId = function(companyId){
 		return($http.get(getUrlForId(companyId)));
 	};
+
+
 
 	this.fetchCompanyByCompanyAccountCreatorId = function(companyAccountCreatorId){
 		return($http.get(getUrl() + "?companyAccountCreatorId=" + companyAccountCreatorId));
