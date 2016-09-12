@@ -1,11 +1,11 @@
 <!----MAIN BODY --->
 <div class="row">
-	<div class="container">
+	<div class="container" ng-repeat="company in companyData">
 		<div class="truck-list-box truck-image">
 			<div class="truck-list-serving-icon"></div>
-			<h3 class="truck-h3" ng-repeat="company in companyData">{{company[0].companyName}}</h3>
+			<h3 class="truck-h3" ><a href="profile/{{company.companyId}}">{{company.companyName}}</a></h3>
 			<hr class="truck-list-hr">
-			<p class="truck-list-text" ng-repeat="company in companyData">{{company[0].companyDescription}}</p>
+			<p class="truck-list-text" >{{company.companyDescription}}</p>
 			<ul class="truck-list-ul">
 				<li>Tacos</li>
 				<li>Burritos</li>

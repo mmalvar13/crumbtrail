@@ -8,9 +8,8 @@ app.controller('ListController', ["$routeParams","$location","$scope", "CompanyS
 
 
 
-
 	/*todo i just made this tonight 9/11 MA*/
-	$scope.loadCompanys = function(){
+	(function(){
 		CompanyService.fetchAllCompanys()
 			.then(function(result){
 				if(result.data.status === 200){
@@ -20,7 +19,7 @@ app.controller('ListController', ["$routeParams","$location","$scope", "CompanyS
 					$scope.alerts[0] = {type:"danger", msg: result.data.message};
 				}
 			})
-	};
+	})();
 
 	//reroute the page to the specified company
 	$scope.loadCompany = function(companyId){
