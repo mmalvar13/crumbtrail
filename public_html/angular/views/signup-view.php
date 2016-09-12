@@ -24,17 +24,16 @@
 						</div>
 				</div>
 
-
 				<!----form groups start here----->
 				<!-----profile Email ----->
 				<div class="form-group text-center"
-					  ng-class="{'has-error': profileSignupForm.Email.$touched && profileSignupForm.Email">
-					<label for="Email">Email</label>
-					<input type="email" id="Email" name="Email" ng-model="formData.Email" ng-required="true"
+					  ng-class="{'has-error': signupForm.profileEmail.$touched && signupForm.profileEmail">
+					<label for="profileEmail">Email</label>
+					<input type="email" id="profileEmail" name="profileEmail" ng-model="signupData.profileEmail" ng-required="true"
 							 class="form-control registration-input"
 							 placeholder="Email">
 					<!-----form alerts----->
-					<div class="alert alert-danger" role="alert" ng-messages="profileSignupForm.Email.$error" ng-if="profileSignupForm.Email.$touched" ng-hide="profileSignupForm.Email.$valid">
+					<div class="alert alert-danger" role="alert" ng-messages="signupForm.profileEmail.$error" ng-if="signupForm.profileEmail.$touched" ng-hide="signupForm.profileEmail.$valid">
 						<p ng-message="required">Please Enter Your Email</p>
 					</div>
 				</div>
@@ -43,14 +42,14 @@
 				<!----form groups start here----->
 				<!-----profile phone ----->
 				<div class="form-group text-center"
-					  ng-class="{'has-error': profileSignupForm.phone.$touched && profileSignupForm.phone">
-					<label for="phone">phone</label>
-					<input type="tel" id="phone" name="phone" ng-model="formData.phone" ng-required="true"
+					  ng-class="{'has-error': signupForm.profilePhone.$touched && signupForm.profilePhone">
+					<label for="profilePhone">Phone Number</label>
+					<input type="tel" id="profilePhone" name="profilePhone" ng-model="signupData.profilePhone" ng-required="true"
 							 class="form-control registration-input"
-							 placeholder="phone">
+							 placeholder="Phone Number">
 					<!-----form alerts----->
-					<div class="alert alert-danger" role="alert" ng-messages="profileSignupForm.phone.$error" ng-if="profileSignupForm.phone.$touched" ng-hide="profileSignupForm.phone.$valid">
-						<p ng-message="required">Please Enter Your phone</p>
+					<div class="alert alert-danger" role="alert" ng-messages="signupForm.profilePhone.$error" ng-if="signupForm.profilePhone.$touched" ng-hide="signupForm.profilePhone.$valid">
+						<p ng-message="required">Please Enter Your Phone Number</p>
 					</div>
 				</div>
 
@@ -58,29 +57,29 @@
 
 				<!----form groups start here----->
 				<!-----profile password ----->
-				<div class="form-group"  ng-class="{'has-error': profileSignupForm.password.$touched && profileSignupForm.password">
-					<label for="password">Password</label>
-					<input type="password" id="password" name="password" ng-model="formData.password" ng-minlength="8" ng-required="true"
+				<div class="form-group"  ng-class="{'has-error': signupForm.profilePassword.$touched && signupForm.profilePassword">
+					<label for="profilePassword">Password</label>
+					<input type="password" id="profilePassword" name="profilePassword" ng-model="signupData.profilePassword" ng-minlength="6" ng-required="true"
 							 class="form-control registration-input"
-							 placeholder="password">
+							 placeholder="Password">
 					<!-----form alerts----->
-					<div class="alert alert-danger" role="alert" ng-messages="profileSignupForm.password.$error" ng-if="profileSignupForm.password.$touched" ng-hide="profileSignupForm.password.$valid">
-						<p ng-message="minlength">Password must be at least 8 characters long!</p>
-						<p ng-message="required">Please Enter Your password</p>
+					<div class="alert alert-danger" role="alert" ng-messages="signupForm.profilePassword.$error" ng-if="signupForm.profilePassword.$touched" ng-hide="signupForm.profilePassword.$valid">
+						<p ng-message="minlength">Password must be at least 6 characters long!</p>
+						<p ng-message="required">Please Enter Your Password</p>
 					</div>
 				</div>
 
 
 				<!----form groups start here----->
 				<!-----profile repeat repeatPassword ----->
-				<div class="form-group"  ng-class="{'has-error': profileSignupForm.repeatPassword.$touched && profileSignupForm.repeatPassword">
-					<label for="repeatPassword"> Repeat Password</label>
-					<input type="password" id="repeatPassword" name="repeatPassword" ng-model="formData.repeatPassword" ng-minlength="8" ng-required="true"
+				<div class="form-group"  ng-class="{'has-error': signupForm.confirmPassword.$touched && signupForm.confirmPassword">
+					<label for="confirmPassword"> Repeat Password</label>
+					<input type="password" id="confirmPassword" name="confirmPassword" ng-model="signupData.confirmPassword" ng-minlength="6" ng-required="true"
 							 class="form-control registration-input"
-							 placeholder=" Repeat Password">
+							 placeholder=" Confirm Password">
 					<!-----form alerts----->
-					<div class="alert alert-danger" role="alert" ng-messages="profileSignupForm.repeatPassword.$error" ng-if="profileSignupForm.repeatPassword.$touched" ng-hide="profileSignupForm.repeatPassword.$valid">
-						<p ng-message="minlength">Password must be at least 8 characters long!</p>
+					<div class="alert alert-danger" role="alert" ng-messages="signupForm.confirmPassword.$error" ng-if="signupForm.confirmPassword.$touched" ng-hide="signupForm.confirmPassword.$valid">
+						<p ng-message="minlength">Password must be at least 6 characters long!</p>
 						<p ng-message="required">Please repeat your password</p>
 					</div>
 				</div>
@@ -94,20 +93,20 @@
 		<div class="col-md-8 col-md-offset-2">
 
 			<!---------beginning of angular form------>
-			<form name="companySignupForm" id="companySignupForm" ng-controller="SignupController"
-					ng-submit="submit(formData, companySignupForm.$valid);" novalidate>
+			<form name="signupForm" id="signupForm" ng-controller="SignupController"
+					ng-submit="submit(signupData, signupForm.$valid);" novalidate>
 
 
 				<!----form groups start here----->
 				<!-----company name ----->
 				<div class="form-group text-center"
-					  ng-class="{'has-error': companySignupForm.companyName.$touched && companySignupForm.companyName">
+					  ng-class="{'has-error': signupForm.companyName.$touched && signupForm.companyName">
 					<label for="companyName">Company name</label>
-					<input type="text" id="companyName" name="companyName" ng-model="formData.companyName" ng-required="true"
+					<input type="text" id="companyName" name="companyName" ng-model="signupData.companyName" ng-required="true"
 							 class="form-control registration-input"
 							 placeholder="Company Name">
 					<!-----form alerts----->
-					<div class="alert alert-danger" role="alert" ng-messages="companySignupForm.companyName.$error" ng-if="companySignupForm.companyName.$touched" ng-hide="companySignupForm.companyName.$valid">
+					<div class="alert alert-danger" role="alert" ng-messages="signupForm.companyName.$error" ng-if="signupForm.companyName.$touched" ng-hide="signupForm.companyName.$valid">
 						<p ng-message="required">Please Enter Your Company Name</p>
 					</div>
 				</div>
@@ -116,13 +115,13 @@
 				<!----form groups start here----->
 				<!-----company email ----->
 				<div class="form-group text-center"
-					  ng-class="{'has-error': companySignupForm.companyEmail.$touched && companySignupForm.companyEmail">
+					  ng-class="{'has-error': signupForm.companyEmail.$touched && signupForm.companyEmail">
 					<label for="companyEmail">Company email</label>
-					<input type="text" id="companyEmail" name="companyEmail" ng-model="formData.companyEmail" ng-required="true"
+					<input type="text" id="companyEmail" name="companyEmail" ng-model="signupData.companyEmail" ng-required="true"
 							 class="form-control registration-input"
 							 placeholder="Company Email">
 					<!-----form alerts----->
-					<div class="alert alert-danger" role="alert" ng-messages="companySignupForm.companyEmail.$error" ng-if="companySignupForm.companyEmail.$touched" ng-hide="companySignupForm.companyEmail.$valid">
+					<div class="alert alert-danger" role="alert" ng-messages="signupForm.companyEmail.$error" ng-if="signupForm.companyEmail.$touched" ng-hide="signupForm.companyEmail.$valid">
 						<p ng-message="required">Please Enter Your Company Email</p>
 					</div>
 				</div>
