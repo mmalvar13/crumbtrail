@@ -7,20 +7,20 @@
 	<hr class="registration-hr">
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2">
-			<form name="profileSignupForm" id="profileSignupForm" ng-controller="SignupController"
-					ng-submit="submit(formData, profileSignupForm.$valid);" novalidate>
+			<form name="signupForm" id="signupForm" ng-controller="SignupController"
+					ng-submit="submit(signupData, signupForm.$valid);" novalidate>
 
 				<!----form groups start here----->
 				<!-----profile first name ----->
 				<div class="form-group text-center"
-					  ng-class="{'has-error': profileSignupForm.firstName.$touched && profileSignupForm.firstName">
-					<label for="firstName">First name</label>
-					<input type="text" id="firstName" name="firstName" ng-model="formData.firstName" ng-required="true"
+					  ng-class="{'has-error': signupForm.profileName.$touched && signupForm.profileName">
+					<label for="profileName">Your Name</label>
+					<input type="text" id="profileName" name="profileName" ng-model="signupData.profileName" ng-required="true"
 							 class="form-control registration-input"
-							 placeholder="First Name">
+							 placeholder="First and Last Name">
 					<!-----form alerts----->
-					<div class="alert alert-danger" role="alert" ng-messages="profileSignupForm.firstName.$error" ng-if="profileSignupForm.firstName.$touched" ng-hide="profileSignupForm.firstName.$valid">
-						<p ng-message="required">Please Enter Your first Name</p>
+					<div class="alert alert-danger" role="alert" ng-messages="signupForm.profileName.$error" ng-if="signupForm.profileName.$touched" ng-hide="signupForm.profileName.$valid">
+						<p ng-message="required">Please Enter Your Name</p>
 						</div>
 				</div>
 
