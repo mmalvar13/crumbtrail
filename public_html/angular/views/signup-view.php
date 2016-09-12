@@ -24,20 +24,6 @@
 						</div>
 				</div>
 
-				<!----form groups start here----->
-				<!-----profile LAST name ----->
-				<div class="form-group text-center"
-					  ng-class="{'has-error': profileSignupForm.lastName.$touched && profileSignupForm.lastName">
-					<label for="lastName">Last name</label>
-					<input type="text" id="lastName" name="lastName" ng-model="formData.lastName" ng-required="true"
-							 class="form-control registration-input"
-							 placeholder="Last Name">
-					<!-----form alerts----->
-					<div class="alert alert-danger" role="alert" ng-messages="profileSignupForm.lastName.$error" ng-if="profileSignupForm.lastName.$touched" ng-hide="profileSignupForm.lastName.$valid">
-						<p ng-message="required">Please Enter Your last Name</p>
-					</div>
-				</div>
-
 
 				<!----form groups start here----->
 				<!-----profile Email ----->
