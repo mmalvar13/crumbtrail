@@ -7,7 +7,7 @@
 	<div class="navbar navbar-default navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+				<button type="button" class="navbar-toggle" ng-click="navCollapsed = !navCollapsed">
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
@@ -24,7 +24,7 @@
 					</div>
 				</form>
 			</div>
-			<div class="navbar-collapse collapse">
+			<div class="navbar-collapse collapse" uib-collapse="navCollapsed">
 				<ul class="nav navbar-nav navbar-right">
 					<li class="active"><a href="index">Home</a></li>
 					<li><a href="truck-listing">See All Trucks</a></li>
