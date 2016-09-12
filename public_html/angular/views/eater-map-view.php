@@ -1,4 +1,9 @@
 		<div id="map"></div>
+
+		<script async defer
+				src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwGxzLKd5waiJFHo5nsZqZl3xJN64JxIc&callback=initMap">
+		</script>
+
 		<script>
 			function initMap() {
 				var map = new google.maps.Map(document.getElementById('map'), {
@@ -46,6 +51,4 @@
 
 		</script>
 
-		<script async defer
-				src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwGxzLKd5waiJFHo5nsZqZl3xJN64JxIc&callback=initMap">
-		</script>
+
