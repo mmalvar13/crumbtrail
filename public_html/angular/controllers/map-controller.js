@@ -7,7 +7,14 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 			latitude: 35.0853,
 			longitude: -106.6056
 		},
-		zoom: 8
+		zoom: 14
+	};
+	$scope.marker = {
+		id: 0, // This should be set to the event id
+		coords: {
+			latitude: 35.0853,
+			longitude: -106.6056
+		}
 	};
 	$scope.alerts = [];
 
