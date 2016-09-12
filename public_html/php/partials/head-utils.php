@@ -49,6 +49,7 @@
 		<script src="angular/services/companyapproved-service.js"></script>
 		<script src="angular/services/employee-service.js"></script>
 		<script src="angular/services/event-service.js"></script>
+		<script src="angular/services/geolocation-service.js"></script>
 		<script src="angular/services/image-service.js"></script>
 		<script src="angular/services/profile-service.js"></script>
 		<script src="angular/services/profileactivation-service.js"></script>
