@@ -252,7 +252,8 @@
 				</div>
 
 			</form>
-			<button type="button" class="btn btn-secondary btn-lg registration-submit-button">Submit</button>
+			<button type="submit" class="btn btn-secondary btn-lg registration-submit-button">Submit</button>
+			<button class="btn btn-lg btn-warning" type="reset" ng-click="reset();">Reset</button>
 		</div>
 	</div>
 </div>
