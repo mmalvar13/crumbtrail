@@ -47,7 +47,7 @@
 				</div>
 			</div>
 
-			<!-------menu box ------->
+			<!-------menu box    ------->
 			<div class="container menu-box">
 				<div class="row text-center">
 					<h3>Menu</h3>
