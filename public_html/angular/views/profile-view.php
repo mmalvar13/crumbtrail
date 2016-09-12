@@ -31,54 +31,19 @@
 
 					<!---------days of the week "loose" schedule------------>
 					<h3 class="week-schedule-h3 display-4">Monday</h3>
-					<div><p class="week-description">Extraordinary claims require extraordinary evidence! Finite but
-							unbounded. Birth, explorations take root and flourish Vangelis at the edge of forever made in the
-							interiors of collapsing stars a mote of dust suspended in a sunbeam with pretty stories for which
-							there's little good evidence. Circumnavigated Hypatia finite but unbounded circumnavigated. Bits of
-							moving fluff, ship of the imagination rich in heavy atoms take root and flourish, Hypatia tingling
-							of the spine. A very small stage in a vast cosmic arena.</p></div>
+					<div><p class="week-description">Hyder Park, 6-9 pm.</p></div>
 					<h3 class="week-schedule-h3">Tuesday</h3>
-					<p class="week-description">Extraordinary claims require extraordinary evidence! Finite but unbounded.
-						Birth, explorations take root and flourish Vangelis at the edge of forever made in the interiors of
-						collapsing stars a mote of dust suspended in a sunbeam with pretty stories for which there's little
-						good evidence. Circumnavigated Hypatia finite but unbounded circumnavigated. Bits of moving fluff,
-						ship of the imagination rich in heavy atoms take root and flourish, Hypatia tingling of the spine. A
-						very small stage in a vast cosmic arena.</p>
+					<p class="week-description">Central Park, noon-3 pm.</p>
 					<h3 class="week-schedule-h3">Wednesday</h3>
-					<p class="week-description">Extraordinary claims require extraordinary evidence! Finite but unbounded.
-						Birth, explorations take root and flourish Vangelis at the edge of forever made in the interiors of
-						collapsing stars a mote of dust suspended in a sunbeam with pretty stories for which there's little
-						good evidence. Circumnavigated Hypatia finite but unbounded circumnavigated. Bits of moving fluff,
-						ship of the imagination rich in heavy atoms take root and flourish, Hypatia tingling of the spine. A
-						very small stage in a vast cosmic arena.</p>
+					<p class="week-description">Central Park, noon-3 pm.</p>
 					<h3 class="week-schedule-h3">Thursday</h3>
-					<p class="week-description">Extraordinary claims require extraordinary evidence! Finite but unbounded.
-						Birth, explorations take root and flourish Vangelis at the edge of forever made in the interiors of
-						collapsing stars a mote of dust suspended in a sunbeam with pretty stories for which there's little
-						good evidence. Circumnavigated Hypatia finite but unbounded circumnavigated. Bits of moving fluff,
-						ship of the imagination rich in heavy atoms take root and flourish, Hypatia tingling of the spine. A
-						very small stage in a vast cosmic arena.</p>
+					<p class="week-description">Hyder Park, noon-3 pm.</p>
 					<h3 class="week-schedule-h3">Friday</h3>
-					<p class="week-description">Extraordinary claims require extraordinary evidence! Finite but unbounded.
-						Birth, explorations take root and flourish Vangelis at the edge of forever made in the interiors of
-						collapsing stars a mote of dust suspended in a sunbeam with pretty stories for which there's little
-						good evidence. Circumnavigated Hypatia finite but unbounded circumnavigated. Bits of moving fluff,
-						ship of the imagination rich in heavy atoms take root and flourish, Hypatia tingling of the spine. A
-						very small stage in a vast cosmic arena.</p>
+					<p class="week-description">Balloon Fiesta Park, noon-9 pm.</p>
 					<h3 class="week-schedule-h3">Saturday</h3>
-					<p class="week-description">Extraordinary claims require extraordinary evidence! Finite but unbounded.
-						Birth, explorations take root and flourish Vangelis at the edge of forever made in the interiors of
-						collapsing stars a mote of dust suspended in a sunbeam with pretty stories for which there's little
-						good evidence. Circumnavigated Hypatia finite but unbounded circumnavigated. Bits of moving fluff,
-						ship of the imagination rich in heavy atoms take root and flourish, Hypatia tingling of the spine. A
-						very small stage in a vast cosmic arena.</p>
+					<p class="week-description">Balloon Fiesta Park, noon-9 pm</p>
 					<h3 class="week-schedule-h3">Sunday</h3>
-					<p class="week-description">Extraordinary claims require extraordinary evidence! Finite but unbounded.
-						Birth, explorations take root and flourish Vangelis at the edge of forever made in the interiors of
-						collapsing stars a mote of dust suspended in a sunbeam with pretty stories for which there's little
-						good evidence. Circumnavigated Hypatia finite but unbounded circumnavigated. Bits of moving fluff,
-						ship of the imagination rich in heavy atoms take root and flourish, Hypatia tingling of the spine. A
-						very small stage in a vast cosmic arena.</p>
+					<p class="week-description">(closed)</p>
 				</div>
 			</div>
 
