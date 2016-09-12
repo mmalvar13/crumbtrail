@@ -18,7 +18,7 @@
 			<!-------------company image-------------------->
 			<div class="container">
 				<div class="row">
-					<img src="https://hd.unsplash.com/photo-1428542244207-0aaec316e609"
+					<img src="https://arlingtonva.s3.amazonaws.com/wp-content/uploads/sites/25/2013/12/foodtruck.jpeg"
 						  class="img-responsive img-thumbnail profile-image">
 				</div>
 			</div>

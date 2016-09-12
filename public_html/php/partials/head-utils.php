@@ -79,6 +79,6 @@
 
 
 		<title>
-			CrumbTrail   <!----add cool icon for tabs here ------->
+			CrumbTrail
 		</title>
 	</head>
