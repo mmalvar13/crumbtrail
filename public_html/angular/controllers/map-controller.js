@@ -18,6 +18,9 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 	};
 	$scope.geoLocation = null;
 	$scope.alerts = [];
+	$scope.eaterMarkerId = {
+		id: 0 // this is a required filed for the eater marker
+	}
 
 	$scope.getGeoLocation = function() {
 		GeoLocationService.getCurrentPosition()
