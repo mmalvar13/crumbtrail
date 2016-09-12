@@ -1,4 +1,4 @@
-app.controller('ListController', ["$location","$scope", "CompanyService", "EventService", "ImageService", function($location, $scope, CompanyService, EventService, ImageService) {
+app.controller('ListController', ["$routeParams","$location","$scope", "CompanyService", "EventService", "ImageService", function($routeParams, $location, $scope, CompanyService, EventService, ImageService) {
 	$scope.alerts = [];
 	$scope.companyData = [];
 	$scope.eventData = [];
@@ -28,6 +28,7 @@ app.controller('ListController', ["$location","$scope", "CompanyService", "Event
 	};
 
 	/*end of what i made tonight 9/11*/
+
 
 
 	/*-------------------------------CompanyService---------------------------------*/
