@@ -1,4 +1,4 @@
-app.controller('SignupController', ["$scope", "SignupService", function($scope, SignupService){
+app.controller('SignupController', ["$scope","$window", "SignupService", function($scope, $window, SignupService){
 	$scope.alerts = [];
 	$scope.activationData = {}; //is this an arbitrary name?
 
