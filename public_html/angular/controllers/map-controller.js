@@ -8,8 +8,8 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 
 	$scope.map = {
 		center: {
-			latitude: 35.0850,
-			longitude: -106.6441
+			latitude: 0,
+			longitude: 0
 		},
 		zoom: 14
 	};
@@ -17,8 +17,8 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 	$scope.marker = {
 		id: 0, // This should be set to the event id
 		coords: {
-			latitude: 35.0850,
-			longitude: -106.6441
+			latitude: 0,
+			longitude: 0
 		}
 	};
 
