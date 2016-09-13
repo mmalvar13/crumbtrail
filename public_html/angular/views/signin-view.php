@@ -68,7 +68,7 @@
 		<!----------NEED TO REGISTER SECTION-------->
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
-				<button type="button" class="btn btn-outline-warning btn-lg btn-block truck-login-register-btn"><a
+				<button type="button" class="btn btn-lg btn-block truck-login-register-btn"><a
 						href="sign-up">Need
 						to register your company?
 					</a></button>
@@ -76,7 +76,7 @@
 		</div>
 
 </div>
-</div> <!------sfooter------>
+<!--</div>--> <!------sfooter------>
 
 
 

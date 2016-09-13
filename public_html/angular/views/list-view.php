@@ -2,7 +2,7 @@
 
 <div class="row">
 	<div class="container-fluid truck-body">
-		<div class="container">
+<!--		<div class="container">-->
 		<h1 id="all-trucks">All Food Trucks</h1>
 			<hr class="truck-list-hr">
 		<div class="col-md-6" ng-repeat="company in companyData">
@@ -16,7 +16,7 @@
 				</ul>
 			</div>
 		</div>
-		</div>
+<!--		</div>-->
 	</div>
 </div>
 

@@ -16,13 +16,13 @@
 
 /*add padding to body so content isnt stuck behind navbar when on small screen*/
 @media (max-width: 768px){
-	body{padding-top:60px;
+	body{padding-top:50px;
 	}
 }
 
 /*add (slightly less) padding to body when on large screen*/
 @media (min-width: 769px){
-	body{padding-top: 60px;
+	body{padding-top: 50px;
 	}
 }
 
@@ -273,11 +273,11 @@ p {
 
 .truck-login-register-btn{
 	margin-top: 2rem;
-	background: none;
+	background: gainsboro;
 	border: 0.1rem solid #BC59D7;
 }
 
-.truck-login-register-btn:hover{
+.truck-login-register-btn a:hover{
 	background:gainsboro;
 	color: #BC59D7;
 	text-decoration: none;

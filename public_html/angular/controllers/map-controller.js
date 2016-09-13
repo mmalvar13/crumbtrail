@@ -4,7 +4,9 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 		$scope.serving = null;
 		$scope.editing = false;
 		$scope.trucks = [];
+		$scope.selectedTruckId = null;
 		$scope.events = [];
+		$scope.currentEvent = {};
 
 
 		$scope.map = {
@@ -45,6 +47,17 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 			EventService.createEvent($scope.event);
 			EventService.update($scope.event.eventId, $scope.event);
 
+		};
+
+		$scope.updateMap = function(selectedTruckId) {
+			EventService.fetchEventByTruckId(selectedTruckId)
+				.then(function(result){
+					if(result.status.data === 200) {
+						$scope.currentEvent = result.data.data;
+					} else {
+						$scope.alerts[0] = {type: "danger", msg: result.data.message};
+					}
+				});
 		};
 
 		/*-------------------------CompanyService methods--------------------------------*/

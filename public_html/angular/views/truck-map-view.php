@@ -20,15 +20,15 @@
 				</div>
 				<div class="checkbox">
 					<label for="truck">Select which truck you're serving from</label>
-					<select class="form-control" id="truck" name="truck" ng-model="truck">
-						<option ng-repeat="truck in trucks" value="1">{{truck.truckId}}</option>
-						<!--									<option value="2">Truck 2</option>-->
+					<select class="form-control" id="selectedTruckId" name="selectedTruckId" ng-model="selectedTruckId" ng-change="updateMap(selectedTruckId);" >
+						<option ng-repeat="truck in trucks" value="{{truck.truckId}}">Truck #: {{truck.truckId}}</option>
+
 					</select>
 				</div>
 				<h4>Current Location:</h4>
 				<ui-gmap-google-map center='map.center' zoom='map.zoom'>
-					<ui-gmap-marker coords="marker.coords" options="marker.options" events="marker.events" idkey="marker.id">
-						{{event.eventId}} <!--to show the current truck's event, or none if there is no event-->
+					<ui-gmap-marker coords="currentEvent.coords" idkey="currentEvent.id">
+						 <!--to show the current truck's event, or none if there is no event-->
 					</ui-gmap-marker>
 				</ui-gmap-google-map>
 				<br>
@@ -144,7 +144,7 @@
 	</div>
 
 	<ui-gmap-google-map ng-hide="editing" center='map.center' zoom='map.zoom'>
-		<ui-gmap-marker ng-repeat="event in events" coords="marker.coords" idkey="marker.id">
+		<ui-gmap-marker ng-repeat="event in events" coords="event.eventLocation" idkey="event.eventId">
 		</ui-gmap-marker>
 	</ui-gmap-google-map>
 
