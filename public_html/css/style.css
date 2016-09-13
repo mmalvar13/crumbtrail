@@ -129,7 +129,7 @@
 h1{
 	font-family: 'Fascinate Inline', cursive;
 	color: #f05e56;
-}
+	text-align: center}
 
 h3{
 	font-family: 'Nixie One', cursive;
@@ -299,12 +299,23 @@ p {
 }
 
 .registration-input{
-	background-color: #FFC468;
+	background-color: #D8D2D0;
+	color: #72b352;
+	border: 0.1rem solid #72b352;
 }
 
+.registration-reset-btn{
+	margin-bottom: 2rem;
+	border: 0.1rem solid black;
+}
+
+.registration-reset-btn:hover{
+	color:#f05e56;
+}
 .registration-submit-button{
-	color: orange;
-	border: 0.1rem solid orange;
+	color: #f05e56;
+	border: 0.1rem solid #f05e56;
+	margin-bottom: 2rem;
 }
 
 

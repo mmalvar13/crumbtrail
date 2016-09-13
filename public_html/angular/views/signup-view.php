@@ -282,7 +282,7 @@
 			<!--			<button class="btn btn-lg btn-info login-submit btn-block" type="submit">Submit</button>-->
 
 			<button type="submit" class="btn btn-secondary btn-lg registration-submit-button">Submit</button>
-			<button class="btn btn-lg btn-warning" type="reset" ng-click="reset();">Reset</button>
+			<button class="btn btn-lg registration-reset-btn" type="reset" ng-click="reset();">Reset</button>
 		</div>
 	</div>
 </div>
