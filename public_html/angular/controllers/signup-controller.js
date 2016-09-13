@@ -15,7 +15,7 @@ app.controller('SignupController', ["$scope","$window", "SignupService", functio
 					if(result.data.status === 200){
 						$scope.alerts[0] = {type: "success", msg: result.data.message};
 						console.log("good status");
-						$window.location.href="truck-map";
+						$window.location.href = "truck-map";
 					}else{
 						console.log(result.data.message);
 						$scope.alerts[0] = {type:"danger", msg: result.data.message};
@@ -34,13 +34,24 @@ app.controller('SignupController', ["$scope","$window", "SignupService", functio
 	/*
 	 * method to reset form data when the submit and cancel buttons are pressed
 	 * */
-	$scope.reset = function(){
-		$scope.signupData = {profileName:null, profileEmail: null,  profilePhone:null, profilePassword: null, confirmProfilePassword:null, companyName:null, companyEmail:null, companyPhone:null, companyStreet:null, companyStreet2:null, companyCity:null, companyState:null, companyZip:null, companyLicense:null, companyPermit:null};
-		$scope.signupForm.$setUntouched();
-		$scope.signupForm.$setPristine();
+	// $scope.reset = function(){
+	// 	$scope.signupData = {profileName:null, profileEmail: null,  profilePhone:null, profilePassword: null, confirmProfilePassword:null, companyName:null, companyEmail:null, companyPhone:null, companyStreet:null, companyStreet2:null, companyCity:null, companyState:null, companyZip:null, companyLicense:null, companyPermit:null};
+	// 	$scope.signupForm.$setUntouched();
+	// 	$scope.signupForm.$setPristine();
+	// };
+
+	/*method to process the action from the submit button*/
+	$scope.submit = function(signupData, validated){
+		if(validated === true){
+			$scope.alerts[0]={
+				type: "success", msg: "You have submitted this form."
+			};
+		}else{
+			$scope.alerts[0] = {
+				type:"danger", msg: "the form has invalid data, please go back and resubmit with the correct data"
+			};
+		}
+		$scope.reset();
 	};
-
-
-
 
 }]);

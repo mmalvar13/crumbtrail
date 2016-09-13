@@ -15,13 +15,15 @@
 				<div class="form-group text-center"
 					  ng-class="{'has-error': signupForm.profileName.$touched && signupForm.profileName.$invalid}">
 					<label for="profileName">Your Name</label>
-					<input type="text" id="profileName" name="profileName" ng-model="signupData.profileName" ng-required="true"
+					<input type="text" id="profileName" name="profileName" ng-model="signupData.profileName"
+							 ng-required="true"
 							 class="form-control registration-input"
 							 placeholder="First and Last Name">
 					<!-----form alerts----->
-					<div class="alert alert-danger" role="alert" ng-messages="signupForm.profileName.$error" ng-if="signupForm.profileName.$touched" ng-hide="signupForm.profileName.$valid">
+					<div class="alert alert-danger" role="alert" ng-messages="signupForm.profileName.$error"
+						  ng-if="signupForm.profileName.$touched" ng-hide="signupForm.profileName.$valid">
 						<p ng-message="required">Please Enter Your Name</p>
-						</div>
+					</div>
 				</div>
 
 				<!----form groups start here----->
@@ -29,11 +31,13 @@
 				<div class="form-group text-center"
 					  ng-class="{'has-error': signupForm.profileEmail.$touched && signupForm.profileEmail.$invalid}">
 					<label for="profileEmail">Email</label>
-					<input type="email" id="profileEmail" name="profileEmail" ng-model="signupData.profileEmail" ng-required="true"
+					<input type="email" id="profileEmail" name="profileEmail" ng-model="signupData.profileEmail"
+							 ng-required="true"
 							 class="form-control registration-input"
 							 placeholder="Email">
 					<!-----form alerts----->
-					<div class="alert alert-danger" role="alert" ng-messages="signupForm.profileEmail.$error" ng-if="signupForm.profileEmail.$touched" ng-hide="signupForm.profileEmail.$valid">
+					<div class="alert alert-danger" role="alert" ng-messages="signupForm.profileEmail.$error"
+						  ng-if="signupForm.profileEmail.$touched" ng-hide="signupForm.profileEmail.$valid">
 						<p ng-message="required">Please Enter Your Email</p>
 					</div>
 				</div>
@@ -44,26 +48,30 @@
 				<div class="form-group text-center"
 					  ng-class="{'has-error': signupForm.profilePhone.$touched && signupForm.profilePhone.$invalid}">
 					<label for="profilePhone">Phone Number</label>
-					<input type="tel" id="profilePhone" name="profilePhone" ng-model="signupData.profilePhone" ng-required="true"
+					<input type="tel" id="profilePhone" name="profilePhone" ng-model="signupData.profilePhone"
+							 ng-required="true"
 							 class="form-control registration-input"
 							 placeholder="Phone Number">
 					<!-----form alerts----->
-					<div class="alert alert-danger" role="alert" ng-messages="signupForm.profilePhone.$error" ng-if="signupForm.profilePhone.$touched" ng-hide="signupForm.profilePhone.$valid">
+					<div class="alert alert-danger" role="alert" ng-messages="signupForm.profilePhone.$error"
+						  ng-if="signupForm.profilePhone.$touched" ng-hide="signupForm.profilePhone.$valid">
 						<p ng-message="required">Please Enter Your Phone Number</p>
 					</div>
 				</div>
 
 
-
 				<!----form groups start here----->
 				<!-----profile password ----->
-				<div class="form-group"  ng-class="{'has-error': signupForm.profilePassword.$touched && signupForm.profilePassword.$invalid}">
+				<div class="form-group"
+					  ng-class="{'has-error': signupForm.profilePassword.$touched && signupForm.profilePassword.$invalid}">
 					<label for="profilePassword">Password</label>
-					<input type="password" id="profilePassword" name="profilePassword" ng-model="signupData.profilePassword" ng-minlength="6" ng-required="true"
+					<input type="password" id="profilePassword" name="profilePassword" ng-model="signupData.profilePassword"
+							 ng-minlength="6" ng-required="true"
 							 class="form-control registration-input"
 							 placeholder="Password">
 					<!-----form alerts----->
-					<div class="alert alert-danger" role="alert" ng-messages="signupForm.profilePassword.$error" ng-if="signupForm.profilePassword.$touched" ng-hide="signupForm.profilePassword.$valid">
+					<div class="alert alert-danger" role="alert" ng-messages="signupForm.profilePassword.$error"
+						  ng-if="signupForm.profilePassword.$touched" ng-hide="signupForm.profilePassword.$valid">
 						<p ng-message="minlength">Password must be at least 6 characters long!</p>
 						<p ng-message="required">Please Enter Your Password</p>
 					</div>
@@ -72,13 +80,16 @@
 
 				<!----form groups start here----->
 				<!-----profile repeat repeatPassword ----->
-				<div class="form-group"  ng-class="{'has-error': signupForm.confirmPassword.$touched && signupForm.confirmPassword.$invalid}">
+				<div class="form-group"
+					  ng-class="{'has-error': signupForm.confirmPassword.$touched && signupForm.confirmPassword.$invalid}">
 					<label for="confirmPassword"> Repeat Password</label>
-					<input type="password" id="confirmPassword" name="confirmPassword" ng-model="signupData.confirmPassword" ng-minlength="6" ng-required="true"
+					<input type="password" id="confirmPassword" name="confirmPassword" ng-model="signupData.confirmPassword"
+							 ng-minlength="6" ng-required="true"
 							 class="form-control registration-input"
 							 placeholder=" Confirm Password">
 					<!-----form alerts----->
-					<div class="alert alert-danger" role="alert" ng-messages="signupForm.confirmPassword.$error" ng-if="signupForm.confirmPassword.$touched" ng-hide="signupForm.confirmPassword.$valid">
+					<div class="alert alert-danger" role="alert" ng-messages="signupForm.confirmPassword.$error"
+						  ng-if="signupForm.confirmPassword.$touched" ng-hide="signupForm.confirmPassword.$valid">
 						<p ng-message="minlength">Password must be at least 6 characters long!</p>
 						<p ng-message="required">Please repeat your password</p>
 					</div>
@@ -102,11 +113,13 @@
 				<div class="form-group text-center"
 					  ng-class="{'has-error': signupForm.companyName.$touched && signupForm.companyName.$invalid}">
 					<label for="companyName">Company name</label>
-					<input type="text" id="companyName" name="companyName" ng-model="signupData.companyName" ng-required="true"
+					<input type="text" id="companyName" name="companyName" ng-model="signupData.companyName"
+							 ng-required="true"
 							 class="form-control registration-input"
 							 placeholder="Company Name">
 					<!-----form alerts----->
-					<div class="alert alert-danger" role="alert" ng-messages="signupForm.companyName.$error" ng-if="signupForm.companyName.$touched" ng-hide="signupForm.companyName.$valid">
+					<div class="alert alert-danger" role="alert" ng-messages="signupForm.companyName.$error"
+						  ng-if="signupForm.companyName.$touched" ng-hide="signupForm.companyName.$valid">
 						<p ng-message="required">Please Enter Your Company Name</p>
 					</div>
 				</div>
@@ -117,26 +130,30 @@
 				<div class="form-group text-center"
 					  ng-class="{'has-error': signupForm.companyEmail.$touched && signupForm.companyEmail.$invalid}">
 					<label for="companyEmail">Company email</label>
-					<input type="text" id="companyEmail" name="companyEmail" ng-model="signupData.companyEmail" ng-required="true"
+					<input type="text" id="companyEmail" name="companyEmail" ng-model="signupData.companyEmail"
+							 ng-required="true"
 							 class="form-control registration-input"
 							 placeholder="Company Email">
 					<!-----form alerts----->
-					<div class="alert alert-danger" role="alert" ng-messages="signupForm.companyEmail.$error" ng-if="signupForm.companyEmail.$touched" ng-hide="signupForm.companyEmail.$valid">
+					<div class="alert alert-danger" role="alert" ng-messages="signupForm.companyEmail.$error"
+						  ng-if="signupForm.companyEmail.$touched" ng-hide="signupForm.companyEmail.$valid">
 						<p ng-message="required">Please Enter Your Company Email</p>
 					</div>
 				</div>
 
 				<!----form groups start here----->
 				<!-----company phone ----->
-<!--				NEED TO ADD minlength on the phones!-->
+				<!--				NEED TO ADD minlength on the phones!-->
 				<div class="form-group text-center"
 					  ng-class="{'has-error': signupForm.companyPhone.$touched && signupForm.companyPhone.$invalid}">
 					<label for="companyPhone">Company Phone</label>
-					<input type="tel" id="companyPhone" name="companyPhone" ng-model="signupData.companyPhone" ng-required="true"
+					<input type="tel" id="companyPhone" name="companyPhone" ng-model="signupData.companyPhone"
+							 ng-required="true"
 							 class="form-control registration-input"
 							 placeholder="Company Phone">
 					<!-----form alerts----->
-					<div class="alert alert-danger" role="alert" ng-messages="signupForm.companyPhone.$error" ng-if="signupForm.companyPhone.$touched" ng-hide="signupForm.companyPhone.$valid">
+					<div class="alert alert-danger" role="alert" ng-messages="signupForm.companyPhone.$error"
+						  ng-if="signupForm.companyPhone.$touched" ng-hide="signupForm.companyPhone.$valid">
 						<p ng-message="required">Please Enter Your Company Phone</p>
 					</div>
 				</div>
@@ -147,11 +164,13 @@
 				<div class="form-group text-center"
 					  ng-class="{'has-error': signupForm.companyStreet.$touched && signupForm.companyStreet.$invalid}">
 					<label for="companyStreet">Company Street</label>
-					<input type="text" id="companyStreet" name="companyStreet" ng-model="signupData.companyStreet" ng-required="true"
+					<input type="text" id="companyStreet" name="companyStreet" ng-model="signupData.companyStreet"
+							 ng-required="true"
 							 class="form-control registration-input"
 							 placeholder="Company Street">
 					<!-----form alerts----->
-					<div class="alert alert-danger" role="alert" ng-messages="signupForm.companyStreet.$error" ng-if="signupForm.companyStreet.$touched" ng-hide="signupForm.companyStreet.$valid">
+					<div class="alert alert-danger" role="alert" ng-messages="signupForm.companyStreet.$error"
+						  ng-if="signupForm.companyStreet.$touched" ng-hide="signupForm.companyStreet.$valid">
 						<p ng-message="required">Please Enter Your Company Street</p>
 					</div>
 				</div>
@@ -166,9 +185,9 @@
 							 class="form-control registration-input"
 							 placeholder="Company Street 2">
 					<!-----form alerts----->
-<!--					<div class="alert alert-danger" role="alert" ng-messages="signupForm.companyStreet2.$error" ng-if="signupForm.companyStreet2.$touched" ng-hide="signupForm.companyStreet2.$valid">-->
-<!--						<p ng-message="required">Please Enter Your Company Street 2</p>-->
-<!--					</div>-->
+					<!--					<div class="alert alert-danger" role="alert" ng-messages="signupForm.companyStreet2.$error" ng-if="signupForm.companyStreet2.$touched" ng-hide="signupForm.companyStreet2.$valid">-->
+					<!--						<p ng-message="required">Please Enter Your Company Street 2</p>-->
+					<!--					</div>-->
 				</div>
 
 
@@ -177,11 +196,13 @@
 				<div class="form-group text-center"
 					  ng-class="{'has-error': signupForm.companyCity.$touched && signupForm.companyCity.$invalid}">
 					<label for="companyCity">Company City</label>
-					<input type="text" id="companyCity" name="companyCity" ng-model="signupData.companyCity" ng-required="true"
+					<input type="text" id="companyCity" name="companyCity" ng-model="signupData.companyCity"
+							 ng-required="true"
 							 class="form-control registration-input"
 							 placeholder="Company City">
 					<!-----form alerts----->
-					<div class="alert alert-danger" role="alert" ng-messages="signupForm.companyCity.$error" ng-if="signupForm.companyCity.$touched" ng-hide="signupForm.companyCity.$valid">
+					<div class="alert alert-danger" role="alert" ng-messages="signupForm.companyCity.$error"
+						  ng-if="signupForm.companyCity.$touched" ng-hide="signupForm.companyCity.$valid">
 						<p ng-message="required">Please Enter Your Company City</p>
 					</div>
 				</div>
@@ -192,15 +213,16 @@
 				<div class="form-group text-center"
 					  ng-class="{'has-error': signupForm.companyState.$touched && signupForm.companyState.$invalid}">
 					<label for="companyState">Company State</label>
-					<input type="text" id="companyState" name="companyState" ng-model="signupData.companyState" ng-required="true"
+					<input type="text" id="companyState" name="companyState" ng-model="signupData.companyState"
+							 ng-required="true"
 							 class="form-control registration-input"
 							 placeholder="Company State">
 					<!-----form alerts----->
-					<div class="alert alert-danger" role="alert" ng-messages="signupForm.companyState.$error" ng-if="signupForm.companyState.$touched" ng-hide="signupForm.companyState.$valid">
+					<div class="alert alert-danger" role="alert" ng-messages="signupForm.companyState.$error"
+						  ng-if="signupForm.companyState.$touched" ng-hide="signupForm.companyState.$valid">
 						<p ng-message="required">Please Enter Your Company State</p>
 					</div>
 				</div>
-
 
 
 				<!----form groups start here----->
@@ -212,7 +234,8 @@
 							 class="form-control registration-input"
 							 placeholder="Company Zip">
 					<!-----form alerts----->
-					<div class="alert alert-danger" role="alert" ng-messages="signupForm.companyZip.$error" ng-if="signupForm.companyZip.$touched" ng-hide="signupForm.companyZip.$valid">
+					<div class="alert alert-danger" role="alert" ng-messages="signupForm.companyZip.$error"
+						  ng-if="signupForm.companyZip.$touched" ng-hide="signupForm.companyZip.$valid">
 						<p ng-message="required">Please Enter Your Company Zip</p>
 					</div>
 				</div>
@@ -222,11 +245,13 @@
 				<div class="form-group text-center"
 					  ng-class="{'has-error': signupForm.companyLicense.$touched && signupForm.companyLicense.$invalid}">
 					<label for="companyLicense">Company License</label>
-					<input type="text" id="companyLicense" name="companyLicense" ng-model="signupData.companyLicense" ng-minlength="9" ng-maxlength="9" ng-required="true"
+					<input type="text" id="companyLicense" name="companyLicense" ng-model="signupData.companyLicense"
+							 ng-minlength="9" ng-maxlength="9" ng-required="true"
 							 class="form-control registration-input"
 							 placeholder="Company License">
 					<!-----form alerts----->
-					<div class="alert alert-danger" role="alert" ng-messages="signupForm.companyLicense.$error" ng-if="signupForm.companyLicense.$touched" ng-hide="signupForm.companyLicense.$valid">
+					<div class="alert alert-danger" role="alert" ng-messages="signupForm.companyLicense.$error"
+						  ng-if="signupForm.companyLicense.$touched" ng-hide="signupForm.companyLicense.$valid">
 						<p ng-message="required">Please enter your city issued, 9-digit
 							business license number</p>
 						<p ng-minlength="required">Please enter your city issued, 9-digit
@@ -241,20 +266,22 @@
 				<div class="form-group text-center"
 					  ng-class="{'has-error': signupForm.companyPermit.$touched && signupForm.companyPermit.$invalid}">
 					<label for="companyPermit">Company Health Permit</label>
-					<input type="text" id="companyPermit" name="companyPermit" ng-model="signupData.companyPermit" ng-minlength="9" ng-maxlength="9" ng-required="true"
+					<input type="text" id="companyPermit" name="companyPermit" ng-model="signupData.companyPermit"
+							 ng-minlength="9" ng-maxlength="9" ng-required="true"
 							 class="form-control registration-input"
 							 placeholder="Company Health Permit">
 					<!-----form alerts----->
-					<div class="alert alert-danger" role="alert" ng-messages="signupForm.companyPermit.$error" ng-if="signupForm.companyPermit.$touched" ng-hide="signupForm.companyPermit.$valid">
+					<div class="alert alert-danger" role="alert" ng-messages="signupForm.companyPermit.$error"
+						  ng-if="signupForm.companyPermit.$touched" ng-hide="signupForm.companyPermit.$valid">
 						<p ng-message="required">Please enter your city issued, 9-digit
 							business Health Permit number</p>
 					</div>
 				</div>
 
 			</form>
-			<button class="btn btn-lg btn-info login-submit btn-block" type="submit">Submit</button>
+			<!--			<button class="btn btn-lg btn-info login-submit btn-block" type="submit">Submit</button>-->
 
-<!--			<button type="submit" class="btn btn-secondary btn-lg registration-submit-button">Submit</button>-->
+			<button type="submit" class="btn btn-secondary btn-lg registration-submit-button">Submit</button>
 			<button class="btn btn-lg btn-warning" type="reset" ng-click="reset();">Reset</button>
 		</div>
 	</div>
