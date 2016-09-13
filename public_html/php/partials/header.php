@@ -12,7 +12,8 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand hidden-xs" href="#"><img src="/public_html/images/crumbtraillogo.png" class="img-responsive"></a>
+<!--				<a href="#" class="navbar-left"><img src="../../images/crumbtraillogo.png"></a>-->
+				<a class=" navbar-brand hidden-xs" href="#"><img  class="logo-img" src="images/crumbtraillogo.png" class="img-responsive"></a>
 				<a class="navbar-brand visible-xs" href="#">CT</a>
 				<form class="navbar-form pull-left" role="search">
 					<div class="input-group">
