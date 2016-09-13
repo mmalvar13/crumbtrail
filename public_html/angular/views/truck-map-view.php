@@ -27,8 +27,8 @@
 							<div class="checkbox">
 								<label for="truck">Select which truck you're serving from</label>
 								<select class="form-control" id="truck" name="truck" ng-model="truck">
-									<option value="1">Truck 1</option>
-									<option value="2">Truck 2</option>
+									<option ng-repeat="truck in trucks" value="1">{{truck.truckId}}</option>
+<!--									<option value="2">Truck 2</option>-->
 								</select>
 							</div>
 							<h4>Current Location:</h4>
