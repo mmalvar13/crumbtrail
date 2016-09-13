@@ -5,6 +5,7 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 		$scope.editing = false;
 		$scope.trucks = [];
 		$scope.selectedTruckId = null;
+		$scope.activeEvents = [];
 		$scope.events = [];
 		$scope.currentEvent = {};
 
@@ -38,33 +39,53 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 					var latLong = {"latitude": result.coords.latitude, "longitude": result.coords.longitude};
 					$scope.map.center = latLong;
 					$scope.marker.coords = latLong;
+					if(angular.equals({}, $scope.currentEvent)) {
+						$scope.updateMap($scope.selectedTruckId);
+					}
 				});
+		};
+
+		$scope.setLocationToCurrent = function() {
+			$scope.currentEvent.eventLocation = {
+				"lat": $scope.map.center.latitude,
+				"long": $scope.map.center.longitude
+			};
+			$scope.currentEvent.eventId = 0;
 		};
 
 		//will be called when we hit submit on the form
 		$scope.editEvent = function() {
 			$scope.editing = false;
-			EventService.createEvent($scope.event);
-			EventService.update($scope.event.eventId, $scope.event);
-
+			if($scope.currentEvent.eventId === 0) {
+				EventService.createEvent($scope.currentEvent);
+			} else {
+				EventService.update($scope.currentEvent.eventId, $scope.currentEvent);
+			}
 		};
 
 		$scope.updateMap = function(selectedTruckId) {
-			EventService.fetchEventByTruckId(selectedTruckId)
-				.then(function(result){
-					if(result.status.data === 200) {
-						$scope.currentEvent = result.data.data;
-					} else {
-						$scope.alerts[0] = {type: "danger", msg: result.data.message};
+			$scope.getActiveEvents();
+			if(selectedTruckId !== null) {
+				var found = false;
+				for(activeEvent in $scope.activeEvents) {
+					if($scope.activeEvents[activeEvent].eventTruckId === Number(selectedTruckId)) {
+						$scope.currentEvent = $scope.activeEvents[activeEvent];
+						found = true;
 					}
-				});
+				}
+				if(!found) {
+					$scope.setLocationToCurrent();
+				}
+			} else {
+				$scope.setLocationToCurrent();
+			}
 		};
 
 		/*-------------------------CompanyService methods--------------------------------*/
 		$scope.getCompanyByCompanyId = function(companyId) {
 			CompanyService.fetchCompanyById(companyId)
 				.then(function(result) {
-					if(result.status.data === 200) {
+					if(result.data.status === 200) {
 						$scope.mapData = result.data.data;
 					} else {
 						$scope.alerts[0] = {type: "danger", msg: result.data.message};
@@ -75,7 +96,7 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 		$scope.getCompanyByCompanyName = function(companyName) {
 			CompanyService.fetchCompanyByCompanyName(companyName)
 				.then(function(result) {
-					if(result.status.data === 200) {
+					if(result.data.status === 200) {
 						$scope.mapData = result.data.data;
 					} else {
 						$scope.alerts[0] = {type: "danger", msg: result.data.message};
@@ -87,7 +108,7 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 		$scope.getCompanyByCompanyMenuText = function(companyMenuText) {
 			CompanyService.fetchCompanyByCompanyMenuText(companyMenuText)
 				.then(function(result) {
-					if(result.status.data === 200) {
+					if(result.data.status === 200) {
 						$scope.mapData = result.data.data;
 					} else {
 						$scope.alerts[0] = {type: "danger", msg: result.data.message};
@@ -99,7 +120,7 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 		$scope.getCompanyByCompanyDescription = function(companyDescription) {
 			CompanyService.fetchCompanyByCompanyDescription(companyDescription)
 				.then(function(result) {
-					if(result.status.data === 200) {
+					if(result.data.status === 200) {
 						$scope.mapData = result.data.data;
 					} else {
 						$scope.alerts[0] = {type: "danger", msg: result.data.message};
@@ -113,7 +134,7 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 		$scope.getEventByEventId = function(eventId) {
 			EventService.fetchEventByEventId(eventId)
 				.then(function(result) {
-					if(result.status.data === 200) {
+					if(result.data.status === 200) {
 						$scope.events = result.data.data;
 					} else {
 						$scope.alerts[0] = {type: "danger", msg: result.data.message};
@@ -126,7 +147,7 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 		$scope.getEventByEventEndAndEventStart = function(eventEnd, eventStart) {
 			EventService.fetchEventByEventEndAndEventStart(eventEnd, eventStart)
 				.then(function(result) {
-					if(result.status.data === 200) {
+					if(result.data.status === 200) {
 						$scope.events = result.data.data;
 					} else {
 						$scope.alerts[0] = {type: "danger", msg: result.data.message};
@@ -138,7 +159,7 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 		$scope.getEventByEventTruckId = function(eventTruckId) {
 			EventService.fetchEventByEventTruckId(eventTruckId)
 				.then(function(result) {
-					if(result.status.data === 200) {
+					if(result.data.status === 200) {
 						$scope.events = result.data.data;
 					} else {
 						$scope.alerts[0] = {type: "danger", msg: result.data.message};
@@ -149,9 +170,9 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 
 
 		$scope.getEventByEventIdAndEventTruckId = function(eventId, eventTruckId) {
-			EventService.fetchEventByEventIdAndEventTruckId(eventTruckId)
+			EventService.fetchEventByEventIdAndEventTruckId(eventId, eventTruckId)
 				.then(function(result) {
-					if(result.status.data === 200) {
+					if(result.data.status === 200) {
 						$scope.events = result.data.data;
 					} else {
 						$scope.alerts[0] = {type: "danger", msg: result.data.message};
@@ -160,12 +181,24 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 				})
 		};
 
+		$scope.getActiveEvents = function() {
+			EventService.all()
+				.then(function(result) {
+					if(result.status === 200) {
+						$scope.activeEvents = result.data.data;
+					} else {
+						$scope.alerts[0] = {type: "danger", msg: result.data.message};
+
+					}
+			});
+		};
+
 
 		/*-----------------------------TruckService Methods-----------------------------------------*/
 		$scope.getTruckByTruckId = function(truckId) {
 			TruckService.fetchTruckByTruckId(truckId)
 				.then(function(result) {
-					if(result.status.data === 200) {
+					if(result.data.status === 200) {
 						$scope.trucks = result.data.data;
 					} else {
 						$scope.alerts[0] = {type: "danger", msg: result.data.message};
@@ -177,7 +210,7 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 		$scope.getTruckByTruckCompanyId = function(truckCompanyId) {
 			TruckService.fetchTruckByTruckCompanyId(truckCompanyId)
 				.then(function(result) {
-					if(result.status.data === 200) {
+					if(result.data.status === 200) {
 						$scope.trucks = result.data.data;
 					} else {
 						$scope.alerts[0] = {type: "danger", msg: result.data.message};
@@ -189,7 +222,7 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 		$scope.getTrucksByProfileId = function() {
 			TruckService.fetchTruckByProfileId()
 				.then(function(result) {
-					if(result.status.data === 200) {
+					if(result.data.status === 200) {
 						$scope.trucks = result.data.data;
 					} else {
 						$scope.alerts[0] = {type: "danger", msg: result.data.message};
@@ -204,7 +237,7 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 		$scope.getProfileByProfileId = function(profileId) {
 			ProfileService.fetchProfileByProfileId(profileId)
 				.then(function(result) {
-					if(result.status.data === 200) {
+					if(result.data.status === 200) {
 						$scope.mapData = result.data.data;
 					} else {
 						$scope.alerts[0] = {type: "danger", msg: result.data.message};
@@ -309,6 +342,10 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 
 		if($scope.trucks.length === 0) {
 			$scope.getTrucksByProfileId();
+		}
+
+		if($scope.activeEvents.length === 0) {
+			$scope.getActiveEvents();
 		}
 
 	}]);

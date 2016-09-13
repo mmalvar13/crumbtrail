@@ -52,7 +52,7 @@ try {
 			if($event !== null) {
 				$reply->data = $event;
 			}
-		} elseif((empty($truckId)) === false) {
+		} elseif(empty($eventTruckId) === false) {
 			$event = Event::getEventByEventTruckId($pdo, $eventTruckId);
 			if($event !== null) {
 				$reply->data = $event;
