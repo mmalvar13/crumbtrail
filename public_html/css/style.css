@@ -40,7 +40,7 @@
 /*changed font style, and background color of nav*/
 .navbar{
 	font-family:"baloo paaji",sans-serif;
-	background: #4BDB71;
+	background: #01D151;
 	color:white;
 }
 
@@ -52,7 +52,7 @@
 .logo-img{
 	height: 30px;
 	width: auto;
-	padding-bottom: 10%;
+	padding-bottom: 11%;
 }
 
 
@@ -165,7 +165,6 @@ p {
 	border: 0.15rem solid slategrey;
 	width: 100%;
 	height: 20rem;
-	padding: 4rem;
 
 }
 
@@ -395,7 +394,7 @@ body { width: 100%;}
 /*bottom footer */
 .bfoot{
 	color: dimgray;
-	background-color: #4BDB71;
+	background-color: #01D151;
 	height: 4em;
 	width:100%;
 	display: inline-flex;

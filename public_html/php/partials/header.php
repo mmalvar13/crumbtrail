@@ -14,7 +14,7 @@
 				</button>
 <!--				<a href="#" class="navbar-left"><img src="../../images/crumbtraillogo.png"></a>-->
 				<a class=" navbar-brand hidden-xs" href="#"><img  class="logo-img" src="images/crumbtraillogo.png" class="img-responsive"></a>
-				<a class="navbar-brand visible-xs" href="#">CT</a>
+				<a class="navbar-brand visible-xs" href="#"><img  class="logo-img" src="images/logosmall.png" class="img-responsive"></a>
 				<form class="navbar-form pull-left" role="search">
 					<div class="input-group">
 						<input type="text" class="form-control" placeholder="Search">
