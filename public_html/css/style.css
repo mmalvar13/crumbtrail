@@ -40,7 +40,7 @@
 /*changed font style, and background color of nav*/
 .navbar{
 	font-family:"baloo paaji",sans-serif;
-	background: #01D151;
+	background: #72b352;
 	color:white;
 }
 
@@ -129,6 +129,7 @@
 
 h1{
 	font-family: 'Fascinate Inline', cursive;
+	color: #f05e56;
 }
 
 h3{
@@ -157,19 +158,30 @@ p {
 
 
 .truck-body{
-	background-color: #FFB996;
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f2f3f7+0,9eb294+100&1+0,0.4+100 */
+	background: -moz-linear-gradient(top,  rgba(242,243,247,1) 0%, rgba(158,178,148,0.4) 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  rgba(242,243,247,1) 0%,rgba(158,178,148,0.4) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  rgba(242,243,247,1) 0%,rgba(158,178,148,0.4) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f3f7', endColorstr='#669eb294',GradientType=0 ); /* IE6-9 */
+
+
 }
 
+.truck-list-hr{
+
+
+
+}
 .truck-list-box{
 	margin-top: 2rem;
-	border: 0.15rem solid slategrey;
+	/*border: 2px double red;*/
 	width: 100%;
 	height: 20rem;
 
 }
 
 .truck-image{
-	background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(../images/littleCafe.png);
+	background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(../images/littleCafe.png);
 
 	width: 100%;
 	background-size: cover;
@@ -212,7 +224,7 @@ p {
 
 .truck-list-text{
 	text-align: center;
-	color: orangered;
+	color: orange;
 	font-family: 'baloo paaji', sans-serif;
 	font-size:2rem;
 }
@@ -232,11 +244,6 @@ p {
 
 #all-trucks{
 	text-align:center;
-}
-
-#back-color{
-	/*background-image: linear-gradient(rgba(0, 150, 0, 0), rgba(0, 204, 0, 0));*/
-/*background-image: linear-gradient(rgba(0,150,0,0.3), rgba(0,204,0, 0.3));*/
 }
 
 
@@ -398,7 +405,7 @@ body { width: 100%;}
 /*bottom footer */
 .bfoot{
 	color: dimgray;
-	background-color: #01D151;
+	background-color: #72b352;
 	height: 4em;
 	width:100%;
 	display: inline-flex;
