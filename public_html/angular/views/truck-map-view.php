@@ -33,7 +33,8 @@
 							</div>
 							<h4>Current Location:</h4>
 							<ui-gmap-google-map center='map.center' zoom='map.zoom'>
-								<ui-gmap-marker coords="marker.coords" options="marker.options" events="marker.events" idkey="marker.id">
+								<ui-gmap-marker ng-repeat="event in events" coords="marker.coords" options="marker.options" events="marker.events" idkey="marker.id">
+
 								</ui-gmap-marker>
 							</ui-gmap-google-map>
 							<br>
