@@ -158,11 +158,12 @@ p {
 
 
 .truck-body{
-	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f2f3f7+0,9eb294+100&1+0,0.4+100 */
-	background: -moz-linear-gradient(top,  rgba(242,243,247,1) 0%, rgba(158,178,148,0.4) 100%); /* FF3.6-15 */
-	background: -webkit-linear-gradient(top,  rgba(242,243,247,1) 0%,rgba(158,178,148,0.4) 100%); /* Chrome10-25,Safari5.1-6 */
-	background: linear-gradient(to bottom,  rgba(242,243,247,1) 0%,rgba(158,178,148,0.4) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f3f7', endColorstr='#669eb294',GradientType=0 ); /* IE6-9 */
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f4f4f4+0,56b229+93&1+0,0.4+100 */
+	background: -moz-linear-gradient(top,  rgba(244,244,244,1) 0%, rgba(86,178,41,0.44) 93%, rgba(86,178,41,0.4) 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  rgba(244,244,244,1) 0%,rgba(86,178,41,0.44) 93%,rgba(86,178,41,0.4) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  rgba(244,244,244,1) 0%,rgba(86,178,41,0.44) 93%,rgba(86,178,41,0.4) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4f4f4', endColorstr='#6656b229',GradientType=0 ); /* IE6-9 */
+
 
 
 }
