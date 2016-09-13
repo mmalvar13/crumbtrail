@@ -158,31 +158,28 @@ p {
 
 
 .truck-body{
-	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f4f4f4+0,56b229+93&1+0,0.4+100 */
-	background: -moz-linear-gradient(top,  rgba(244,244,244,1) 0%, rgba(86,178,41,0.44) 93%, rgba(86,178,41,0.4) 100%); /* FF3.6-15 */
-	background: -webkit-linear-gradient(top,  rgba(244,244,244,1) 0%,rgba(86,178,41,0.44) 93%,rgba(86,178,41,0.4) 100%); /* Chrome10-25,Safari5.1-6 */
-	background: linear-gradient(to bottom,  rgba(244,244,244,1) 0%,rgba(86,178,41,0.44) 93%,rgba(86,178,41,0.4) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4f4f4', endColorstr='#6656b229',GradientType=0 ); /* IE6-9 */
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f4f4f4+0,6daf4b+100&1+0,0.4+100 */
+	background: -moz-linear-gradient(top,  rgba(244,244,244,1) 0%, rgba(109,175,75,0.4) 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  rgba(244,244,244,1) 0%,rgba(109,175,75,0.4) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  rgba(244,244,244,1) 0%,rgba(109,175,75,0.4) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4f4f4', endColorstr='#666daf4b',GradientType=0 ); /* IE6-9 */
 
-
-
-}
-
-.truck-list-hr{
 
 
 
 }
+
+
 .truck-list-box{
-	margin-top: 2rem;
-	/*border: 2px double red;*/
+	margin-bottom: 3rem;
+	border: 2px double #f05e56;
 	width: 100%;
-	height: 20rem;
+	height: 24rem;
 
 }
 
 .truck-image{
-	background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(../images/littleCafe.png);
+	background-image: linear-gradient(rgba(255,255, 255, 0.8), rgba(255, 255, 255, 0.8)), url(../images/littleCafe.png);
 
 	width: 100%;
 	background-size: cover;
@@ -258,7 +255,7 @@ p {
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
-	height: 60rem;
+	height: 100vh;
 }
 .truck-login-hr{
 	width: 50%;
@@ -413,7 +410,7 @@ body { width: 100%;}
 	font-family:sans-serif;
 	text-align: left;
 	padding-top: 1rem;
-	margin-top: 1rem;
+	/*margin-top: 1rem;*/
 }
 
 .foot-logo{
