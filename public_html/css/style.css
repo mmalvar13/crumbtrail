@@ -37,8 +37,16 @@
 	box-shadow: none;
 }
 
+/*changed font style, and background color of nav*/
 .navbar{
 	font-family:"baloo paaji",sans-serif;
+	background: #00CC00;
+	color:white;
+}
+
+/*this changes the nav text color to white*/
+.navbar-default .navbar-nav>li>a{
+	color:white;
 }
 
 
