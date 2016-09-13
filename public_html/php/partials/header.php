@@ -26,7 +26,7 @@
 			</div>
 			<div class="navbar-collapse collapse" uib-collapse="navCollapsed">
 				<ul class="nav navbar-nav navbar-right">
-					<li class="active"><a href="index">Home</a></li>
+					<li><a href="index">Home</a></li> <!--I took out class active on this list-->
 					<li><a href="truck-listing">See All Trucks</a></li>
 					<li><a href="settings">Settings</a></li>
 					<li><a href="sign-in">Sign In</a></li>

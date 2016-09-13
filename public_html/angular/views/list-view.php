@@ -1,7 +1,8 @@
 <!----MAIN BODY --->
 
 <div class="row">
-	<div class="container">
+	<div class="container" id="back-color">
+		<h1 id="all-trucks">All Food Trucks</h1>
 		<div class="col-md-6" ng-repeat="company in companyData">
 			<div class="truck-list-box truck-image">
 				<div class="truck-list-serving-icon"></div>
