@@ -63,7 +63,7 @@
 
 
 .angular-google-map-container {
-	height: 90vh;
+	height: 88vh;
 	width: auto;
 }
 
@@ -415,7 +415,9 @@ body { width: 100%;}
 .foot-logo{
 	height:3.5rem;
 	width: auto;
-	/*margin: 0 auto;*/
+}
 
+.foot-logo-div{
+	margin: 0 auto;
 }
 
