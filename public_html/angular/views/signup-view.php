@@ -8,7 +8,7 @@
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2">
 			<form name="signupForm" id="signupForm" ng-controller="SignupController"
-					ng-submit="submit(signupData, signupForm.$valid);" novalidate>
+					ng-submit="signup(signupData, signupForm.$valid);" novalidate>
 
 				<!----form groups start here----->
 				<!-----profile first name ----->
@@ -94,7 +94,7 @@
 
 			<!---------beginning of angular form------>
 			<form name="signupForm" id="signupForm" ng-controller="SignupController"
-					ng-submit="submit(signupData, signupForm.$valid);" novalidate>
+					ng-submit="signup(signupData, signupForm.$valid);" novalidate>
 
 
 				<!----form groups start here----->
