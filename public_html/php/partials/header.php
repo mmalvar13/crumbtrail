@@ -31,7 +31,7 @@
 					<li><a href="settings">Settings</a></li>
 					<li><a href="sign-in">Sign In</a></li>
 					<li><a href="truck-map">Truck Map</a></li>
-					<li><a href="profile">Profile</a></li>
+<!--					<li><a href="profile">Profile</a></li>--> <!--add this to be viewed by truck owners only-->
 					<li><a href="sign-up">Register Your Truck</a></li>
 				</ul>
 			</div>
