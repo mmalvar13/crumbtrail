@@ -2,6 +2,10 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 	function($scope, CompanyService, EventService, ProfileService, TruckService, GeoLocationService, uiGmapGoogleMapApi) {
 	//what do we add here on top?
 	$scope.serving = null;
+	$scope.editing = false;
+	$scope.trucks = [];
+
+
 	$scope.map = {
 		center: {
 			latitude: 0,
@@ -12,8 +16,8 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 	$scope.marker = {
 		id: 0, // This should be set to the event id
 		coords: {
-			latitude: 35.0853,
-			longitude: -106.6056
+			latitude: 0,
+			longitude: 0
 		}
 	};
 	$scope.geoLocation = null;
@@ -26,8 +30,15 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 		GeoLocationService.getCurrentPosition()
 			.then(function(result) {
 				$scope.geoLocation = result;
-				$scope.map.center = result.coords;
+				var latLong = {"latitude": result.coords.latitude, "longitude": result.coords.longitude};
+				$scope.map.center = latLong;
+				$scope.marker.coords = latLong;
 			});
+	};
+
+	//will be called when we hit submit on the form
+	$scope.editEvent = function() {
+		$scope.editing = false;
 	};
 
 		/*-------------------------CompanyService methods--------------------------------*/

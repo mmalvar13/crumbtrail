@@ -10,21 +10,16 @@
 			<div class="container">
 
 				<!---------------START SERVING------------------------------------->
-				<div class="row">
+				<div class="row" ng-hide="editing">
 					<div class="col-md-8 col-md-offset-2">
-						<button type="button" class="btn btn-lg btn-block truck-map-start-serving-btn"
-								  data-toggle="modal" data-target="#startServing" ng-click="showStartServing();" ng-hide="serving">START SERVING
-						</button>
-						<button type="button" class="btn btn-lg btn-block truck-map-stop-serving-btn"
-								  data-toggle="modal" data-target="#stopServing" ng-click="showStopServing();" ng-show="serving">STOP SERVING
-						</button>
+						<button type="button" class="btn btn-lg btn-block truck-map-start-serving-btn" ng-click="editing = true">EDIT EVENTS</button>
 					</div>
 				</div>
 
-				<div class="row">
+				<div class="row" ng-show="editing">
 					<div class="col-md-8 col-md-offset-2">
 						<h2>Start Serving</h2>
-						<form>
+						<form ng-submit="editEvent();">
 							<div class="form-group">
 								<label for="endTime">End Time</label>
 								<input type="time" class="form-control" id="endTime" name="endTime" value="13:45:00" ng-model="endTime">
@@ -36,19 +31,20 @@
 									<option value="2">Truck 2</option>
 								</select>
 							</div>
+							<h4>Current Location:</h4>
+							<ui-gmap-google-map center='map.center' zoom='map.zoom'>
+								<ui-gmap-marker coords="marker.coords" options="marker.options" events="marker.events" idkey="marker.id">
+								</ui-gmap-marker>
+							</ui-gmap-google-map>
+							<br>
 							<button type="submit" class="btn btn-default">Submit</button>
 						</form>
-						<h4>Current Location:</h4>
-						<ui-gmap-google-map center='map.center' zoom='map.zoom'>
-							<ui-gmap-marker coords="marker.coords" options="marker.options" events="marker.events" idkey="marker.id">
-							</ui-gmap-marker>
-						</ui-gmap-google-map>
 					</div>
 				</div>
 
 														<!--------START Modal------->
 <!--				<div class="modal fade bd-example-modal-lg" id="startServing" tabindex="-1" role="dialog"-->
-<!--					  aria-labelledby="myLargeModalLabel"-->
+<!--					  aria-labelledby="myLargeModalLabel"-->`
 <!--					  aria-hidden="true">-->
 <!--					<div class="modal-dialog modal-lg">-->
 <!--						<div class="modal-content">-->
@@ -151,7 +147,7 @@
 					</div>
 				</div>
 
-				<ui-gmap-google-map center='map.center' zoom='map.zoom'>
+				<ui-gmap-google-map  ng-hide="editing" center='map.center' zoom='map.zoom'>
 					<ui-gmap-marker coords="marker.coords" idkey="marker.id">
 					</ui-gmap-marker>
 				</ui-gmap-google-map>

@@ -227,6 +227,11 @@ p {
 	margin-top:0.25rem;
 }
 
+.truck-login-input{
+	margin: 0 auto;
+	width: 80%
+}
+
 .truck-login-form{
 	padding: 15px;
 	/*margin: 0 auto;*/
@@ -236,6 +241,12 @@ p {
 	margin-top: 2rem;
 	background: none;
 	border: 0.1rem solid orange;
+}
+
+.truck-login-register-btn:hover{
+	background:orange;
+	color: white;
+	text-decoration: none;
 }
 
 
