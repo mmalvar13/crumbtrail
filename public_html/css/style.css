@@ -270,13 +270,17 @@ p {
 .truck-login-register-btn{
 	margin-top: 2rem;
 	background: none;
-	border: 0.1rem solid orange;
+	border: 0.1rem solid #BC59D7;
 }
 
 .truck-login-register-btn:hover{
-	background:orange;
-	color: white;
+	background:gainsboro;
+	color: #BC59D7;
 	text-decoration: none;
+}
+
+.login-submit{
+	background:#BC59D7;
 }
 
 
@@ -402,5 +406,12 @@ body { width: 100%;}
 	text-align: left;
 	padding-top: 1rem;
 	margin-top: 1rem;
+}
+
+.foot-logo{
+	height:3.5rem;
+	width: auto;
+	/*margin: 0 auto;*/
+
 }
 

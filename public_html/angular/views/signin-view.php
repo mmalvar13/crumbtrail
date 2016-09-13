@@ -57,7 +57,7 @@
 				<!--			</div>-->
 
 				<!--button-->
-				<button class="btn btn-lg btn-info btn-warning btn-block" type="submit">Sign in</button>
+				<button class="btn btn-lg btn-info login-submit btn-block" type="submit">Sign in</button>
 				<!--			<button class="btn btn-lg btn-warning" type="reset" ng-click="reset();">Reset</button>-->
 				<!--can reset button needs CSSing-->
 
