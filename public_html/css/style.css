@@ -156,7 +156,9 @@ p {
 }
 
 .truck-image{
-	background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("https://hd.unsplash.com/photo-1468956398224-6d6f66e22c35");
+	/*background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("https://hd.unsplash.com/photo-1468956398224-6d6f66e22c35");*/
+	background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(../images/littleCafe.png);
+
 	width: 100%;
 	/*padding-bottom: 66.666666666667%;*/
 	background-size: cover;
@@ -178,6 +180,7 @@ p {
 	text-align: center;
 	color: white;
 	padding-left: 4rem;
+	font-family: 'Fascinate Inline', cursive;
 }
 .truck-list-hr{
 	width: 50%;
@@ -194,6 +197,8 @@ p {
 .truck-list-text{
 	text-align: center;
 	color: orangered;
+	font-family: 'Roboto', sans-serif;
+	font-size:2rem;
 }
 
 
