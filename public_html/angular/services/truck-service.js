@@ -62,6 +62,13 @@ app.service("TruckService", function($http, TRUCK_ENDPOINT){
 	};
 
 	/*
+	 * GETS a truck by the logged-in user's profileId
+	 * */
+	this.fetchTruckByProfileId = function(){
+		return($http.get(getUrl() + "?getTruckByProfileId=" + true));
+	};
+
+	/*
 	* POSTS a truck (creates one)
 	* */
 	this.createTruck = function(truck){

@@ -186,6 +186,18 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 				})
 		};
 
+		$scope.getTrucksByProfileId = function() {
+			TruckService.fetchTruckByProfileId()
+				.then(function(result) {
+					if(result.status.data === 200) {
+						$scope.trucks = result.data.data;
+					} else {
+						$scope.alerts[0] = {type: "danger", msg: result.data.message};
+
+					}
+				});
+		};
+
 
 		/*------------------------------------ProfileService Methods--------------------------------------*/
 
@@ -293,6 +305,10 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 
 		if($scope.geoLocation === null) {
 			$scope.getGeoLocation();
+		}
+
+		if($scope.trucks.length === 0) {
+			$scope.getTrucksByProfileId();
 		}
 
 	}]);

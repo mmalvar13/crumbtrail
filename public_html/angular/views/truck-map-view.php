@@ -2,6 +2,9 @@
 <div class="container">
 
 	<!---------------START SERVING------------------------------------->
+	<pre>
+		{{ trucks | json }}
+	</pre>
 	<div class="row" ng-hide="editing">
 		<div class="col-md-8 col-md-offset-2">
 			<button type="button" class="btn btn-lg btn-block truck-map-start-serving-btn" ng-click="editing = true">EDIT

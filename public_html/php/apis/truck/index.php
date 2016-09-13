@@ -41,6 +41,7 @@ try {
 	//sanitize input(Explain this) Where is the input coming from??
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
 	$truckCompanyId = filter_input(INPUT_GET, "truckCompanyId", FILTER_VALIDATE_INT);
+	$getTruckByProfileId = filter_input(INPUT_GET, "getTruckByProfileId", FILTER_SANITIZE_STRING);
 //	$companyId = filter_input(INPUT_GET, "companyId", FILTER_VALIDATE_INT);//todo i just added this today 9/3
 
 
@@ -66,7 +67,16 @@ try {
 			if($truck !== null) {
 				$reply->data = $truck;
 			}
-		} else {
+		} elseif(empty($getTruckByProfileId) === false){
+			if(empty($_SESSION["profile"]) === false) {
+				$truck = Truck::getTruckByProfileId($pdo, $_SESSION["profile"]->getProfileId());
+			} else {
+				throw(new \RuntimeException("You must be logged in to view your trucks."));
+			}
+			if($truck !== null) {
+				$reply->data = $truck;
+			}
+		}else {
 			$trucks = Truck::getAllTrucks($pdo);
 			if($trucks !== null) {
 				$reply->data = $trucks;

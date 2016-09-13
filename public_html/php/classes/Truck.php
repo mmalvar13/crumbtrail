@@ -245,6 +245,33 @@ public function __construct(int $newTruckId = null, int $newTruckCompanyId) {
 		return($trucks);
 	}
 
+	public static function getTruckByProfileId(\PDO $pdo, int $profileId) {
+		//sanitize the description before searching?
+		if($profileId <= 0) {
+			throw(new \PDOException("Profile Id is not positive"));
+		}
+		//query template
+		$query = "SELECT truckId, truckCompanyId FROM truck INNER JOIN (SELECT employProfileId, employCompanyId FROM employ WHERE employProfileId = :profileId) employ ON truck.truckCompanyId = employ.employCompanyId";
+		$statement = $pdo->prepare($query);
+		//bind the truck company Id to the placeholder template
+		$parameters = ["profileId" => $profileId];
+		$statement->execute($parameters);
+		//build an array of trucks
+		$trucks = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !==false) {
+			try {
+				$truck = new Truck($row["truckId"], $row["truckCompanyId"]);
+				$trucks[$trucks->key()] = $truck;
+				$trucks->next();
+			} catch(\Exception $exception) {
+				//if row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($trucks);
+	}
+
 	/** gets all trucks
 	 *
 	 * @param \PDO $pdo PDO connection object
