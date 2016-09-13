@@ -13,6 +13,7 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 		},
 		zoom: 14
 	};
+
 	$scope.marker = {
 		id: 0, // This should be set to the event id
 		coords: {
@@ -20,6 +21,7 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 			longitude: 0
 		}
 	};
+
 	$scope.geoLocation = null;
 	$scope.alerts = [];
 	$scope.eaterMarkerId = {
