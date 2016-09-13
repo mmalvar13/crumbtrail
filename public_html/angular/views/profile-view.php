@@ -18,7 +18,7 @@
 			<!-------------company image-------------------->
 			<div class="container">
 				<div class="row">
-					<img src="images/popFizzPlaceholder.png" class="img-responsive img-thumbnail profile-image" />
+					<img src="images/popFizzTruck.png" class="img-responsive img-thumbnail profile-image" />
 
 				</div>
 			</div>
