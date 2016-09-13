@@ -27,7 +27,7 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 		$scope.alerts = [];
 		$scope.eaterMarkerId = {
 			id: 0 // this is a required filed for the eater marker
-		}
+		};
 
 		$scope.getGeoLocation = function() {
 			GeoLocationService.getCurrentPosition()
@@ -101,7 +101,7 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 			EventService.fetchEventByEventId(eventId)
 				.then(function(result) {
 					if(result.status.data === 200) {
-						$scope.mapData = result.data.data;
+						$scope.events = result.data.data;
 					} else {
 						$scope.alerts[0] = {type: "danger", msg: result.data.message};
 
@@ -114,7 +114,7 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 			EventService.fetchEventByEventEndAndEventStart(eventEnd, eventStart)
 				.then(function(result) {
 					if(result.status.data === 200) {
-						$scope.mapData = result.data.data;
+						$scope.events = result.data.data;
 					} else {
 						$scope.alerts[0] = {type: "danger", msg: result.data.message};
 
@@ -126,7 +126,7 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 			EventService.fetchEventByEventTruckId(eventTruckId)
 				.then(function(result) {
 					if(result.status.data === 200) {
-						$scope.mapData = result.data.data;
+						$scope.events = result.data.data;
 					} else {
 						$scope.alerts[0] = {type: "danger", msg: result.data.message};
 
@@ -139,7 +139,7 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 			EventService.fetchEventByEventIdAndEventTruckId(eventTruckId)
 				.then(function(result) {
 					if(result.status.data === 200) {
-						$scope.mapData = result.data.data;
+						$scope.events = result.data.data;
 					} else {
 						$scope.alerts[0] = {type: "danger", msg: result.data.message};
 
@@ -153,7 +153,7 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 			TruckService.fetchTruckByTruckId(truckId)
 				.then(function(result) {
 					if(result.status.data === 200) {
-						$scope.mapData = result.data.data;
+						$scope.trucks = result.data.data;
 					} else {
 						$scope.alerts[0] = {type: "danger", msg: result.data.message};
 
@@ -165,7 +165,7 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 			TruckService.fetchTruckByTruckCompanyId(truckCompanyId)
 				.then(function(result) {
 					if(result.status.data === 200) {
-						$scope.mapData = result.data.data;
+						$scope.trucks = result.data.data;
 					} else {
 						$scope.alerts[0] = {type: "danger", msg: result.data.message};
 
