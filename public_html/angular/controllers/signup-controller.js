@@ -1,6 +1,5 @@
 app.controller('SignupController', ["$scope","$window", "SignupService", function($scope, $window, SignupService){
 	$scope.alerts = [];
-	$scope.activationData = {}; //is this an arbitrary name?
 
 	/*
 	* Method that uses the sign up service to activate an account? idk!
