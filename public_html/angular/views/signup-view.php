@@ -13,7 +13,7 @@
 				<!----form groups start here----->
 				<!-----profile first name ----->
 				<div class="form-group text-center"
-					  ng-class="{'has-error': signupForm.profileName.$touched && signupForm.profileName">
+					  ng-class="{'has-error': signupForm.profileName.$touched && signupForm.profileName.$invalid}">
 					<label for="profileName">Your Name</label>
 					<input type="text" id="profileName" name="profileName" ng-model="signupData.profileName" ng-required="true"
 							 class="form-control registration-input"
@@ -27,7 +27,7 @@
 				<!----form groups start here----->
 				<!-----profile Email ----->
 				<div class="form-group text-center"
-					  ng-class="{'has-error': signupForm.profileEmail.$touched && signupForm.profileEmail">
+					  ng-class="{'has-error': signupForm.profileEmail.$touched && signupForm.profileEmail.$invalid}">
 					<label for="profileEmail">Email</label>
 					<input type="email" id="profileEmail" name="profileEmail" ng-model="signupData.profileEmail" ng-required="true"
 							 class="form-control registration-input"
@@ -42,7 +42,7 @@
 				<!----form groups start here----->
 				<!-----profile phone ----->
 				<div class="form-group text-center"
-					  ng-class="{'has-error': signupForm.profilePhone.$touched && signupForm.profilePhone">
+					  ng-class="{'has-error': signupForm.profilePhone.$touched && signupForm.profilePhone.$invalid}">
 					<label for="profilePhone">Phone Number</label>
 					<input type="tel" id="profilePhone" name="profilePhone" ng-model="signupData.profilePhone" ng-required="true"
 							 class="form-control registration-input"
@@ -57,7 +57,7 @@
 
 				<!----form groups start here----->
 				<!-----profile password ----->
-				<div class="form-group"  ng-class="{'has-error': signupForm.profilePassword.$touched && signupForm.profilePassword">
+				<div class="form-group"  ng-class="{'has-error': signupForm.profilePassword.$touched && signupForm.profilePassword.$invalid}">
 					<label for="profilePassword">Password</label>
 					<input type="password" id="profilePassword" name="profilePassword" ng-model="signupData.profilePassword" ng-minlength="6" ng-required="true"
 							 class="form-control registration-input"
@@ -72,7 +72,7 @@
 
 				<!----form groups start here----->
 				<!-----profile repeat repeatPassword ----->
-				<div class="form-group"  ng-class="{'has-error': signupForm.confirmPassword.$touched && signupForm.confirmPassword">
+				<div class="form-group"  ng-class="{'has-error': signupForm.confirmPassword.$touched && signupForm.confirmPassword.$invalid}">
 					<label for="confirmPassword"> Repeat Password</label>
 					<input type="password" id="confirmPassword" name="confirmPassword" ng-model="signupData.confirmPassword" ng-minlength="6" ng-required="true"
 							 class="form-control registration-input"
@@ -100,7 +100,7 @@
 				<!----form groups start here----->
 				<!-----company name ----->
 				<div class="form-group text-center"
-					  ng-class="{'has-error': signupForm.companyName.$touched && signupForm.companyName">
+					  ng-class="{'has-error': signupForm.companyName.$touched && signupForm.companyName.$invalid}">
 					<label for="companyName">Company name</label>
 					<input type="text" id="companyName" name="companyName" ng-model="signupData.companyName" ng-required="true"
 							 class="form-control registration-input"
@@ -115,7 +115,7 @@
 				<!----form groups start here----->
 				<!-----company email ----->
 				<div class="form-group text-center"
-					  ng-class="{'has-error': signupForm.companyEmail.$touched && signupForm.companyEmail">
+					  ng-class="{'has-error': signupForm.companyEmail.$touched && signupForm.companyEmail.$invalid}">
 					<label for="companyEmail">Company email</label>
 					<input type="text" id="companyEmail" name="companyEmail" ng-model="signupData.companyEmail" ng-required="true"
 							 class="form-control registration-input"
@@ -130,7 +130,7 @@
 				<!-----company phone ----->
 <!--				NEED TO ADD minlength on the phones!-->
 				<div class="form-group text-center"
-					  ng-class="{'has-error': signupForm.companyPhone.$touched && signupForm.companyPhone">
+					  ng-class="{'has-error': signupForm.companyPhone.$touched && signupForm.companyPhone.$invalid}">
 					<label for="companyPhone">Company Phone</label>
 					<input type="tel" id="companyPhone" name="companyPhone" ng-model="signupData.companyPhone" ng-required="true"
 							 class="form-control registration-input"
@@ -145,7 +145,7 @@
 				<!----form groups start here----->
 				<!-----company street ----->
 				<div class="form-group text-center"
-					  ng-class="{'has-error': signupForm.companyStreet.$touched && signupForm.companyStreet">
+					  ng-class="{'has-error': signupForm.companyStreet.$touched && signupForm.companyStreet.$invalid}">
 					<label for="companyStreet">Company Street</label>
 					<input type="text" id="companyStreet" name="companyStreet" ng-model="signupData.companyStreet" ng-required="true"
 							 class="form-control registration-input"
@@ -160,7 +160,7 @@
 				<!----form groups start here----->
 				<!-----company Street2 ----->
 				<div class="form-group text-center"
-					  ng-class="{'has-error': signupForm.companyStreet2.$touched && signupForm.companyStreet2">
+					  ng-class="{'has-error': signupForm.companyStreet2.$touched && signupForm.companyStreet2.$invalid}">
 					<label for="companyStreet2">Company Street 2</label>
 					<input type="text" id="companyStreet2" name="companyStreet2" ng-model="signupData.companyStreet2"
 							 class="form-control registration-input"
@@ -175,7 +175,7 @@
 				<!----form groups start here----->
 				<!-----company city ----->
 				<div class="form-group text-center"
-					  ng-class="{'has-error': signupForm.companyCity.$touched && signupForm.companyCity">
+					  ng-class="{'has-error': signupForm.companyCity.$touched && signupForm.companyCity.$invalid}">
 					<label for="companyCity">Company City</label>
 					<input type="text" id="companyCity" name="companyCity" ng-model="signupData.companyCity" ng-required="true"
 							 class="form-control registration-input"
@@ -190,7 +190,7 @@
 				<!----form groups start here----->
 				<!-----company State ----->
 				<div class="form-group text-center"
-					  ng-class="{'has-error': signupForm.companyState.$touched && signupForm.companyState">
+					  ng-class="{'has-error': signupForm.companyState.$touched && signupForm.companyState.$invalid}">
 					<label for="companyState">Company State</label>
 					<input type="text" id="companyState" name="companyState" ng-model="signupData.companyState" ng-required="true"
 							 class="form-control registration-input"
@@ -206,7 +206,7 @@
 				<!----form groups start here----->
 				<!-----company Zip ----->
 				<div class="form-group text-center"
-					  ng-class="{'has-error': signupForm.companyZip.$touched && signupForm.companyZip">
+					  ng-class="{'has-error': signupForm.companyZip.$touched && signupForm.companyZip.$invalid}">
 					<label for="companyZip">Company Zip</label>
 					<input type="text" id="companyZip" name="companyZip" ng-model="signupData.companyZip" ng-required="true"
 							 class="form-control registration-input"
@@ -220,7 +220,7 @@
 				<!----form groups start here----->
 				<!-----company License ----->
 				<div class="form-group text-center"
-					  ng-class="{'has-error': signupForm.companyLicense.$touched && signupForm.companyLicense">
+					  ng-class="{'has-error': signupForm.companyLicense.$touched && signupForm.companyLicense.$invalid}">
 					<label for="companyLicense">Company License</label>
 					<input type="text" id="companyLicense" name="companyLicense" ng-model="signupData.companyLicense" ng-minlength="9" ng-maxlength="9" ng-required="true"
 							 class="form-control registration-input"
@@ -239,7 +239,7 @@
 				<!----form groups start here----->
 				<!-----company Health Permit ----->
 				<div class="form-group text-center"
-					  ng-class="{'has-error': signupForm.companyPermit.$touched && signupForm.companyPermit">
+					  ng-class="{'has-error': signupForm.companyPermit.$touched && signupForm.companyPermit.$invalid}">
 					<label for="companyPermit">Company Health Permit</label>
 					<input type="text" id="companyPermit" name="companyPermit" ng-model="signupData.companyPermit" ng-minlength="9" ng-maxlength="9" ng-required="true"
 							 class="form-control registration-input"
