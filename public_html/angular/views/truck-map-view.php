@@ -88,7 +88,7 @@
 <!--								<div class="col-xs-4 text-center">-->
 <!--									<h4>You are currently located at:</h4>-->
 <!--								</div>-->
-<!--								<div class="col-xs-7 text-center truck-map-location"></div> <!-- need to add this in from maps? -->-->
+<!--								<div class="col-xs-7 text-center truck-map-location"></div> <!-- need to add this in from maps? -->
 <!--							</div>-->
 <!--							<div class="row text-center">-->
 <!---->

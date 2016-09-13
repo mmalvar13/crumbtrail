@@ -42,6 +42,7 @@
 	font-family:"baloo paaji",sans-serif;
 	background: #72b352;
 	color:white;
+
 }
 
 /*this changes the nav text color to white*/
@@ -58,14 +59,12 @@
 
 
 
-/* ------------- MAPS CSS ------------------- */
-/*		#map {
-/*		height: 100%;
-/*		}
-*/
+/* -------------------------------MAPS CSS -------------------------------------------------- */
+
 
 .angular-google-map-container {
-	height: 800px;
+	height: 90vh;
+	width: auto;
 }
 
 
