@@ -18,8 +18,8 @@
 			<!-------------company image-------------------->
 			<div class="container">
 				<div class="row">
-					<img src="https://unsplash.com/search/food%20truck?photo=nZv5fBUeIZY"
-						  class="img-responsive img-thumbnail profile-image">
+					<img src="images/popFizzPlaceholder.png" class="img-responsive img-thumbnail profile-image" />
+
 				</div>
 			</div>
 
