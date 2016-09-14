@@ -28,6 +28,10 @@
 		<link href="css/style.css" rel="stylesheet" type="text/css"/>
 
 
+		<!--------------FONT AWESOME----------------->
+		<link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+
+
 		<!--Google Maps API-->
 		<script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
 
