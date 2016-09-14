@@ -2,7 +2,7 @@
 <div class="container-fluid login-background">
 
 		<div class="row">
-			<h1 class="text-center">Food Truck Login</h1>
+			<h1 class="text-center truck-login-h1">Food Truck Login</h1>
 			<hr class="truck-login-hr">
 		</div>
 		<!-----------LOGIN FORM------------------->

@@ -270,6 +270,7 @@ a {
 	padding-left:0;  /*this will remove the list item indentation and center everything */
 	text-align: center;
 	color: black;
+	font-family: 'Montserrat', sans-serif;
 }
 
 .truck-list-text{
@@ -338,6 +339,9 @@ a {
 
 .login-submit{
 	background:#BC59D7;
+}
+.truck-login-h1{
+	color: gainsboro;
 }
 
 

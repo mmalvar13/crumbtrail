@@ -25,6 +25,7 @@
 
 					</select>
 				</div>
+				<button type="submit" class="btn btn-default">Submit</button>
 				<h4>Current Location:</h4>
 				<ui-gmap-google-map center="{'latitude': currentEvent.eventLocation.lat, 'longitude': currentEvent.eventLocation.long}" zoom="map.zoom">
 					<ui-gmap-marker coords="{'latitude': currentEvent.eventLocation.lat, 'longitude': currentEvent.eventLocation.long}" idkey="currentEvent.eventId">
@@ -32,7 +33,7 @@
 					</ui-gmap-marker>
 				</ui-gmap-google-map>
 				<br>
-				<button type="submit" class="btn btn-default">Submit</button>
+
 			</form>
 		</div>
 	</div>
