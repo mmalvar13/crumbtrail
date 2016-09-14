@@ -73,11 +73,22 @@
 /*CSS FOR COMPANY PROFILE*/
 
 .company-name{
-
 	text-align: center;
-	border: 0.15rem solid lightgray;
-	border-radius: 2%;
-	margin-top:0;
+	margin-top:3rem;
+}
+
+.company-info-div{
+	margin-top: 3rem;
+}
+
+.serving-now{
+	font-family: "baloo paaji", sans-serif;
+	color: #f05e56;
+	font-size: 20px;
+}
+.company-hr{
+	width: 50%;
+	margin-top:0.25rem;
 }
 
 .serving-icon{
@@ -87,6 +98,7 @@
 	height: 2.5rem;
 	background: green;
 	transform: translateY(17.5%);
+	margin: 0 auto;
 }
 
 
@@ -95,15 +107,21 @@
 }
 
 .profile-image{
-	margin-top: 1rem;
+	/*margin-top: 1rem;*/
 }
 
-#companyDescription{
+.companyDescription{
 	font-family: "baloo paaji", sans-serif;
+	text-align: center;
 }
-#companyMenuText{
-	font-family: 'Nixie One', cursive;
+
+.company-description-box{
+	border: 2px solid #f05e56;
+	margin-bottom: 2rem;
 }
+/*#companyMenuText{*/
+	/*font-family: 'Nixie One', cursive;*/
+/*}*/
 
 .description-box{
 	box-sizing: border-box;
