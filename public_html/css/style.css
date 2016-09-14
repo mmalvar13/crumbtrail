@@ -381,9 +381,11 @@ a {
 	margin-left: 1rem;
 }
 .truck-map-start-serving-btn{
-	background-color: green;
+	background-color: #f05e56;;
 	color: black;
 	min-height: 6rem;
+	font-family: 'Fredoka One', cursive;
+
 }
 
 .truck-map-stop-serving-btn{

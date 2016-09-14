@@ -4,8 +4,7 @@
 	<!---------------START SERVING------------------------------------->
 	<div class="row" ng-hide="editing">
 		<div class="col-md-8 col-md-offset-2">
-			<button type="button" class="btn btn-lg btn-block truck-map-start-serving-btn" ng-click="editing = true">EDIT
-				EVENTS
+			<button type="button" class="btn btn-lg btn-block truck-map-start-serving-btn" ng-click="editing = true">Start/Edit Serving Event
 			</button>
 		</div>
 	</div>
