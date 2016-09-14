@@ -98,6 +98,13 @@
 	margin-top: 1rem;
 }
 
+#companyDescription{
+	font-family: "baloo paaji", sans-serif;
+}
+#companyMenuText{
+	font-family: 'Nixie One', cursive;
+}
+
 .description-box{
 	box-sizing: border-box;
 	margin-top: 2rem;
