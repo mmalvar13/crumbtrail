@@ -59,7 +59,7 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 			if($scope.currentEvent.eventId === 0) {
 				EventService.createEvent($scope.currentEvent);
 			} else {
-				EventService.update($scope.currentEvent.eventId, $scope.currentEvent);
+				EventService.updateEvent($scope.currentEvent.eventId, $scope.currentEvent);
 			}
 		};
 

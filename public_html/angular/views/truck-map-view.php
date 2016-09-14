@@ -12,12 +12,14 @@
 	<div class="row" ng-if="editing">
 		<div class="col-md-8 col-md-offset-2">
 			<h1>Start Serving</h1>
-			<form ng-submit="editEvent();">
+			<form name="eventForm" ng-submit="editEvent();">
 				<div class="form-group">
 					<label for="endTime">End Time</label>
-					<input type="time" class="form-control" id="endTime" name="endTime" value="13:45:00" ng-model="endTime">
+					<!--					adding ng-model to input and truck select-->
+					<input type="time" class="form-control" id="endTime" name="endTime" value="13:45:00" ng-model="currentEvent.endTime">
 				</div>
 				<div class="checkbox">
+<!--					adding ng-model to input and truck select-->
 					<label for="truck">Select which truck you're serving from</label>
 					<select class="form-control" id="selectedTruckId" name="selectedTruckId" ng-model="selectedTruckId" ng-change="updateMap(selectedTruckId);">
 						<option ng-repeat="truck in trucks" value="{{truck.truckId}}">Truck #: {{truck.truckId}}</option>
