@@ -29,7 +29,8 @@
 
 
 		<!--------------FONT AWESOME----------------->
-		<link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+<!--		<link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">-->
+		<script src="https://use.fontawesome.com/812baeea59.js"></script>
 
 
 		<!--Google Maps API-->

@@ -105,6 +105,17 @@
 	margin: 0 auto;
 }
 
+.company-media{
+	/*display: inline-block;*/
+	margin: 0 auto;
+}
+
+.i-company{
+	margin-bottom: 2rem;
+}
+.i-company:hover{
+	color: #f05e56;
+}
 
 .locate-btn{
 	width: 10rem;
@@ -112,6 +123,7 @@
 
 .profile-image{
 	margin-bottom: 2rem;
+	margin-top:3rem;
 }
 
 .companyDescription{

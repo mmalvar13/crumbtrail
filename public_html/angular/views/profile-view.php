@@ -18,10 +18,10 @@
 
 	<div class="row company-info-div">
 		<div class="col-md-6">
-			<figure class="figure">
+
 				<img src="images/popFizzTruck.png" class="figure-img img-fluid img-rounded img-responsive profile-image"/>
-				<figcaption class="figure-caption figcapt-text pull-right">"PopFizz on your face!"</figcaption>
-			</figure>
+
+
 		</div>
 		<div class="row">
 			<div class="col-md-6">
@@ -114,6 +114,16 @@
 					<h2 class="text-center company-description-header-font">Reach Out To Us!</h2>
 					<hr class="company-hr">
 				</div>
+				<div class="row">
+					<div class="company-media text-center">
+
+							<a  href="https://www.facebook.com/PopFizzABQ/?fref=ts"><i class="fa fa-facebook-square fa-4x i-company" aria-hidden="true"></i></a></li>
+							<a  href="https://www.instagram.com/popfizzabq/"><i class="fa fa-instagram fa-4x i-company" aria-hidden="true"></i></a></li>
+							</div>
+
+
+					</div>
+<!--				</div>-->
 
 
 				</div>
