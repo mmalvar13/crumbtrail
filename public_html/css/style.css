@@ -380,6 +380,10 @@ a {
 .truck-map-serving-h4{
 	margin-left: 1rem;
 }
+
+.truck-map-submit{
+	margin: 0 auto !important;
+}
 .truck-map-start-serving-btn{
 	background-color: #f05e56;;
 	color: black;

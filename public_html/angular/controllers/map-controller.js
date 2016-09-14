@@ -45,11 +45,13 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 				});
 		};
 
-		$scope.setLocationToCurrent = function() {
+		$scope.setLocationToCurrent = function(selectedTruckId) {
 			$scope.currentEvent.eventLocation = {
 				"lat": $scope.map.center.latitude,
 				"long": $scope.map.center.longitude
 			};
+			$scope.currentEvent.eventStart = Date.now();
+			$scope.currentEvent.eventTruckId = selectedTruckId;
 			$scope.currentEvent.eventId = 0;
 		};
 
@@ -67,17 +69,17 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 			$scope.getActiveEvents();
 			if(selectedTruckId !== null) {
 				var found = false;
-				for(activeEvent in $scope.activeEvents) {
+				for(var activeEvent in $scope.activeEvents) {
 					if($scope.activeEvents[activeEvent].eventTruckId === Number(selectedTruckId)) {
 						$scope.currentEvent = $scope.activeEvents[activeEvent];
 						found = true;
 					}
 				}
 				if(!found) {
-					$scope.setLocationToCurrent();
+					$scope.setLocationToCurrent(selectedTruckId);
 				}
 			} else {
-				$scope.setLocationToCurrent();
+				$scope.setLocationToCurrent(selectedTruckId);
 			}
 		};
 

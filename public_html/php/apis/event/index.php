@@ -114,7 +114,7 @@ try {
 			if(empty($requestObject->eventLocation->lat) === true) {
 				throw(new \InvalidArgumentException("No event latitude exists.", 405));
 			}
-			if(empty($requestObject->eventLocation->lng) === true) {
+			if(empty($requestObject->eventLocation->long) === true) {
 				throw(new \InvalidArgumentException("No event longitude exists.", 405));
 			}
 			// is this correct??????? Event start time defaults to current correct? YES WooHoo!!!!

@@ -4,7 +4,7 @@
 	<!---------------START SERVING------------------------------------->
 	<div class="row" ng-hide="editing">
 		<div class="col-md-8 col-md-offset-2">
-			<button type="button" class="btn btn-lg btn-block truck-map-start-serving-btn" ng-click="editing = true">Start/Edit Serving Event
+			<button type="button" class="btn btn-lg btn-block truck-map-start-serving-btn" ng-click="editing = true">Start Serving/Edit Event
 			</button>
 		</div>
 	</div>
@@ -26,7 +26,7 @@
 
 					</select>
 				</div>
-				<button type="submit" class="btn btn-default">Submit</button>
+				<button type="submit" class="btn btn-default truck-map-submit">Submit</button>
 				<h4>Current Location:</h4>
 				<ui-gmap-google-map center="{'latitude': currentEvent.eventLocation.lat, 'longitude': currentEvent.eventLocation.long}" zoom="map.zoom">
 					<ui-gmap-marker coords="{'latitude': currentEvent.eventLocation.lat, 'longitude': currentEvent.eventLocation.long}" idkey="currentEvent.eventId">
