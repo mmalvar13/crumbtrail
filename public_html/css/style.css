@@ -124,10 +124,14 @@
 	margin-bottom: 2rem;
 
 }
-/*#companyMenuText{*/
-	/*font-family: 'Nixie One', cursive;*/
-/*}*/
 
+.company-description-header-font{
+	font-family: 'Fredoka One', cursive;
+}
+
+.company-description-body-font{
+	font-family: 'Montserrat', sans-serif;
+}
 .description-box{
 	box-sizing: border-box;
 	margin-top: 2rem;

@@ -22,6 +22,7 @@
 
 		<!-------------------GOOGLE FONTS------------------>
 		<link href="https://fonts.googleapis.com/css?family=Fascinate+Inline|Nixie+One|Roboto|Baloo+Paaji" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Fredoka+One|Montserrat" rel="stylesheet">
 
 		<!---------------Custom CSS here---------------------why was this commented out? 9/9 MA-->
 		<link href="css/style.css" rel="stylesheet" type="text/css"/>
