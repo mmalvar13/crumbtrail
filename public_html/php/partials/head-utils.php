@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1"/>
 
 		<!-- set base for relative links - to enable pretty URLs -->
-		<base href="<?php echo dirname($_SERVER["PHP_SELF"]) . "/";?>">
+		<base href="/">
 
 		<!-------------Bootstrap links all here---------->
 		<!-- Latest compiled and minified CSS -->
