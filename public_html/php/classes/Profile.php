@@ -8,23 +8,22 @@ require_once("autoload.php");
  * this class contains all state variables, constructor, mutators, accessors, PDOs, and getFooByBar methods
  * @author Loren Baca
  */
-
-class Profile implements \JsonSerializable{
+class Profile implements \JsonSerializable {
 
 //use ValidateDate;
 
-/**
- * Primary key for Profile class is profileId
- * @var $profileId
- */
-private $profileId;
+	/**
+	 * Primary key for Profile class is profileId
+	 * @var $profileId
+	 */
+	private $profileId;
 
 
-/**
- * name of person who has profile
- * @var $profileName
- */
-private $profileName;
+	/**
+	 * name of person who has profile
+	 * @var $profileName
+	 */
+	private $profileName;
 
 
 	/**
@@ -78,13 +77,13 @@ private $profileName;
 
 	/**
 	 * Profile constructor.
-	 * @param int|null $newProfileId, null if it's a new profile
-	 * @param string $newProfileName, humans name who created this profile
-	 * @param string $newProfileEmail, humans email who created this profile
-	 * @param string $newProfilePhone, humans phone who created this profile
-	 * @param string $newProfileAccessToken, access token to later link social media to our app
-	 * @param string $newProfileActivationToken, access token to activated a user profile application
-	 * @param string $newProfileType, type of profile: 'a'(admin), 'o'(owner), or 'e'(employee)
+	 * @param int|null $newProfileId , null if it's a new profile
+	 * @param string $newProfileName , humans name who created this profile
+	 * @param string $newProfileEmail , humans email who created this profile
+	 * @param string $newProfilePhone , humans phone who created this profile
+	 * @param string $newProfileAccessToken , access token to later link social media to our app
+	 * @param string $newProfileActivationToken , access token to activated a user profile application
+	 * @param string $newProfileType , type of profile: 'a'(admin), 'o'(owner), or 'e'(employee)
 	 * @param string $newProfileSalt
 	 * @param string $newProfileHash
 	 * @throws \InvalidArgumentException if data types are not valid
@@ -95,7 +94,7 @@ private $profileName;
 	public function __construct(int $newProfileId = null, string $newProfileName, string $newProfileEmail, string $newProfilePhone, string $newProfileAccessToken, string $newProfileActivationToken = null, string $newProfileType, string $newProfileHash, string $newProfileSalt) {
 
 		//try statements
-		try{
+		try {
 
 			$this->setProfileId($newProfileId);
 			$this->setProfileName($newProfileName);
@@ -123,70 +122,70 @@ private $profileName;
 
 	}
 
-/*--------------------Get Foo By Bar Section here---------------------------*/
+	/*--------------------Get Foo By Bar Section here---------------------------*/
 
-/**
- * gets profile by the profile ID
- * @param \PDO $pdo PDO connection object
- * @param int $profileId used as the profileId to search for
- * @return Profile|null Profile found or null if not found  ***Why is profile capitalized?? referencing the class??****
- * @throws \PDOException when mySQL related errors occur
- * @throws \TypeError when variables are not the correct data type
- */
-public static function getProfileByProfileId(\PDO $pdo, int $profileId){
-	//sanitize the ID before searching for it
-	if($profileId <= 0){
-		throw(new \PDOException("The profile ID is negative or zero"));
-	}
-	//create query template
-	$query = "SELECT profileId, profileName, profileEmail, profilePhone, profileAccessToken, profileActivationToken, profileType, profileHash, profileSalt FROM profile WHERE profileId = :profileId";
-
-	//prepare template
-	$statement = $pdo->prepare($query);
-
-	//bind the profileId to the placeholder in the template ***WHY JUST TO PROFILE ID?***
-	$parameters = ["profileId"=>$profileId];
-	//execute the SQL statement
-	$statement->execute($parameters);
-
-	//now that we have selected the correct profile, we need to grab it from mySQL
-	try{
-		$profile = null;   //new variable $profile is what we will assign all the information in this profile to, and return to whatever called this method
-		$statement->setFetchMode(\PDO::FETCH_ASSOC); //what is going on here? establishing the fetch mode for this method?
-		//$row is an empty array I think
-		$row = $statement->fetch(); //create new variable and assign it to $statement which is pointing to the value of fetch???
-
-		//what does it mean for the row to be false?? That the row is empty? Couldnt be retrieved???
-		if($row !== false){
-			//set $profile to a new object based on the Profile class with these values assigned into it (I think)
-			$profile = new Profile($row["profileId"], $row["profileName"], $row["profileEmail"], $row["profilePhone"], $row["profileAccessToken"], $row["profileActivationToken"], $row["profileType"], $row["profileHash"], $row["profileSalt"]);
+	/**
+	 * gets profile by the profile ID
+	 * @param \PDO $pdo PDO connection object
+	 * @param int $profileId used as the profileId to search for
+	 * @return Profile|null Profile found or null if not found  ***Why is profile capitalized?? referencing the class??****
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 */
+	public static function getProfileByProfileId(\PDO $pdo, int $profileId) {
+		//sanitize the ID before searching for it
+		if($profileId <= 0) {
+			throw(new \PDOException("The profile ID is negative or zero"));
 		}
-		//catch statement
-	}catch(\Exception $exception){
-		// if the row couldnt be converted, re-throw it
-		throw(new \PDOException($exception->getMessage(), 0, $exception));
-	}
-	return($profile);
-}
+		//create query template
+		$query = "SELECT profileId, profileName, profileEmail, profilePhone, profileAccessToken, profileActivationToken, profileType, profileHash, profileSalt FROM profile WHERE profileId = :profileId";
 
-/**
-* gets profile by the profile name
-* @param \PDO $pdo PDO connection object
-* @param string $profileName used as the profile name to search for
-* @return \SplFixedArray SplFixedArray of profiles found
-* @throws \PDOException when mySQL related errors occur
-* @throws \TypeError when variables are not the correct data type
-*/
-	public static function getProfileByProfileName(\PDO $pdo, string $profileName){
+		//prepare template
+		$statement = $pdo->prepare($query);
+
+		//bind the profileId to the placeholder in the template ***WHY JUST TO PROFILE ID?***
+		$parameters = ["profileId" => $profileId];
+		//execute the SQL statement
+		$statement->execute($parameters);
+
+		//now that we have selected the correct profile, we need to grab it from mySQL
+		try {
+			$profile = null;   //new variable $profile is what we will assign all the information in this profile to, and return to whatever called this method
+			$statement->setFetchMode(\PDO::FETCH_ASSOC); //what is going on here? establishing the fetch mode for this method?
+			//$row is an empty array I think
+			$row = $statement->fetch(); //create new variable and assign it to $statement which is pointing to the value of fetch???
+
+			//what does it mean for the row to be false?? That the row is empty? Couldnt be retrieved???
+			if($row !== false) {
+				//set $profile to a new object based on the Profile class with these values assigned into it (I think)
+				$profile = new Profile($row["profileId"], $row["profileName"], $row["profileEmail"], $row["profilePhone"], $row["profileAccessToken"], $row["profileActivationToken"], $row["profileType"], $row["profileHash"], $row["profileSalt"]);
+			}
+			//catch statement
+		} catch(\Exception $exception) {
+			// if the row couldnt be converted, re-throw it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return ($profile);
+	}
+
+	/**
+	 * gets profile by the profile name
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $profileName used as the profile name to search for
+	 * @return \SplFixedArray SplFixedArray of profiles found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 */
+	public static function getProfileByProfileName(\PDO $pdo, string $profileName) {
 		//sanitize the ID before searching for it
 		$profileName = trim($profileName);
 		$profileName = filter_var($profileName, FILTER_SANITIZE_STRING);
 
-		if(empty($profileName) === true){
+		if(empty($profileName) === true) {
 			throw(new \PDOException("The profile name is empty"));
 		}
 
-		if(strlen($profileName)>128){
+		if(strlen($profileName) > 128) {
 			throw(new \PDOException("The profile name entered is too long"));
 		}
 
@@ -198,7 +197,7 @@ public static function getProfileByProfileId(\PDO $pdo, int $profileId){
 
 		//bind the profileId to the placeholder in the template
 		$profileName = "%$profileName%";
-		$parameters = ["profileName"=>$profileName];
+		$parameters = ["profileName" => $profileName];
 		//execute the SQL statement
 		$statement->execute($parameters);
 
@@ -206,21 +205,20 @@ public static function getProfileByProfileId(\PDO $pdo, int $profileId){
 		$profiles = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 
-		while(($row = $statement->fetch()) !== false){
-			try{
+		while(($row = $statement->fetch()) !== false) {
+			try {
 				$profile = new Profile($row["profileId"], $row["profileName"], $row["profileEmail"], $row["profilePhone"], $row["profileAccessToken"], $row["profileActivationToken"], $row["profileType"], $row["profileHash"], $row["profileSalt"]);
 
 				//What exactly is happening here ****
 				$profiles[$profiles->key()] = $profile;
 				$profiles->next();
-			}catch(\Exception $exception){
+			} catch(\Exception $exception) {
 				//if the row couldn't be converted, rethrow it (the error?)
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
 		}
-		return($profiles);
+		return ($profiles);
 	}
-
 
 
 	/**
@@ -231,16 +229,16 @@ public static function getProfileByProfileId(\PDO $pdo, int $profileId){
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 */
-	public static function getProfileByProfileEmail(\PDO $pdo, string $profileEmail){
+	public static function getProfileByProfileEmail(\PDO $pdo, string $profileEmail) {
 		//sanitize the ID before searching for it
 		$profileEmail = trim($profileEmail);
 		$profileEmail = filter_var($profileEmail, FILTER_SANITIZE_STRING);
 
-		if(empty($profileEmail) === true){
+		if(empty($profileEmail) === true) {
 			throw(new \PDOException("The profile email is empty"));
 		}
 
-		if(strlen($profileEmail)>128){
+		if(strlen($profileEmail) > 128) {
 			throw(new \PDOException("The profile Phone entered is too long"));
 		}
 
@@ -251,30 +249,29 @@ public static function getProfileByProfileId(\PDO $pdo, int $profileId){
 		$statement = $pdo->prepare($query);
 
 		//bind the profileId to the placeholder in the template ***WHY JUST TO PROFILE ID?***
-		$parameters = ["profileEmail"=>$profileEmail];
+		$parameters = ["profileEmail" => $profileEmail];
 		//execute the SQL statement
 		$statement->execute($parameters);
 
 		//now that we have selected the correct profile, we need to grab it from mySQL
-		try{
+		try {
 			$profile = null;
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 
 			$row = $statement->fetch();
 
 
-			if($row !== false){
+			if($row !== false) {
 				//set $profile to a new object based on the Profile class with these values assigned into it (I think)
 				$profile = new Profile($row["profileId"], $row["profileName"], $row["profileEmail"], $row["profilePhone"], $row["profileAccessToken"], $row["profileActivationToken"], $row["profileType"], $row["profileHash"], $row["profileSalt"]);
 			}
 			//catch statement
-		}catch(\Exception $exception){
+		} catch(\Exception $exception) {
 			// if the row couldn't be converted, re-throw it
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
-		return($profile);
+		return ($profile);
 	}
-
 
 
 	/**
@@ -285,16 +282,16 @@ public static function getProfileByProfileId(\PDO $pdo, int $profileId){
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 */
-	public static function getProfileByProfilePhone(\PDO $pdo, string $profilePhone){
+	public static function getProfileByProfilePhone(\PDO $pdo, string $profilePhone) {
 		//sanitize the ID before searching for it
 		$profilePhone = trim($profilePhone);
 		$profilePhone = filter_var($profilePhone, FILTER_SANITIZE_STRING);
 
-		if(empty($profilePhone) === true){
+		if(empty($profilePhone) === true) {
 			throw(new \PDOException("The profile email is empty"));
 		}
 
-		if(strlen($profilePhone)>32){
+		if(strlen($profilePhone) > 32) {
 			throw(new \PDOException("The profile Phone entered is too long"));
 		}
 
@@ -306,7 +303,7 @@ public static function getProfileByProfileId(\PDO $pdo, int $profileId){
 
 		//bind the profileId to the placeholder in the template
 		$profilePhone = "%$profilePhone%";
-		$parameters = ["profilePhone"=>$profilePhone];
+		$parameters = ["profilePhone" => $profilePhone];
 		//execute the SQL statement
 		$statement->execute($parameters);
 
@@ -314,21 +311,20 @@ public static function getProfileByProfileId(\PDO $pdo, int $profileId){
 		$profiles = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 
-		while(($row = $statement->fetch()) !== false){
-			try{
+		while(($row = $statement->fetch()) !== false) {
+			try {
 				$profile = new Profile($row["profileId"], $row["profileName"], $row["profileEmail"], $row["profilePhone"], $row["profileAccessToken"], $row["profileActivationToken"], $row["profileType"], $row["profileHash"], $row["profileSalt"]);
 
 				//What exactly is happening here ****
 				$profiles[$profiles->key()] = $profile;
 				$profiles->next();
-			}catch(\Exception $exception){
+			} catch(\Exception $exception) {
 				//if the row couldn't be converted, rethrow it (the error?)
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
 		}
-		return($profiles);
+		return ($profiles);
 	}
-
 
 
 	/**
@@ -339,16 +335,16 @@ public static function getProfileByProfileId(\PDO $pdo, int $profileId){
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 */
-	public static function getProfileByProfileActivationToken(\PDO $pdo, string $profileActivationToken){
+	public static function getProfileByProfileActivationToken(\PDO $pdo, string $profileActivationToken) {
 		//sanitize the ID before searching for it
 		$profileActivationToken = trim($profileActivationToken);
 		$profileActivationToken = filter_var($profileActivationToken, FILTER_SANITIZE_STRING);
 
-		if(empty($profileActivationToken) === true){
+		if(empty($profileActivationToken) === true) {
 			throw(new \PDOException("The profile activation token is empty"));
 		}
 
-		if(strlen($profileActivationToken)>32){
+		if(strlen($profileActivationToken) > 32) {
 			throw(new \PDOException("The profile activation token is too long"));
 		}
 
@@ -359,31 +355,29 @@ public static function getProfileByProfileId(\PDO $pdo, int $profileId){
 		$statement = $pdo->prepare($query);
 
 		//bind the profileId to the placeholder in the template ***WHY JUST TO PROFILE ID?***
-		$parameters = ["profileActivationToken"=>$profileActivationToken];
+		$parameters = ["profileActivationToken" => $profileActivationToken];
 		//execute the SQL statement
 		$statement->execute($parameters);
 
 		//now that we have selected the correct profile, we need to grab it from mySQL
-		try{
+		try {
 			$profile = null;
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 
 			$row = $statement->fetch();
 
 
-			if($row !== false){
+			if($row !== false) {
 				//set $profile to a new object based on the Profile class with these values assigned into it (I think)
 				$profile = new Profile($row["profileId"], $row["profileName"], $row["profileEmail"], $row["profilePhone"], $row["profileAccessToken"], $row["profileActivationToken"], $row["profileType"], $row["profileHash"], $row["profileSalt"]);
 			}
 			//catch statement
-		}catch(\Exception $exception){
+		} catch(\Exception $exception) {
 			// if the row couldn't be converted, re-throw it
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
-		return($profile);
+		return ($profile);
 	}
-
-
 
 
 	/**
@@ -394,7 +388,7 @@ public static function getProfileByProfileId(\PDO $pdo, int $profileId){
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
-	public function getAllProfiles(\PDO $pdo){
+	public function getAllProfiles(\PDO $pdo) {
 		//create query template
 		$query = "SELECT profileId, profileName, profileEmail, profilePhone, profileAccessToken, profileActivationToken, profileType, profileHash, profileSalt FROM profile";
 
@@ -408,13 +402,13 @@ public static function getProfileByProfileId(\PDO $pdo, int $profileId){
 		$statement->setFetchMode(\PDO::FETCH_ASSOC); //still not exactly sure what this does
 
 		//find out what this while-loop is actually doing
-		while(($row = $statement->fetch()) !==false){
-			try{
+		while(($row = $statement->fetch()) !== false) {
+			try {
 				//this is getting the value from each of these keys in the array called $row
 				$profile = new Profile($row["profileId"], $row["profileName"], $row["profileEmail"], $row["profilePhone"], $row["profileAccessToken"], $row["profileActivationToken"], $row["profileType"], $row["profileHash"], $row["profileSalt"]);
 
 				//now we are taking each profile and putting it into the array called $profiles which will collect all the profiles we have!
-				$profiles[$profiles->key()]= $profile; //inserts the first entry from the $profile array
+				$profiles[$profiles->key()] = $profile; //inserts the first entry from the $profile array
 				$profiles->next();  //next increments the key in the fixed array $profiles
 				//profile array to enter!!
 			} catch(\Exception $exception) {
@@ -422,40 +416,35 @@ public static function getProfileByProfileId(\PDO $pdo, int $profileId){
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
 		}
-		return($profiles);
+		return ($profiles);
 	}
 
 
+	/**
+	 * accessor method for profileId
+	 * @return int|null value for profileId
+	 */
+	public function getProfileId() {
+		return ($this->profileId);
+	}
 
-
-
-
-
-/**
- * accessor method for profileId
- * @return int|null value for profileId
- */
-public function getProfileId(){
-	return($this-> profileId);
-}
-
-/**
- * mutator method for profileId
- * @param int|null  use $newProfileId to assign a new value to profileId
- * @throws \RangeException if $newProfileId is not positive
- * @throws \TypeError if $newProfileId is not an integer
- **/
-	public function setProfileId(int $newProfileId = null){
+	/**
+	 * mutator method for profileId
+	 * @param int|null use $newProfileId to assign a new value to profileId
+	 * @throws \RangeException if $newProfileId is not positive
+	 * @throws \TypeError if $newProfileId is not an integer
+	 **/
+	public function setProfileId(int $newProfileId = null) {
 		//create a base case where this is a new profile and profileId is null with no SQL assigned ID yet!
 		// is this because set ProofileId takes in one argument, which then gets assigned to $newProfileId???
 		//ASK ON THIS!!!!!
-		if($newProfileId === null){
+		if($newProfileId === null) {
 			$this->profileId = null;
 			return;
 		}
 
 		//check to see if $newProfileId is positive
-		if($newProfileId <= 0){
+		if($newProfileId <= 0) {
 			throw(new \RangeException("The profile ID is not positive!"));
 		}
 
@@ -467,28 +456,28 @@ public function getProfileId(){
 	 * accessor method for profileName
 	 * @return string value for profileName
 	 */
-	public function getProfileName(){
-		return($this-> profileName);
+	public function getProfileName() {
+		return ($this->profileName);
 	}
 
 	/**
 	 * mutator method for profileName
-	 * @param string, $newProfileName used to update profileName
+	 * @param string , $newProfileName used to update profileName
 	 * @throw \RangeException if $newProfileName is empty or too long
 	 * @throw \InvalidArgumentException if $newProfileName is not a string
 	 * @throw \TypeError if $newProfileName is not a string
 	 */
-	public function setProfileName(string $newProfileName){
+	public function setProfileName(string $newProfileName) {
 		//first we need to strip out all the white space on either end of $newProfileName
 		$newProfileName = trim($newProfileName);
 		//Then we must sanitize $newProfileName
 		$newProfileName = filter_var($newProfileName, FILTER_SANITIZE_STRING);
 		//now check if $newProfileName is either empty or too long
-		if(strlen($newProfileName) === 0){
+		if(strlen($newProfileName) === 0) {
 			throw(new \RangeException("Profile name is too short"));
-			}
+		}
 
-		if(strlen($newProfileName > 128)){
+		if(strlen($newProfileName) > 128) {
 			throw(new \RangeException("Profile name is too long"));
 		}
 		//now assign $newProfileName to profileName and store in SQL
@@ -499,32 +488,31 @@ public function getProfileId(){
 	 * accessor method for profileEmail
 	 * @return string value for profileEmail
 	 */
-	public function getProfileEmail(){
-		return($this-> profileEmail);
+	public function getProfileEmail() {
+		return ($this->profileEmail);
 	}
-
 
 
 	/**
 	 * mutator method for profileEmail
-	 * @param string, $newProfileEmail used to assign new value of profileEmail
+	 * @param string , $newProfileEmail used to assign new value of profileEmail
 	 * @throws \InvalidArgumentException if $newProfileEmail is not a string or is insecure
 	 * @throws \RangeException if $newProfileEmail is longer than 128 char
 	 * @throws \TypeError if $newProfileEmail is not a string
 	 */
-	public function setProfileEmail(string $newProfileEmail){
+	public function setProfileEmail(string $newProfileEmail) {
 		// first take out any white space on $newProfileEmail
 		$newProfileEmail = trim($newProfileEmail);
 		//next ensure that $newProfileEmail is sanitized
 		$newProfileEmail = filter_var($newProfileEmail, FILTER_SANITIZE_EMAIL);
 
 		//ensure that $newProfileEmail isnt empty
-		if(strlen($newProfileEmail)=== 0){
+		if(strlen($newProfileEmail) === 0) {
 			throw(new \RangeException("The email entered is empty"));
 		}
 
 		//ensure $newProfileEmail isn't too long
-		if(strlen($newProfileEmail) > 128){
+		if(strlen($newProfileEmail) > 128) {
 			throw(new \RangeException("email entered is too long"));
 		}
 
@@ -536,34 +524,34 @@ public function getProfileId(){
 	 * accessor method for profilePhone
 	 * @return string value for profilePhone  **WOULD THIS BE A STRING SINCE PHONE NUMBERS CAN BE VARIABLE LENGTHS?
 	 */
-	public function getProfilePhone(){
-		return($this-> profilePhone);
+	public function getProfilePhone() {
+		return ($this->profilePhone);
 	}
 
 	/**
 	 * mutator method for profilePhone
-	 * @param string, $newProfilePhone used to assign new value of profilePhone
+	 * @param string , $newProfilePhone used to assign new value of profilePhone
 	 * @throws \InvalidArgumentException if $newProfilePhone is not a string or is insecure
 	 * @throws \RangeException if $newProfilePhone is longer than 32 char
 	 * @throws \TypeError if $newProfilePhone is not a string
 	 */
-	public function setProfilePhone(string $newProfilePhone){
+	public function setProfilePhone(string $newProfilePhone) {
 		// first take out any white space on $newProfilePhone
 		$newProfilePhone = trim($newProfilePhone);
 		//next ensure that $newProfilePhone is sanitized
 		$newProfilePhone = filter_var($newProfilePhone, FILTER_SANITIZE_STRING);
 
 		//ensure that $newProfilePhone isnt empty
-		if(strlen($newProfilePhone)< 10){
+		if(strlen($newProfilePhone) < 10) {
 			throw(new \RangeException("The phone number entered is too short. Please enter a phone number including 3 digit area-code"));
 		}
 
-		if(strlen($newProfilePhone) < 10){   //what do we need to do to ensure a valid phone number
+		if(strlen($newProfilePhone) < 10) {   //what do we need to do to ensure a valid phone number
 			throw(new \RangeException("Please enter a complete phone number starting with area-code"));
 		}
 
 		//ensure $newProfilePhone isn't too long
-		if(strlen($newProfilePhone) > 32){
+		if(strlen($newProfilePhone) > 32) {
 			throw(new \RangeException("Phone number entered is too long"));
 		}
 
@@ -575,31 +563,31 @@ public function getProfileId(){
 	 * accessor method for profileAccessToken
 	 * @return string value for profileAccessToken  **AGAIN, WOULD THIS BE A STRING OR INT VALUE??
 	 */
-	public function getProfileAccessToken(){
-		return($this-> profileAccessToken);
+	public function getProfileAccessToken() {
+		return ($this->profileAccessToken);
 	}
 
 	/**
 	 * *********LOOK INTO THIS ONE HOW IS THIS TOKEN GENERATED??***********
 	 * mutator method for profileAccessToken
-	 * @param string, $newProfileAccessToken used to assign new value of profileAccessToken
+	 * @param string , $newProfileAccessToken used to assign new value of profileAccessToken
 	 * @throws \InvalidArgumentException if $newProfileAccessToken is not a string or is insecure
 	 * @throws \RangeException if $newProfileAccessToken is longer than 64 char
 	 * @throws \TypeError if $newProfileAccessToken is not a string
 	 */
-	public function setProfileAccessToken(string $newProfileAccessToken){
+	public function setProfileAccessToken(string $newProfileAccessToken) {
 		// first take out any white space on $newProfileAccessToken
 		$newProfileAccessToken = trim($newProfileAccessToken);
 		//next ensure that $newProfileAccessToken is sanitized
 		$newProfileAccessToken = filter_var($newProfileAccessToken, FILTER_SANITIZE_STRING);
 
 		//ensure that $newProfileAccessToken isnt empty ***CHECK ON THIS ONE!!!!!!!!!!!!!!!, How should it be????
-		if(strlen($newProfileAccessToken)=== 0){
+		if(strlen($newProfileAccessToken) === 0) {
 			throw(new \RangeException("The access token is too short"));
 		}
 
 		//ensure $newProfileAccessToken isn't too long
-		if(strlen($newProfileAccessToken) > 64){
+		if(strlen($newProfileAccessToken) > 64) {
 			throw(new \RangeException("Access token is too long"));
 		}
 
@@ -611,19 +599,19 @@ public function getProfileId(){
 	 * accessor method for profileActivationToken
 	 * @return string value for profileActivationToken
 	 */
-	public function getProfileActivationToken(){
-		return($this-> profileActivationToken);
+	public function getProfileActivationToken() {
+		return ($this->profileActivationToken);
 	}
 
 	/**
 	 * *********LOOK INTO THIS ONE AS WELL HOW ARE THESE TOKENS GENERATED?***********
 	 * mutator method for profileActivationToken
-	 * @param string, $newProfileActivationToken used to assign new value of profileActivationToken
+	 * @param string , $newProfileActivationToken used to assign new value of profileActivationToken
 	 * @throws \InvalidArgumentException if $newProfileActivationToken is not a string or is insecure
 	 * @throws \RangeException if $newProfileActivationToken is longer than 32 char
 	 * @throws \TypeError if $newProfileActivationToken is not a string
 	 */
-	public function setProfileActivationToken(string $newProfileActivationToken = null){
+	public function setProfileActivationToken(string $newProfileActivationToken = null) {
 		// Base case, for a new profile.
 		if($newProfileActivationToken === null) {
 			$this->profileActivationToken = null;
@@ -636,7 +624,7 @@ public function getProfileId(){
 		$newProfileActivationToken = filter_var($newProfileActivationToken, FILTER_SANITIZE_STRING);
 //todo we commented this out to test
 		//ensure $newProfileActivationToken isn't too long
-		if(strlen($newProfileActivationToken) !== 32){
+		if(strlen($newProfileActivationToken) !== 32) {
 			throw(new \RangeException("Activation token is too long"));
 		}
 
@@ -648,8 +636,8 @@ public function getProfileId(){
 	 * accessor method for profileType
 	 * @return string value for profileType
 	 */
-	public function getProfileType(){
-		return($this-> profileType);
+	public function getProfileType() {
+		return ($this->profileType);
 	}
 
 	/**
@@ -657,11 +645,11 @@ public function getProfileId(){
 	 * mutator method for profileType
 	 * @param string $newProfileType will be used to change the value of profileType
 	 * @throws \InvalidArgumentException if the input value for $newProfileType is anything besides:
-	 * 	a(admin), o(owner), e(employee), or is insecure or not a string
+	 *   a(admin), o(owner), e(employee), or is insecure or not a string
 	 * @throws \RangeException if the input for $newProfileType is longer than 1
 	 * @throws \TypeError if $newProfileType is not a string
 	 */
-	public function setProfileType(string $newProfileType){
+	public function setProfileType(string $newProfileType) {
 
 		//make lower case
 		$newProfileType = strtolower($newProfileType);
@@ -673,61 +661,61 @@ public function getProfileId(){
 		$types = ['a', 'o', 'e'];
 
 		//ensure input for $newProfileType is not empty
-		if(strlen($newProfileType)=== 0){
+		if(strlen($newProfileType) === 0) {
 			throw(new \RangeException("Please designate a profile type by entering a single letter: 'a'(admin), 'o'(owner), or 'e'(employee)"));
 		}
 
 		//ensure input for $newProfileType is valid
-		if(strlen($newProfileType) > 1){
+		if(strlen($newProfileType) > 1) {
 			throw(new \InvalidArgumentException("Invalid profile type. Please designate a profile type by entering a single letter: 'a'(admin), 'o'(owner), or 'e'(employee)"));
 		}
 
 
 		//check if $newProfileType
-		if(in_array($newProfileType, $types)){
+		if(in_array($newProfileType, $types)) {
 			//set profileType to $newProfileType and give it an assignment in SQL
 			$this->profileType = $newProfileType;
-		}else {
+		} else {
 			throw(new \InvalidArgumentException("Invalid profile type. Please designate a profile type by entering a single letter: 'a'(admin), 'o'(owner), or 'e'(employee)"));
 		}
 	}
 
 
-/*-------------------------------PDO SECTION HERE--------------------------------------*/
+	/*-------------------------------PDO SECTION HERE--------------------------------------*/
 
 	/**
 	 * accessor method for profileSalt
 	 * @return string value for profileSalt
 	 */
-	public function getProfileSalt(){
-		return($this-> profileSalt);
+	public function getProfileSalt() {
+		return ($this->profileSalt);
 	}
 
 	/**
 	 * CHECK ON THIS ONE!!!!!
 	 * mutator method for profileSalt
-	 * @param string, $newProfileSalt used to update profileSalt
+	 * @param string , $newProfileSalt used to update profileSalt
 	 * @throw \RangeException if $newProfileSalt is empty or too long
 	 * @throw \InvalidArgumentException if $newProfileSalt is not a string
 	 * @throw \TypeError if $newProfileSalt is not a string
 	 */
-	public function setProfileSalt(string $newProfileSalt){
+	public function setProfileSalt(string $newProfileSalt) {
 		//first we need to strip out all the white space on either end of $newProfileSalt
 		$newProfileSalt = trim($newProfileSalt);
 		//Then we must sanitize $newProfileSalt
 		$newProfileSalt = filter_var($newProfileSalt, FILTER_SANITIZE_STRING); //SHOULD I USE ENCODE FOR THIS?????
 		//now check if $newProfileSalt is either empty or too long
-		if(strlen($newProfileSalt) === 0){
+		if(strlen($newProfileSalt) === 0) {
 			throw(new \RangeException("Profile salt is too short"));
 		}
 
 		//gotta check if the salt is c_type x-digit
-		if(!ctype_xdigit($newProfileSalt)){
+		if(!ctype_xdigit($newProfileSalt)) {
 			throw(new \InvalidArgumentException("The salt supplied does not contain c_type xdigit"));
 		}
 
 		//**doesnt salt and hash need to be EXACTLY the designated length?? CHECK ON THIS!!**
-		if(strlen($newProfileSalt) !== 32){
+		if(strlen($newProfileSalt) !== 32) {
 			throw(new \RangeException("Profile salt should be exactly 32 characters long"));
 		}
 		//now assign $newProfileSalt to profileSalt and store in SQL
@@ -738,35 +726,35 @@ public function getProfileId(){
 	 * accessor method for profileHash
 	 * @return string value for profileHash
 	 */
-	public function getProfileHash(){
-		return($this-> profileHash);
+	public function getProfileHash() {
+		return ($this->profileHash);
 	}
 
 	/**
 	 * CHECK ON THIS ONE TOO!!!!!
 	 * mutator method for profileHash
-	 * @param string, $newProfileHash used to update profileHash
+	 * @param string , $newProfileHash used to update profileHash
 	 * @throw \RangeException if $newProfileHash is empty or too long
 	 * @throw \InvalidArgumentException if $newProfileHash is not a string
 	 * @throw \TypeError if $newProfileHash is not a string
 	 */
-	public function setProfileHash(string $newProfileHash){
+	public function setProfileHash(string $newProfileHash) {
 		//first we need to strip out all the white space on either end of $newProfileHash
 		$newProfileHash = trim($newProfileHash);
 		//Then we must sanitize $newProfileHash
 		$newProfileHash = filter_var($newProfileHash, FILTER_SANITIZE_STRING); //SHOULD I USE ENCODE FOR THIS?????
 		//now check if $newProfileHash is either empty or too long
-		if(strlen($newProfileHash) === 0){
+		if(strlen($newProfileHash) === 0) {
 			throw(new \RangeException("Profile hash is too short"));
 		}
 
 		//gotta check if the salt is c_type x-digit
-		if(!ctype_xdigit($newProfileHash)){
+		if(!ctype_xdigit($newProfileHash)) {
 			throw(new \InvalidArgumentException("The hash supplied does not contain c_type xdigit"));
 		}
 
 		//**doesnt salt and hash need to be EXACTLY the designated length?? CHECK ON THIS!!**
-		if(strlen($newProfileHash) !== 128){
+		if(strlen($newProfileHash) !== 128) {
 			throw(new \RangeException("Profile hash should be exactly 128 characters long"));
 		}
 		//now assign $newProfileSalt to profileSalt and store in SQL
@@ -774,23 +762,18 @@ public function getProfileId(){
 	}
 
 
+	/**
+	 * inserts this profile into mySQL
+	 *
+	 * @param \PDO $pdo is the PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 * SINCE THIS IS FOR A NEW PROFILE INSERT, DO NOT INCLUDE profileId in the template or array
+	 **/
 
-
-
-
-
-/**
- * inserts this profile into mySQL
- *
- * @param \PDO $pdo is the PDO connection object
- * @throws \PDOException when mySQL related errors occur
- * @throws \TypeError if $pdo is not a PDO connection object
- * SINCE THIS IS FOR A NEW PROFILE INSERT, DO NOT INCLUDE profileId in the template or array
- **/
-
-	public function insert(\PDO $pdo){
+	public function insert(\PDO $pdo) {
 		//ensure that the profileId is null, dont want to insert a profileId that already exists. This prevents modifying a primary key
-		if($this->profileId !== null){
+		if($this->profileId !== null) {
 			throw(new \PDOException("This is not a new profileId"));
 		}
 
@@ -801,7 +784,7 @@ public function getProfileId(){
 		$statement = $pdo->prepare($query);
 
 		//bind the member variables to the place holder slots in the template. putting these into an array
-		$parameters = ["profileName"=>$this->profileName, "profileEmail"=>$this->profileEmail, "profilePhone"=>$this->profilePhone, "profileAccessToken"=>$this->profileAccessToken, "profileActivationToken"=>$this->profileActivationToken, "profileType"=>$this->profileType, "profileHash"=>$this->profileHash, "profileSalt"=>$this->profileSalt];
+		$parameters = ["profileName" => $this->profileName, "profileEmail" => $this->profileEmail, "profilePhone" => $this->profilePhone, "profileAccessToken" => $this->profileAccessToken, "profileActivationToken" => $this->profileActivationToken, "profileType" => $this->profileType, "profileHash" => $this->profileHash, "profileSalt" => $this->profileSalt];
 
 		//execute the command held in $statement
 		$statement->execute($parameters);
@@ -816,9 +799,9 @@ public function getProfileId(){
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
-	public function delete(\PDO $pdo){
+	public function delete(\PDO $pdo) {
 		//first check to make sure the profileId isn't null, cant delete something that hasn't been entered into SQL yet
-		if($this->profileId === null){
+		if($this->profileId === null) {
 			throw(new \PDOException("The profile you selected does not exist"));
 		}
 
@@ -838,9 +821,9 @@ public function getProfileId(){
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 */
 
-	public function update(\PDO $pdo){
-			//ensure that this profile is not null (hasn't been entered into SQL). Can't update something that doesn't exist
-		if($this->profileId === null){
+	public function update(\PDO $pdo) {
+		//ensure that this profile is not null (hasn't been entered into SQL). Can't update something that doesn't exist
+		if($this->profileId === null) {
 			throw(new \PDOException("Can't update a profile that doesn't exist"));
 		}
 
@@ -851,12 +834,10 @@ public function getProfileId(){
 
 		//bind the variables to the template and execute the SQL command (is that correct?) Why is the primary key last in the array????
 		//should $parameters always have every every entry that's in the selected table??
-		$parameters = ["profileName"=>$this->profileName, "profileEmail"=>$this->profileEmail, "profilePhone"=>$this->profilePhone, "profileAccessToken"=>$this->profileAccessToken, "profileActivationToken"=>$this->profileActivationToken, "profileType"=>$this->profileType,"profileHash"=>$this->profileHash, "profileSalt"=>$this->profileSalt, "profileId"=>$this->profileId];
+		$parameters = ["profileName" => $this->profileName, "profileEmail" => $this->profileEmail, "profilePhone" => $this->profilePhone, "profileAccessToken" => $this->profileAccessToken, "profileActivationToken" => $this->profileActivationToken, "profileType" => $this->profileType, "profileHash" => $this->profileHash, "profileSalt" => $this->profileSalt, "profileId" => $this->profileId];
 		//execute
 		$statement->execute($parameters);
-}
-
-
+	}
 
 
 	/**
@@ -868,6 +849,6 @@ public function getProfileId(){
 		$fields = get_object_vars($this);
 		unset($fields["profileHash"]);
 		unset($fields["profileSalt"]);
-		return($fields);
+		return ($fields);
 	}
 }
