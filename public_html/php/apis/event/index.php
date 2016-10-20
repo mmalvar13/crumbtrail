@@ -131,7 +131,7 @@ try {
 			$point = new Point($requestObject->eventLocation->lat, $requestObject->eventLocation->lng);
 			$event = new Event(null, $requestObject ->eventTruckId, $eventEnd, $point, $eventStart);
 			$event->insert($pdo);;
-			//update reply
+			//update reply≤
 			$reply->message = "Event created successfully.";
 		}
 	} else {

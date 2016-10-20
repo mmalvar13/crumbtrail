@@ -11,6 +11,7 @@ DROP TABLE IF EXISTS event;
 DROP TABLE IF EXISTS image;
 DROP TABLE IF EXISTS truck;
 DROP TABLE IF EXISTS employ;
+DROP TABLE IF EXISTS schedule;
 DROP TABLE IF EXISTS company;
 DROP TABLE IF EXISTS profile;
 
@@ -74,6 +75,19 @@ CREATE TABLE company (
 	UNIQUE(companyPermit),
 	UNIQUE(companyLicense),
 	PRIMARY KEY(companyId)
+);
+
+CREATE TABLE schedule (
+	scheduleId INT UNSIGNED NOT NULL,
+	scheduleDaysOfWeek VARCHAR(9) NOT NULL,
+	scheduleLocation VARCHAR(255) NOT NULL,
+	-- varchar because it's not a point, it is something that the food truck owner enters? or are we going to have this as a point? Talk about on Tuesday 10/2 --
+	scheduleTime DATETIME NOT NULL,
+	-- did we decide to use "date/time" UTC like event?? --
+	scheduleComapanyId INT UNSIGNED NOT NULL,
+	INDEX(scheduleComapanyId),
+	FOREIGN KEY(scheduleComapanyId) REFERENCES company(companyId),
+	PRIMARY KEY (scheduleId)
 );
 
 
