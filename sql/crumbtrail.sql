@@ -79,12 +79,12 @@ CREATE TABLE company (
 
 CREATE TABLE schedule (
 	scheduleId INT UNSIGNED NOT NULL,
+	scheduleComapanyId INT UNSIGNED NOT NULL,
 	scheduleDaysOfWeek VARCHAR(9) NOT NULL,
 	scheduleLocation VARCHAR(255) NOT NULL,
 	-- varchar because it's not a point, it is something that the food truck owner enters? or are we going to have this as a point? Talk about on Tuesday 10/2 --
 	scheduleTime DATETIME NOT NULL,
 	-- did we decide to use "date/time" UTC like event?? or is this a string --
-	scheduleComapanyId INT UNSIGNED NOT NULL,
 	INDEX(scheduleComapanyId),
 	FOREIGN KEY(scheduleComapanyId) REFERENCES company(companyId),
 	PRIMARY KEY (scheduleId)
