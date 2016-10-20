@@ -31,22 +31,31 @@ class Schedule implements \JsonSerializable {
 	 * id for this schedule's location. (Todo: is this a point or a string...need to clarify on Tuesday
 	 * @var string $scheduleLocation;
 	 */
+	private $scheduleLocation;
 	/*
 	(JUST IN CASE WE DECIDE POINT)
 	 * id for this schedule's location (if it is a point)
 	 * @var point $scheduleLocation;
+	 * (NEEDS FORMATTING)
+	 * /*
+	 * Private $scheduleLocation;
 	 */
 	/**
 	 * id for this schedule's time of operation (Todo: does this need to be a date/time? or are we just having the food truck owner put this in as a string
 	 * @var \DateTime $scheduleTime;
 	 */
+	private $scheduleTime;
 	/*
 	 * (JUST IN CASE WE DECIDE STRING)
 	 * id for this schedule's time of operation (if it is a string)
 	 * @var string $scheduleTime;
+	 * (NEEDS FORMATTING)
+	 * /*
+	 * private $scheduleTime;
 	 */
 	/**
 	 * id for this schedule's connection to its company
 	 * @var int $scheduleCompanyId;
 	 */
+	private $scheduleCompanyId;
 }
