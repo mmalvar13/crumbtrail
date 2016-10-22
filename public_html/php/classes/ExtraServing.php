@@ -81,5 +81,39 @@ class ExtraServing implements \JsonSerializable {
 
 	public function setExtraServingId(int $newExtraServingId = null){
 
+		if($newExtraServingId === null){
+			$this->extraServingId = null;
+			return;
+		}
+
+		if($newExtraServingId <= 0){
+			throw(new \RangeException("The Extra Serving ID cannot be negative or zero"));
+		}
+
+		$this->extraServingId = $newExtraServingId;
+	}
+
+
+	/**
+	 * getter for extraServingCompanyId
+	 * @return int|null for $extraServingCompanyId
+	 */
+	public function getExtraServingCompanyId(){
+		return ($this->extraServingCompanyId);
+	}
+
+	/**
+	 * settter for extraServingCompanyId
+	 * @param int|null for $newExtraServingCompanyId
+	 * @throws \InvalidArgumentException if $newExtraServingCompanyId not valid
+	 * @throws \RangeException if $newExtraServingCompanyId is less than or equal to zero
+	 * @throws \TypeError if $newExtraServingCompanyId not an int
+	 */
+	public function setExtraServingCompanyId(int $newExtraServingCompanyId){
+		if($newExtraServingCompanyId <= 0){
+			throw(new \RangeException("company ID cannot be negative or zero!"));
+		}
+		$this->extraServingCompanyId = $newExtraServingCompanyId;
+
 	}
 }
