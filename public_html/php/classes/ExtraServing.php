@@ -129,8 +129,56 @@ class ExtraServing implements \JsonSerializable {
 	/**
 	 * setter for extraServingDescription
 	 * @param string $newExtraServingDescription
-	 * @throws \InvalidArgumentException if $newExtraServingDescription not a string
-	 * @throws \RangeException if
+	 * @throws \InvalidArgumentException if $newExtraServingDescription not a string or insecure
+	 * @throws \RangeException if $newExtraServingDescription longer than 4096 char
+	 * @throws \TypeError if $newExtraServingDescription not a string
 	 */
+	public function setExtraServingDescription(string $newExtraServingDescription){
+
+		$newExtraServingDescription = trim($newExtraServingDescription);
+		$newExtraServingDescription = filter_var($newExtraServingDescription, FILTER_SANITIZE_STRING);
+
+		if(strlen($newExtraServingDescription) === 0){
+			throw(new \InvalidArgumentException("Please enter a description!"));
+		}
+
+		if(strlen($newExtraServingDescription) > 4096){
+			throw(new \InvalidArgumentException("The description is too long!"));
+		}
+
+		$this->extraServingDescription = $newExtraServingDescription;
+	}
+
+
+	/**
+	 * getter for extraServingLocation
+	 * @return string for $extraServingLocation
+	 */
+	public function getExtraServingLocation(){
+		return ($this->extraServingLocation);
+	}
+
+	/**
+	 * setter for extraServingLocation
+	 * @param string $newExtraServingLocation
+	 * @throws \InvalidArgumentException if $newExtraServingLocation not a string or insecure
+	 * @throws \RangeException if $newExtraServingLocation longer than 512 char
+	 * @throws \TypeError if $newExtraServingLocation not a string
+	 */
+	public function setExtraServingLocation(string $newExtraServingLocation){
+
+		$newExtraServingLocation = trim($newExtraServingLocation);
+		$newExtraServingLocation = filter_var($newExtraServingLocation, FILTER_SANITIZE_STRING);
+
+		if(strlen($newExtraServingLocation) === 0){
+			throw(new \InvalidArgumentException("Please enter a location!"));
+		}
+
+		if(strlen($newExtraServingLocation) > 512){
+			throw(new \InvalidArgumentException("The location is too long!"));
+		}
+
+		$this->extraServingLocation = $newExtraServingLocation;
+	}
 
 }

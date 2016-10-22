@@ -546,10 +546,6 @@ class Profile implements \JsonSerializable {
 			throw(new \RangeException("The phone number entered is too short. Please enter a phone number including 3 digit area-code"));
 		}
 
-		if(strlen($newProfilePhone) < 10) {   //what do we need to do to ensure a valid phone number
-			throw(new \RangeException("Please enter a complete phone number starting with area-code"));
-		}
-
 		//ensure $newProfilePhone isn't too long
 		if(strlen($newProfilePhone) > 32) {
 			throw(new \RangeException("Phone number entered is too long"));
