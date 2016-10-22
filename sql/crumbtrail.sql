@@ -77,6 +77,21 @@ CREATE TABLE company (
 	PRIMARY KEY(companyId)
 );
 
+CREATE TABLE extraServing (
+
+	extraServingId INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	-- foreign key to company
+	extraServingCompanyId INT UNSIGNED NOT NULL ,
+	extraServingDescription VARCHAR(4096) NOT NULL ,
+	extraServingLocation VARCHAR(512) NOT NULL ,
+	extraServingStartTime DATETIME NOT NULL ,
+	extraServingEndTime DATETIME NOT NULL ,
+
+	INDEX (extraServingCompanyId),
+	FOREIGN KEY (extraServingCompanyId) REFERENCES company (companyId),
+	PRIMARY KEY (extraServingId)
+);
+
 CREATE TABLE schedule (
 	scheduleId INT UNSIGNED NOT NULL,
 	scheduleComapanyId INT UNSIGNED NOT NULL,

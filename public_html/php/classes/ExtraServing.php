@@ -116,4 +116,21 @@ class ExtraServing implements \JsonSerializable {
 		$this->extraServingCompanyId = $newExtraServingCompanyId;
 
 	}
+
+
+	/**
+	 * getter for extraServingDescription
+	 * @return string for $extraServingDescription
+	 */
+	public function getExtraServingDescription(){
+		return ($this->extraServingCompanyId);
+	}
+
+	/**
+	 * setter for extraServingDescription
+	 * @param string $newExtraServingDescription
+	 * @throws \InvalidArgumentException if $newExtraServingDescription not a string
+	 * @throws \RangeException if
+	 */
+
 }
