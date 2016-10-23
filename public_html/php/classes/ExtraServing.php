@@ -103,7 +103,7 @@ class ExtraServing implements \JsonSerializable {
 	}
 
 	/**
-	 * settter for extraServingCompanyId
+	 * setter for extraServingCompanyId
 	 * @param int|null for $newExtraServingCompanyId
 	 * @throws \InvalidArgumentException if $newExtraServingCompanyId not valid
 	 * @throws \RangeException if $newExtraServingCompanyId is less than or equal to zero
@@ -180,5 +180,24 @@ class ExtraServing implements \JsonSerializable {
 
 		$this->extraServingLocation = $newExtraServingLocation;
 	}
+
+
+	/**
+	 * getter for extraServingStartTime
+	 * @return \DateTime for $extraServingStartTime
+	 */
+	public function getExtraServingStartTime(){
+		return ($this->extraServingStartTime);
+	}
+
+	/**
+	 * setter for extraServingStartTime
+	 * @param \DateTime|string for $newExtraServingStartTime
+	 * @throws \InvalidArgumentException if $newExtraServingStartTime is null
+	 * @throws \RangeException if $newExtraServingStartTime is less than current date-time
+	 */
+	public function setExtraServingStartTime(\DateTime $newExtraServingStartTime)
+
+
 
 }

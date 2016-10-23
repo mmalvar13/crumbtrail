@@ -93,7 +93,7 @@ CREATE TABLE extraServing (
 );
 
 CREATE TABLE schedule (
-	scheduleId INT UNSIGNED NOT NULL,
+	scheduleId INT UNSIGNED AUTO_INCREMENT NOT NULL,
 	scheduleComapanyId INT UNSIGNED NOT NULL,
 	scheduleDaysOfWeek VARCHAR(9) NOT NULL,
 	scheduleLocation VARCHAR(255) NOT NULL,
