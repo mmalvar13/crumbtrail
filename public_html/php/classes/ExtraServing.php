@@ -271,16 +271,17 @@ class ExtraServing implements \JsonSerializable {
 			throw(new \PDOException("This is not a new Extra Serving Object!"));
 		}
 
-		$query = "INSERT INTO extraServing(extraServingId, extraServingCompanyId, extraServingDescription, extraServingEndTime, extraServingLocation, extraServingStartTime) VALUES(:extraServingId, :extraServingCompanyId, :extraServingDescription, :extraServingEndTime, :extraServingLocation, :extraServingStartTime)";
+		$query = "INSERT INTO extraServing(extraServingCompanyId, extraServingDescription, extraServingEndTime, extraServingLocation, extraServingStartTime) VALUES(:extraServingId, :extraServingCompanyId, :extraServingDescription, :extraServingEndTime, :extraServingLocation, :extraServingStartTime)";
 
 		$statement = $pdo->prepare($query);
 
-		//Format the time/dates so all is uniform and ready to go into SQL
+		//Format the time/dates so all is uniform and ready to go into SQL...isnt this already done in the ValidateDate trait?
+		//if not...couldn't I just do this up in the setter for start and end time?
 
 		$formattedExtraServingEndTime = $this->extraServingEndTime->format("Y-m-d H:i:s");
 		$formattedExtraServingStartTime = $this->extraServingStartTime->format("Y-m-d H:i:s");
 
-		$parameters = ["extraServingId" => $this->extraServingId, "extraServingCompanyId" => $this->extraServingCompanyId, "extraServingDescription" => $this->extraServingDescription, "extraServingEndTime" => $this->$formattedExtraServingEndTime, "extraServingLocation" => $this->extraServingLocation, "extraServingStartTime" => $this->$formattedExtraServingStartTime];
+		$parameters = ["extraServingCompanyId" => $this->extraServingCompanyId, "extraServingDescription" => $this->extraServingDescription, "extraServingEndTime" => $this->$formattedExtraServingEndTime, "extraServingLocation" => $this->extraServingLocation, "extraServingStartTime" => $this->$formattedExtraServingStartTime];
 
 		$statement->execute($parameters);
 
@@ -289,6 +290,35 @@ class ExtraServing implements \JsonSerializable {
 		$this->extraServingId = intval($pdo->lastInsertId());
 
 	}
+
+
+
+	/**
+	 * update method for the ExtraServing Class
+	 * @param \PDO $pdo connection object
+	 * @throws \PDOException when PDO related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 */
+
+	public function update(\PDO $pdo) {
+		if($this->extraServingId === null) {
+			throw(new \PDOException("Cannot update an extra serving object that doesn't exist!"));
+		}
+
+		$query = "UPDATE extraServing SET extraServingCompanyId = :extraServingCompanyId, extraServingDescription = :extraServingDescription, extraServingEndTime = :extraServingEndTime, extraServingLocation = :extraServingLocation, extraServingStartTime = :extraServingStartTime WHERE extraServingId = : extraServingId";
+
+		$statement = $pdo->prepare($query);
+
+		//Format the time/dates so all is uniform and ready to go into SQL
+
+		$formattedExtraServingEndTime = $this->extraServingEndTime->format("Y-m-d H:i:s");
+		$formattedExtraServingStartTime = $this->extraServingStartTime->format("Y-m-d H:i:s");
+
+		$parameters = ["extraServingCompanyId" => $this->extraServingCompanyId, "extraServingDescription" => $this->extraServingDescription, "extraServingEndTime" => $this->$formattedExtraServingEndTime, "extraServingLocation" => $this->extraServingLocation, "extraServingStartTime" => $this->$formattedExtraServingStartTime, "extraServingId" => $this->extraServingId];
+
+		$statement->execute($parameters);
+		}
+
 
 
 }
