@@ -193,10 +193,71 @@ class ExtraServing implements \JsonSerializable {
 	/**
 	 * setter for extraServingStartTime
 	 * @param \DateTime|string for $newExtraServingStartTime
-	 * @throws \InvalidArgumentException if $newExtraServingStartTime is null
+	 * @throws \InvalidArgumentException if $newExtraServingStartTime is null or not a valid date-time
 	 * @throws \RangeException if $newExtraServingStartTime is less than current date-time
 	 */
-	public function setExtraServingStartTime(\DateTime $newExtraServingStartTime)
+	public function setExtraServingStartTime(\DateTime $newExtraServingStartTime){
+
+		if($newExtraServingStartTime === null){
+			throw(new \InvalidArgumentException("The start time cannot be null!"));
+		}
+
+		$currentTime = new \DateTime();
+
+		if($newExtraServingStartTime < $currentTime){
+			throw(new \RangeException("The start time cannot be in the past!"));
+		}
+
+		try{
+			$newExtraServingStartTime = self::validateDate($newExtraServingStartTime);
+		}catch(\InvalidArgumentException $invalidArgument) {
+			throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
+		} catch(\RangeException $range) {
+			throw(new \RangeException($range->getMessage(), 0, $range));
+		}
+
+		$this->extraServingStartTime = $newExtraServingStartTime;
+	}
+
+
+
+
+	/**
+	 * getter for extraServingEndTime
+	 * @return \DateTime for $extraServingEndTime
+	 */
+	public function getExtraServingEndTime(){
+		return ($this->extraServingEndTime);
+	}
+
+	/**
+	 * setter for extraServingEndTime
+	 * @param \DateTime|string for $newExtraServingEndTime
+	 * @throws \InvalidArgumentException if $newExtraServingEndTime is null or not a valid date-time
+	 * @throws \RangeException if $newExtraServingEndTime is less than current date-time
+	 */
+	public function setExtraServingEndTime(\DateTime $newExtraServingEndTime){
+
+		if($newExtraServingEndTime === null){
+			throw(new \InvalidArgumentException("The End time cannot be null!"));
+		}
+
+
+
+		if($newExtraServingEndTime <= $this->extraServingStartTime){
+			throw(new \RangeException("The End time cannot be before the start time!"));
+		}
+
+		try{
+			$newExtraServingEndTime = self::validateDate($newExtraServingEndTime);
+		}catch(\InvalidArgumentException $invalidArgument) {
+			throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
+		} catch(\RangeException $range) {
+			throw(new \RangeException($range->getMessage(), 0, $range));
+		}
+
+		$this->extraServingEndTime = $newExtraServingEndTime;
+	}
 
 
 
