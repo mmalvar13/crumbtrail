@@ -79,14 +79,14 @@ class ExtraServing implements \JsonSerializable {
 	 * @throws \TypeError if $newExtraServingId not an int
 	 */
 
-	public function setExtraServingId(int $newExtraServingId = null){
+	public function setExtraServingId(int $newExtraServingId = null) {
 
-		if($newExtraServingId === null){
+		if($newExtraServingId === null) {
 			$this->extraServingId = null;
 			return;
 		}
 
-		if($newExtraServingId <= 0){
+		if($newExtraServingId <= 0) {
 			throw(new \RangeException("The Extra Serving ID cannot be negative or zero"));
 		}
 
@@ -98,7 +98,7 @@ class ExtraServing implements \JsonSerializable {
 	 * getter for extraServingCompanyId
 	 * @return int|null for $extraServingCompanyId
 	 */
-	public function getExtraServingCompanyId(){
+	public function getExtraServingCompanyId() {
 		return ($this->extraServingCompanyId);
 	}
 
@@ -109,8 +109,8 @@ class ExtraServing implements \JsonSerializable {
 	 * @throws \RangeException if $newExtraServingCompanyId is less than or equal to zero
 	 * @throws \TypeError if $newExtraServingCompanyId not an int
 	 */
-	public function setExtraServingCompanyId(int $newExtraServingCompanyId){
-		if($newExtraServingCompanyId <= 0){
+	public function setExtraServingCompanyId(int $newExtraServingCompanyId) {
+		if($newExtraServingCompanyId <= 0) {
 			throw(new \RangeException("company ID cannot be negative or zero!"));
 		}
 		$this->extraServingCompanyId = $newExtraServingCompanyId;
@@ -122,7 +122,7 @@ class ExtraServing implements \JsonSerializable {
 	 * getter for extraServingDescription
 	 * @return string for $extraServingDescription
 	 */
-	public function getExtraServingDescription(){
+	public function getExtraServingDescription() {
 		return ($this->extraServingCompanyId);
 	}
 
@@ -133,16 +133,16 @@ class ExtraServing implements \JsonSerializable {
 	 * @throws \RangeException if $newExtraServingDescription longer than 4096 char
 	 * @throws \TypeError if $newExtraServingDescription not a string
 	 */
-	public function setExtraServingDescription(string $newExtraServingDescription){
+	public function setExtraServingDescription(string $newExtraServingDescription) {
 
 		$newExtraServingDescription = trim($newExtraServingDescription);
 		$newExtraServingDescription = filter_var($newExtraServingDescription, FILTER_SANITIZE_STRING);
 
-		if(strlen($newExtraServingDescription) === 0){
+		if(strlen($newExtraServingDescription) === 0) {
 			throw(new \InvalidArgumentException("Please enter a description!"));
 		}
 
-		if(strlen($newExtraServingDescription) > 4096){
+		if(strlen($newExtraServingDescription) > 4096) {
 			throw(new \InvalidArgumentException("The description is too long!"));
 		}
 
@@ -154,7 +154,7 @@ class ExtraServing implements \JsonSerializable {
 	 * getter for extraServingLocation
 	 * @return string for $extraServingLocation
 	 */
-	public function getExtraServingLocation(){
+	public function getExtraServingLocation() {
 		return ($this->extraServingLocation);
 	}
 
@@ -165,16 +165,16 @@ class ExtraServing implements \JsonSerializable {
 	 * @throws \RangeException if $newExtraServingLocation longer than 512 char
 	 * @throws \TypeError if $newExtraServingLocation not a string
 	 */
-	public function setExtraServingLocation(string $newExtraServingLocation){
+	public function setExtraServingLocation(string $newExtraServingLocation) {
 
 		$newExtraServingLocation = trim($newExtraServingLocation);
 		$newExtraServingLocation = filter_var($newExtraServingLocation, FILTER_SANITIZE_STRING);
 
-		if(strlen($newExtraServingLocation) === 0){
+		if(strlen($newExtraServingLocation) === 0) {
 			throw(new \InvalidArgumentException("Please enter a location!"));
 		}
 
-		if(strlen($newExtraServingLocation) > 512){
+		if(strlen($newExtraServingLocation) > 512) {
 			throw(new \InvalidArgumentException("The location is too long!"));
 		}
 
@@ -186,7 +186,7 @@ class ExtraServing implements \JsonSerializable {
 	 * getter for extraServingStartTime
 	 * @return \DateTime for $extraServingStartTime
 	 */
-	public function getExtraServingStartTime(){
+	public function getExtraServingStartTime() {
 		return ($this->extraServingStartTime);
 	}
 
@@ -196,21 +196,21 @@ class ExtraServing implements \JsonSerializable {
 	 * @throws \InvalidArgumentException if $newExtraServingStartTime is null or not a valid date-time
 	 * @throws \RangeException if $newExtraServingStartTime is less than current date-time
 	 */
-	public function setExtraServingStartTime(\DateTime $newExtraServingStartTime){
+	public function setExtraServingStartTime(\DateTime $newExtraServingStartTime) {
 
-		if($newExtraServingStartTime === null){
+		if($newExtraServingStartTime === null) {
 			throw(new \InvalidArgumentException("The start time cannot be null!"));
 		}
 
 		$currentTime = new \DateTime();
 
-		if($newExtraServingStartTime < $currentTime){
+		if($newExtraServingStartTime < $currentTime) {
 			throw(new \RangeException("The start time cannot be in the past!"));
 		}
 
-		try{
+		try {
 			$newExtraServingStartTime = self::validateDate($newExtraServingStartTime);
-		}catch(\InvalidArgumentException $invalidArgument) {
+		} catch(\InvalidArgumentException $invalidArgument) {
 			throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
 		} catch(\RangeException $range) {
 			throw(new \RangeException($range->getMessage(), 0, $range));
@@ -220,13 +220,11 @@ class ExtraServing implements \JsonSerializable {
 	}
 
 
-
-
 	/**
 	 * getter for extraServingEndTime
 	 * @return \DateTime for $extraServingEndTime
 	 */
-	public function getExtraServingEndTime(){
+	public function getExtraServingEndTime() {
 		return ($this->extraServingEndTime);
 	}
 
@@ -236,21 +234,20 @@ class ExtraServing implements \JsonSerializable {
 	 * @throws \InvalidArgumentException if $newExtraServingEndTime is null or not a valid date-time
 	 * @throws \RangeException if $newExtraServingEndTime is less than current date-time
 	 */
-	public function setExtraServingEndTime(\DateTime $newExtraServingEndTime){
+	public function setExtraServingEndTime(\DateTime $newExtraServingEndTime) {
 
-		if($newExtraServingEndTime === null){
+		if($newExtraServingEndTime === null) {
 			throw(new \InvalidArgumentException("The End time cannot be null!"));
 		}
 
 
-
-		if($newExtraServingEndTime <= $this->extraServingStartTime){
+		if($newExtraServingEndTime <= $this->extraServingStartTime) {
 			throw(new \RangeException("The End time cannot be before the start time!"));
 		}
 
-		try{
+		try {
 			$newExtraServingEndTime = self::validateDate($newExtraServingEndTime);
-		}catch(\InvalidArgumentException $invalidArgument) {
+		} catch(\InvalidArgumentException $invalidArgument) {
 			throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
 		} catch(\RangeException $range) {
 			throw(new \RangeException($range->getMessage(), 0, $range));
@@ -259,6 +256,39 @@ class ExtraServing implements \JsonSerializable {
 		$this->extraServingEndTime = $newExtraServingEndTime;
 	}
 
+
+//	------------------------------------------------------SQL Methods-----------------------------------------------------
+
+	/**
+	 * insert method for the ExtraServing Class
+	 * @param \PDO $pdo connection object
+	 * @throws \PDOException when PDO related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 */
+
+	public function insert(\PDO $pdo) {
+		if($this->extraServingId != null) {
+			throw(new \PDOException("This is not a new Extra Serving Object!"));
+		}
+
+		$query = "INSERT INTO extraServing(extraServingId, extraServingCompanyId, extraServingDescription, extraServingEndTime, extraServingLocation, extraServingStartTime) VALUES(:extraServingId, :extraServingCompanyId, :extraServingDescription, :extraServingEndTime, :extraServingLocation, :extraServingStartTime)";
+
+		$statement = $pdo->prepare($query);
+
+		//Format the time/dates so all is uniform and ready to go into SQL
+
+		$formattedExtraServingEndTime = $this->extraServingEndTime->format("Y-m-d H:i:s");
+		$formattedExtraServingStartTime = $this->extraServingStartTime->format("Y-m-d H:i:s");
+
+		$parameters = ["extraServingId" => $this->extraServingId, "extraServingCompanyId" => $this->extraServingCompanyId, "extraServingDescription" => $this->extraServingDescription, "extraServingEndTime" => $this->$formattedExtraServingEndTime, "extraServingLocation" => $this->extraServingLocation, "extraServingStartTime" => $this->$formattedExtraServingStartTime];
+
+		$statement->execute($parameters);
+
+
+		//ask SQL for the primary key it just assigned to this insertion
+		$this->extraServingId = intval($pdo->lastInsertId());
+
+	}
 
 
 }

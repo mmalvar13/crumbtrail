@@ -83,9 +83,10 @@ CREATE TABLE extraServing (
 	-- foreign key to company
 	extraServingCompanyId INT UNSIGNED NOT NULL ,
 	extraServingDescription VARCHAR(4096) NOT NULL ,
+	extraServingEndTime DATETIME NOT NULL ,
 	extraServingLocation VARCHAR(512) NOT NULL ,
 	extraServingStartTime DATETIME NOT NULL ,
-	extraServingEndTime DATETIME NOT NULL ,
+
 
 	INDEX (extraServingCompanyId),
 	FOREIGN KEY (extraServingCompanyId) REFERENCES company (companyId),
