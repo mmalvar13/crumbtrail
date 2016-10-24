@@ -321,4 +321,26 @@ class ExtraServing implements \JsonSerializable {
 
 
 
+	/**
+	 * delete method for the ExtraServing Class
+	 * @param \PDO $pdo connection object
+	 * @throws \PDOException when PDO related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 */
+
+	public function delete(\PDO $pdo){
+		if($this->extraServingId === null) {
+			throw(new \PDOException("Cannot delete an extra serving object that doesn't exist!"));
+		}
+
+		$query = "DELETE FROM extraServing WHERE extraServingId = extraServingId";
+
+		$statement = $pdo->prepare($query);
+
+		$parameters = ["extraServingId" => $this->extraServingId];
+
+		$statement->execute($parameters);
+	}
+
+
 }
