@@ -133,7 +133,31 @@ public function __construct(int $newScheduleId = null, int $newScheduleCompanyId
 		//convert and store schedule
 		$this->scheduleId = $newScheduleId;
 	}
-
+	/**
+	 * accessor for the scheduleCompanyId
+	 *
+	 * @return int|null value for scheduleCompanyId
+	 **/
+	public function getScheduleCompanyId() {
+		return ($this->scheduleCompanyId);
+	}
+	/**
+	 * mutator method for scheduleCompanyId
+	 * @param int|null value for scheduleCompanyId
+	 * @throws \RangeException if $newScheduleCompanyId is negative
+	 * @throws \InvalidArgumentException if $newScheduleCompanyId is not of the type integer
+	 **/
+	public function setScheduleCompanyId(int $newScheduleCompanyId = null) {
+		if($newScheduleCompanyId === null) {
+			$this->scheduleCompanyId = null;
+			return;
+		}
+		if ($newScheduleCompanyId <=0) {
+			throw( new \RangeException("This schedule company id is not positive"));
+		}
+		//convert and store this schedule
+		$this->scheduleCompanyId = $newScheduleCompanyId;
+	}
 
 
 }
