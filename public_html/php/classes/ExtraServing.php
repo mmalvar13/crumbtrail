@@ -706,6 +706,49 @@ class ExtraServing implements \JsonSerializable {
 
 
 
+	/**
+	 * gets all extraServing objects
+	 * @param \PDO $pdo PDO connection object
+	 * @return \SplFixedArray SplFixedArray of extraServings found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 */
+	public static function getAllExtraServing(\PDO $pdo){
+
+		//make template
+		$query = "SELECT extraServingId, extraServingCompanyId, extraServingDescription, extraServingEndTIme, ExtraServingLocationAddress, extraServingLocationName, extraServingStartTime FROM extraServing";
+
+		$statement = $pdo->prepare($query);
+		$statement->execute();
+
+		$extraServings = new \SplFixedArray($statement->rowCount());
+
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+
+		while(($row = $statement->fetch())!= false){
+			try{
+
+				$extraServing = new ExtraServing($row["extraServingId"], $row["extraServingCompanyId"], $row["extraServingDescription"], $row["extraServingEndTime"], $row["extraServingLocationAddress"], $row["extraServingLocationName"], $row["extraServingStartTime"]);
+
+				$extraServings[$extraServings->key()] = $extraServing;
+
+				// next() advances the internal array pointer one place forward before returning the element value. That means it returns the next array value and advances the internal array pointer by one.
+				$extraServings->next();
+
+			}catch(\Exception $exception) {
+				// if the row couldnt be converted, re-throw it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+			return ($extraServings);
+		}
+			}
+
+
+
+
+
+
+
 
 
 
