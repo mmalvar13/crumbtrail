@@ -78,10 +78,12 @@ class Schedule implements \JsonSerializable {
 	 * @param string $newScheduleLocation string of the location
 	 * @param string $newScheduleLocationName string of the location name
 	 * @param string $newScheduleLocationAddress string of the location address
-	Todo: ANYTHING HERE IN YELLOW IS THE ALTERNATIVE CODE BASED ON OUT DECISIONS @param point $newScheduleLocation gps location of this schedule object if we decide to make this a point object
+	Todo: ANYTHING HERE IN YELLOW IS THE ALTERNATIVE CODE BASED ON OUR DECISIONS @param point $newScheduleLocation gps location of this schedule object if we decide to make this a point object
 	 * @param \DateTime|string|null $newScheduleTime data and time of the schedule (taken from the event class)
 	Todo: @param string $newScheduleTime string of times set for an event (if we deiced to make this a string)
-	 * @throws
+	 * @throws \RangeException when the integer is negative or strings are too long
+	 * @throws \InvalidArgumentException if data types are not valid
+	 * @throws \exception when error need to be called in the code??
 	 **/
 
 
