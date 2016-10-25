@@ -86,5 +86,17 @@ class Schedule implements \JsonSerializable {
 	 * @throws \exception when error need to be called in the code??
 	 **/
 
+public function __construct(int $newScheduleId = null, int $newScheduleCompanyId, string $newScheduleDaysOfWeek, string $newScheduleLocation, string $newScheduleLocationName, string $newScheduleLocationAddress, $newScheduleTime = null) {
+	try {
+		$this->setScheduleId($newScheduleId);
+		$this->setScheduleCompanyId($newScheduleCompanyId);
+		$this->setScheduleDaysOfWeek($newScheduleDaysOfWeek);
+		$this->setScheduleLocation($newScheduleLocation);
+		$this->setScheduleLocationName($newScheduleLocationName);
+		$this->setScheduleLocationAddress($newScheduleLocationAddress);
+		$this->setScheduleTime($newScheduleTime);
+	}
+}
+
 
 }
