@@ -103,7 +103,7 @@ public function __construct(int $newScheduleId = null, int $newScheduleCompanyId
 		throw(new \Exception($exception->getMessage(), 0, $exception));
 	}
 }
-/* Begin the setters and getters Here...accessor and mutator */
+/* Begin the setters and getters Here...accessors and mutators */
 
 
 
