@@ -83,7 +83,7 @@ class Schedule implements \JsonSerializable {
 	Todo: @param string $newScheduleTime string of times set for an event (if we deiced to make this a string)
 	 * @throws \RangeException when the integer is negative or strings are too long
 	 * @throws \InvalidArgumentException if data types are not valid
-	 * @throws \exception when error need to be called in the code??
+	 * @throws \Exception when error need to be called in the code??
 	 **/
 
 public function __construct(int $newScheduleId = null, int $newScheduleCompanyId, string $newScheduleDaysOfWeek, string $newScheduleLocation, string $newScheduleLocationName, string $newScheduleLocationAddress, $newScheduleTime = null) {
@@ -95,8 +95,16 @@ public function __construct(int $newScheduleId = null, int $newScheduleCompanyId
 		$this->setScheduleLocationName($newScheduleLocationName);
 		$this->setScheduleLocationAddress($newScheduleLocationAddress);
 		$this->setScheduleTime($newScheduleTime);
+	} catch(\RangeException $range) {
+		throw(new \RangeException($range->getMessage(), 0, $range));
+	} catch(\InvalidArgumentException $invalidArgument) {
+		throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
+	} catch(\Exception $exception) {
+		throw(new \Exception($exception->getMessage(), 0, $exception));
 	}
 }
+/* Begin the setters and getters Here...accessor and mutator */
+
 
 
 }
