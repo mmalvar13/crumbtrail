@@ -325,7 +325,7 @@ class ExtraServing implements \JsonSerializable {
 		$formattedExtraServingEndTime = $this->extraServingEndTime->format("Y-m-d H:i:s");
 		$formattedExtraServingStartTime = $this->extraServingStartTime->format("Y-m-d H:i:s");
 
-		$parameters = ["extraServingCompanyId" => $this->extraServingCompanyId, "extraServingDescription" => $this->extraServingDescription, "extraServingEndTime" => $this->$formattedExtraServingEndTime, "extraServingLocationAddress" => $this->extraServingLocationAddress, "extraServingLocationName"=> $this->extraServingLocationName, "extraServingStartTime" => $this->$formattedExtraServingStartTime];
+		$parameters = ["extraServingCompanyId" => $this->extraServingCompanyId, "extraServingDescription" => $this->extraServingDescription, "extraServingEndTime" => $this->$formattedExtraServingEndTime, "extraServingLocationAddress" => $this->extraServingLocationAddress, "extraServingLocationName" => $this->extraServingLocationName, "extraServingStartTime" => $this->$formattedExtraServingStartTime];
 
 		$statement->execute($parameters);
 
@@ -361,7 +361,7 @@ class ExtraServing implements \JsonSerializable {
 		$parameters = ["extraServingCompanyId" => $this->extraServingCompanyId, "extraServingDescription" => $this->extraServingDescription, "extraServingEndTime" => $this->$formattedExtraServingEndTime, "extraServingLocationAddress" => $this->extraServingLocationAddress, "extraServingLocationName" => $this->extraServingLocationName, "extraServingStartTime" => $this->$formattedExtraServingStartTime, "extraServingId" => $this->extraServingId];
 
 		$statement->execute($parameters);
-		}
+	}
 
 
 
@@ -372,7 +372,7 @@ class ExtraServing implements \JsonSerializable {
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 */
 
-	public function delete(\PDO $pdo){
+	public function delete(\PDO $pdo) {
 		if($this->extraServingId === null) {
 			throw(new \PDOException("Cannot delete an extra serving object that doesn't exist!"));
 		}
@@ -384,6 +384,58 @@ class ExtraServing implements \JsonSerializable {
 		$parameters = ["extraServingId" => $this->extraServingId];
 
 		$statement->execute($parameters);
+	}
+
+
+
+//	-------------------------------------------------GET FOO BY BAR METHOD SECTION----------------------------------------
+
+	/**
+	 * get extra serving by extraServingId
+	 *
+	 * @param \PDO $pdo connection object
+	 * @param int $extraServingId is the id to search for
+	 * @return extraServing|null
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 */
+
+	public function getExtraServingByExtraServingId(\PDO $pdo, int $extraServingId) {
+
+		//make sure id isnt wack
+		if($extraServingId <= 0) {
+			throw(new \PDOException("the primary key cannot be 0 or negative!"));
+		}
+
+		//make template
+		$query = "SELECT extraServingId, extraServingCompanyId, extraServingDescription, extraServingEndTIme, ExtraServingLocationAddress, extraServingLocationName, extraServingStartTime FROM extraServing WHERE extraServingId = :extraServingId";
+
+		$statement = $pdo->prepare($query);
+
+		//bind the id to its placeholder inside the template
+		//we dont use $this->$extraServingId, because we arent pulling the value of the state variable,
+		//we want to use the value passed into the function
+		$parameters = ["extraServingId" => $extraServingId];
+
+		$statement->execute($parameters);
+
+		try{
+			//new variable $extraServing is what we will assign all the information in this object to, and return to whatever called this method
+			$extraServing = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+
+			$row = $statement->fetch();
+
+			if($row != false){
+				//set $extraServing to a new object based on the ExtraServing class
+				$extraServing = new ExtraServing($row["extraServingId"], $row["extraServingCompanyId"], $row["extraServingDescription"], $row["extraServingEndTime"], $row["extraServingLocationAddress"], $row["extraServingLocationName"], $row["extraServingStartTime"]);
+			}
+		}catch(\Exception $exception) {
+			// if the row couldnt be converted, re-throw it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return ($extraServing);
+
 	}
 
 
