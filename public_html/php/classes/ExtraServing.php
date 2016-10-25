@@ -224,6 +224,8 @@ class ExtraServing implements \JsonSerializable {
 	}
 
 
+
+
 	/**
 	 * getter for extraServingStartTime
 	 * @return \DateTime for $extraServingStartTime
@@ -313,7 +315,7 @@ class ExtraServing implements \JsonSerializable {
 			throw(new \PDOException("This is not a new Extra Serving Object!"));
 		}
 
-		$query = "INSERT INTO extraServing(extraServingCompanyId, extraServingDescription, extraServingEndTime, extraServingLocation, extraServingStartTime) VALUES(:extraServingId, :extraServingCompanyId, :extraServingDescription, :extraServingEndTime, :extraServingLocation, :extraServingStartTime)";
+		$query = "INSERT INTO extraServing(extraServingCompanyId, extraServingDescription, extraServingEndTime, extraServingLocationAddress, extraServingLocationName, extraServingStartTime) VALUES(:extraServingId, :extraServingCompanyId, :extraServingDescription, :extraServingEndTime, :extraServingLocationAddress, :extraServingLocationName, :extraServingStartTime)";
 
 		$statement = $pdo->prepare($query);
 
@@ -323,7 +325,7 @@ class ExtraServing implements \JsonSerializable {
 		$formattedExtraServingEndTime = $this->extraServingEndTime->format("Y-m-d H:i:s");
 		$formattedExtraServingStartTime = $this->extraServingStartTime->format("Y-m-d H:i:s");
 
-		$parameters = ["extraServingCompanyId" => $this->extraServingCompanyId, "extraServingDescription" => $this->extraServingDescription, "extraServingEndTime" => $this->$formattedExtraServingEndTime, "extraServingLocation" => $this->extraServingLocation, "extraServingStartTime" => $this->$formattedExtraServingStartTime];
+		$parameters = ["extraServingCompanyId" => $this->extraServingCompanyId, "extraServingDescription" => $this->extraServingDescription, "extraServingEndTime" => $this->$formattedExtraServingEndTime, "extraServingLocationAddress" => $this->extraServingLocationAddress, "extraServingLocationName"=> $this->extraServingLocationName, "extraServingStartTime" => $this->$formattedExtraServingStartTime];
 
 		$statement->execute($parameters);
 
@@ -347,7 +349,7 @@ class ExtraServing implements \JsonSerializable {
 			throw(new \PDOException("Cannot update an extra serving object that doesn't exist!"));
 		}
 
-		$query = "UPDATE extraServing SET extraServingCompanyId = :extraServingCompanyId, extraServingDescription = :extraServingDescription, extraServingEndTime = :extraServingEndTime, extraServingLocation = :extraServingLocation, extraServingStartTime = :extraServingStartTime WHERE extraServingId = : extraServingId";
+		$query = "UPDATE extraServing SET extraServingCompanyId = :extraServingCompanyId, extraServingDescription = :extraServingDescription, extraServingEndTime = :extraServingEndTime, extraServingLocationAddress = :extraServingLocationAddress, extraServingLocationName = :extraServingLocationName, extraServingStartTime = :extraServingStartTime WHERE extraServingId = : extraServingId";
 
 		$statement = $pdo->prepare($query);
 
@@ -356,7 +358,7 @@ class ExtraServing implements \JsonSerializable {
 		$formattedExtraServingEndTime = $this->extraServingEndTime->format("Y-m-d H:i:s");
 		$formattedExtraServingStartTime = $this->extraServingStartTime->format("Y-m-d H:i:s");
 
-		$parameters = ["extraServingCompanyId" => $this->extraServingCompanyId, "extraServingDescription" => $this->extraServingDescription, "extraServingEndTime" => $this->$formattedExtraServingEndTime, "extraServingLocation" => $this->extraServingLocation, "extraServingStartTime" => $this->$formattedExtraServingStartTime, "extraServingId" => $this->extraServingId];
+		$parameters = ["extraServingCompanyId" => $this->extraServingCompanyId, "extraServingDescription" => $this->extraServingDescription, "extraServingEndTime" => $this->$formattedExtraServingEndTime, "extraServingLocationAddress" => $this->extraServingLocationAddress, "extraServingLocationName" => $this->extraServingLocationName, "extraServingStartTime" => $this->$formattedExtraServingStartTime, "extraServingId" => $this->extraServingId];
 
 		$statement->execute($parameters);
 		}
