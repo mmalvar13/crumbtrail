@@ -400,7 +400,7 @@ class ExtraServing implements \JsonSerializable {
 	 * @throws \TypeError when variables are not the correct data type
 	 */
 
-	public function getExtraServingByExtraServingId(\PDO $pdo, int $extraServingId) {
+	public static function getExtraServingByExtraServingId(\PDO $pdo, int $extraServingId) {
 
 		//make sure id isnt wack
 		if($extraServingId <= 0) {
@@ -449,7 +449,7 @@ class ExtraServing implements \JsonSerializable {
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
 
-	public function getExtraServingByExtraServingCompanyId(\PDO $pdo, int $extraServingCompanyId) {
+	public static function getExtraServingByExtraServingCompanyId(\PDO $pdo, int $extraServingCompanyId) {
 
 		if($extraServingCompanyId <= 0) {
 			throw(new \PDOException("The foreign key to company cannot be 0 or negative!"));
@@ -495,6 +495,56 @@ class ExtraServing implements \JsonSerializable {
 	}
 
 
+
+
+	/**
+	 * get the extraServing by the extraServingId and extraServingCompanyId
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param int $extraServingId event id to search by
+	 * @param int $extraServingCompanyId event company id to search by
+	 * @return extraServing|null
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+
+	public static function getExtraServingByExtraServingIdAndExtraServingCompanyId(\PDO $pdo, int $extraServingId, int $extraServingCompanyId) {
+
+		if($extraServingCompanyId <= 0 || $extraServingId <=0) {
+			throw(new \PDOException("The primary and foreign key cannot be 0 or negative!"));
+		}
+
+		//make template
+		$query = "SELECT extraServingId, extraServingCompanyId, extraServingDescription, extraServingEndTIme, ExtraServingLocationAddress, extraServingLocationName, extraServingStartTime FROM extraServing WHERE extraServingId = :extraServingId AND extraServingCompanyId = :extraServingCompanyId";
+
+		$statement = $pdo->prepare($query);
+
+		//bind the id to its placeholder inside the template
+		//we dont use $this->$extraServingId, because we arent pulling the value of the state variable,
+		//we want to use the value passed into the function
+		$parameters = ["extraServingId" => $extraServingId, "extraServingCompanyId"=>$extraServingCompanyId];
+
+		$statement->execute($parameters);
+
+		try {
+			//new variable $extraServing is what we will assign all the information in this object to, and return to whatever called this method
+			$extraServing = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+
+			$row = $statement->fetch();
+
+			if($row != false) {
+				//set $extraServing to a new object based on the ExtraServing class
+				$extraServing = new ExtraServing($row["extraServingId"], $row["extraServingCompanyId"], $row["extraServingDescription"], $row["extraServingEndTime"], $row["extraServingLocationAddress"], $row["extraServingLocationName"], $row["extraServingStartTime"]);
+			}
+		} catch(\Exception $exception) {
+			// if the row couldnt be converted, re-throw it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return ($extraServing);
+	}
+
+
 	/**
 	 * gets extraServing by the description
 	 * @param \PDO $pdo PDO connection object
@@ -504,7 +554,7 @@ class ExtraServing implements \JsonSerializable {
 	 * @throws \TypeError when variables are not the correct data type
 	 */
 
-	public function getExtraServingByExtraServingDescription(\PDO $pdo, string $extraServingDescription){
+	public static function getExtraServingByExtraServingDescription(\PDO $pdo, string $extraServingDescription){
 
 		if(empty($extraServingDescription)){
 			throw(new \PDOException("The description is empty!"));
@@ -545,13 +595,23 @@ class ExtraServing implements \JsonSerializable {
 			}
 			return ($extraServings);
 		}
+	}
 
 
-
-
-
+	/**
+	 * gets extraServing by the end time
+	 * @param \PDO $pdo PDO connection object
+	 * @param \DateTime|string $extraServingEndTime used as the time to search for
+	 * @param \DateTime|string $extraServingStartTime used as the time to search for
+	 * @return \SplFixedArray SplFixedArray of extraServings found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 */
+	public static function getExtraServingByExtraServingEndTimeAndExtraServingStartTime(\PDO $pdo, \DateTime $extraServingEndTime, \DateTime $extraServingStartTime){
 
 	}
+
+
 
 
 
