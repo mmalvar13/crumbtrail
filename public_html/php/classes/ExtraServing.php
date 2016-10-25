@@ -36,10 +36,16 @@ class ExtraServing implements \JsonSerializable {
 	private $extraServingDescription;
 
 	/**
-	 * location of where the food truck will be serving
-	 * @var string $extraServingLocation
+	 * location address of where the food truck will be serving
+	 * @var string $extraServingLocationAddress
 	 */
-	private $extraServingLocation;
+	private $extraServingLocationAddress;
+
+	/**
+	 * location Name of where the food truck will be serving
+	 * @var string $extraServingLocationName
+	 */
+	private $extraServingLocationName
 
 	/**
 	 * start time of the extra serving event
@@ -151,34 +157,70 @@ class ExtraServing implements \JsonSerializable {
 
 
 	/**
-	 * getter for extraServingLocation
-	 * @return string for $extraServingLocation
+	 * getter for extraServingLocationAddress
+	 * @return string for $extraServingLocationAddress
 	 */
-	public function getExtraServingLocation() {
-		return ($this->extraServingLocation);
+	public function getExtraServingLocationAddress() {
+		return ($this->extraServingLocationAddress);
 	}
 
 	/**
-	 * setter for extraServingLocation
-	 * @param string $newExtraServingLocation
-	 * @throws \InvalidArgumentException if $newExtraServingLocation not a string or insecure
-	 * @throws \RangeException if $newExtraServingLocation longer than 512 char
-	 * @throws \TypeError if $newExtraServingLocation not a string
+	 * setter for extraServingLocationAddress
+	 * @param string $newExtraServingLocationAddress
+	 * @throws \InvalidArgumentException if $newExtraServingLocationAddress not a string or insecure
+	 * @throws \RangeException if $newExtraServingLocationAddress longer than 512 char
+	 * @throws \TypeError if $newExtraServingLocationAddress not a string
 	 */
-	public function setExtraServingLocation(string $newExtraServingLocation) {
+	public function setExtraServingLocationAddress(string $newExtraServingLocationAddress) {
 
-		$newExtraServingLocation = trim($newExtraServingLocation);
-		$newExtraServingLocation = filter_var($newExtraServingLocation, FILTER_SANITIZE_STRING);
+		$newExtraServingLocationAddress = trim($newExtraServingLocationAddress);
+		$newExtraServingLocationAddress = filter_var($newExtraServingLocationAddress, FILTER_SANITIZE_STRING);
 
-		if(strlen($newExtraServingLocation) === 0) {
-			throw(new \InvalidArgumentException("Please enter a location!"));
+		if(strlen($newExtraServingLocationAddress) === 0) {
+			throw(new \InvalidArgumentException("Please enter a location address!"));
 		}
 
-		if(strlen($newExtraServingLocation) > 512) {
-			throw(new \InvalidArgumentException("The location is too long!"));
+		if(strlen($newExtraServingLocationAddress) > 512) {
+			throw(new \InvalidArgumentException("The location address is too long!"));
 		}
 
-		$this->extraServingLocation = $newExtraServingLocation;
+		$this->extraServingLocationAddress = $newExtraServingLocationAddress;
+	}
+
+
+
+
+
+
+	/**
+	 * getter for extraServingLocationName
+	 * @return string for $extraServingLocationName
+	 */
+	public function getExtraServingLocationName() {
+		return ($this->extraServingLocationName);
+	}
+
+	/**
+	 * setter for extraServingLocationName
+	 * @param string $newExtraServingLocationName
+	 * @throws \InvalidArgumentException if $newExtraServingLocationName not a string or insecure
+	 * @throws \RangeException if $newExtraServingLocationName longer than 512 char
+	 * @throws \TypeError if $newExtraServingLocationName not a string
+	 */
+	public function setExtraServingLocationName(string $newExtraServingLocationName) {
+
+		$newExtraServingLocationName = trim($newExtraServingLocationName);
+		$newExtraServingLocationName = filter_var($newExtraServingLocationName, FILTER_SANITIZE_STRING);
+
+		if(strlen($newExtraServingLocationName) === 0) {
+			throw(new \InvalidArgumentException("Please enter a location name!"));
+		}
+
+		if(strlen($newExtraServingLocationName) > 512) {
+			throw(new \InvalidArgumentException("The location name is too long!"));
+		}
+
+		$this->extraServingLocationName = $newExtraServingLocationName;
 	}
 
 

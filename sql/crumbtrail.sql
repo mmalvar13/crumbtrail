@@ -84,7 +84,8 @@ CREATE TABLE extraServing (
 	extraServingCompanyId INT UNSIGNED NOT NULL ,
 	extraServingDescription VARCHAR(4096) NOT NULL ,
 	extraServingEndTime DATETIME NOT NULL ,
-	extraServingLocation VARCHAR(512) NOT NULL ,
+	extraServingLocationAddress VARCHAR(512) NOT NULL ,
+	extraServingLocationName VARCHAR(512) NOT NULL ,
 	extraServingStartTime DATETIME NOT NULL ,
 
 
