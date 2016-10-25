@@ -248,6 +248,9 @@ class ExtraServing implements \JsonSerializable {
 
 		$currentTime = new \DateTime();
 
+
+		//I FEEL LIKE I SHOULD BE DOING THE FORMAT DONE IN insert and update HERE INSTEAD!
+
 		if($newExtraServingStartTime < $currentTime) {
 			throw(new \RangeException("The start time cannot be in the past!"));
 		}
@@ -283,6 +286,9 @@ class ExtraServing implements \JsonSerializable {
 		if($newExtraServingEndTime === null) {
 			throw(new \InvalidArgumentException("The End time cannot be null!"));
 		}
+
+
+		//I FEEL LIKE I SHOULD BE DOING THE FORMAT DONE IN insert and update HERE INSTEAD!
 
 
 		if($newExtraServingEndTime <= $this->extraServingStartTime) {
@@ -502,7 +508,7 @@ class ExtraServing implements \JsonSerializable {
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @param int $extraServingId event id to search by
-	 * @param int $extraServingCompanyId event company id to search by
+	 * @param int $extraServingCompanyId company id to search by
 	 * @return extraServing|null
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
@@ -668,6 +674,33 @@ class ExtraServing implements \JsonSerializable {
 	 */
 	public static function getExtraServingByExtraServingEndTimeAndExtraServingStartTime(\PDO $pdo, \DateTime $extraServingEndTime, \DateTime $extraServingStartTime){
 
+	}
+
+
+
+
+	/**
+	 * get the extraServing by the extraServingId and extraServingEndTime
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param int $extraServingId event id to search by
+	 * @param \DateTime $extraServingEndTime end time to search by
+	 * @return extraServing|null
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+
+	public static function getExtraServingByExtraServingIdAndExtraServingEndTime(\PDO $pdo, int $extraServingId, \DateTime $extraServingEndTime){
+
+		if($extraServingId <= 0){
+			throw(new \PDOException("the ID cannot be 0 or negative!"));
+		}
+
+		//what format should $extraServingEndTime be in when input to this method?
+		//Do i need to format it once it has been input to the method?
+		if(empty($extraServingEndTime)){
+			throw(new \PDOException("Please enter an end time!"));
+		}
 	}
 
 
