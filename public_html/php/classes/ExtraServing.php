@@ -492,6 +492,63 @@ class ExtraServing implements \JsonSerializable {
 			}
 			return ($extraServings);
 		}
+	}
+
+
+	/**
+	 * gets extraServing by the description
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $extraServingDescription used as the description to search for
+	 * @return \SplFixedArray SplFixedArray of extraServings found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 */
+
+	public function getExtraServingByExtraServingDescription(\PDO $pdo, string $extraServingDescription){
+
+		if(empty($extraServingDescription)){
+			throw(new \PDOException("The description is empty!"));
+		}
+
+		if(strlen($extraServingDescription)> 4096){
+			throw(new \PDOException("The description is too long!"));
+		}
+
+		//make template
+		$query = "SELECT extraServingId, extraServingCompanyId, extraServingDescription, extraServingEndTIme, ExtraServingLocationAddress, extraServingLocationName, extraServingStartTime FROM extraServing WHERE extraServingDescription = :extraServingDescription";
+
+		$statement = $pdo->prepare($query);
+
+		$extraServingDescription = "%$extraServingDescription%";
+		$parameters = ["extraServingDescription"=> $extraServingDescription];
+		$statement->execute($parameters);
+
+		$extraServings = new \SplFixedArray($statement->rowCount());
+
+		// remember...PDO::FETCH_ASSOC tells PDO to return the result as an associative array. The array keys will match your column names.
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+
+		while(($row = $statement->fetch()) != false) {
+
+			try {
+
+				$extraServing = new ExtraServing($row["extraServingId"], $row["extraServingCompanyId"], $row["extraServingDescription"], $row["extraServingEndTime"], $row["extraServingLocationAddress"], $row["extraServingLocationName"], $row["extraServingStartTime"]);
+
+				$extraServings[$extraServings->key()] = $extraServing;
+
+				// next() advances the internal array pointer one place forward before returning the element value. That means it returns the next array value and advances the internal array pointer by one.
+				$extraServings->next();
+
+			}catch(\Exception $exception) {
+				// if the row couldnt be converted, re-throw it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+			return ($extraServings);
+		}
+
+
+
+
 
 
 	}
