@@ -28,12 +28,12 @@ class Schedule implements \JsonSerializable {
 	 */
 	private $scheduleCompanyId;
 	/**
-	 * id for this schedule's day of the week (Todo: Does this need to be private? So someone cant mess around with a trucks schedule right?)
+	 * id for this schedule's day of the week (Todo: Does this need to be private? So someone cant mess around with a trucks schedule right? (down))
 	 * @var string $scheduleDaysOfWeek;
 	 */
 	private $scheduleDaysOfWeek;
 	/**
-	 * id for this schedule's location. (Todo: is this a point or a string...need to clarify on Tuesday
+	 * id for this schedule's location. (Todo: is this a point or a string...need to clarify on Tuesday (down is the string version, point at the moment is in gray)
 	 * @var string $scheduleLocation;
 	 */
 	private $scheduleLocation;
@@ -46,7 +46,7 @@ class Schedule implements \JsonSerializable {
 	 * Private $scheduleLocation;
 	 */
 	/**
-	 * id for this schedule's time of operation (Todo: does this need to be a date/time? or are we just having the food truck owner put this in as a string
+	 * id for this schedule's time of operation (Todo: does this need to be a date/time? or are we just having the food truck owner put this in as a string (currently set as a date time, the string version is in grey at the bottom)
 	 * @var \DateTime $scheduleTime;
 	 */
 	private $scheduleTime;
@@ -58,17 +58,29 @@ class Schedule implements \JsonSerializable {
 	 * /*
 	 * private $scheduleTime;
 	 */
+	/**
+	 * id for this schedule's location name
+	 * @var string $scheduleLocationName;
+	 */
+	private $scheduleLocationName;
+	/**
+	 * id for this schedule's location address
+	 * @var string $scheduleLocationAddress
+	 */
+	private $scheduleLocationAddress;
 
 // constructor here //
 	/**
 	 * Schedule Constructor
 	 * @param int|null $newScheduleId id of the schedule or null if a new schedule
 	 * @param int|null $newScheduleCompanyId id of the schedule and it company connection
-	 * @param string $scheduleDaysOfWeek string of the day of the week
-	 * @param string $scheduleLocation string of the location
-	Todo: @param point $scheduleLocation gps location of this schedule object if we decide to make this a point object
-	 * @param \DateTime|string|null $scheduleTime data and time of the schedule (taken from the event class)
-	Todo: @param string $scheduleTime string of times set for an event (if we deiced to make this a string)
+	 * @param string $newScheduleDaysOfWeek string of the day of the week
+	 * @param string $newScheduleLocation string of the location
+	 * @param string $newScheduleLocationName string of the location name
+	 * @param string $newScheduleLocationAddress string of the location address
+	Todo: ANYTHING HERE IN YELLOW IS THE ALTERNATIVE CODE BASED ON OUT DECISIONS @param point $newScheduleLocation gps location of this schedule object if we decide to make this a point object
+	 * @param \DateTime|string|null $newScheduleTime data and time of the schedule (taken from the event class)
+	Todo: @param string $newScheduleTime string of times set for an event (if we deiced to make this a string)
 	 * @throws
 	 **/
 
