@@ -598,6 +598,65 @@ class ExtraServing implements \JsonSerializable {
 	}
 
 
+
+
+	/**
+	 * gets extraServing by the address
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $extraServingAddress used as the address to search for
+	 * @return \SplFixedArray SplFixedArray of extraServings found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 */
+
+	public static function getExtraServingByExtraServingAddress(\PDO $pdo, string $extraServingAddress){
+
+		//IM MAKING THIS RETURN AN ARRAY FOR ALL MATCHES THAT ARE CLOSE TO THE TERM SEARCHED FOR
+		//JUST IN CASE YOU ONLY KNOW PART OF THE ADDRESS. mAY NEED TO CHANGE THIS TO A STRICT SEARCH IN THE FUTURE
+		//THAT JUST RETURNS A SINGLE OBJECT
+
+		if(empty($extraServingAddress)){
+			throw(new \PDOException("The address is empty!"));
+		}
+
+		if(strlen($extraServingAddress)> 512){
+			throw(new \PDOException("The address is too long!"));
+		}
+
+		//make template
+		$query = "SELECT extraServingId, extraServingCompanyId, extraServingDescription, extraServingEndTIme, ExtraServingLocationAddress, extraServingLocationName, extraServingStartTime FROM extraServing WHERE ExtraServingLocationAddress = :ExtraServingLocationAddress";
+
+		$statement = $pdo->prepare($query);
+
+		$extraServingAddress = "%$extraServingAddress%";
+		$parameters = ["extraServingAddress"=> $extraServingAddress];
+		$statement->execute($parameters);
+
+		$extraServings = new \SplFixedArray($statement->rowCount());
+
+		// remember...PDO::FETCH_ASSOC tells PDO to return the result as an associative array. The array keys will match your column names.
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+
+		while(($row = $statement->fetch()) != false) {
+
+			try {
+
+				$extraServing = new ExtraServing($row["extraServingId"], $row["extraServingCompanyId"], $row["extraServingDescription"], $row["extraServingEndTime"], $row["extraServingLocationAddress"], $row["extraServingLocationName"], $row["extraServingStartTime"]);
+
+				$extraServings[$extraServings->key()] = $extraServing;
+
+				// next() advances the internal array pointer one place forward before returning the element value. That means it returns the next array value and advances the internal array pointer by one.
+				$extraServings->next();
+
+			}catch(\Exception $exception) {
+				// if the row couldnt be converted, re-throw it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+			return ($extraServings);
+		}
+	}
+
+
 	/**
 	 * gets extraServing by the end time
 	 * @param \PDO $pdo PDO connection object

@@ -88,11 +88,11 @@ CREATE TABLE extraServing (
 	extraServingLocationName VARCHAR(512) NOT NULL ,
 	extraServingStartTime DATETIME NOT NULL ,
 
-
 	INDEX (extraServingCompanyId),
 	FOREIGN KEY (extraServingCompanyId) REFERENCES company (companyId),
 	PRIMARY KEY (extraServingId)
 );
+
 
 CREATE TABLE schedule (
 	scheduleId INT UNSIGNED AUTO_INCREMENT NOT NULL,
