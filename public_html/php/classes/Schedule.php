@@ -105,6 +105,35 @@ public function __construct(int $newScheduleId = null, int $newScheduleCompanyId
 }
 /* Begin the setters and getters Here...accessors and mutators */
 
+	/**
+ 	* accessor for the scheduleId
+ 	*
+ 	* @return int|null value of scheduleId
+ 	**/
+
+	public function getScheduleId() {
+		return ($this->scheduleId);
+	}
+
+	/**
+	 * mutator method for scheduleId
+	 * @param int|null value for scheduleId
+	 * @throws \RangeException if the $newScheduleId is negative
+	 * @throws \InvalidArgumentException if $newScheduleId is not of the type integer
+	 **/
+	public function setScheduleId(int $newScheduleId = null) {
+		if($newScheduleId === null) {
+			$this->scheduleId = null;
+			return;
+		}
+		//verifying whether the id is positive
+		if($newScheduleId <=0) {
+			throw( new \RangeException("This schedule id is not positive"));
+		}
+		//convert and store schedule
+		$this->scheduleId = $newScheduleId;
+	}
+
 
 
 }
