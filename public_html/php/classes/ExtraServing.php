@@ -462,7 +462,7 @@ class ExtraServing implements \JsonSerializable {
 		}
 
 		//make template
-		$query = "SELECT extraServingId, extraServingCompanyId, extraServingDescription, extraServingEndTIme, ExtraServingLocationAddress, extraServingLocationName, extraServingStartTime FROM extraServing WHERE extraServingCompanyId = :extraServingCompanyId";
+		$query = "SELECT extraServingId, extraServingCompanyId, extraServingDescription, extraServingEndTime, ExtraServingLocationAddress, extraServingLocationName, extraServingStartTime FROM extraServing WHERE extraServingCompanyId = :extraServingCompanyId";
 
 		$statement = $pdo->prepare($query);
 
@@ -663,45 +663,68 @@ class ExtraServing implements \JsonSerializable {
 	}
 
 
-	/**
-	 * gets extraServing by the end time
-	 * @param \PDO $pdo PDO connection object
-	 * @param \DateTime|string $extraServingEndTime used as the time to search for
-	 * @param \DateTime|string $extraServingStartTime used as the time to search for
-	 * @return \SplFixedArray SplFixedArray of extraServings found
-	 * @throws \PDOException when mySQL related errors occur
-	 * @throws \TypeError when variables are not the correct data type
-	 */
-	public static function getExtraServingByExtraServingEndTimeAndExtraServingStartTime(\PDO $pdo, \DateTime $extraServingEndTime, \DateTime $extraServingStartTime){
-
-	}
-
-
-
 
 	/**
-	 * get the extraServing by the extraServingId and extraServingEndTime
+	 * get the extraServing by extraServingEndTime
 	 *
 	 * @param \PDO $pdo PDO connection object
-	 * @param int $extraServingId event id to search by
 	 * @param \DateTime $extraServingEndTime end time to search by
-	 * @return extraServing|null
+	 * @return \SplFixedArray SplFixedArray of extraServings found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
 
-	public static function getExtraServingByExtraServingIdAndExtraServingEndTime(\PDO $pdo, int $extraServingId, \DateTime $extraServingEndTime){
-
-		if($extraServingId <= 0){
-			throw(new \PDOException("the ID cannot be 0 or negative!"));
-		}
+	public static function getExtraServingByExtraServingEndTime(\PDO $pdo, \DateTime $extraServingEndTime){
 
 		//what format should $extraServingEndTime be in when input to this method?
 		//Do i need to format it once it has been input to the method?
 		if(empty($extraServingEndTime)){
 			throw(new \PDOException("Please enter an end time!"));
 		}
+
+		//make template
+		$query = "SELECT extraServingId, extraServingCompanyId, extraServingDescription, extraServingEndTIme, ExtraServingLocationAddress, extraServingLocationName, extraServingStartTime FROM extraServing WHERE extraServingEndTIme = :extraServingEndTIme";
+
+		$statement = $pdo->prepare($query);
+
+		//bind the id to its placeholder inside the template
+		//we dont use $this->$extraServingId, because we arent pulling the value of the state variable,
+		//we want to use the value passed into the function
+		$parameters = ["extraServingEndTime" => extraServingEndTime];
+
+		$statement->execute($parameters);
+
+		//construct array for all the objects to go into
+		// \SplFixedArray take in a parameter of how long it should be. $statement->rowCount() give the number of rows found in the database
+		$extraServings = new \SplFixedArray($statement->rowCount());
+
+		// PDO::FETCH_ASSOC tells PDO to return the result as an associative array. The array keys will match your column names.
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+
+		//why there are still rows with juicy, juicy data in them, keep this party going
+		while(($row = $statement->fetch()) != false) {
+
+			try {
+
+				$extraServing = new ExtraServing($row["extraServingId"], $row["extraServingCompanyId"], $row["extraServingDescription"], $row["extraServingEndTime"], $row["extraServingLocationAddress"], $row["extraServingLocationName"], $row["extraServingStartTime"]);
+
+				$extraServings[$extraServings->key()] = $extraServing;
+
+				// next() advances the internal array pointer one place forward before returning the element value. That means it returns the next array value and advances the internal array pointer by one.
+				$extraServings->next();
+
+			}catch(\Exception $exception) {
+				// if the row couldnt be converted, re-throw it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+			return ($extraServings);
+		}
 	}
+
+
+
+
+
 
 
 
