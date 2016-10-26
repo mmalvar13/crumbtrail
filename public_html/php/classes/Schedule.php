@@ -29,35 +29,21 @@ class Schedule implements \JsonSerializable {
 	private $scheduleCompanyId;
 	/**
 	 * id for this schedule's day of the week (Todo: Does this need to be private? So someone cant mess around with a trucks schedule right? (down))
-	 * @var string $scheduleDaysOfWeek;
+	 * @var string $scheduleDayOfWeek;
 	 */
-	private $scheduleDaysOfWeek;
+	private $scheduleDayOfWeek;
 	/**
-	 * id for this schedule's location. (Todo: is this a point or a string...need to clarify on Tuesday (down is the string version, point at the moment is in gray)
-	 * @var string $scheduleLocation;
+	 * id for this schedule's start time of operation
+	 *
+	 * @var \DateTime $scheduleStartTime;
 	 */
-	private $scheduleLocation;
-	/*
-	(JUST IN CASE WE DECIDE POINT)
-	 * id for this schedule's location (if it is a point)
-	 * @var point $scheduleLocation;
-	 * (NEEDS FORMATTING)
-	 * /*
-	 * Private $scheduleLocation;
-	 */
+	private $scheduleStartTime;
 	/**
-	 * id for this schedule's time of operation (Todo: does this need to be a date/time? or are we just having the food truck owner put this in as a string (currently set as a date time, the string version is in grey at the bottom)
-	 * @var \DateTime $scheduleTime;
+	 * id for this schedule's end time of operation
+	 *
+	 * @var \DateTime $scheduleEndTime
 	 */
-	private $scheduleTime;
-	/*
-	 * (JUST IN CASE WE DECIDE STRING)
-	 * id for this schedule's time of operation (if it is a string)
-	 * @var string $scheduleTime;
-	 * (NEEDS FORMATTING)
-	 * /*
-	 * private $scheduleTime;
-	 */
+	private $scheduleEndTime;
 	/**
 	 * id for this schedule's location name
 	 * @var string $scheduleLocationName;
@@ -74,27 +60,28 @@ class Schedule implements \JsonSerializable {
 	 * Schedule Constructor
 	 * @param int|null $newScheduleId id of the schedule or null if a new schedule
 	 * @param int|null $newScheduleCompanyId id of the schedule and it company connection
-	 * @param string $newScheduleDaysOfWeek string of the day of the week
-	 * @param string $newScheduleLocation string of the location
+	 * @param string $newScheduleDayOfWeek string of the day of the week
 	 * @param string $newScheduleLocationName string of the location name
 	 * @param string $newScheduleLocationAddress string of the location address
-	Todo: ANYTHING HERE IN YELLOW IS THE ALTERNATIVE CODE BASED ON OUR DECISIONS @param point $newScheduleLocation gps location of this schedule object if we decide to make this a point object
-	 * @param \DateTime|string|null $newScheduleTime data and time of the schedule (taken from the event class)
+	 * @param \DateTime|string|null $newScheduleStartTime data and time of the schedule (taken from the event class)
+	 * @param \DateTime|string|null $newScheduleEndTime data and time of the schedule (taken from the event class)
+	 *
 	Todo: @param string $newScheduleTime string of times set for an event (if we deiced to make this a string)
 	 * @throws \RangeException when the integer is negative or strings are too long
+	 * @throws \TypeError if the the days of the week do not match our parameters
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \Exception when error need to be called in the code??
 	 **/
 
-public function __construct(int $newScheduleId = null, int $newScheduleCompanyId, string $newScheduleDaysOfWeek, string $newScheduleLocation, string $newScheduleLocationName, string $newScheduleLocationAddress, $newScheduleTime = null) {
+public function __construct(int $newScheduleId = null, int $newScheduleCompanyId, string $newScheduleDayOfWeek, string $newScheduleLocationName, string $newScheduleLocationAddress, $newScheduleStartTime = null, $newScheduleEndTime = null) {
 	try {
 		$this->setScheduleId($newScheduleId);
 		$this->setScheduleCompanyId($newScheduleCompanyId);
-		$this->setScheduleDaysOfWeek($newScheduleDaysOfWeek);
-		$this->setScheduleLocation($newScheduleLocation);
+		$this->setScheduleDayOfWeek($newScheduleDayOfWeek);
 		$this->setScheduleLocationName($newScheduleLocationName);
 		$this->setScheduleLocationAddress($newScheduleLocationAddress);
-		$this->setScheduleTime($newScheduleTime);
+		$this->setScheduleStartTime($newScheduleStartTime);
+		$this->setScheduleEndTime($newScheduleEndTime);
 	} catch(\RangeException $range) {
 		throw(new \RangeException($range->getMessage(), 0, $range));
 	} catch(\InvalidArgumentException $invalidArgument) {
@@ -158,6 +145,56 @@ public function __construct(int $newScheduleId = null, int $newScheduleCompanyId
 		//convert and store this schedule
 		$this->scheduleCompanyId = $newScheduleCompanyId;
 	}
-
+	/**
+	 * accessor for the scheduleDayOfWeek
+	 *
+	 * @return string $scheduleDayOfWeek the string day of the week
+	 **/
+	public function getScheduleDayOfWeek() {
+		return ($this->scheduleDayOfWeek);
+	}
+	/**
+	 * mutator method for scheduleDayOfWeek
+	 * @param string $newScheduleDayOfWeek the string day of the week
+	 * @throws \RangeException when the integer is negative or strings are too long
+	 * @throws  \TypeError if the day does not exist
+	 **/
+	public function setScheduleDayOfWeek(string $newScheduleDayOfWeek) {
+		if($newScheduleDayOfWeek === null) {
+			$this->scheduleDayOfWeek = null;
+			return;
+		}
+		/* make sure the scheduled day is no more than nine characters */
+		/* is this right? */
+		if ($newScheduleDayOfWeek !== "Monday" or "Tuesday" or "Wednesday" or "Thursday" or "Friday" or "Saturday" or "Sunday") {
+			throw( new \TypeError("This day of the week does not exist"));
+		}
+		//convert and store this day of the week
+		$this->scheduleDayOfWeek = $newScheduleDayOfWeek;
+	}
+	/**
+	 *accessor for the schedule location
+	 *
+	 * @return string $scheduleLocationName the string name of the location
+	 **/
+/* example for @return (CNM)*/
+	public function getScheduleLocationName() {
+		return ($this->scheduleLocationName);
+	}
+	/**
+	 * mutator method for scheduleLocationName
+	 * @param string $newScheduleLocationName the string of the location name
+	 * @throws \RangeException if the string is too long
+	 **/
+	public function setScheduleLocationName(string $newScheduleLocationName) {
+		if($newScheduleLocationName === null) {
+			$this->scheduleLocationName = null;
+			return;
+		}
+		if($newScheduleLocationName > 255) {
+			throw(new \RangeException("This Location Name is too long"));
+		}
+		$this->scheduleLocationName = $newScheduleLocationName;
+	}
 
 }

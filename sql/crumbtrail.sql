@@ -97,12 +97,12 @@ CREATE TABLE extraServing (
 CREATE TABLE schedule (
 	scheduleId INT UNSIGNED AUTO_INCREMENT NOT NULL,
 	scheduleComapanyId INT UNSIGNED NOT NULL,
-	scheduleDaysOfWeek VARCHAR(9) NOT NULL,
-	scheduleLocation POINT NOT NULL,
+	scheduleDayOfWeek VARCHAR(9) NOT NULL,
 	scheduleLocationName VARCHAR(255) NOT NULL,
-	scheduleLocationAddress VARCHAR(255) NOT NULL,
+	scheduleLocationAddress VARCHAR(255) NULL,
 	-- varchar (location) because it's not a point, it is something that the food truck owner enters? or are we going to have this as a point? Talk about on Tuesday 10/2/16 UPDATE: changed to point because we now have location name and address added to the table 10/25/16 --
-	scheduleTime DATETIME NOT NULL,
+	scheduleStartTime DATETIME NOT NULL,
+	scheduleEndTime DATETIME NOT NULL,
 	-- did we decide to use "date/time" UTC like event?? or is this a string --
 	INDEX(scheduleComapanyId),
 	FOREIGN KEY(scheduleComapanyId) REFERENCES company(companyId),
