@@ -784,12 +784,6 @@ class ExtraServing implements \JsonSerializable {
 
 
 
-
-
-
-
-
-
 	/**
 	 * gets all extraServing objects
 	 * @param \PDO $pdo PDO connection object
