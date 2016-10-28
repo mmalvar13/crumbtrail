@@ -732,3 +732,4 @@ class Schedule implements \JsonSerializable {
 	}
 
 }
+
