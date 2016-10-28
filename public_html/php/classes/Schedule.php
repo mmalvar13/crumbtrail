@@ -534,20 +534,20 @@ class Schedule implements \JsonSerializable {
 			throw(new \PDOException("Must enter a start time"));
 			//as i have it above in the setter and getters should i have a section here that stops a user from putting in a start time and end time from being the same
 		}
-		$query = "SELECT scheduleId, scheduleCompanyId, scheduleDayOfWeek, scheduleStartTime, scheduleEndTime, scheduleLocationName, scheduleLocationAddress FROM schedule WHERE scheduleDayOfWeek = :scheduleDayOfWeek";
+		$query = "SELECT scheduleId, scheduleCompanyId, scheduleDayOfWeek, scheduleStartTime, scheduleEndTime, scheduleLocationName, scheduleLocationAddress FROM schedule WHERE scheduleStartTime = :scheduleStartTime";
 
 		$statement = $pdo->prepare($query);
 		$parameters = ["scheduleStartTime" => $scheduleStartTime];
 
 		$statement->execute($parameters);
-		$scheduleStartTime = new \SplFixedArray($statement->rowCount());
+		$schedules = new \SplFixedArray($statement->rowCount());
 
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) != false) {
 
 			try {
 
-				$schedule = new Schedule($row["scheduleId"], $row["scheduleCompanyId"], $row["scheduleDayOfWeek"], $row["scheduleStartTime"], $row ["scheduleEndTime"], $row ["scheduleLoacationName"], $row["scheduleLocationAddress"]);
+				$schedule = new Schedule($row["scheduleId"], $row["scheduleCompanyId"], $row["scheduleDayOfWeek"], $row["scheduleStartTime"], $row ["scheduleEndTime"], $row ["scheduleLocationName"], $row["scheduleLocationAddress"]);
 
 				//Following Lorens format for extra serving by start time....
 				$schedules[$schedules->key()] = $schedule;
@@ -560,6 +560,48 @@ class Schedule implements \JsonSerializable {
 		}
 	}
 
+	/**
+	 * get schedule by end time
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param \DateTime $scheduleEndTime end time to search by
+	 * @return \SplFixedArray SplfixedArray of schedules
+	 * @throws \PDOException when mySQL error occur
+	 * @throws \TypeError when variables are not the correct data type
+	 */
+
+	public static function getScheduleByScheduleEndTime(\PDO $pdo, \DateTime $scheduleEndTime) {
+		if(empty($scheduleEndTime)) {
+			throw(new \PDOException("Must enter in an end time"));
+		}
+		//query template
+		$query = "SELECT scheduleId, scheduleCompanyId, scheduleDayOfWeek, scheduleStartTime, scheduleEndTime, scheduleLocationName, scheduleLocationAddress FROM schedule WHERE scheduleEndTime = :scheduleEndTime";
+
+		$statement = $pdo->prepare($query);
+		$parameters = ["scheduleEndTime" => $scheduleEndTime];
+
+		$statement->execute($parameters);
+		$schedules = new \SplFixedArray($statement->rowCount());
+
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+
+		while(($row = $statement->fetch()) != false) {
+
+			try {
+
+				$schedule = new Schedule($row["scheduleId"], $row["scheduleCompanyId"], $row["scheduleDayOfWeek"], $row["scheduleStartTime"], $row ["scheduleEndTime"], $row ["scheduleLocationName"], $row["scheduleLocationAddress"]);
+
+				//Following Lorens format for extra serving by end time....
+				$schedules[$schedules->key()] = $schedule;
+
+				$schedules->next();
+			}catch(\Exception $exception) {
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+			return ($schedules);
+		}
+
+	}
 
 
 
