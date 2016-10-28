@@ -632,7 +632,7 @@ class Schedule implements \JsonSerializable {
 		//executing sql statement here (forgot to label above...ooops)
 		$statement->execute($parameters);
 
-		$scheduleLocationNames = new \SplFixedArray($statement->rowCount());
+		$schedules = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 
 		while(($row = $statement->fetch()) !== false){
@@ -645,17 +645,80 @@ class Schedule implements \JsonSerializable {
 			} catch(\Exception $exception) {
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
+			return($schedules);
 		}
-		return($schedules);
 	}
 	/**
 	 * gets schedule by schedule address
 	 * @param \PDO $pdo connection object
 	 * @param string $scheduleLocationAddress address used to search for
+	 * @return \SplFixedArray SplFixedArray of schedules
+	 * @throws \PDOException when mySQL errors occur
+	 * @throws \TypeError when variables are not the correct data type
 	 */
 
+	public static function getScheduleByScheduleLocationAddress(\PDO $pdo, string $scheduleLocationAddress) {
 
+		if(strlen($scheduleLocationAddress)> 255) {
+			throw(new \PDOException("The location address is too long"));
+		}
+		$query = "SELECT scheduleId, scheduleCompanyId, scheduleDayOfWeek, scheduleStartTime, scheduleEndTime, scheduleLocationName, scheduleLocationAddress FROM schedule WHERE scheduleLocationAddress = :scheduleLocationAddress";
 
+		$statement = $pdo->prepare($query);
+
+		$scheduleLocationAddress = "%$scheduleLocationAddress%";
+		$parameters = ["scheduleLocationAddress" => $scheduleLocationAddress];
+		$statement->execute($parameters);
+		$schedules = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+
+		while(($row = $statement->fetch()) !== false){
+
+			try {
+				$schedule = new Schedule($row["scheduleId"], $row["scheduleCompanyId"], $row["scheduleDayOfWeek"], $row["scheduleStartTime"], $row ["scheduleEndTime"], $row ["scheduleLocationName"], $row["scheduleLocationAddress"]);
+
+				$schedules[$schedules->key()] = $schedule;
+				$schedules->next();
+			} catch(\Exception $exception) {
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+			return($schedules);
+		}
+	}
+
+	/**
+	 * gets all schedules
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @return \SplFixedArray SplFixedArray of schedules
+	 * @throws \PDOException when mySQL error occur
+	 * @throws \TypeError when variables are not the correct data type
+	 */
+
+	public static function getAllSchedule(\PDO $pdo){
+
+		$query = "SELECT scheduleId, scheduleCompanyId, scheduleDayOfWeek, scheduleStartTime, scheduleEndTime, scheduleLocationName, scheduleLocationAddress FROM schedule";
+
+		$statement = $pdo->prepare($query);
+		$statement->execute();
+
+		$schedules = new \SplFixedArray($statement->rowCount());
+
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+
+		while(($row = $statement->fetch())!= false) {
+
+			try {
+				$schedule = new Schedule($row["scheduleId"], $row["scheduleCompanyId"], $row["scheduleDayOfWeek"], $row["scheduleStartTime"], $row ["scheduleEndTime"], $row ["scheduleLocationName"], $row["scheduleLocationAddress"]);
+
+				$schedules[$schedules->key()] = $schedule;
+				$schedules->next();
+			} catch(\Exception $exception) {
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+			return($schedules);
+		}
+	}
 
 
 	/**
