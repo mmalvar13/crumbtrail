@@ -472,6 +472,53 @@ class Schedule implements \JsonSerializable {
 		return ($schedule);
 	}
 
+	/**
+	 * get schedule by the day of the week
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $scheduleDayOfWeek day of week to search for
+	 * @return \SplFixedArray splFixedArray of days of the week found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not of the correct data type
+	 */
+
+	public static function getScheduleByScheduleDayOfWeek(\PDO $pdo, string $scheduleDayOfWeek) {
+
+		if(empty($scheduleDayOfWeek)) {
+			throw(new \PDOException("The day of the week is empty"));
+		}
+		//hopefully this is right, but im going to make sure that the schedule can only be found by having the exact day of the week...
+		if(strlen($scheduleDayOfWeek) !== "Monday" or "Tuesday" or "Wednesday" or "Thursday" or "Friday" or "Saturday" or "Sunday") {
+			throw(new \PDOException("This day of the week does not exist"));
+		}
+		$query = "SELECT scheduleId, scheduleCompanyId, scheduleDayOfWeek, scheduleStartTime, scheduleEndTime, scheduleLocationName, scheduleLocationAddress FROM schedule WHERE scheduleDayOfWeek = :scheduleDayOfWeek";
+
+		$statement = $pdo->prepare($query);
+
+		$parameters = ["scheduleDayOfWeek" => $scheduleDayOfWeek];
+		$statement->execute($parameters);
+		$scheduleDayOfWeek = new \SplFixedArray($statement->rowCount());
+
+		while(($row = $statement->fetch()) != false) {
+
+			try {
+				$schedule=null;
+				$statement->setFetchMode(\PDO::FETCH_ASSOC);
+
+				$row = $statement->fetch();
+
+				if($row != false) {
+					$schedule = new Schedule($row["scheduleId"], $row["scheduleCompanyId"], $row["scheduleDayOfWeek"], $row["scheduleStartTime"], $row ["scheduleEndTime"], $row ["scheduleLoacationName"], $row["scheduleLocationAddress"]);
+				}
+			} catch(\Exception $exception) {
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+			return ($schedule);
+		}
+	}
+
+
+
 
 
 
