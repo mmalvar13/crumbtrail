@@ -287,10 +287,41 @@ class Schedule implements \JsonSerializable {
 			throw(new \InvalidArgumentException("The end time cannot be the same as the start time."));
 		}
 		$this->scheduleEndTime = $newScheduleEndTime;
-//------INSERT UPDATE AND DELETE METHODS HERE--------//
-		/**
-		 *
-		 */
-
 	}
+//------INSERT UPDATE AND DELETE METHODS HERE--------//
+		/* not sure if typeError is what i need here*/
+	/**
+	 * Inserts this Schedule int mySQL
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException whe mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+		public function insert(\PDO $pdo) {
+			//make sure that the schedule is null...not one that already exists
+			if($this->scheduleId !== null) {
+				throw(new \PDOException("not a new schedule"));
+			}
+		//query template
+		$query = "INSERT INTO schedule(scheduleCompanyId, scheduleDayOfWeek, scheduleStartTime, scheduleEndTime, scheduleLocationName, scheduleLocationAddress)VALUES(:scheduleCompanyId, :scheduleDayOfWeek, :scheduleStartTime, :scheduleEndTime, :scheduleLocationName, :scheduleLocationAddress)";
+		$statement = $pdo->prepare($query);
+
+		//bind the member variables to the place holders in the template...Wat?
+		$formattedScheduleStartTime = $this->scheduleStartTime->format("Y-m-d H:i:s");
+		$formattedScheduleEndTime = $this->scheduleEndTime->format("Y-m-d H:i:s");
+
+		$parameters = ["scheduleCompanyId"=> $this->scheduleCompanyId, "scheduleDayOfWeek"=> $this->scheduleDayOfWeek, "scheduleStartTime"=>$formattedScheduleStartTime, "scheduleEndTime"=>$formattedScheduleEndTime, "scheduleLocationName"=>$this->scheduleLocationName, "scheduleLocationAddress"=>$this->scheduleLocationAddress];
+		$statement->execute($parameters);
+
+		//update the null scheduleId with what SQL just gave us
+		$this->scheduleId = intval($pdo->lastInsertId());
+		}
+		/**
+		 * Deletes this Schedule int mySQL
+		 * @param \PDO $pdo PDO connection objecty
+		 * @throws \PDOException whe mySQL related errors occur
+		 * @throws \TypeError if $pdo is not a PDO connection object
+		 **/
+		public function delete(\PDO $pdo) {
+
+		}
 }
