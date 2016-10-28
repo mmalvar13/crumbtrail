@@ -18,6 +18,8 @@ require_once("autoload.php");
 /* Begin class here */
 
 class Schedule implements \JsonSerializable {
+
+	use ValidateDate;
 	/**
 	 * id for this schedule; this is the primary key
 	 * @var int $scheduleId ;
@@ -254,7 +256,7 @@ class Schedule implements \JsonSerializable {
 		}
 		if($newScheduleStartTime = $newScheduleEndTime) /*not sure if this makes sense*/ {
 			throw(new \InvalidArgumentException("The start time cannot be the same as the end time."));
-			/* so event uses range exception to show that the end time cannot come before the start time. Should that also be the case here??? */
+			/* so schedule uses range exception to show that the end time cannot come before the start time. Should that also be the case here??? */
 		}
 		$this->scheduleStartTime = $newScheduleStartTime;
 	}
@@ -333,8 +335,9 @@ class Schedule implements \JsonSerializable {
 		$parameters = ["scheduleId" => $this->scheduleId];
 		$statement->execute($parameters);
 	}
+
 	/**
-	 * Updates this Event in mySQL
+	 * Updates this Schedule in mySQL
 	 * @param \PDO $pdo PDO connection object
 	 * @throws \PDOException if mySQL related errors occur
 	 * @throws \TypeError is $pdo is not a PDO connection object
@@ -355,6 +358,92 @@ class Schedule implements \JsonSerializable {
 		$statement->execute($parameters);
 	}
 	/* GET FOO BY BARS*/
+	/**
+	 * gets the schedule by scheduleId
+	 * @param \PDO $pdo PDO connection object
+	 * @param int $scheduleId schedule id to search for
+	 * @return schedule|null schedule found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 */
 
+	public static function getScheduleByScheduleId(\PDO $pdo, int $scheduleId) {
+		//make sure the schedule Id is positive
+		if($scheduleId <= 0) {
+			throw(new \PDOException("schedule Id is not positive"));
+		}
+		//query template
+		//Why is this not formatted correctly???
+		$query = "SELECT scheduleId, scheduleCompanyId, scheduleDayOfWeek, scheduleStartTime, scheduleEndTime, scheduleLocationName, scheduleLocationAddress FROM schedule WHERE scheduleId = :scheduleId";
+		$statement = $pdo->prepare($query);
+
+		$parameters = ["scheduleId" => $scheduleId];
+		$statement->execute($parameters);
+
+		//get the schedule from mySQL database
+		try {
+			$schedule = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+
+			if($row != false) {
+				$schedule = new Schedule($row["scheduleId"], $row["scheduleCompanyId"], $row["scheduleDayOfWeek"], $row["scheduleStartTime"], $row ["scheduleEndTime"], $row ["scheduleLoacationName"], $row["scheduleLocationAddress"]);
+
+			}
+		} catch(\Exception $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return ($schedule);
+	}
+	/**
+	 * get schedule by scheduleCompanyId
+	 * @param \PDO $pdo PDO connection object
+	 * @param int $scheduleCompanyId schedulecompany id to search for
+	 * @return \$scheduleCompanyId|null schedule found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 */
+	public static function getScheduleByScheduleCompanyId(\PDO $pdo, int $scheduleCompanyId) {
+		if($scheduleCompanyId <=0) {
+			throw(new \PDOException("The scheduleCompany Id cannont be 0 or negative"));
+		}
+		//not sure why this isnt working//
+		$query = "SELECT scheduleId, scheduleCompanyId, scheduleDayOfWeek, scheduleStartTime, scheduleEndTime, scheduleLocationName, scheduleLocationAddress FROM schedule WHERE scheduleCompanyId = :scheduleCompanyId";
+
+		$statement = $pdo->prepare($query);
+
+		$parameters = ["$scheduleCompanyId" => $scheduleCompanyId];
+
+		$statement->execute($parameters);
+
+		try {
+			$schedule = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+
+			if($row != false) {
+				$schedule = new Schedule($row["scheduleId"], $row["scheduleCompanyId"], $row["scheduleDayOfWeek"], $row["scheduleStartTime"], $row ["scheduleEndTime"], $row ["scheduleLoacationName"], $row["scheduleLocationAddress"]);
+
+			}
+		} catch(\Exception $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return ($schedule);
+	}
+
+
+
+
+
+	/**
+	 * formats the state variables for JSON serialization
+	 * @return array resulting state variables to serialize
+	 **/
+	public function jsonSerialize() {
+		$fields = get_object_vars($this);
+		$fields["scheduleStartTime"] = $this->scheduleStartTime->getTimestamp() * 1000;
+		$fields["scheduleEndTime"] = $this->scheduleEndTime->getTimestamp() * 1000;
+		return ($fields);
+	}
 
 }
