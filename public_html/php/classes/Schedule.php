@@ -398,7 +398,7 @@ class Schedule implements \JsonSerializable {
 	/**
 	 * get schedule by scheduleCompanyId
 	 * @param \PDO $pdo PDO connection object
-	 * @param int $scheduleCompanyId schedulecompany id to search for
+	 * @param int $scheduleCompanyId schedule company id to search for
 	 * @return \$scheduleCompanyId|null schedule found or null if not found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
@@ -412,24 +412,66 @@ class Schedule implements \JsonSerializable {
 
 		$statement = $pdo->prepare($query);
 
-		$parameters = ["$scheduleCompanyId" => $scheduleCompanyId];
+		$parameters = ["scheduleCompanyId" => $scheduleCompanyId];
 
 		$statement->execute($parameters);
 
 		try {
-			$schedule = null;
+			$schedule=null;
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+
+			$row = $statement->fetch();
+
+			if($row != false) {
+				$schedule = new Schedule($row["scheduleId"], $row["scheduleCompanyId"], $row["scheduleDayOfWeek"], $row["scheduleStartTime"], $row ["scheduleEndTime"], $row ["scheduleLocationName"], $row["scheduleLocationAddress"]);
+			}
+		} catch(\Exception $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		//not sure why this isnt working
+		return ($schedule);
+	}
+
+	/**
+	 * get schedule by scheduleId and scheduleCompanyId
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param int $scheduleId scheduleId to search by
+	 * @param \int $scheduleCompanyId schedule company id to search by
+	 * @return schedule|null
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 */
+
+	public static function getScheduleByScheduleIdandScheduleCompanyId(\PDO $pdo, int $scheduleId, int $scheduleCompanyId) {
+
+		if($scheduleId <=0 || $scheduleCompanyId <=0) {
+			throw(new \PDOException("scheduleId and scheduleCompanyId cannot be negative or 0"));
+		}
+		//query
+		$query = "SELECT scheduleId, scheduleCompanyId, scheduleDayOfWeek, scheduleStartTime, scheduleEndTime, scheduleLocationName, scheduleLocationAddress FROM schedule WHERE scheduleCompanyId = :scheduleCompanyId AND scheduleCompanyId = :scheduleCompanyId";
+
+		$statement = $pdo->prepare($query);
+
+		$parameters = ["scheduleId" => $scheduleId, "scheduleCompanyId" => $scheduleCompanyId];
+
+		$statement->execute($parameters);
+
+		try {
+			$schedule=null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+
 			$row = $statement->fetch();
 
 			if($row != false) {
 				$schedule = new Schedule($row["scheduleId"], $row["scheduleCompanyId"], $row["scheduleDayOfWeek"], $row["scheduleStartTime"], $row ["scheduleEndTime"], $row ["scheduleLoacationName"], $row["scheduleLocationAddress"]);
-
 			}
 		} catch(\Exception $exception) {
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
 		return ($schedule);
 	}
+
 
 
 
