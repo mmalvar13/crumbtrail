@@ -602,6 +602,59 @@ class Schedule implements \JsonSerializable {
 		}
 
 	}
+	/**
+	 * get schedule by schedule location name
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $scheduleLocationName schedule location name to search for
+	 * @return \SplFixedArray SplFixedArray of locations found
+	 * @throws \PDOException when mySQL errors occur
+	 * @throws \TypeError when variables are not of the correct data type
+	 */
+	public static function getScheduleByScheduleLocationName(\PDO $pdo, string $scheduleLocationName) {
+		//sanitize the string so no malicious code can be placed within...right?
+		$scheduleLocationName = trim($scheduleLocationName);
+		$scheduleLocationName = filter_var($scheduleLocationName, FILTER_SANITIZE_STRING);
+
+		if(empty($scheduleLocationName)) {
+			throw(new \PDOException("Must Enter a Location Name"));
+		}
+		if(strlen($scheduleLocationName)>255){
+			throw(new \PDOException("The location name is too long"));
+		}
+
+		//query
+		$query = "SELECT scheduleId, scheduleCompanyId, scheduleDayOfWeek, scheduleStartTime, scheduleEndTime, scheduleLocationName, scheduleLocationAddress FROM schedule WHERE scheduleLocationName = :scheduleLocationName";
+
+		$statement = $pdo->prepare($query);
+		$scheduleLocationName = "%$scheduleLocationName%";
+		$parameters = ["scheduleLocationName" =>$scheduleLocationName];
+		//executing sql statement here (forgot to label above...ooops)
+		$statement->execute($parameters);
+
+		$scheduleLocationNames = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+
+		while(($row = $statement->fetch()) !== false){
+
+			try {
+				$schedule = new Schedule($row["scheduleId"], $row["scheduleCompanyId"], $row["scheduleDayOfWeek"], $row["scheduleStartTime"], $row ["scheduleEndTime"], $row ["scheduleLocationName"], $row["scheduleLocationAddress"]);
+
+				$schedules[$schedules->key()] = $schedule;
+				$schedules->next();
+			} catch(\Exception $exception) {
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($schedules);
+	}
+	/**
+	 * gets schedule by schedule address
+	 * @param \PDO $pdo connection object
+	 * @param string $scheduleLocationAddress address used to search for
+	 */
+
+
 
 
 
