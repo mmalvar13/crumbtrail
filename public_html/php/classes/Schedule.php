@@ -322,6 +322,22 @@ class Schedule implements \JsonSerializable {
 		 * @throws \TypeError if $pdo is not a PDO connection object
 		 **/
 		public function delete(\PDO $pdo) {
+			if($this->scheduleId === null) {
+				throw(new\PDOException("unable to delete a schedule that does noe exist"));
+			}
+			$query = "DELETE FROM schedule WHERE scheduleId = :scheduleId";
+			$statement = $pdo->prepare($query);
 
+			$parameters = ["scheduleId" =>$this->scheduleId];
+			$statement->execute($parameters);
 		}
+	/**
+	 * Updates this Event in mySQL
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException if mySQL related errors occur
+	 * @throws \TypeError is $pdo is not a PDO connection object
+	 **/
+
+
+
 }
