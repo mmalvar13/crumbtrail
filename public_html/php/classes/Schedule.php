@@ -254,7 +254,7 @@ class Schedule implements \JsonSerializable {
 		} catch(\InvalidArgumentException $invalidArgument) {
 			throw(new \InvalidArgumentException($invalidArgument->getMessage(), $invalidArgument));
 		}
-		if($newScheduleStartTime = $newScheduleEndTime) /*not sure if this makes sense*/ {
+		if($newScheduleStartTime = $ScheduleEndTime) /*not sure if this makes sense*/ {
 			throw(new \InvalidArgumentException("The start time cannot be the same as the end time."));
 			/* so schedule uses range exception to show that the end time cannot come before the start time. Should that also be the case here??? */
 		}
@@ -395,6 +395,7 @@ class Schedule implements \JsonSerializable {
 		}
 		return ($schedule);
 	}
+
 	/**
 	 * get schedule by scheduleCompanyId
 	 * @param \PDO $pdo PDO connection object
@@ -404,7 +405,7 @@ class Schedule implements \JsonSerializable {
 	 * @throws \TypeError when variables are not the correct data type
 	 */
 	public static function getScheduleByScheduleCompanyId(\PDO $pdo, int $scheduleCompanyId) {
-		if($scheduleCompanyId <=0) {
+		if($scheduleCompanyId <= 0) {
 			throw(new \PDOException("The scheduleCompany Id cannont be 0 or negative"));
 		}
 		//not sure why this isnt working//
@@ -417,7 +418,7 @@ class Schedule implements \JsonSerializable {
 		$statement->execute($parameters);
 
 		try {
-			$schedule=null;
+			$schedule = null;
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 
 			$row = $statement->fetch();
@@ -445,7 +446,7 @@ class Schedule implements \JsonSerializable {
 
 	public static function getScheduleByScheduleIdandScheduleCompanyId(\PDO $pdo, int $scheduleId, int $scheduleCompanyId) {
 
-		if($scheduleId <=0 || $scheduleCompanyId <=0) {
+		if($scheduleId <= 0 || $scheduleCompanyId <= 0) {
 			throw(new \PDOException("scheduleId and scheduleCompanyId cannot be negative or 0"));
 		}
 		//query
@@ -458,7 +459,7 @@ class Schedule implements \JsonSerializable {
 		$statement->execute($parameters);
 
 		try {
-			$schedule=null;
+			$schedule = null;
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 
 			$row = $statement->fetch();
@@ -502,7 +503,7 @@ class Schedule implements \JsonSerializable {
 		while(($row = $statement->fetch()) != false) {
 
 			try {
-				$schedule=null;
+				$schedule = null;
 				$statement->setFetchMode(\PDO::FETCH_ASSOC);
 
 				$row = $statement->fetch();
@@ -517,9 +518,47 @@ class Schedule implements \JsonSerializable {
 		}
 	}
 
+	/**
+	 *get schedule by schedule start time
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param \DateTime $scheduleStartTime start time to search by
+	 * @return \SplFixedArray SplFixedArray of schedule start times
+	 * @throws \PDOException when mySQL errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 */
 
+	public static function getScheduleByScheduleStartTime(\PDO $pdo, \DateTime $scheduleStartTime) {
 
+		if(empty($scheduleStartTime)) {
+			throw(new \PDOException("Must enter a start time"));
+			//as i have it above in the setter and getters should i have a section here that stops a user from putting in a start time and end time from being the same
+		}
+		$query = "SELECT scheduleId, scheduleCompanyId, scheduleDayOfWeek, scheduleStartTime, scheduleEndTime, scheduleLocationName, scheduleLocationAddress FROM schedule WHERE scheduleDayOfWeek = :scheduleDayOfWeek";
 
+		$statement = $pdo->prepare($query);
+		$parameters = ["scheduleStartTime" => $scheduleStartTime];
+
+		$statement->execute($parameters);
+		$scheduleStartTime = new \SplFixedArray($statement->rowCount());
+
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) != false) {
+
+			try {
+
+				$schedule = new Schedule($row["scheduleId"], $row["scheduleCompanyId"], $row["scheduleDayOfWeek"], $row["scheduleStartTime"], $row ["scheduleEndTime"], $row ["scheduleLoacationName"], $row["scheduleLocationAddress"]);
+
+				//Following Lorens format for extra serving by start time....
+				$schedules[$schedules->key()] = $schedule;
+
+				$schedules->next();
+			}catch(\Exception $exception) {
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+			return ($schedules);
+		}
+	}
 
 
 

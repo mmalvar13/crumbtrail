@@ -726,7 +726,7 @@ class ExtraServing implements \JsonSerializable {
 
 
 	/**
-	 * get the extraServing by extraServingEndTime
+	 * get the extraServing by extraServingStartTime
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @param \DateTime $extraServingStartTime end time to search by
@@ -744,7 +744,7 @@ class ExtraServing implements \JsonSerializable {
 		}
 
 		//make template
-		$query = "SELECT extraServingId, extraServingCompanyId, extraServingDescription, extraServingEndTIme, ExtraServingLocationAddress, extraServingLocationName, extraServingStartTime FROM extraServing WHERE extraServingEndTIme = :extraServingEndTIme";
+		$query = "SELECT extraServingId, extraServingCompanyId, extraServingDescription, extraServingEndTIme, ExtraServingLocationAddress, extraServingLocationName, extraServingStartTime FROM extraServing WHERE extraServingEndTime = :extraServingEndTime";
 
 		$statement = $pdo->prepare($query);
 
