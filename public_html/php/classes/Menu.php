@@ -8,36 +8,35 @@ require_once("autoload.php");
  * Menu class
  * @author Kevin Lee Kirk <klkirkhome@gmail.com>
  **/
-
 class Menu implements \JsonSerializable {
 
 	/**
 	 * Primary key, menuId.
-	 * @var int $menuId;
+	 * @var int $menuId ;
 	 **/
 	private $menuId;
 
 	/**
 	 * Foreign key, the company this menu item belongs to, menuCompanyId.
-	 * @var int $menuCompanyId;
+	 * @var int $menuCompanyId ;
 	 **/
 	private $menuCompanyId;
 
 	/**
 	 * The cost of this menu item, menuCost.
-	 * @var string $menuCost;
+	 * @var string $menuCost ;
 	 **/
 	private $menuCost;
 
 	/**
 	 * The description of this menu item, menuDescription.
-	 * @var string $menuDescription;
+	 * @var string $menuDescription ;
 	 **/
 	private $menuDescription;
 
 	/**
 	 * The name of this menu item, menuItem.
-	 * @var string $menuItem;
+	 * @var string $menuItem ;
 	 **/
 	private $menuItem;
 
@@ -55,7 +54,7 @@ class Menu implements \JsonSerializable {
 	 * @throws \exception when errors need to be called in the code
 	 **/
 
-	public function __construct(int $newMenuId = null, int $newMenuCompanyId, string $newCost, string $newDescription, string $newItem) { //we might waant $newCost to be a string.
+	public function __construct(int $newMenuId = null, int $newMenuCompanyId, string $newMenuCost, string $newMenuDescription, string $newMenuItem) { //we might waant $newCost to be a string.
 
 		try {
 			$this->setMenuId($newMenuId);
@@ -63,14 +62,14 @@ class Menu implements \JsonSerializable {
 			$this->setMenuCost($newMenuCost);
 			$this->setMenuDescription($newMenuDescription);
 			$this->setMenuItem($newMenuItem);
-		}catch(\InvalidArgumentException $invalidArgument){
+		} catch(\InvalidArgumentException $invalidArgument) {
 			//rethrow the exception to the caller
 			throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
-		} catch (\RangeException $range) {
+		} catch(\RangeException $range) {
 			throw(new \RangeException ($range->getMessage(), 0, $range));
-		}catch (\TypeError $typeError) {
-			throw(new \TypeError($typeError->getMessage(), 0, $typeError ));
-		} catch (\Exception $exception) {
+		} catch(\TypeError $typeError) {
+			throw(new \TypeError($typeError->getMessage(), 0, $typeError));
+		} catch(\Exception $exception) {
 			throw (new \Exception($exception->getMessage(), 0, $exception));
 		}
 	}
@@ -109,7 +108,7 @@ class Menu implements \JsonSerializable {
 	/**
 	 * Accessor for the menu company Id
 	 *
-	 *@return Int|null value of menu company Id
+	 * @return Int|null value of menu company Id
 	 **/
 	public function getMenuCompanyId() {
 		return ($this->menuCompanyId);
@@ -123,7 +122,7 @@ class Menu implements \JsonSerializable {
 	 * @throws \TypeError
 	 **/
 	public function setMenuCompanyId(int $newMenuCompanyId) {
-		if($newMenuCompanyId <=0) {
+		if($newMenuCompanyId <= 0) {
 			throw (new \RangeException ("Menu company Id is not positive"));
 		}
 		$this->menuCompanyId = $newMenuCompanyId;
@@ -133,7 +132,7 @@ class Menu implements \JsonSerializable {
 	/**
 	 * Accessor for the menu cost
 	 *
-	 *@return string value of menu cost e.g. $5.99
+	 * @return string value of menu cost e.g. $5.99
 	 **/
 	public function getMenuCost() {
 		return ($this->menuCost);
@@ -154,11 +153,11 @@ class Menu implements \JsonSerializable {
 		//sanitize $newMenuCost
 		$newMenuCost = filter_var($newMenuCost, FILTER_SANITIZE_STRING);
 		//check if $newMenuCost is empty or too long
-		if(strlen($newMenuCost)=== 0){
+		if(strlen($newMenuCost) === 0) {
 			throw(new \RangeException("Menu cost is too short"));
 		}
 		//todo check to see what max characters are in database
-		if(strlen($newMenuCost)>128){
+		if(strlen($newMenuCost) > 128) {
 			throw(new \RangeException("Menu cost is too long"));
 		}
 		//assign $newMenuCost to menuCost and store in SQL
@@ -179,7 +178,7 @@ class Menu implements \JsonSerializable {
 	/**
 	 * Mutator method for menuDescription.
 	 *
-	 * @param string $newMenuDescription  The new value of menuDescription
+	 * @param string $newMenuDescription The new value of menuDescription
 	 * @throw \RangeException if $newMenuDescription is empty or too long
 	 * @throw \InvalidArgumentException if $newMenuDescription is not a string
 	 * @throw \TypeError if $newMenuDescription is not a string
@@ -213,7 +212,7 @@ class Menu implements \JsonSerializable {
 	/**
 	 * Mutator method for menuItem.
 	 *
-	 * @param string $newMenuItem  The new value of menuItem
+	 * @param string $newMenuItem The new value of menuItem
 	 * @throw \RangeException if $newMenuItem is empty or too long
 	 * @throw \InvalidArgumentException if $newMenuItem is not a string
 	 * @throw \TypeError if $newMenuItem is not a string
@@ -229,7 +228,7 @@ class Menu implements \JsonSerializable {
 		if(strlen($newMenuItem) > 512) {
 			throw(new \RangeException("Menu Item is too long."));
 		}
-		$this->menuItem= $newMenuItem;
+		$this->menuItem = $newMenuItem;
 	}
 
 //-----------------------------------------------------------------
@@ -309,10 +308,11 @@ class Menu implements \JsonSerializable {
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
 	public static function getMenuByMenuId(\PDO $pdo, int $menuId) {
-		if($menuId <=0) {
+		//sanitize the id before searching for it
+		if($menuId <= 0) {
 			throw(new \PDOException("menuId is not positive"));
 		}
-
+//create query template
 		$query = "SELECT menuId, menuCompanyId, menuCost, menuDescription, menuItem FROM menu WHERE menuId =:menuId";
 
 		$statement = $pdo->prepare($query);
@@ -324,15 +324,15 @@ class Menu implements \JsonSerializable {
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 
-			if($row !==false) {
+			if($row !== false) {
 				$menu = new Menu($row["menuId"], $row["menuCompanyId"], $row["menuCost"], $row["menuDescription"], $row["menuItem"]);
 			}
 
-		}catch(\Exception $exception) {
+		} catch(\Exception $exception) {
 			//if throw couldn't be converted, rethrow it
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
-		return($menu);
+		return ($menu);
 	}
 
 //-----------------------------------------------------------------
@@ -346,7 +346,7 @@ class Menu implements \JsonSerializable {
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
 	public static function getMenuByMenuCompanyId(\PDO $pdo, int $menuCompanyId) {
-		if($menuCompanyId <=0) {
+		if($menuCompanyId <= 0) {
 			throw(new \PDOException("menuCompanyId is not positive"));
 		}
 
@@ -361,15 +361,15 @@ class Menu implements \JsonSerializable {
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 
-			if($row !==false) {
+			if($row !== false) {
 				$menu = new Menu($row["menuId"], $row["menuCompanyId"], $row["menuCost"], $row["menuDescription"], $row["menuItem"]);
 			}
 
-		}catch(\Exception $exception) {
+		} catch(\Exception $exception) {
 			//if throw couldn't be converted, rethrow it
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
-		return($menu);
+		return ($menu);
 	}
+}
 
-//--------...
