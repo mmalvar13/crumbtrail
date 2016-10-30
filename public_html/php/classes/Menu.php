@@ -55,7 +55,7 @@ class Menu implements \JsonSerializable {
 	 * @throws \exception when errors need to be called in the code
 	 **/
 
-	public function __construct(int $newMenuId = null, int $newMenuCompanyId, float $newCost, string $newDescription, string $newItem) {
+	public function __construct(int $newMenuId = null, int $newMenuCompanyId, float $newCost, string $newDescription, string $newItem) { //we might waant $newCost to be a string.
 
 		try {
 			$this->setMenuId($newMenuId);
@@ -63,13 +63,15 @@ class Menu implements \JsonSerializable {
 			$this->setMenuCost($newMenuCost);
 			$this->setMenuDescription($newMenuDescription);
 			$this->setMenuItem($newMenuItem);
-
+		}catch(\InvalidArgumentException $invalidArgument){
+			//rethrow the exception to the caller
+			throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
 		} catch (\RangeException $range) {
 			throw(new \RangeException ($range->getMessage(), 0, $range));
 		}catch (\TypeError $typeError) {
 			throw(new \TypeError($typeError->getMessage(), 0, $typeError ));
-		} catch (\Exception $Exception) {
-			throw (new \Exception($Exception->getMessage(), 0, $Exception));
+		} catch (\Exception $exception) {
+			throw (new \Exception($exception->getMessage(), 0, $exception));
 		}
 	}
 
@@ -80,7 +82,7 @@ class Menu implements \JsonSerializable {
 	 * @return int|null value of menu id
 	 **/
 	public function getMenuId() {
-		return ($this->MenuId);
+		return ($this->menuId);
 	}
 
 	/**
