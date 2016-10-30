@@ -136,6 +136,7 @@ CREATE TABLE image (
 CREATE TABLE truck (
 	truckId INT UNSIGNED AUTO_INCREMENT NOT NULL,
 	truckCompanyId INT UNSIGNED NOT NULL,
+	truckName VARCHAR(128),
 	INDEX(truckCompanyId),
 	FOREIGN KEY(truckCompanyId) REFERENCES company(companyId),
 	PRIMARY KEY (truckId)
