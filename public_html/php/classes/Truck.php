@@ -288,13 +288,14 @@ public function __construct(int $newTruckId = null, int $newTruckCompanyId, stri
 		return($trucks);
 	}
 
+	//todo what is this for? why do we get it by profile id?
 	public static function getTruckByProfileId(\PDO $pdo, int $profileId) {
 		//sanitize the description before searching?
 		if($profileId <= 0) {
 			throw(new \PDOException("Profile Id is not positive"));
 		}
 		//query template
-		$query = "SELECT truckId, truckCompanyId FROM truck INNER JOIN (SELECT employProfileId, employCompanyId FROM employ WHERE employProfileId = :profileId) employ ON truck.truckCompanyId = employ.employCompanyId";
+		$query = "SELECT truckId, truckCompanyId, truckName FROM truck INNER JOIN (SELECT employProfileId, employCompanyId FROM employ WHERE employProfileId = :profileId) employ ON truck.truckCompanyId = employ.employCompanyId";
 		$statement = $pdo->prepare($query);
 		//bind the truck company Id to the placeholder template
 		$parameters = ["profileId" => $profileId];
@@ -304,7 +305,7 @@ public function __construct(int $newTruckId = null, int $newTruckCompanyId, stri
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !==false) {
 			try {
-				$truck = new Truck($row["truckId"], $row["truckCompanyId"]);
+				$truck = new Truck($row["truckId"], $row["truckCompanyId"], $row["truckName"]);
 				$trucks[$trucks->key()] = $truck;
 				$trucks->next();
 			} catch(\Exception $exception) {
