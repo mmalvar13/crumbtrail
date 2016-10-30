@@ -25,7 +25,7 @@ class Menu implements \JsonSerializable {
 
 	/**
 	 * The cost of this menu item, menuCost.
-	 * @var float $menuCost;
+	 * @var string $menuCost;
 	 **/
 	private $menuCost;
 
@@ -47,7 +47,7 @@ class Menu implements \JsonSerializable {
 	 *
 	 * @param int|null $newMenuId
 	 * @param int $newMenuCompanyId
-	 * @param float $newMenuCost
+	 * @param string $newMenuCost
 	 * @param string $newMenuDescription
 	 * @param string $newMenuItem
 	 * @throws \RangeException when the integer is negative
@@ -55,7 +55,7 @@ class Menu implements \JsonSerializable {
 	 * @throws \exception when errors need to be called in the code
 	 **/
 
-	public function __construct(int $newMenuId = null, int $newMenuCompanyId, float $newCost, string $newDescription, string $newItem) { //we might waant $newCost to be a string.
+	public function __construct(int $newMenuId = null, int $newMenuCompanyId, string $newCost, string $newDescription, string $newItem) { //we might waant $newCost to be a string.
 
 		try {
 			$this->setMenuId($newMenuId);
@@ -133,7 +133,7 @@ class Menu implements \JsonSerializable {
 	/**
 	 * Accessor for the menu cost
 	 *
-	 *@return float value of menu cost e.g. $5.99
+	 *@return string value of menu cost e.g. $5.99
 	 **/
 	public function getMenuCost() {
 		return ($this->menuCost);
@@ -142,15 +142,27 @@ class Menu implements \JsonSerializable {
 	/**
 	 * Mutator method for menu cost
 	 *
-	 * @param float $newMenuCost new value of menu cost
+	 * @param string $newMenuCost new value of menu cost
 	 * @throws \RangeException if $newMenuCost is negative
-	 * @throws \TypeError
+	 * @throws \InvalidArgumentException if $newMenuCost is not a string
+	 * @throws \TypeError if $newMenuItem is not a string
 	 * ??? Need something for dollar amount formatting ???
 	 **/
-	public function setMenuCost(float $newMenuCost) {
-		if($newMenuCost <=0) {
-			throw (new \RangeException ("Menu cost is not positive"));
+	public function setMenuCost(string $newMenuCost) {
+		//strip out white space on either end of $newMenuCost
+		$newMenuCost = trim($newMenuCost);
+		//sanitize $newMenuCost
+		$newMenuCost = filter_var($newMenuCost, FILTER_SANITIZE_STRING);
+		//check if $newMenuCost is empty or too long
+		if(strlen($newMenuCost)=== 0){
+			throw(new \RangeException("Menu cost is too short"));
 		}
+		//todo check to see what max characters are in database
+		if(strlen($newMenuCost)>128){
+			throw(new \RangeException("Menu cost is too long"));
+		}
+		//assign $newMenuCost to menuCost and store in SQL
+
 		$this->menuCost = $newMenuCost;
 	}
 
@@ -230,7 +242,7 @@ class Menu implements \JsonSerializable {
 	 **/
 	public function insert(\PDO $pdo) {
 		if($this->menuId !== null) {
-			throw(new \PDOException("Not a new menu object"));
+			throw(new \PDOException("Not a new menuId"));
 		}
 
 		// Create a mySQL query template.
