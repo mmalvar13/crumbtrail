@@ -214,7 +214,7 @@ class Menu implements \JsonSerializable {
 		if(strlen($newMenuItem) === 0) {
 			throw(new \RangeException("Menu Item is too short."));
 		}
-		if(strlen($newMenuItem > 512)) {
+		if(strlen($newMenuItem) > 512) {
 			throw(new \RangeException("Menu Item is too long."));
 		}
 		$this->menuItem= $newMenuItem;
