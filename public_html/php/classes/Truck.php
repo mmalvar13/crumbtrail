@@ -158,10 +158,10 @@ public function __construct(int $newTruckId = null, int $newTruckCompanyId, stri
 			throw(new \PDOException("Not a new Truck"));
 		}
 		//query template
-		$query = "INSERT INTO truck(truckCompanyId) VALUES(:truckCompanyId)";
+		$query = "INSERT INTO truck(truckCompanyId, truckName) VALUES(:truckCompanyId, :truckName)";
 		$statement = $pdo->prepare($query);
 
-		$parameters = ["truckCompanyId" => $this->truckCompanyId];
+		$parameters = ["truckCompanyId" => $this->truckCompanyId, "truckName" => $this->truckName];
 		$statement->execute($parameters);
 
 		//update the null truckId with what SQL just gave us
@@ -179,10 +179,10 @@ public function __construct(int $newTruckId = null, int $newTruckCompanyId, stri
 		if($this->truckId === null) {
 			throw(new \PDOException("unable to update a truck that does not exist "));
 		}
-		$query = "UPDATE truck SET truckCompanyId = :truckCompanyId WHERE truckId = :truckId";
+		$query = "UPDATE truck SET truckCompanyId = :truckCompanyId, truckName = :truckName WHERE truckId = :truckId";
 		$statement = $pdo->prepare($query);
 
-		$parameters = ["truckCompanyId" => $this->truckCompanyId, "truckId" => $this->truckId];
+		$parameters = ["truckCompanyId" => $this->truckCompanyId, "truckName" => $this->truckName, "truckId" => $this->truckId];
 		$statement->execute($parameters);
 	}
 
@@ -222,7 +222,7 @@ public function __construct(int $newTruckId = null, int $newTruckCompanyId, stri
 			throw(new \PDOException("truck Id is not positive"));
 		}
 		//query template
-		$query = "SELECT truckId, truckCompanyId FROM truck WHERE truckId =:truckId";
+		$query = "SELECT truckId, truckCompanyId, truckName FROM truck WHERE truckId =:truckId";
 
 		//prepare template
 		$statement = $pdo->prepare($query);
@@ -240,7 +240,7 @@ public function __construct(int $newTruckId = null, int $newTruckCompanyId, stri
 			$row = $statement->fetch();
 
 			if($row !==false) {
-				$truck = new Truck($row["truckId"], $row["truckCompanyId"]);
+				$truck = new Truck($row["truckId"], $row["truckCompanyId"], $row["truckName"]);
 			}
 
 		}catch(\Exception $exception) {
@@ -267,7 +267,7 @@ public function __construct(int $newTruckId = null, int $newTruckCompanyId, stri
 			throw(new \PDOException("Truck Company Id is not positive"));
 		}
 		//query template
-		$query = "SELECT truckCompanyId FROM truck WHERE truckCompanyId= :truckCompanyId";
+		$query = "SELECT truckId, truckCompanyId, truckName FROM truck WHERE truckCompanyId= :truckCompanyId";
 		$statement = $pdo->prepare($query);
 		//bind the truck company Id to the placeholder template
 		$parameters = ["truckCompanyId" => $truckCompanyId];
@@ -277,7 +277,7 @@ public function __construct(int $newTruckId = null, int $newTruckCompanyId, stri
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !==false) {
 			try {
-				$truck = new Truck($row["truckId"], $row["truckCompanyId"]);
+				$truck = new Truck($row["truckId"], $row["truckCompanyId"], $row["truckName"]);
 				$trucks[$trucks->key()] = $truck;
 				$trucks->next();
 			} catch(\Exception $exception) {
