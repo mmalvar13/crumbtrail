@@ -14,9 +14,9 @@
 			<h1>Start Serving</h1>
 			<form name="eventForm" ng-submit="editEvent();">
 				<div class="form-group">
-					<label for="endTime">End Time</label>
+					<label for="eventEnd">End Time</label>
 					<!--					adding ng-model to input and truck select-->
-					<input type="time" class="form-control" id="endTime" name="endTime" value="13:45:00" ng-model="currentEvent.endTime">
+					<input type="datetime-local" class="form-control" id="eventEnd" name="eventEnd" ng-model="currentEvent.eventEnd">
 				</div>
 				<div class="checkbox">
 <!--					adding ng-model to input and truck select-->

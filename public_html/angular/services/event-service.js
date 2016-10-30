@@ -35,10 +35,12 @@ app.service("EventService", function($http, EVENT_ENDPOINT) {
 
 
 	this.updateEvent = function(eventId, event) {
+		console.log(event);
 		return ($http.put(getUrlForId(eventId, event)));
 	};
 
 	this.createEvent = function(event) {
+		console.log(event);
 		return ($http.post(getUrl(), event));
 	};
 

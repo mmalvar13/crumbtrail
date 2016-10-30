@@ -128,7 +128,7 @@ try {
 
 			//because this is how angular will send the associate array.......null given->consistency
 			$reply->start = $eventStart;
-			$point = new Point($requestObject->eventLocation->lat, $requestObject->eventLocation->lng);
+			$point = new Point($requestObject->eventLocation->long, $requestObject->eventLocation->lat);
 			$event = new Event(null, $requestObject ->eventTruckId, $eventEnd, $point, $eventStart);
 			$event->insert($pdo);;
 			//update reply≤

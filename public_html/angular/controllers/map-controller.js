@@ -50,7 +50,8 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 				"lat": $scope.map.center.latitude,
 				"long": $scope.map.center.longitude
 			};
-			$scope.currentEvent.eventStart = Date.now();
+			$scope.currentEvent.eventStart = new Date();
+			$scope.currentEvent.eventEnd = new Date();
 			$scope.currentEvent.eventTruckId = selectedTruckId;
 			$scope.currentEvent.eventId = 0;
 		};
@@ -58,6 +59,8 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 		//will be called when we hit submit on the form
 		$scope.editEvent = function() {
 			$scope.editing = false;
+			$scope.currentEvent.eventEnd = $scope.currentEvent.eventEnd.getTime();
+			console.log($scope.currentEvent);
 			if($scope.currentEvent.eventId === 0) {
 				EventService.createEvent($scope.currentEvent);
 			} else {
@@ -71,7 +74,9 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 				var found = false;
 				for(var activeEvent in $scope.activeEvents) {
 					if($scope.activeEvents[activeEvent].eventTruckId === Number(selectedTruckId)) {
-						$scope.currentEvent = $scope.activeEvents[activeEvent];
+						var event = $scope.activeEvents[activeEvent];
+						event.eventEnd = new Date(event.eventEnd);
+						$scope.currentEvent = event;
 						found = true;
 					}
 				}
@@ -187,7 +192,9 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 			EventService.all()
 				.then(function(result) {
 					if(result.status === 200) {
-						$scope.activeEvents = result.data.data;
+						var event = result.data.data;
+						event.eventEnd = new Date(event.eventEnd);
+						$scope.activeEvents = event;
 					} else {
 						$scope.alerts[0] = {type: "danger", msg: result.data.message};
 
