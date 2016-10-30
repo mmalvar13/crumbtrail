@@ -93,10 +93,12 @@ class Menu implements \JsonSerializable {
 	 * @throws \TypeError when variables are nor the correct data type
 	 **/
 	public function setMenuId(int $newMenuId = null) {
+		//base case: if the menuId is null, this is a new menu without a mySQL assigned id yet.
 		if($newMenuId === null) {
-			$this->MenuId = null;
+			$this->menuId = null;
 			return;
 		}
+		//verify that the menuId is positive
 		if($newMenuId <= 0) {
 			throw (new \RangeException ("Menu Id is not positive"));
 		}
