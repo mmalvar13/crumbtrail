@@ -42,10 +42,14 @@ class Truck implements \JsonSerializable {
 	 * @throws \exception when errors need to be called in the code
 	 **/
 
-public function __construct(int $newTruckId = null, int $newTruckCompanyId) {
+public function __construct(int $newTruckId = null, int $newTruckCompanyId, string $newTruckName) {
 	try {
-	$this->setTruckId($newTruckId);
-	$this->setTruckCompanyId($newTruckCompanyId);
+		$this->setTruckId($newTruckId);
+		$this->setTruckCompanyId($newTruckCompanyId);
+		$this->setTruckName($newTruckName);
+	}catch(\InvalidArgumentException $invalidArgument){
+		//rethrow the exception to the caller
+		throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
 	} catch (\RangeException $range) {
 		throw(new \RangeException ($range->getMessage(), 0, $range));
 	}catch (\TypeError $typeError) {
@@ -107,6 +111,38 @@ public function __construct(int $newTruckId = null, int $newTruckCompanyId) {
 		}
 		//convert and store
 		$this->truckCompanyId = $newTruckCompanyId;
+	}
+
+	/**
+	 * accessor method for truck name
+	 *
+	 * @return string value for truckName
+	 **/
+	public function getTruckName(){
+		return($this->truckName);
+	}
+
+	/**
+	 * mutator method for truckName
+	 * @param string $newTruckName new value of truckName
+	 * @throws \RangeException if $newTruckName is empty or too long
+	 * @throws \InvalidArgumentException if $newTruckName is not a string
+	 * @throws \TypeError if $newTruckName is wrong data type
+	 **/
+	public function setTruckName(string $newTruckName){
+		//strip out white space on either end of $newTruckName
+		$newTruckName = trim($newTruckName);
+		//sanitize
+		$newTruckName = filter_var($newTruckName, FILTER_SANITIZE_STRING);
+		//check to see if $newTruckName is empty or too long
+		if(strlen($newTruckName) === 0){
+			throw(new \RangeException("Truck Name is too short"));
+		}
+		if(strlen($newTruckName) > 128){
+			throw(new \RangeException("truck name is too long"));
+		}
+		//assign $newTruckName to truckName and store in SQL
+		$this->truckName = $newTruckName;
 	}
 
 	//-------------INSERT, UPDATE, DELETE METHODS---------
