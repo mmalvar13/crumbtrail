@@ -54,7 +54,7 @@ class Menu implements \JsonSerializable {
 	 * @throws \exception when errors need to be called in the code
 	 **/
 
-	public function __construct(int $newMenuId = null, int $newMenuCompanyId, string $newMenuCost, string $newMenuDescription, string $newMenuItem) { //we might waant $newCost to be a string.
+	public function __construct(int $newMenuId = null, int $newMenuCompanyId, string $newMenuCost, string $newMenuDescription, string $newMenuItem) {
 
 		try {
 			$this->setMenuId($newMenuId);
@@ -370,6 +370,16 @@ class Menu implements \JsonSerializable {
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
 		return ($menu);
+	}
+
+	/**
+	 * Formats the state variables for JSON serialization
+	 *
+	 * @return array resulting state variables to serialize
+	 **/
+	public function jsonSerialize() {
+		$fields = get_object_vars($this);
+		return($fields);
 	}
 }
 
