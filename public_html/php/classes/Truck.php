@@ -24,13 +24,20 @@ class Truck implements \JsonSerializable {
 	 * @var int $truckCompanyId;
 	 **/
 	private $truckCompanyId;
+	/**
+	 * name of the truck
+	 * @var string $truckName
+	 **/
+	private $truckName;
 
 //constructor will go here//
 	/**
 	 * Truck constructor
 	 * @param int|null $newTruckId id of the truck or null if new truck
 	 * @param int $newTruckCompanyId
-	 * @throws \RangeException when the integer is negative
+	 * @param string $newTruckName
+	 * @throws \InvalidArgumentException if data types are not valid
+	 * @throws \RangeException when data values are out of bounds
 	 * @throws \TypeError When the variable is not the correct data type
 	 * @throws \exception when errors need to be called in the code
 	 **/
