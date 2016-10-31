@@ -36,6 +36,12 @@ class ExtraServing implements \JsonSerializable {
 	private $extraServingDescription;
 
 	/**
+	 * end time of the extra serving event
+	 * @var \DateTime $extraServingEndTime
+	 */
+	private $extraServingEndTime;
+
+	/**
 	 * location address of where the food truck will be serving
 	 * @var string $extraServingLocationAddress
 	 */
@@ -45,7 +51,7 @@ class ExtraServing implements \JsonSerializable {
 	 * location Name of where the food truck will be serving
 	 * @var string $extraServingLocationName
 	 */
-	private $extraServingLocationName
+	private $extraServingLocationName;
 
 	/**
 	 * start time of the extra serving event
@@ -53,16 +59,52 @@ class ExtraServing implements \JsonSerializable {
 	 */
 	private $extraServingStartTime;
 
-	/**
-	 * end time of the extra serving event
-	 * @var \DateTime $extraServingEndTime
-	 */
-	private $extraServingEndTime;
+
 
 
 	/**
-	 * constructor for extraServing
+	 * ExtraServing constructor
+	 *
+	 * @param int|null $newExtraServingId, null if new ID
+	 * @param  int $newExtraServingCompanyId
+	 * @param string $newExtraServingDescription
+	 * @param \DateTime $newExtraServingEndTime
+	 * @param string $newExtraServingLocationAddress
+	 * @param  string $newExtraServingLocationName
+	 * @param \DateTime $newExtraServingStartTime
+	 *
+	 * @throws \InvalidArgumentException if data types are not valid
+	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
+	 * @throws \TypeError if data types violate type hints
+	 * @throws \Exception if some other exception occurs
+	 *
 	 */
+	public function __construct(int $newExtraServingId, int $newExtraServingCompanyId, string $newExtraServingDescription, \DateTime $newExtraServingEndTime, string $newExtraServingLocationAddress, string $newExtraServingLocationName, \DateTime $newExtraServingStartTime) {
+
+		try{
+
+			$this->setExtraServingId($newExtraServingId);
+			$this->setExtraServingCompanyId($newExtraServingCompanyId);
+			$this->setExtraServingDescription($newExtraServingDescription);
+			$this->setExtraServingEndTime($newExtraServingEndTime);
+			$this->setExtraServingLocationAddress($newExtraServingLocationAddress);
+			$this->setExtraServingLocationName($newExtraServingLocationName);
+			$this->setExtraServingStartTime($newExtraServingStartTime);
+		}catch(\InvalidArgumentException $invalidArgument) {
+			// rethrow the exception to the caller
+			throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
+		} catch(\RangeException $range) {
+			// rethrow the exception to the caller
+			throw(new \RangeException($range->getMessage(), 0, $range));
+		} catch(\TypeError $typeError) {
+			// rethrow the exception to the caller
+			throw(new \TypeError($typeError->getMessage(), 0, $typeError));
+		} catch(\Exception $exception) {
+			// rethrow the exception to the caller
+			throw(new \Exception($exception->getMessage(), 0, $exception));
+		}
+
+	}
 
 
 //	--------------------------------------SETTERS AND GETTERS SECTION---------------------------------
@@ -496,8 +538,9 @@ class ExtraServing implements \JsonSerializable {
 				// if the row couldnt be converted, re-throw it
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
-			return ($extraServings);
+
 		}
+		return ($extraServings);
 	}
 
 
@@ -599,8 +642,9 @@ class ExtraServing implements \JsonSerializable {
 				// if the row couldnt be converted, re-throw it
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
-			return ($extraServings);
+
 		}
+		return ($extraServings);
 	}
 
 
@@ -658,8 +702,9 @@ class ExtraServing implements \JsonSerializable {
 				// if the row couldnt be converted, re-throw it
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
-			return ($extraServings);
+
 		}
+		return ($extraServings);
 	}
 
 
@@ -717,8 +762,9 @@ class ExtraServing implements \JsonSerializable {
 				// if the row couldnt be converted, re-throw it
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
-			return ($extraServings);
+
 		}
+		return ($extraServings);
 	}
 
 
@@ -778,8 +824,9 @@ class ExtraServing implements \JsonSerializable {
 				// if the row couldnt be converted, re-throw it
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
-			return ($extraServings);
+
 		}
+		return ($extraServings);
 	}
 
 
@@ -817,9 +864,22 @@ class ExtraServing implements \JsonSerializable {
 				// if the row couldnt be converted, re-throw it
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
-			return ($extraServings);
+
 		}
+		return ($extraServings);
 			}
+
+			/**
+			 * Formats the state variables for JSON serialization
+			 *
+			 * @return array resulting state variables to serialize
+			 **/
+	public function jsonSerialize() {
+
+		//pretty sure i need more in this....
+		$fields = get_object_vars($this);
+		return($fields);
+	}
 
 
 
