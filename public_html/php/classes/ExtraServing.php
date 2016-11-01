@@ -360,7 +360,7 @@ class ExtraServing implements \JsonSerializable {
 			throw(new \PDOException("This is not a new Extra Serving Object!"));
 		}
 
-		$query = "INSERT INTO extraServing(extraServingCompanyId, extraServingDescription, extraServingEndTime, extraServingLocationAddress, extraServingLocationName, extraServingStartTime) VALUES(:extraServingId, :extraServingCompanyId, :extraServingDescription, :extraServingEndTime, :extraServingLocationAddress, :extraServingLocationName, :extraServingStartTime)";
+		$query = "INSERT INTO extraServing(extraServingCompanyId, extraServingDescription, extraServingEndTime, extraServingLocationAddress, extraServingLocationName, extraServingStartTime) VALUES(:extraServingCompanyId, :extraServingDescription, :extraServingEndTime, :extraServingLocationAddress, :extraServingLocationName, :extraServingStartTime)";
 
 		$statement = $pdo->prepare($query);
 
@@ -394,7 +394,7 @@ class ExtraServing implements \JsonSerializable {
 			throw(new \PDOException("Cannot update an extra serving object that doesn't exist!"));
 		}
 
-		$query = "UPDATE extraServing SET extraServingCompanyId = :extraServingCompanyId, extraServingDescription = :extraServingDescription, extraServingEndTime = :extraServingEndTime, extraServingLocationAddress = :extraServingLocationAddress, extraServingLocationName = :extraServingLocationName, extraServingStartTime = :extraServingStartTime WHERE extraServingId = : extraServingId";
+		$query = "UPDATE extraServing SET extraServingCompanyId = :extraServingCompanyId, extraServingDescription = :extraServingDescription, extraServingEndTime = :extraServingEndTime, extraServingLocationAddress = :extraServingLocationAddress, extraServingLocationName = :extraServingLocationName, extraServingStartTime = :extraServingStartTime WHERE extraServingId = :extraServingId";
 
 		$statement = $pdo->prepare($query);
 

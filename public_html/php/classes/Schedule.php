@@ -320,7 +320,7 @@ class Schedule implements \JsonSerializable {
 			throw(new \PDOException("not a new schedule"));
 		}
 		//query template
-		$query = "INSERT INTO schedule(scheduleCompanyId, scheduleDayOfWeek, scheduleStartTime, scheduleEndTime, scheduleLocationName, scheduleLocationAddress)VALUES(:scheduleCompanyId, :scheduleDayOfWeek, :scheduleStartTime, :scheduleEndTime, :scheduleLocationName, :scheduleLocationAddress)";
+		$query = "INSERT INTO schedule(scheduleCompanyId, scheduleDayOfWeek, scheduleEndTime, scheduleLocationAddress, scheduleLocationName, scheduleStartTime )VALUES(:scheduleCompanyId, :scheduleDayOfWeek, :scheduleEndTime, :scheduleLocationAddress, :scheduleLocationName, :scheduleStartTime)";
 		$statement = $pdo->prepare($query);
 
 		//bind the member variables to the place holders in the template...Wat?
@@ -354,25 +354,29 @@ class Schedule implements \JsonSerializable {
 
 	/**
 	 * Updates this Schedule in mySQL
-	 * @param \PDO $pdo PDO connection object
-	 * @throws \PDOException if mySQL related errors occur
-	 * @throws \TypeError is $pdo is not a PDO connection object
+	 * @param \PDO $pdo connection object
+	 * @throws \PDOException when PDO related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
 	public function update(\PDO $pdo) {
 		if($this->scheduleId === null) {
 			throw(new \PDOException("unable to update a schedule that does not exist"));
 		}
-		//query template
-		//why is schedule orange??
-		$query = "UPDATE schedule SET scheduleCompanyId = : scheduleCompanyId, scheduleDayOfWeek = : scheduleDayOfWeek, scheduleStartTime = :scheduleStartTime, scheduleEndTime = : scheduleEndTime, scheduleLocationName = :scheduleLocationName, scheduleLocationAddress = : scheduleLocationAddress";
+
+		$query = "UPDATE schedule SET scheduleCompanyId = :scheduleCompanyId, scheduleDayOfWeek = :scheduleDayOfWeek, scheduleEndTime = :scheduleEndTime, scheduleLocationAddress = :scheduleLocationAddress, scheduleLocationName = :scheduleLocationName, scheduleStartTime = :scheduleStartTime WHERE scheduleId = :scheduleId";
+
+
+
 		$statement = $pdo->prepare($query);
 
 		$formattedScheduleStartTime = $this->scheduleStartTime->format("Y-m-d H:i:s");
 		$formattedScheduleEndTime = $this->scheduleEndTime->format("Y-m-d H:i:s");
 
-		$parameters = ["scheduleCompanyId" => $this->scheduleCompanyId, "scheduleDayOfWeek" => $this->scheduleDayOfWeek, "scheduleStartTime" => $formattedScheduleStartTime, "scheduleEndTime" => $formattedScheduleEndTime, "scheduleLocationName" => $this->scheduleLocationName, "scheduleLocationAddress" => $this->scheduleLocationAddress, "scheduleId" => $this->scheduleId];
+		$parameters = ["scheduleCompanyId" => $this->scheduleCompanyId, "scheduleDayOfWeek" => $this->scheduleDayOfWeek, "scheduleEndTime" => $formattedScheduleEndTime, "scheduleLocationAddress" => $this->scheduleLocationAddress, "scheduleLocationName" => $this->scheduleLocationName, "scheduleStartTime" => $formattedScheduleStartTime, "scheduleId" => $this->scheduleId];
+
 		$statement->execute($parameters);
 	}
+
 	/* GET FOO BY BARS*/
 	/**
 	 * gets the schedule by scheduleId
