@@ -191,6 +191,8 @@ class Schedule implements \JsonSerializable {
 		return ($this->scheduleLocationName);
 	}
 
+
+
 	/**
 	 * mutator method for scheduleLocationName
 	 * @param string $newScheduleLocationName the string of the location name
@@ -209,6 +211,9 @@ class Schedule implements \JsonSerializable {
 		}
 		$this->scheduleLocationName = $newScheduleLocationName;
 	}
+
+
+
 	/**
 	 * accessor for schedule address
 	 *
@@ -222,10 +227,17 @@ class Schedule implements \JsonSerializable {
 	/**
 	 * mutator for schedule location address
 	 *
-	 * @return string $newScheduleLocationAddress the string of the location address
+	 * @param  string $newScheduleLocationAddress the string of the location address
 	 * @throws \RangeException if the string is too long
 	 */
 	public function setScheduleLocationAddress(string $newScheduleLocationAddress) {
+
+		if(empty($newScheduleLocationAddress)){
+			throw(new \InvalidArgumentException("Please enter a location address"));
+		}
+
+		$newScheduleLocationAddress = trim($newScheduleLocationAddress);
+		$newScheduleLocationAddress = filter_var($newScheduleLocationAddress, FILTER_SANITIZE_STRING);
 
 		if($newScheduleLocationAddress > 255) {
 			throw(new \RangeException("This Location Address is too long"));
@@ -243,10 +255,10 @@ class Schedule implements \JsonSerializable {
 
 	/**
 	 * mutator for schedule start time
-	 * @param \DateTime|string|null $newScheduleStartTime scheduled start time as a DateTime
+	 * @param \DateTime $newScheduleStartTime scheduled start time as a DateTime
 	 * @throws \InvalidArgumentException if there is no schedule start time input
 	 */
-	public function setScheduleStartTime($newScheduleStartTime) {
+	public function setScheduleStartTime(\DateTime $newScheduleStartTime) {
 		if($newScheduleStartTime === null) {
 			throw(new \InvalidArgumentException("Must enter a start time"));
 		}
@@ -254,12 +266,12 @@ class Schedule implements \JsonSerializable {
 		try {
 			$newScheduleStartTime = self::validateDateTime($newScheduleStartTime);
 		} catch(\InvalidArgumentException $invalidArgument) {
-			throw(new \InvalidArgumentException($invalidArgument->getMessage(), $invalidArgument));
+			throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
+		} catch(\RangeException $range) {
+			throw(new \RangeException($range->getMessage(), 0, $range));
 		}
-		if($newScheduleStartTime = $ScheduleEndTime) /*not sure if this makes sense*/ {
-			throw(new \InvalidArgumentException("The start time cannot be the same as the end time."));
-			/* so schedule uses range exception to show that the end time cannot come before the start time. Should that also be the case here??? */
-		}
+
+
 		$this->scheduleStartTime = $newScheduleStartTime;
 	}
 
@@ -273,10 +285,10 @@ class Schedule implements \JsonSerializable {
 
 	/**
 	 * mutator for schedule End Time
-	 * @param \DateTime|string|null $newScheduleEndTime scheduled start time as a DateTime
+	 * @param \DateTime $newScheduleEndTime scheduled start time as a DateTime
 	 * @throws \InvalidArgumentException if there is no schedule start time input
 	 */
-	public function setScheduleEndTime($newScheduleEndTime) {
+	public function setScheduleEndTime(\DateTime $newScheduleEndTime) {
 		if($newScheduleEndTime === null) {
 			throw(new \InvalidArgumentException("Must enter in an end time"));
 		}
@@ -286,12 +298,14 @@ class Schedule implements \JsonSerializable {
 		} catch(\InvalidArgumentException $invalidArgument) {
 			throw(new \InvalidArgumentException($invalidArgument->getMessage(), $invalidArgument));
 		}
-		if($newScheduleEndTime = $newScheduleStartTime) { /*not sure if this makes sense*/
 
-			throw(new \InvalidArgumentException("The end time cannot be the same as the start time."));
+		if($newScheduleEndTime <= $this->scheduleStartTime){
+			throw(new \InvalidArgumentException("The end-time cannot be before the start-time"));
 		}
+
 		$this->scheduleEndTime = $newScheduleEndTime;
 	}
+
 //------INSERT UPDATE AND DELETE METHODS HERE--------//
 	/* not sure if typeError is what i need here*/
 	/**

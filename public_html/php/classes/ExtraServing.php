@@ -290,19 +290,16 @@ class ExtraServing implements \JsonSerializable {
 
 		$currentTime = new \DateTime();
 
-
-		//I FEEL LIKE I SHOULD BE DOING THE FORMAT DONE IN insert and update HERE INSTEAD!
-
-		if($newExtraServingStartTime < $currentTime) {
-			throw(new \RangeException("The start time cannot be in the past!"));
-		}
-
 		try {
 			$newExtraServingStartTime = self::validateDate($newExtraServingStartTime);
 		} catch(\InvalidArgumentException $invalidArgument) {
 			throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
 		} catch(\RangeException $range) {
 			throw(new \RangeException($range->getMessage(), 0, $range));
+		}
+
+		if($newExtraServingStartTime < $currentTime) {
+			throw(new \RangeException("The start time cannot be in the past!"));
 		}
 
 		$this->extraServingStartTime = $newExtraServingStartTime;
