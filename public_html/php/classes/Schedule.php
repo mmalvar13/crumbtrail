@@ -168,6 +168,9 @@ class Schedule implements \JsonSerializable {
 			throw(new \InvalidArgumentException("Please enter a day of the week! (i.e. 'monday', 'tuesday', etc)"));
 		}
 
+		$newScheduleDayOfWeek = trim($newScheduleDayOfWeek);
+		$newScheduleDayOfWeek = filter_var($newScheduleDayOfWeek, FILTER_SANITIZE_STRING);
+
 		$newScheduleDayOfWeek = strtolower($newScheduleDayOfWeek);
 
 		$dayz = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
@@ -194,10 +197,13 @@ class Schedule implements \JsonSerializable {
 	 * @throws \RangeException if the string is too long
 	 **/
 	public function setScheduleLocationName(string $newScheduleLocationName) {
-		if($newScheduleLocationName === null) {
-			$this->scheduleLocationName = null;
-			return;
-		}
+		 if(empty($newScheduleLocationName)){
+			 throw(new \InvalidArgumentException("Please enter a location name"));
+		 }
+
+		$newScheduleLocationName = trim($newScheduleLocationName);
+		$newScheduleLocationName = filter_var($newScheduleLocationName, FILTER_SANITIZE_STRING);
+
 		if($newScheduleLocationName > 255) {
 			throw(new \RangeException("This Location Name is too long"));
 		}
@@ -220,10 +226,7 @@ class Schedule implements \JsonSerializable {
 	 * @throws \RangeException if the string is too long
 	 */
 	public function setScheduleLocationAddress(string $newScheduleLocationAddress) {
-		if($newScheduleLocationAddress === null) {
-			$this->scheduleLocationAddress = null;
-			return;
-		}
+
 		if($newScheduleLocationAddress > 255) {
 			throw(new \RangeException("This Location Address is too long"));
 		}
