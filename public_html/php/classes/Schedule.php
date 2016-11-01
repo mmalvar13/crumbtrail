@@ -327,7 +327,7 @@ class Schedule implements \JsonSerializable {
 		$formattedScheduleStartTime = $this->scheduleStartTime->format("Y-m-d H:i:s");
 		$formattedScheduleEndTime = $this->scheduleEndTime->format("Y-m-d H:i:s");
 
-		$parameters = ["scheduleCompanyId" => $this->scheduleCompanyId, "scheduleDayOfWeek" => $this->scheduleDayOfWeek, "scheduleStartTime" => $formattedScheduleStartTime, "scheduleEndTime" => $formattedScheduleEndTime, "scheduleLocationName" => $this->scheduleLocationName, "scheduleLocationAddress" => $this->scheduleLocationAddress];
+		$parameters = ["scheduleCompanyId" => $this->scheduleCompanyId, "scheduleDayOfWeek" => $this->scheduleDayOfWeek,  "scheduleEndTime" => $formattedScheduleEndTime, "scheduleLocationAddress" => $this->scheduleLocationAddress, "scheduleLocationName" => $this->scheduleLocationName, "scheduleStartTime" => $formattedScheduleStartTime];
 		$statement->execute($parameters);
 
 		//update the null scheduleId with what SQL just gave us
