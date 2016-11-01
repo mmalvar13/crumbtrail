@@ -36,12 +36,6 @@ class Schedule implements \JsonSerializable {
 	 */
 	private $scheduleDayOfWeek;
 	/**
-	 * id for this schedule's start time of operation
-	 *
-	 * @var \DateTime $scheduleStartTime ;
-	 */
-	private $scheduleStartTime;
-	/**
 	 * id for this schedule's end time of operation
 	 *
 	 * @var \DateTime $scheduleEndTime
@@ -57,6 +51,12 @@ class Schedule implements \JsonSerializable {
 	 * @var string $scheduleLocationAddress
 	 */
 	private $scheduleLocationAddress;
+	/**
+	 * id for this schedule's start time of operation
+	 *
+	 * @var \DateTime $scheduleStartTime ;
+	 */
+	private $scheduleStartTime;
 
 // constructor here //
 	/**
@@ -139,11 +139,7 @@ class Schedule implements \JsonSerializable {
 	 * @throws \RangeException if $newScheduleCompanyId is negative
 	 * @throws \InvalidArgumentException if $newScheduleCompanyId is not of the type integer
 	 **/
-	public function setScheduleCompanyId(int $newScheduleCompanyId = null) {
-		if($newScheduleCompanyId === null) {
-			$this->scheduleCompanyId = null;
-			return;
-		}
+	public function setScheduleCompanyId($newScheduleCompanyId) {
 		if($newScheduleCompanyId <= 0) {
 			throw(new \RangeException("This schedule company id is not positive"));
 		}

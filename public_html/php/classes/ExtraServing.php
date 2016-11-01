@@ -79,7 +79,7 @@ class ExtraServing implements \JsonSerializable {
 	 * @throws \Exception if some other exception occurs
 	 *
 	 */
-	public function __construct(int $newExtraServingId, int $newExtraServingCompanyId, string $newExtraServingDescription, \DateTime $newExtraServingEndTime, string $newExtraServingLocationAddress, string $newExtraServingLocationName, \DateTime $newExtraServingStartTime) {
+	public function __construct(int $newExtraServingId = null, int $newExtraServingCompanyId, string $newExtraServingDescription, \DateTime $newExtraServingEndTime, string $newExtraServingLocationAddress, string $newExtraServingLocationName, \DateTime $newExtraServingStartTime) {
 
 		try{
 
@@ -880,15 +880,6 @@ class ExtraServing implements \JsonSerializable {
 		$fields = get_object_vars($this);
 		return($fields);
 	}
-
-
-
-
-
-
-
-
-
 
 
 }
