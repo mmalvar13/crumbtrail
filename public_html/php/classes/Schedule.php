@@ -163,14 +163,18 @@ class Schedule implements \JsonSerializable {
 	 * @throws  \TypeError if the day does not exist
 	 **/
 	public function setScheduleDayOfWeek(string $newScheduleDayOfWeek) {
-		if($newScheduleDayOfWeek === null) {
-			$this->scheduleDayOfWeek = null;
-			return;
+
+		if(empty($newScheduleDayOfWeek)){
+			throw(new \InvalidArgumentException("Please enter a day of the week! (i.e. 'monday', 'tuesday', etc)"));
 		}
+
+		$newScheduleDayOfWeek = strtolower($newScheduleDayOfWeek);
+
+		$dayz = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
 		/* make sure the scheduled day is no more than nine characters */
 		/* is this right? */
-		if($newScheduleDayOfWeek !== "Monday" or "Tuesday" or "Wednesday" or "Thursday" or "Friday" or "Saturday" or "Sunday") {
-			throw(new \TypeError("This day of the week does not exist"));
+		if(!(in_array($newScheduleDayOfWeek, $dayz))){
+			throw(new \InvalidArgumentException("Please enter a day of the week!(i.e. 'monday', 'tuesday', etc) "));
 		}
 		//convert and store this day of the week
 		$this->scheduleDayOfWeek = $newScheduleDayOfWeek;
