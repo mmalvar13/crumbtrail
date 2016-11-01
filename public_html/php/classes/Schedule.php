@@ -35,22 +35,29 @@ class Schedule implements \JsonSerializable {
 	 * @var string $scheduleDayOfWeek ;
 	 */
 	private $scheduleDayOfWeek;
+
+
 	/**
 	 * id for this schedule's end time of operation
 	 *
 	 * @var \DateTime $scheduleEndTime
 	 */
 	private $scheduleEndTime;
-	/**
-	 * id for this schedule's location name
-	 * @var string $scheduleLocationName ;
-	 */
-	private $scheduleLocationName;
+
 	/**
 	 * id for this schedule's location address
 	 * @var string $scheduleLocationAddress
 	 */
 	private $scheduleLocationAddress;
+
+
+	/**
+	 * id for this schedule's location name
+	 * @var string $scheduleLocationName ;
+	 */
+	private $scheduleLocationName;
+
+
 	/**
 	 * id for this schedule's start time of operation
 	 *
@@ -76,20 +83,27 @@ class Schedule implements \JsonSerializable {
 	 * @throws \Exception when error need to be called in the code??
 	 **/
 
-	public function __construct(int $newScheduleId = null, int $newScheduleCompanyId, string $newScheduleDayOfWeek, string $newScheduleLocationName, string $newScheduleLocationAddress, $newScheduleStartTime = null, $newScheduleEndTime = null) {
+	public function __construct(int $newScheduleId = null, int $newScheduleCompanyId, string $newScheduleDayOfWeek, $newScheduleEndTime, string $newScheduleLocationAddress, string $newScheduleLocationName,  $newScheduleStartTime = null) {
 		try {
 			$this->setScheduleId($newScheduleId);
 			$this->setScheduleCompanyId($newScheduleCompanyId);
 			$this->setScheduleDayOfWeek($newScheduleDayOfWeek);
-			$this->setScheduleLocationName($newScheduleLocationName);
-			$this->setScheduleLocationAddress($newScheduleLocationAddress);
-			$this->setScheduleStartTime($newScheduleStartTime);
 			$this->setScheduleEndTime($newScheduleEndTime);
-		} catch(\RangeException $range) {
-			throw(new \RangeException($range->getMessage(), 0, $range));
-		} catch(\InvalidArgumentException $invalidArgument) {
+			$this->setScheduleLocationAddress($newScheduleLocationAddress);
+			$this->setScheduleLocationName($newScheduleLocationName);
+			$this->setScheduleStartTime($newScheduleStartTime);
+
+		}catch(\InvalidArgumentException $invalidArgument) {
+			// rethrow the exception to the caller
 			throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
+		} catch(\RangeException $range) {
+			// rethrow the exception to the caller
+			throw(new \RangeException($range->getMessage(), 0, $range));
+		} catch(\TypeError $typeError) {
+			// rethrow the exception to the caller
+			throw(new \TypeError($typeError->getMessage(), 0, $typeError));
 		} catch(\Exception $exception) {
+			// rethrow the exception to the caller
 			throw(new \Exception($exception->getMessage(), 0, $exception));
 		}
 	}
@@ -320,6 +334,7 @@ class Schedule implements \JsonSerializable {
 			throw(new \PDOException("not a new schedule"));
 		}
 		//query template
+		//I think the table name is orange bec something is fucked up in SQL maybe
 		$query = "INSERT INTO schedule(scheduleCompanyId, scheduleDayOfWeek, scheduleEndTime, scheduleLocationAddress, scheduleLocationName, scheduleStartTime )VALUES(:scheduleCompanyId, :scheduleDayOfWeek, :scheduleEndTime, :scheduleLocationAddress, :scheduleLocationName, :scheduleStartTime)";
 		$statement = $pdo->prepare($query);
 
