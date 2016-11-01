@@ -171,8 +171,7 @@ class Schedule implements \JsonSerializable {
 		$newScheduleDayOfWeek = strtolower($newScheduleDayOfWeek);
 
 		$dayz = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
-		/* make sure the scheduled day is no more than nine characters */
-		/* is this right? */
+
 		if(!(in_array($newScheduleDayOfWeek, $dayz))){
 			throw(new \InvalidArgumentException("Please enter a day of the week!(i.e. 'monday', 'tuesday', etc) "));
 		}
