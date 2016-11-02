@@ -221,7 +221,7 @@ public function __construct(int $newTruckId = null, int $newTruckCompanyId, stri
 		if($truckId <=0) {
 			throw(new \PDOException("truck Id is not positive"));
 		}
-		//query template
+		//query template, need to fix this!!
 		$query = "SELECT truckId, truckCompanyId, truckName FROM truck WHERE truckId =:truckId";
 
 		//prepare template
