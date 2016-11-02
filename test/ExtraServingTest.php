@@ -303,15 +303,19 @@ class ExtraServingTest extends CrumbTrailTest {
 		$this->assertEquals($pdoExtraServing->getExtraServingLocationName(), $this->VALID_EXTRASERVINGLOCATIONNAME1);
 		$this->assertEquals($pdoExtraServing->getExtraServingStartTime(), $this->VALID_EXTRASERVINGSTARTTIME1);
 
-
-
-
-
 	}
 
+	/**
+	 * test get by invalid company ID
+	 * @expectedException \PDOException
+	 */
+	public function testGetExtraServingByInvalidExtraServingCompanyId(){
 
+		$extraServing = ExtraServing::getExtraServingByExtraServingCompanyId($this->getPDO(), CrumbTrailTest::INVALID_KEY);
 
+		$this->assertCount(0,$extraServing);
 
+	}
 
 
 	/**
