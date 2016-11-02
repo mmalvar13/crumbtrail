@@ -169,7 +169,16 @@ public final function setUp(){
 	 */
 	public function testInsertInvalidExtraServing(){
 
+		//insert a ES with a non-null ID, it should fail
+		//use INVALID_KEY in the abstract CrumbTrailTest
+
+		$extraServing = new ExtraServing(CrumbTrailTest::INVALID_KEY, $this->company->getCompanyId(), $this->VALID_EXTRASERVINGDESCRIPTION1, $this->VALID_EXTRASERVINGENDTIME1, $this->VALID_EXTRASERVINGLOCATIONADDRESS1, $this->VALID_EXTRASERVINGLOCATIONNAME1, $this->VALID_EXTRASERVINGSTARTTIME1);
+
+		$extraServing->insert($this->getPDO());
+
 	}
+
+
 
 
 
