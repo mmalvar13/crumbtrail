@@ -228,6 +228,35 @@ public final function setUp(){
 	}
 
 
+	/**
+	 * TEST DELETE VALID extraServing object
+	 */
+	public function testDeleteValidExtraServing(){
+		//get number of rows and save for later....wouldnt it be zero....?
+		$numRows = $this->getConnection()->getRowCount("extraServing");
+
+		$extraServing = new ExtraServing(null, $this->company->getCompanyId(), $this->VALID_EXTRASERVINGDESCRIPTION1, $this->VALID_EXTRASERVINGENDTIME1, $this->VALID_EXTRASERVINGLOCATIONADDRESS1, $this->VALID_EXTRASERVINGLOCATIONNAME1, $this->VALID_EXTRASERVINGSTARTTIME1);
+
+		$extraServing->insert($this->getPDO());
+
+		//check to make sure it was inserted A-OK
+		//assert that there is 1 row in there
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("extraServing"));
+
+		//now 410 it
+
+		$extraServing->delete($this->getPDO());
+
+		//now check to make sure there is no data in the row
+		$pdoExtraServing = ExtraServing::getExtraServingByExtraServingId($this->getPDO(), $extraServing->getExtraServingId());
+		$this->assertNull($pdoExtraServing);
+		$this->assertEquals($numRows, $this->getConnection()->getRowCount("extraServing"));
+
+	}
+
+
+
+
 
 
 
