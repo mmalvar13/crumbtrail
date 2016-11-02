@@ -615,6 +615,7 @@ class ExtraServingTest extends CrumbTrailTest {
 
 		//get an extraServing by searching for a end time that doesnt exist
 //		think i can use $this->VALID_EXTRASERVINGSTARTTIME1 in here for 2nd param???? what else could i put there for invalid time?
+		//again check on what to use here for invalid time
 		$extraServing = ExtraServing::getExtraServingByExtraServingStartTime($this->getPDO(), $this->VALID_EXTRASERVINGENDTIME1);
 
 		$this->assertCount(0,$extraServing );
