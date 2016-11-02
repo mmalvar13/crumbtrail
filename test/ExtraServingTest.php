@@ -217,7 +217,7 @@ public final function setUp(){
 	}
 
 	/**
-	 * TEST UPDATE INVALID extraServing
+	 * TEST UPDATE INVALID extraServing object
 	 */
 	public function testUpdateInvalidExtraServing(){
 
