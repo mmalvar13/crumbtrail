@@ -367,6 +367,57 @@ class ExtraServingTest extends CrumbTrailTest {
 	}
 
 
+	/**
+	 * test getting an extra serving by both the extraServingId and the extraServingCompanyId
+	 *
+	 * CHECK ON THIS ONE
+	 */
+	public function testGetExtraServingByValidExtraServingIdAndExtraServingCompanyId(){
+
+		$numRows = $this->getConnection()->getRowCount("extraServing");
+
+		$extraServing = new ExtraServing(null, $this->company->getCompanyId(), $this->VALID_EXTRASERVINGDESCRIPTION1, $this->VALID_EXTRASERVINGENDTIME1, $this->VALID_EXTRASERVINGLOCATIONADDRESS1, $this->VALID_EXTRASERVINGLOCATIONNAME1, $this->VALID_EXTRASERVINGSTARTTIME1);
+
+		$extraServing->insert($this->getPDO());
+
+		$results = ExtraServing::getExtraServingByExtraServingIdAndExtraServingCompanyId($this->getPDO(), $extraServing->getExtraServingId(), $extraServing->getExtraServingCompanyId());
+
+		//ensure there is now one row
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("extraServing"));
+
+		//confirm there is just one object in SQL
+		$this->assertCount(1, $results);
+
+		//ensure there are only instances of the extraServing class in the namespace
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\CrumbTrail\\ExtraServing", $results);
+
+		//grab results from the array and validate them!
+		$pdoExtraServing = $results[0];
+		$this->assertEquals($pdoExtraServing->getExtraServingCompanyId(), $this->company->getCompanyId());
+		$this->assertEquals($pdoExtraServing->getExtraServingDescription(), $this->VALID_EXTRASERVINGDESCRIPTION1);
+		$this->assertEquals($pdoExtraServing->getExtraServingEndTime(), $this->VALID_EXTRASERVINGENDTIME1);
+		$this->assertEquals($pdoExtraServing->getExtraServingLocationAddress(), $this->VALID_EXTRASERVINGLOCATIONADDRESS1);
+		$this->assertEquals($pdoExtraServing->getExtraServingLocationName(), $this->VALID_EXTRASERVINGLOCATIONNAME1);
+		$this->assertEquals($pdoExtraServing->getExtraServingStartTime(), $this->VALID_EXTRASERVINGSTARTTIME1);
+
+	}
+
+
+	/**
+	 * test getting extra serving by invalid extraServingId and extraServingCompanyId
+	 * @expectedException \PDOException
+	 */
+	public function testGetExtraServingByInvalidExtraServingIdAndExtraServingCompanyId(){
+
+		//get an extraServing by searching for a ID and foreign key that doesnt exist
+		$extraServing = ExtraServing::getExtraServingByExtraServingIdAndExtraServingCompanyId($this->getPDO(), CrumbTrailTest::INVALID_KEY, CrumbTrailTest::INVALID_KEY);
+
+		$this->assertCount(0,$extraServing );
+
+	}
+
+
+
 
 
 }
