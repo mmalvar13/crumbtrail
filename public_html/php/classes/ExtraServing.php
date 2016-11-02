@@ -453,7 +453,7 @@ class ExtraServing implements \JsonSerializable {
 		}
 
 		//make template
-		$query = "SELECT extraServingId, extraServingCompanyId, extraServingDescription, extraServingEndTIme, ExtraServingLocationAddress, extraServingLocationName, extraServingStartTime FROM extraServing WHERE extraServingId = :extraServingId";
+		$query = "SELECT extraServingId, extraServingCompanyId, extraServingDescription, extraServingEndTIme, extraServingLocationAddress, extraServingLocationName, extraServingStartTime FROM extraServing WHERE extraServingId = :extraServingId";
 
 		$statement = $pdo->prepare($query);
 
@@ -501,7 +501,7 @@ class ExtraServing implements \JsonSerializable {
 		}
 
 		//make template
-		$query = "SELECT extraServingId, extraServingCompanyId, extraServingDescription, extraServingEndTime, ExtraServingLocationAddress, extraServingLocationName, extraServingStartTime FROM extraServing WHERE extraServingCompanyId = :extraServingCompanyId";
+		$query = "SELECT extraServingId, extraServingCompanyId, extraServingDescription, extraServingEndTime, extraServingLocationAddress, extraServingLocationName, extraServingStartTime FROM extraServing WHERE extraServingCompanyId = :extraServingCompanyId";
 
 		$statement = $pdo->prepare($query);
 
@@ -561,7 +561,7 @@ class ExtraServing implements \JsonSerializable {
 		}
 
 		//make template
-		$query = "SELECT extraServingId, extraServingCompanyId, extraServingDescription, extraServingEndTIme, ExtraServingLocationAddress, extraServingLocationName, extraServingStartTime FROM extraServing WHERE extraServingId = :extraServingId AND extraServingCompanyId = :extraServingCompanyId";
+		$query = "SELECT extraServingId, extraServingCompanyId, extraServingDescription, extraServingEndTIme, extraServingLocationAddress, extraServingLocationName, extraServingStartTime FROM extraServing WHERE extraServingId = :extraServingId AND extraServingCompanyId = :extraServingCompanyId";
 
 		$statement = $pdo->prepare($query);
 
@@ -611,7 +611,7 @@ class ExtraServing implements \JsonSerializable {
 		}
 
 		//make template
-		$query = "SELECT extraServingId, extraServingCompanyId, extraServingDescription, extraServingEndTIme, ExtraServingLocationAddress, extraServingLocationName, extraServingStartTime FROM extraServing WHERE extraServingDescription = :extraServingDescription";
+		$query = "SELECT extraServingId, extraServingCompanyId, extraServingDescription, extraServingEndTIme, extraServingLocationAddress, extraServingLocationName, extraServingStartTime FROM extraServing WHERE extraServingDescription = :extraServingDescription";
 
 		$statement = $pdo->prepare($query);
 
@@ -656,7 +656,7 @@ class ExtraServing implements \JsonSerializable {
 	 * @throws \TypeError when variables are not the correct data type
 	 */
 
-	public static function getExtraServingByExtraServingAddress(\PDO $pdo, string $extraServingLocationAddress){
+	public static function getExtraServingByExtraServingLocationAddress(\PDO $pdo, string $extraServingLocationAddress){
 
 		//IM MAKING THIS RETURN AN ARRAY FOR ALL MATCHES THAT ARE CLOSE TO THE TERM SEARCHED FOR
 		//JUST IN CASE YOU ONLY KNOW PART OF THE ADDRESS. mAY NEED TO CHANGE THIS TO A STRICT SEARCH IN THE FUTURE
@@ -671,7 +671,7 @@ class ExtraServing implements \JsonSerializable {
 		}
 
 		//make template
-		$query = "SELECT extraServingId, extraServingCompanyId, extraServingDescription, extraServingEndTIme, ExtraServingLocationAddress, extraServingLocationName, extraServingStartTime FROM extraServing WHERE extraServingLocationAddress = :extraServingLocationAddress";
+		$query = "SELECT extraServingId, extraServingCompanyId, extraServingDescription, extraServingEndTIme, extraServingLocationAddress, extraServingLocationName, extraServingStartTime FROM extraServing WHERE extraServingLocationAddress = :extraServingLocationAddress";
 
 		$statement = $pdo->prepare($query);
 
@@ -731,11 +731,11 @@ class ExtraServing implements \JsonSerializable {
 		}
 
 		//make template
-		$query = "SELECT extraServingId, extraServingCompanyId, extraServingDescription, extraServingEndTIme, ExtraServingLocationAddress, extraServingLocationName, extraServingStartTime FROM extraServing WHERE extraServingLocationName = :extraServingLocationName";
+		$query = "SELECT extraServingId, extraServingCompanyId, extraServingDescription, extraServingEndTIme, extraServingLocationAddress, extraServingLocationName, extraServingStartTime FROM extraServing WHERE extraServingLocationName = :extraServingLocationName";
 
 		$statement = $pdo->prepare($query);
 
-		$extraServingAddress = "%$extraServingLocationName%";
+		$extraServingLocationName = "%$extraServingLocationName%";
 		$parameters = ["extraServingLocationName"=> $extraServingLocationName];
 		$statement->execute($parameters);
 
@@ -846,7 +846,7 @@ class ExtraServing implements \JsonSerializable {
 		}
 
 		//make template
-		$query = "SELECT extraServingId, extraServingCompanyId, extraServingDescription, extraServingEndTIme, ExtraServingLocationAddress, extraServingLocationName, extraServingStartTime FROM extraServing WHERE extraServingEndTime = :extraServingEndTime";
+		$query = "SELECT extraServingId, extraServingCompanyId, extraServingDescription, extraServingEndTIme, extraServingLocationAddress, extraServingLocationName, extraServingStartTime FROM extraServing WHERE extraServingEndTime = :extraServingEndTime";
 
 		$statement = $pdo->prepare($query);
 
@@ -897,7 +897,7 @@ class ExtraServing implements \JsonSerializable {
 	public static function getAllExtraServing(\PDO $pdo){
 
 		//make template
-		$query = "SELECT extraServingId, extraServingCompanyId, extraServingDescription, extraServingEndTIme, ExtraServingLocationAddress, extraServingLocationName, extraServingStartTime FROM extraServing";
+		$query = "SELECT extraServingId, extraServingCompanyId, extraServingDescription, extraServingEndTIme, extraServingLocationAddress, extraServingLocationName, extraServingStartTime FROM extraServing";
 
 		$statement = $pdo->prepare($query);
 		$statement->execute();
