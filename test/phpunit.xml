@@ -10,6 +10,7 @@
 			 <file>ImageTest.php</file>
 			 <file>PointTest.php</file>
 			 <file>TruckTest.php</file>
+			<file>ExtraServingTest.php</file>
 
 			</testsuite>
 	</testsuites>
