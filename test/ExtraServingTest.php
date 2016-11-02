@@ -141,10 +141,24 @@ public final function setUp(){
 	 * TEST INSERTING A VALID ExtraServing object to SQL
 	 */
 	public function testInsertValidExtraServing(){
-		//get number of rows and save for later
+		//get number of rows and save for later....wouldnt it be zero....?
 		$numRows = $this->getConnection()->getRowCount("extraServing");
 
+		$extraServing = new ExtraServing(null, $this->company->getCompanyId(), $this->VALID_EXTRASERVINGDESCRIPTION1, $this->VALID_EXTRASERVINGENDTIME1, $this->VALID_EXTRASERVINGLOCATIONADDRESS1, $this->VALID_EXTRASERVINGLOCATIONNAME1, $this->VALID_EXTRASERVINGSTARTTIME1);
 
+		$extraServing->insert($this->getPDO());
+
+		//pull the data out of SQL and ensure its matches what we think it should be
+
+		//$pdoExtraServing will have all the information associated with our extraServing object
+		$pdoExtraServing = ExtraServing::getExtraServingByExtraServingId($this->getPDO(), $extraServing->getExtraServingId());
+
+		//assert that there is 1 row in there
+		$this->assertEquals($pdoExtraServing->getExtraServingDescription(), $this->VALID_EXTRASERVINGDESCRIPTION1);
+		$this->assertEquals($pdoExtraServing->getExtraServingEndTime(), $this->VALID_EXTRASERVINGENDTIME1);
+		$this->assertEquals($pdoExtraServing->getExtraServingLocationAddress(), $this->VALID_EXTRASERVINGLOCATIONADDRESS1);
+		$this->assertEquals($pdoExtraServing->getExtraServingLocationName(), $this->VALID_EXTRASERVINGLOCATIONNAME1);
+		$this->assertEquals($pdoExtraServing->getExtraServingStartTime(), $this->VALID_EXTRASERVINGSTARTTIME1);
 
 	}
 

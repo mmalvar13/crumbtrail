@@ -185,7 +185,7 @@ class ProfileTest extends CrumbTrailTest {
 
 		//starting from the inside (right) and working out (left):
 		//We are making sure that the two arguments inside the assertEquals() are in fact equal
-		//on the left we $numRows which is assigned to the initial row count of the object profile (it's initially 0 because
+		//on the left we have $numRows which is assigned to the initial row count of the object profile (it's initially 0 because
 		//nothing is in there yet
 		//on right right we have the updated row count of the object profile after having inserted a dummy profile
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
