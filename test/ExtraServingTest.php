@@ -472,6 +472,59 @@ class ExtraServingTest extends CrumbTrailTest {
 
 
 
+	/**
+	 * TEST getting extraServing by valid Name
+	 */
+	public function testGetExtraServingByValidExtraServingLocationName() {
+
+		$numRows = $this->getConnection()->getRowCount("extraServing");
+
+		$extraServing = new ExtraServing(null, $this->company->getCompanyId(), $this->VALID_EXTRASERVINGDESCRIPTION1, $this->VALID_EXTRASERVINGENDTIME1, $this->VALID_EXTRASERVINGLOCATIONADDRESS1, $this->VALID_EXTRASERVINGLOCATIONNAME1, $this->VALID_EXTRASERVINGSTARTTIME1);
+
+		$extraServing->insert($this->getPDO());
+
+		//why do we set this to $results? why cant we reference everything from $extraServing, like $extraServing->getExtraServingDescription()????? !!!!Is the whole reason we set it equal to $results so that we can check on line 340 that there is 1 object in the database???
+
+		$results = ExtraServing::getExtraServingByExtraServingLocationName($this->getPDO(), $extraServing->getExtraServingLocationName());
+
+		//ensure there is now one row
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("extraServing"));
+
+		//confirm there is just one object in SQL
+		$this->assertCount(1, $results);
+
+		//ensure there are only instances of the extraServing class in the namespace
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\CrumbTrail\\ExtraServing", $results);
+
+		//grab results from the array and validate them!
+		$pdoExtraServing = $results[0];
+		$this->assertEquals($pdoExtraServing->getExtraServingCompanyId(), $this->company->getCompanyId());
+		$this->assertEquals($pdoExtraServing->getExtraServingDescription(), $this->VALID_EXTRASERVINGDESCRIPTION1);
+		$this->assertEquals($pdoExtraServing->getExtraServingEndTime(), $this->VALID_EXTRASERVINGENDTIME1);
+		$this->assertEquals($pdoExtraServing->getExtraServingLocationAddress(), $this->VALID_EXTRASERVINGLOCATIONADDRESS1);
+		$this->assertEquals($pdoExtraServing->getExtraServingLocationName(), $this->VALID_EXTRASERVINGLOCATIONNAME1);
+		$this->assertEquals($pdoExtraServing->getExtraServingStartTime(), $this->VALID_EXTRASERVINGSTARTTIME1);
+
+	}
+
+	/**
+	 * test getting extra serving by invalid location name
+	 * @expectedException \PDOException
+	 */
+	public function testGetExtraServingByInvalidExtraServingLocationName(){
+
+		//get an extraServing by searching for a description that doesnt exist
+		$extraServing = ExtraServing::getExtraServingByExtraServingLocationName($this->getPDO(), "ADDRESS DONT EXIST");
+
+		$this->assertCount(0,$extraServing );
+
+	}
+
+
+
+
+
+
 
 
 
