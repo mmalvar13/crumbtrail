@@ -353,5 +353,20 @@ class ExtraServingTest extends CrumbTrailTest {
 
 	}
 
+	/**
+	 * test getting extra serving by invalid description
+	 * @expectedException \PDOException
+	 */
+	public function testGetExtraServingByInvalidDescription(){
+
+		//get an extraServing by searching for a description that doesnt exist
+		$extraServing = ExtraServing::getExtraServingByExtraServingDescription($this->getPDO(), "THIS DOESNT EXIST");
+
+		$this->assertCount(0,$extraServing );
+
+	}
+
+
+
 
 }
