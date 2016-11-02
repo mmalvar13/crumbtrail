@@ -156,6 +156,8 @@ public final function setUp(){
 		$pdoExtraServing = ExtraServing::getExtraServingByExtraServingId($this->getPDO(), $extraServing->getExtraServingId());
 
 		//assert that there is 1 row in there
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("extraServing"));
+
 		$this->assertEquals($pdoExtraServing->getExtraServingDescription(), $this->VALID_EXTRASERVINGDESCRIPTION1);
 		$this->assertEquals($pdoExtraServing->getExtraServingEndTime(), $this->VALID_EXTRASERVINGENDTIME1);
 		$this->assertEquals($pdoExtraServing->getExtraServingLocationAddress(), $this->VALID_EXTRASERVINGLOCATIONADDRESS1);
@@ -177,6 +179,56 @@ public final function setUp(){
 		$extraServing->insert($this->getPDO());
 
 	}
+
+
+	/**
+	 * TEST UPDATING A VALID ExtraServing
+	 */
+	public function testUpdateValidExtraServing(){
+
+		//get number of rows and save for later....wouldnt it be zero....?
+		$numRows = $this->getConnection()->getRowCount("extraServing");
+
+		$extraServing = new ExtraServing(null, $this->company->getCompanyId(), $this->VALID_EXTRASERVINGDESCRIPTION1, $this->VALID_EXTRASERVINGENDTIME1, $this->VALID_EXTRASERVINGLOCATIONADDRESS1, $this->VALID_EXTRASERVINGLOCATIONNAME1, $this->VALID_EXTRASERVINGSTARTTIME1);
+
+		$extraServing->insert($this->getPDO());
+
+		//now edit all the attributes for object
+
+		$extraServing->setExtraServingDescription($this->VALID_EXTRASERVINGDESCRIPTION2);
+		$extraServing->setExtraServingEndTime($this->VALID_EXTRASERVINGENDTIME2);
+		$extraServing->setExtraServingLocationAddress($this->VALID_EXTRASERVINGLOCATIONADDRESS2);
+		$extraServing->setExtraServingLocationName($this->VALID_EXTRASERVINGLOCATIONNAME2);
+		$extraServing->setExtraServingStartTime($this->VALID_EXTRASERVINGSTARTTIME2);
+
+		$extraServing->update($this->getPDO());
+
+		$pdoExtraServing = ExtraServing::getExtraServingByExtraServingId($this->getPDO(), $extraServing->getExtraServingId());
+
+		//assert that there is 1 row in there
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("extraServing"));
+
+		$this->assertEquals($pdoExtraServing->getExtraServingDescription(), $this->VALID_EXTRASERVINGDESCRIPTION2);
+		$this->assertEquals($pdoExtraServing->getExtraServingEndTime(), $this->VALID_EXTRASERVINGENDTIME2);
+		$this->assertEquals($pdoExtraServing->getExtraServingLocationAddress(), $this->VALID_EXTRASERVINGLOCATIONADDRESS2);
+		$this->assertEquals($pdoExtraServing->getExtraServingLocationName(), $this->VALID_EXTRASERVINGLOCATIONNAME2);
+		$this->assertEquals($pdoExtraServing->getExtraServingStartTime(), $this->VALID_EXTRASERVINGSTARTTIME2);
+
+	}
+
+	/**
+	 * TEST UPDATE INVALID extraServing
+	 */
+	public function testUpdateInvalidExtraServing(){
+
+		$extraServing = new ExtraServing(null, $this->company->getCompanyId(), $this->VALID_EXTRASERVINGDESCRIPTION1, $this->VALID_EXTRASERVINGENDTIME1, $this->VALID_EXTRASERVINGLOCATIONADDRESS1, $this->VALID_EXTRASERVINGLOCATIONNAME1, $this->VALID_EXTRASERVINGSTARTTIME1);
+
+		//try t update without inserting
+		$extraServing->update($this->getPDO());
+	}
+
+
+
 
 
 
