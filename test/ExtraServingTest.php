@@ -21,7 +21,7 @@ require_once(dirname(__DIR__) . "/public_html/php/classes/autoload.php"); //wtf 
  * This is a complete PHPUnit test of the Extra Serving class. It is complete because *ALL* mySQL/PDO enabled methods
  * are tested for both invalid and valid inputs.
  *
- * @see ExtraServing\
+ * @see ExtraServing
  * @author Lo-BAK <baca.loren@gmail.com>
  **/
 class ExtraServingTest extends CrumbTrailTest {
@@ -98,43 +98,43 @@ class ExtraServingTest extends CrumbTrailTest {
 
 //	----------------------CREATE DEPENDENT OBJECTS BEFORE TESTING--------------------------------------
 
-public final function setUp(){
+	public final function setUp() {
 
-	parent::setUp();
+		parent::setUp();
 
-	//create a insert for a dummy company so we have a foreign key to profile
-	//create and insert a Profile to own the test Employ
-	$password = "abc123";
-	$salt = bin2hex(random_bytes(16));
-	$hash = hash_pbkdf2("sha512", $password, $salt, 262144);
-
-
-	$this->profile = new Profile(null, "Loren", "lorenisthebest@gmail.com", "5057303164", "0000000000000000000000000000000000000000000000000000000000004444", "00000000000000000000000000000022","a", $hash, $salt);
-	$this->profile->insert($this->getPDO());
-
-	$pdoProfile = Profile::getProfileByProfileId($this->getPDO(), $this->profile->getProfileId());
+		//create a insert for a dummy company so we have a foreign key to profile
+		//create and insert a Profile to own the test Employ
+		$password = "abc123";
+		$salt = bin2hex(random_bytes(16));
+		$hash = hash_pbkdf2("sha512", $password, $salt, 262144);
 
 
-	//create and insert a Company to own the test Employ
-	$this->company = new Company(null, $pdoProfile->getProfileId(), "Terry's Tacos", "terrytacos@tacos.com", "5052345678", "12345", "2345", "attn: MR taco", "345 Taco Street", "taco street 2", "Albuquerque", "NM", "87654", "We are a Taco truck description", "Tacos, Tortillas, Burritos","848484", 0);
-	$this->company->insert($this->getPDO());
+		$this->profile = new Profile(null, "Loren", "lorenisthebest@gmail.com", "5057303164", "0000000000000000000000000000000000000000000000000000000000004444", "00000000000000000000000000000022", "a", $hash, $salt);
+		$this->profile->insert($this->getPDO());
 
-	$pdoCompany = Company::getCompanyByCompanyId($this->getPDO(), $this->company->getCompanyId());
+		$pdoProfile = Profile::getProfileByProfileId($this->getPDO(), $this->profile->getProfileId());
 
-	//set start time 1 by calling new instance of \DateTime() class, this will be formatted
-	$this->VALID_EXTRASERVINGSTARTTIME1 = new \DateTime();
-	//make end time 1 a copy of start time 1
-	$this->VALID_EXTRASERVINGENDTIME1 = clone $this->VALID_EXTRASERVINGSTARTTIME1;
-	//add one additional hour to the time of end time 1
-	$this->VALID_EXTRASERVINGENDTIME1->add(new \DateInterval("PT1H"));
 
-	//set start time 2
-	$this->VALID_EXTRASERVINGSTARTTIME2 = new \DateTime();
-	$this->VALID_EXTRASERVINGENDTIME2 = clone $this->VALID_EXTRASERVINGSTARTTIME2;
-	//add 1 hour 30 min to end time 2
-	$this->VALID_EXTRASERVINGENDTIME2->add(new \DateInterval("PT1H"));
+		//create and insert a Company to own the test Employ
+		$this->company = new Company(null, $pdoProfile->getProfileId(), "Terry's Tacos", "terrytacos@tacos.com", "5052345678", "12345", "2345", "attn: MR taco", "345 Taco Street", "taco street 2", "Albuquerque", "NM", "87654", "We are a Taco truck description", "Tacos, Tortillas, Burritos", "848484", 0);
+		$this->company->insert($this->getPDO());
 
-}
+//		$pdoCompany = Company::getCompanyByCompanyId($this->getPDO(), $this->company->getCompanyId());
+
+		//set start time 1 by calling new instance of \DateTime() class, this will be formatted
+		$this->VALID_EXTRASERVINGSTARTTIME1 = new \DateTime();
+		//make end time 1 a copy of start time 1
+		$this->VALID_EXTRASERVINGENDTIME1 = clone $this->VALID_EXTRASERVINGSTARTTIME1;
+		//add one additional hour to the time of end time 1
+		$this->VALID_EXTRASERVINGENDTIME1->add(new \DateInterval("PT1H"));
+
+		//set start time 2
+		$this->VALID_EXTRASERVINGSTARTTIME2 = new \DateTime();
+		$this->VALID_EXTRASERVINGENDTIME2 = clone $this->VALID_EXTRASERVINGSTARTTIME2;
+		//add 1 hour 30 min to end time 2
+		$this->VALID_EXTRASERVINGENDTIME2->add(new \DateInterval("PT1H"));
+
+	}
 
 
 //	-----------------------------------------TEST SECTION------------------------------------------------------------
@@ -142,7 +142,7 @@ public final function setUp(){
 	/**
 	 * TEST INSERTING A VALID ExtraServing object to SQL
 	 */
-	public function testInsertValidExtraServing(){
+	public function testInsertValidExtraServing() {
 		//get number of rows and save for later....wouldnt it be zero....?
 		$numRows = $this->getConnection()->getRowCount("extraServing");
 
@@ -170,7 +170,7 @@ public final function setUp(){
 	 * TEST INSERTING AN INVALID ExtraServing Object into SQL
 	 * @expectedException \PDOException
 	 */
-	public function testInsertInvalidExtraServing(){
+	public function testInsertInvalidExtraServing() {
 
 		//insert a ES with a non-null ID, it should fail
 		//use INVALID_KEY in the abstract CrumbTrailTest
@@ -185,7 +185,7 @@ public final function setUp(){
 	/**
 	 * TEST UPDATING A VALID ExtraServing
 	 */
-	public function testUpdateValidExtraServing(){
+	public function testUpdateValidExtraServing() {
 
 		//get number of rows and save for later....wouldnt it be zero....?
 		$numRows = $this->getConnection()->getRowCount("extraServing");
@@ -221,7 +221,7 @@ public final function setUp(){
 	 * TEST UPDATE INVALID extraServing object
 	 * @expectedException \PDOException
 	 */
-	public function testUpdateInvalidExtraServing(){
+	public function testUpdateInvalidExtraServing() {
 
 		$extraServing = new ExtraServing(null, $this->company->getCompanyId(), $this->VALID_EXTRASERVINGDESCRIPTION1, $this->VALID_EXTRASERVINGENDTIME1, $this->VALID_EXTRASERVINGLOCATIONADDRESS1, $this->VALID_EXTRASERVINGLOCATIONNAME1, $this->VALID_EXTRASERVINGSTARTTIME1);
 
@@ -233,7 +233,7 @@ public final function setUp(){
 	/**
 	 * TEST DELETE VALID extraServing object
 	 */
-	public function testDeleteValidExtraServing(){
+	public function testDeleteValidExtraServing() {
 		//get number of rows and save for later....wouldnt it be zero....?
 		$numRows = $this->getConnection()->getRowCount("extraServing");
 
@@ -260,7 +260,7 @@ public final function setUp(){
 	 * TEST DELETE INVALID extraServing object
 	 * @expectedException \PDOException
 	 */
-	public function testDeleteInvalidExtraServing(){
+	public function testDeleteInvalidExtraServing() {
 
 		//create new object
 		$extraServing = new ExtraServing(null, $this->company->getCompanyId(), $this->VALID_EXTRASERVINGDESCRIPTION1, $this->VALID_EXTRASERVINGENDTIME1, $this->VALID_EXTRASERVINGLOCATIONADDRESS1, $this->VALID_EXTRASERVINGLOCATIONNAME1, $this->VALID_EXTRASERVINGSTARTTIME1);
@@ -270,17 +270,56 @@ public final function setUp(){
 	}
 
 
+	/**
+	 *test getting extraServing by valid extraServingCompanyId
+	 */
+	public function testGetExtraServingByValidExtraServingCompanyId(){
+
+		$numRows = $this->getConnection()->getRowCount("extraServing");
+
+		$extraServing = new ExtraServing(null, $this->company->getCompanyId(), $this->VALID_EXTRASERVINGDESCRIPTION1, $this->VALID_EXTRASERVINGENDTIME1, $this->VALID_EXTRASERVINGLOCATIONADDRESS1, $this->VALID_EXTRASERVINGLOCATIONNAME1, $this->VALID_EXTRASERVINGSTARTTIME1);
+
+		$extraServing->insert($this->getPDO());
+
+		//$results will be an array with object info inside it
+		//curious why we use $results here instead of just setting $pdoExtraServing to this?
+		$results = ExtraServing::getExtraServingByExtraServingCompanyId($this->getPDO(), $extraServing->getExtraServingCompanyId());
+
+		//make sure there is 1 row in there
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("extraServing"));
+
+		//confirm there is just one object in the database
+		$this->assertCount(1, $results);
+
+		//ensure there are only instances of the extraServing class in the namespace
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\CrumbTrail\\ExtraServing", $results);
+
+		//grab results from the array and validate them!
+		$pdoExtraServing = $results[0];
+		$this->assertEquals($pdoExtraServing->getExtraServingCompanyId(), $this->company->getCompanyId());
+		$this->assertEquals($pdoExtraServing->getExtraServingDescription(), $this->VALID_EXTRASERVINGDESCRIPTION1);
+		$this->assertEquals($pdoExtraServing->getExtraServingEndTime(), $this->VALID_EXTRASERVINGENDTIME1);
+		$this->assertEquals($pdoExtraServing->getExtraServingLocationAddress(), $this->VALID_EXTRASERVINGLOCATIONADDRESS1);
+		$this->assertEquals($pdoExtraServing->getExtraServingLocationName(), $this->VALID_EXTRASERVINGLOCATIONNAME1);
+		$this->assertEquals($pdoExtraServing->getExtraServingStartTime(), $this->VALID_EXTRASERVINGSTARTTIME1);
+
+
+
+
+
+	}
 
 
 
 
 
 
+	/**
+	 * TEST getting extraServing by valid description
+	 */
+	public function testGetExtraServingByValidDescription() {
 
-
-
-
-
+	}
 
 
 }
