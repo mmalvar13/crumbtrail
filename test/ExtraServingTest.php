@@ -168,6 +168,7 @@ public final function setUp(){
 
 	/**
 	 * TEST INSERTING AN INVALID ExtraServing Object into SQL
+	 * @expectedException \PDOException
 	 */
 	public function testInsertInvalidExtraServing(){
 
@@ -218,6 +219,7 @@ public final function setUp(){
 
 	/**
 	 * TEST UPDATE INVALID extraServing object
+	 * @expectedException \PDOException
 	 */
 	public function testUpdateInvalidExtraServing(){
 
@@ -252,6 +254,19 @@ public final function setUp(){
 		$this->assertNull($pdoExtraServing);
 		$this->assertEquals($numRows, $this->getConnection()->getRowCount("extraServing"));
 
+	}
+
+	/**
+	 * TEST DELETE INVALID extraServing object
+	 * @expectedException \PDOException
+	 */
+	public function testDeleteInvalidExtraServing(){
+
+		//create new object
+		$extraServing = new ExtraServing(null, $this->company->getCompanyId(), $this->VALID_EXTRASERVINGDESCRIPTION1, $this->VALID_EXTRASERVINGENDTIME1, $this->VALID_EXTRASERVINGLOCATIONADDRESS1, $this->VALID_EXTRASERVINGLOCATIONNAME1, $this->VALID_EXTRASERVINGSTARTTIME1);
+
+		//delete without ever inserting
+		$extraServing->delete($this->getPDO());
 	}
 
 
