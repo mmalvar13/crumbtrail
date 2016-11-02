@@ -134,6 +134,8 @@ public final function setUp(){
 	//add 1 hour 30 min to end time 2
 	$this->VALID_EXTRASERVINGENDTIME2->add(new \DateInterval("PT1H"));
 
+}
+
 
 //	-----------------------------------------TEST SECTION------------------------------------------------------------
 
@@ -162,10 +164,12 @@ public final function setUp(){
 
 	}
 
+	/**
+	 * TEST INSERTING AN INVALID ExtraServing Object into SQL
+	 */
+	public function testInsertInvalidExtraServing(){
 
-
-
-}
+	}
 
 
 
