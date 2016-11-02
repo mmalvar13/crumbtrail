@@ -3,7 +3,7 @@
 namespace Edu\Cnm\CrumbTrail\Test;  /*LOOK INTO THIS FOR ACCURACY */
 
 
-use Edu\Cnm\CrumbTrail\{Company};
+use Edu\Cnm\CrumbTrail\{Company, ExtraServing};
 
 //grab the parameters for the test, go the the abstract test file
 require_once("CrumbTrailTest.php");
@@ -27,9 +27,29 @@ class ExtraServingTest extends CrumbTrailTest {
 
 	/*----------------------------Declare Protected State Variables ----------------*/
 
+	protected $company = null;
+
 	/**
 	 * Default input data set for extra serving description
-	 * @var string $VALID_PROFILENAME1 //why is this in all caps, what's up with this syntax?
+	 * @var string $VALID_EXTRASERVINGDESCRIPTION1 //why is this in all caps, what's up with this syntax?
 	 */
-	protected $VALID_PROFILENAME1 = "Name";
+	protected $VALID_EXTRASERVINGDESCRIPTION1 = "Valid description 1";
+
+	/**
+	 * Default input data set for extra serving description
+	 * @var string $VALID_EXTRASERVINGDESCRIPTION2 //why is this in all caps, what's up with this syntax?
+	 */
+	protected $VALID_EXTRASERVINGDESCRIPTION2 = "UPDATED Valid description 2";
+
+
+
+	/**
+	 * timestamp for extraServingEndTime
+	 * @var \DateTime $VALID_EXTRASERVINGENDTIME1
+	 **/
+	protected $VALID_EXTRASERVINGENDTIME1 = null;
+
+
+
+
 }
