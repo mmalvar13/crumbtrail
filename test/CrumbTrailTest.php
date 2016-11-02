@@ -48,8 +48,11 @@ abstract class CrumbTrailTest extends \PHPUnit_Extensions_Database_TestCase {
 		$dataset->addTable("profile");
 		$dataset->addTable("company");
 		$dataset->addTable("employ");
-		$dataset->addTable("image");
 		$dataset->addTable("truck");
+		$dataset->addTable("menu");
+		$dataset->addTable("extraServing");
+		$dataset->addTable("schedule");
+		$dataset->addTable("image");
 		$dataset->addTable("event");
 
 

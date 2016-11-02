@@ -121,6 +121,33 @@ public final function setUp(){
 
 	$pdoCompany = Company::getCompanyByCompanyId($this->getPDO(), $this->company->getCompanyId());
 
+	//set start time 1 by calling new instance of \DateTime() class, this will be formatted
+	$this->VALID_EXTRASERVINGSTARTTIME1 = new \DateTime();
+	//make end time 1 a copy of start time 1
+	$this->VALID_EXTRASERVINGENDTIME1 = clone $this->VALID_EXTRASERVINGSTARTTIME1;
+	//add one additional hour to the time of end time 1
+	$this->VALID_EXTRASERVINGENDTIME1->add(new \DateInterval("PT1H"));
+
+	//set start time 2
+	$this->VALID_EXTRASERVINGSTARTTIME2 = new \DateTime();
+	$this->VALID_EXTRASERVINGENDTIME2 = clone $this->VALID_EXTRASERVINGSTARTTIME2;
+	//add 1 hour 30 min to end time 2
+	$this->VALID_EXTRASERVINGENDTIME2->add(new \DateInterval("PT1H"));
+
+
+//	-----------------------------------------TEST SECTION------------------------------------------------------------
+
+	/**
+	 * TEST INSERTING A VALID ExtraServing object to SQL
+	 */
+	public function testInsertValidExtraServing(){
+		//get number of rows and save for later
+		$numRows = $this->getConnection()->getRowCount("extraServing");
+
+
+
+	}
+
 
 
 
