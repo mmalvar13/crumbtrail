@@ -412,6 +412,7 @@ class ExtraServingTest extends CrumbTrailTest {
 		//get an extraServing by searching for a ID and foreign key that doesnt exist
 		$extraServing = ExtraServing::getExtraServingByExtraServingIdAndExtraServingCompanyId($this->getPDO(), CrumbTrailTest::INVALID_KEY, CrumbTrailTest::INVALID_KEY);
 
+		//Monica used $this->assertNull($event); here and just in this one similar instance? sup wit dat?
 		$this->assertCount(0,$extraServing );
 
 	}
