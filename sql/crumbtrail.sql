@@ -1,18 +1,15 @@
 -- drop tables in reverse order to start fresh every time
 
-# DROP TABLE IF EXISTS company;
-# DROP TABLE IF EXISTS employ;
-# DROP TABLE IF EXISTS event;
-# DROP TABLE IF EXISTS image;
-# DROP TABLE IF EXISTS profile;
-# DROP TABLE IF EXISTS truck;
+
 
 DROP TABLE IF EXISTS event;
 DROP TABLE IF EXISTS image;
-DROP TABLE IF EXISTS truck;
-DROP TABLE IF EXISTS employ;
 DROP TABLE IF EXISTS schedule;
 DROP TABLE IF EXISTS extraServing;
+DROP TABLE If EXISTS menu;
+DROP TABLE IF EXISTS truck;
+DROP TABLE IF EXISTS employ;
+
 DROP TABLE IF EXISTS company;
 DROP TABLE IF EXISTS profile;
 
@@ -78,6 +75,40 @@ CREATE TABLE company (
 	PRIMARY KEY(companyId)
 );
 
+
+CREATE TABLE employ(
+	employCompanyId INT UNSIGNED NOT NULL,
+	employProfileId INT UNSIGNED NOT NULL,
+	INDEX(employCompanyId),
+	INDEX(employProfileId),
+	FOREIGN KEY(employCompanyId) REFERENCES company(companyId),
+	FOREIGN KEY(employProfileId) REFERENCES profile(profileId),
+	PRIMARY KEY(employCompanyId, employProfileId)
+);
+
+
+
+CREATE TABLE truck (
+	truckId INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	truckCompanyId INT UNSIGNED NOT NULL,
+	truckName VARCHAR(128),
+	INDEX(truckCompanyId),
+	FOREIGN KEY(truckCompanyId) REFERENCES company(companyId),
+	PRIMARY KEY (truckId)
+);
+
+CREATE TABLE menu (
+	menuId INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	menuCompanyId INT UNSIGNED NOT NULL ,
+	menuCost FLOAT UNSIGNED NOT NULL ,
+	menuDescription VARCHAR(512),
+	menuItem VARCHAR(512) NOT NULL ,
+
+	INDEX (menuCompanyId),
+	FOREIGN KEY (menuCompanyId) REFERENCES company(companyId),
+	PRIMARY KEY (menuId)
+);
+
 CREATE TABLE extraServing (
 
 	extraServingId INT UNSIGNED AUTO_INCREMENT NOT NULL,
@@ -110,17 +141,6 @@ CREATE TABLE schedule (
 );
 
 
-CREATE TABLE employ(
-	employCompanyId INT UNSIGNED NOT NULL,
-	employProfileId INT UNSIGNED NOT NULL,
-	INDEX(employCompanyId),
-	INDEX(employProfileId),
-	FOREIGN KEY(employCompanyId) REFERENCES company(companyId),
-	FOREIGN KEY(employProfileId) REFERENCES profile(profileId),
-	PRIMARY KEY(employCompanyId, employProfileId)
-);
-
-
 CREATE TABLE image (
 	imageId        INT UNSIGNED AUTO_INCREMENT NOT NULL,
 	-- foreign key imageCompanyId
@@ -133,14 +153,6 @@ CREATE TABLE image (
 	PRIMARY KEY(imageId)
 );
 
-CREATE TABLE truck (
-	truckId INT UNSIGNED AUTO_INCREMENT NOT NULL,
-	truckCompanyId INT UNSIGNED NOT NULL,
-	truckName VARCHAR(128),
-	INDEX(truckCompanyId),
-	FOREIGN KEY(truckCompanyId) REFERENCES company(companyId),
-	PRIMARY KEY (truckId)
-);
 
 CREATE TABLE event(
 	eventId INT UNSIGNED AUTO_INCREMENT NOT NULL,
