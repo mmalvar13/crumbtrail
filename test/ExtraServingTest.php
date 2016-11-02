@@ -422,7 +422,7 @@ class ExtraServingTest extends CrumbTrailTest {
 	/**
 	 * TEST getting extraServing by valid address
 	 */
-	public function testGetExtraServingByExtraServingLocationAddress() {
+	public function testGetExtraServingByValidExtraServingLocationAddress() {
 
 		$numRows = $this->getConnection()->getRowCount("extraServing");
 
@@ -451,6 +451,19 @@ class ExtraServingTest extends CrumbTrailTest {
 		$this->assertEquals($pdoExtraServing->getExtraServingLocationAddress(), $this->VALID_EXTRASERVINGLOCATIONADDRESS1);
 		$this->assertEquals($pdoExtraServing->getExtraServingLocationName(), $this->VALID_EXTRASERVINGLOCATIONNAME1);
 		$this->assertEquals($pdoExtraServing->getExtraServingStartTime(), $this->VALID_EXTRASERVINGSTARTTIME1);
+
+	}
+
+	/**
+	 * test getting extra serving by invalid location address
+	 * @expectedException \PDOException
+	 */
+	public function testGetExtraServingByInvalidExtraServingLocationAddress(){
+
+		//get an extraServing by searching for a description that doesnt exist
+		$extraServing = ExtraServing::getExtraServingByExtraServingLocationAddress($this->getPDO(), "ADDRESS DONT EXIST");
+
+		$this->assertCount(0,$extraServing );
 
 	}
 
