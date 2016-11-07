@@ -19,7 +19,6 @@ require_once(dirname(__DIR__) . "/public_html/php/classes/autoload.php");
  * @see Schedule
  * @author Victoria Chacon <victoriousdesignco@gmail.com>
  **/
-
 class ScheduleTest extends CrumbTrailTest {
 	//setting up made up variables to test
 	//--------------STATE VARIABLES: PROTECTED SECTION----------------------------//
@@ -71,36 +70,36 @@ class ScheduleTest extends CrumbTrailTest {
 	protected $VALID_SCHEDULELOCATIONNAME2 = "418 Teapot Event ";
 	/**
 	 * Timestamp data for the Schedule Start Time
-	 *@var /DateTime $VALID_SCHEDULESTARTTIME1
+	 * @var /DateTime $VALID_SCHEDULESTARTTIME1
 	 */
 	protected $VALID_SCHEDULESTARTTIME1 = null;
 	/**
 	 * Timestamp data for the Schedule Start Time
-	 *@var /DateTime $VALID_SCHEDULESTARTTIME2
+	 * @var /DateTime $VALID_SCHEDULESTARTTIME2
 	 */
 	protected $VALID_SCHEDULESTARTTIME2 = null;
 
 //---------CREATING ALREADY MADE STUFF THAT WILL BE INSERTED, UPDATED, DELETED-----//
 //------------------------BASED ON THE INFORMATION ABOVE---------------------------//
 
-public final function setUp() {
+	public final function setUp() {
 
-	parent::setUp();
+		parent::setUp();
 
-	//creating a fake company so that we can make a connection between company and schedule
-	$password = "abc123";
-	$salt = bin2hex(random_bytes(16));
-	//what was the blue number below again??
-	$hash = hash_pbkdf2("sha512", $password, $salt, 262144);
+		//creating a fake company so that we can make a connection between company and schedule
+		$password = "abc123";
+		$salt = bin2hex(random_bytes(16));
+		//what was the blue number below again??
+		$hash = hash_pbkdf2("sha512", $password, $salt, 262144);
 
-	//kept this stuff the same as my last test since it worked the last time.....why not
-	//took out the second profile and company...dont think i need these in the last test i only needed them in the event that we needed a truck to move over to another company....which is not the case here hehe.
+		//kept this stuff the same as my last test since it worked the last time.....why not
+		//took out the second profile and company...dont think i need these in the last test i only needed them in the event that we needed a truck to move over to another company....which is not the case here hehe.
 
-	//------------Profile 1--------------------------------------------------
-	$this->profile = new Profile(null, "Terry", "test@phpunit.de", "12125551212", "0000000000000000000000000000000000000000000000000000000000004444", "00000000000000000000000000000022", "o", $hash, $salt);
-	// Insert the dummy profile object into the database.
-	$this->profile->insert($this->getPDO());
-	$pdoProfile = Profile::getProfileByProfileId($this->getPDO(), $this->profile->getProfileId());
+		//------------Profile 1--------------------------------------------------
+		$this->profile = new Profile(null, "Terry", "test@phpunit.de", "12125551212", "0000000000000000000000000000000000000000000000000000000000004444", "00000000000000000000000000000022", "o", $hash, $salt);
+		// Insert the dummy profile object into the database.
+		$this->profile->insert($this->getPDO());
+		$pdoProfile = Profile::getProfileByProfileId($this->getPDO(), $this->profile->getProfileId());
 
 //	//--------------Profile 2-------------------------------------------------
 //	$this->profile2 = new Profile(null, "James", "james@gmail.com", "12125555567", "0000000000000000000000000000000000000000000000000000000000005555", "00000000000000000000000000000088", "e", $hash, $salt);
@@ -108,30 +107,59 @@ public final function setUp() {
 //	$this->profile2->insert($this->getPDO());
 //	$pdoProfile2 = Profile::getProfileByProfileId($this->getPDO(), $this->profile2->getProfileId());
 
-	//create and insert a company to own the test schedule
-	//---------------------company1------------------------------------------------
-	$this->company = new Company(null, $pdoProfile->getProfileId(), "Terry's Tacos", "terrytacos@tacos.com", "5052345678", "12345", "2345", "attn: MR Taco", "345 Taco Street", "Taco Street 2", "Albuquerque", "NM", "87654", "We are a Taco truck description", "Tacos, Tortillas, Burritos", "84848409878765432123456789099999", 1);
-	$this->company->insert($this->getPDO());
+		//create and insert a company to own the test schedule
+		//---------------------company1------------------------------------------------
+		$this->company = new Company(null, $pdoProfile->getProfileId(), "Terry's Tacos", "terrytacos@tacos.com", "5052345678", "12345", "2345", "attn: MR Taco", "345 Taco Street", "Taco Street 2", "Albuquerque", "NM", "87654", "We are a Taco truck description", "Tacos, Tortillas, Burritos", "84848409878765432123456789099999", 1);
+		$this->company->insert($this->getPDO());
 
 //	//--------------------------company2-----------------------------------------
 //	//create and insert a second company to buy the test truck (a truck moving to another company)
 //	$this->company2 = new Company(null, $pdoProfile2->getProfileId(), "Truckina's Crepes", "truckina@trucks.com", "5052345666", "45678", "4567", "attn: MRS Crepe", "456 Crepe Street", "CrepeStreet2", "Albuquerque", "NM", "45678", "We sell crepes", "crepes, ice cream, cakes", "34343409876543212345678998787654", 0);
 //	$this->company2->insert($this->getPDO());
-	//SETUP DATE TIME OBJECTS
-	$this->VALID_SCHEDULESTARTTIME1 = new \DateTime();
-	$this->VALID_SCHEDULEENDTIME1 = clone $this->VALID_SCHEDULESTARTTIME1;
-	$this->VALID_SCHEDULEENDTIME1->add(new \DateInterval('PT1H'));
+		//SETUP DATE TIME OBJECTS
+		$this->VALID_SCHEDULESTARTTIME1 = new \DateTime();
+		$this->VALID_SCHEDULEENDTIME1 = clone $this->VALID_SCHEDULESTARTTIME1;
+		$this->VALID_SCHEDULEENDTIME1->add(new \DateInterval('PT1H'));
 
-	$this->VALID_SCHEDULESTARTTIME2 = new \DateTime();
-	$this->VALID_SCHEDULEENDTIME2 = clone $this->VALID_SCHEDULESTARTTIME2;
-	$this->VALID_SCHEDULEENDTIME2->add(new \DateInterval('PT1H'));
+		$this->VALID_SCHEDULESTARTTIME2 = new \DateTime();
+		$this->VALID_SCHEDULEENDTIME2 = clone $this->VALID_SCHEDULESTARTTIME2;
+		$this->VALID_SCHEDULEENDTIME2->add(new \DateInterval('PT1H'));
 
+	}
+	//---------------------------NOW.....WE TEST!!!!!--------------------------------//
+	/**
+	 *Insert a valid schedule object into SQL
+	 **/
+	public function testInsertValidSchedule() {
+		$numRows = $this->getConnection()->getRowCount("schedule");
 
-}
+		$schedule = new Schedule(null, $this->company->getCompanyId(), $this->VALID_SCHEDULEDAYOFWEEK1, $this->VALID_SCHEDULEENDTIME1, $this->VALID_SCHEDULELOCATIONADDRESS1, $this->VALID_SCHEDULELOCATIONNAME1, $this->VALID_SCHEDULELOCATIONNAME1, $this->VALID_SCHEDULESTARTTIME1);
 
-/**
- *
- */
+		$schedule->insert($this->getPDO());
+
+		//make sure this data in sql matches what we have above.....
+
+		$pdoSchedule = Schedule::getScheduleByScheduleId($this->getPDO(), $schedule->getScheduleId());
+
+		//grab the data from mySQL and enforce the fields match our expectations
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("schedule"));
+
+		$this->assertEquals($pdoSchedule->getScheduleCompanyId(), $this->company->getCompanyId());
+		$this->assertEquals($pdoSchedule->getScheduleDayOfWeek(), $this->VALID_SCHEDULEDAYOFWEEK1);
+		$this->assertEquals($pdoSchedule->getScheduleEndTime(), $this->VALID_SCHEDULEENDTIME1);
+		$this->assertEquals($pdoSchedule->getScheduleLocationAddress(), $this->VALID_SCHEDULELOCATIONADDRESS1);
+		$this->assertEquals($pdoSchedule->getScheduleLocationName(), $this->VALID_SCHEDULELOCATIONNAME1);
+		$this->assertEquals($pdoSchedule->getScheduleStartTime(), $this->VALID_SCHEDULESTARTTIME1);
+
+	}
+	/**
+	 * Test inserting an INVALID schedule into the SQL
+	 * @expectedException \PDOException
+	 **/
+	public function testInsertInvalidSchedule() {
+
+	}
+
 //   "}"   NOT SURE IF THIS BELONGED SOMEWHERE...OOOOPS
 
 
