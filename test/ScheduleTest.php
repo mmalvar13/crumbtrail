@@ -94,6 +94,7 @@ public final function setUp() {
 	$hash = hash_pbkdf2("sha512", $password, $salt, 262144);
 
 	//kept this stuff the same as my last test since it worked the last time.....why not
+	//took out the second profile and company...dont think i need these in the last test i only needed them in the event that we needed a truck to move over to another company....which is not the case here hehe.
 
 	//------------Profile 1--------------------------------------------------
 	$this->profile = new Profile(null, "Terry", "test@phpunit.de", "12125551212", "0000000000000000000000000000000000000000000000000000000000004444", "00000000000000000000000000000022", "o", $hash, $salt);
@@ -101,22 +102,36 @@ public final function setUp() {
 	$this->profile->insert($this->getPDO());
 	$pdoProfile = Profile::getProfileByProfileId($this->getPDO(), $this->profile->getProfileId());
 
-	//--------------Profile 2-------------------------------------------------
-	$this->profile2 = new Profile(null, "James", "james@gmail.com", "12125555567", "0000000000000000000000000000000000000000000000000000000000005555", "00000000000000000000000000000088", "e", $hash, $salt);
-	// Insert the dummy profile object into the database.
-	$this->profile2->insert($this->getPDO());
-	$pdoProfile2 = Profile::getProfileByProfileId($this->getPDO(), $this->profile2->getProfileId());
+//	//--------------Profile 2-------------------------------------------------
+//	$this->profile2 = new Profile(null, "James", "james@gmail.com", "12125555567", "0000000000000000000000000000000000000000000000000000000000005555", "00000000000000000000000000000088", "e", $hash, $salt);
+//	// Insert the dummy profile object into the database.
+//	$this->profile2->insert($this->getPDO());
+//	$pdoProfile2 = Profile::getProfileByProfileId($this->getPDO(), $this->profile2->getProfileId());
 
 	//create and insert a company to own the test schedule
 	//---------------------company1------------------------------------------------
 	$this->company = new Company(null, $pdoProfile->getProfileId(), "Terry's Tacos", "terrytacos@tacos.com", "5052345678", "12345", "2345", "attn: MR Taco", "345 Taco Street", "Taco Street 2", "Albuquerque", "NM", "87654", "We are a Taco truck description", "Tacos, Tortillas, Burritos", "84848409878765432123456789099999", 1);
 	$this->company->insert($this->getPDO());
 
-	//--------------------------company2-----------------------------------------
-	//create and insert a second company to buy the test truck (a truck moving to another company)
-	$this->company2 = new Company(null, $pdoProfile2->getProfileId(), "Truckina's Crepes", "truckina@trucks.com", "5052345666", "45678", "4567", "attn: MRS Crepe", "456 Crepe Street", "CrepeStreet2", "Albuquerque", "NM", "45678", "We sell crepes", "crepes, ice cream, cakes", "34343409876543212345678998787654", 0);
-	$this->company2->insert($this->getPDO());
+//	//--------------------------company2-----------------------------------------
+//	//create and insert a second company to buy the test truck (a truck moving to another company)
+//	$this->company2 = new Company(null, $pdoProfile2->getProfileId(), "Truckina's Crepes", "truckina@trucks.com", "5052345666", "45678", "4567", "attn: MRS Crepe", "456 Crepe Street", "CrepeStreet2", "Albuquerque", "NM", "45678", "We sell crepes", "crepes, ice cream, cakes", "34343409876543212345678998787654", 0);
+//	$this->company2->insert($this->getPDO());
+	//SETUP DATE TIME OBJECTS
+	$this->VALID_SCHEDULESTARTTIME1 = new \DateTime();
+	$this->VALID_SCHEDULEENDTIME1 = clone $this->VALID_SCHEDULESTARTTIME1;
+	$this->VALID_SCHEDULEENDTIME1->add(new \DateInterval('PT1H'));
+
+	$this->VALID_SCHEDULESTARTTIME2 = new \DateTime();
+	$this->VALID_SCHEDULEENDTIME2 = clone $this->VALID_SCHEDULESTARTTIME2;
+	$this->VALID_SCHEDULEENDTIME2->add(new \DateInterval('PT1H'));
+
+
 }
+
+/**
+ *
+ */
 //   "}"   NOT SURE IF THIS BELONGED SOMEWHERE...OOOOPS
 
 
