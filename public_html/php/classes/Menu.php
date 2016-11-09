@@ -373,13 +373,190 @@ class Menu implements \JsonSerializable {
 	}
 
 	/**
+	 * Get menu by menuItem, e.g. search for tacos.
+	 * ??? Change get company by companyMenuText, in the class Company ???
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $menuItem menu item to search for
+	 * @return \SplFixedArray SplFixedArray of menus found, that match the search
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getMenuByMenuItem(\PDO $pdo, string $menuItem) {
+		$menuItem = trim($menuItem);
+		$menuItem = filter_var($menuItem, FILTER_SANTIZE_STRING);
+
+        if(empty($menuItem) === TRUE) {
+			  throw(new \PDOException("Menu item is empty"));
+		  }
+
+        // ??? Check the maximum string length ???
+        if(strlen($menuItem) > 128) {
+			  throw(new \PDOException("Menu item is too long"));
+		  }
+
+        $query = "SELECT menuId, menuCompanyId, menuCost, menuDescription, menuItem FROM menu WHERE menuItem =:menuItem";
+
+        $statement = $pdo->prepare($query);
+        $parameters = ["menuItem" => $menuItem];
+        $statement->execute($parameters);
+
+        try {
+			  $menu = null;
+			  $statement->setFetchMode(\PDO::FETCH_ASSOC);
+			  $row = $statement->fetch();
+
+			  if($row !== false) {
+				  $menu = new Menu($row["menuId"], $row["menuCompanyId"], $row["menuCost"], $row["menuDescription"], $row["menuItem"]);
+			  }
+
+			  // ??? Build an array of all the menus that contain the searched-for menuItem ???
+			  $menus[$menus->key()] = $menu;
+			  $menus->next();
+
+		  } catch(\Exception $exception) {
+			  //if throw couldn't be converted, rethrow it
+			  throw(new \PDOException($exception->getMessage(), 0, $exception));
+		  }
+        return ($menus);
+    }
+
+
+//-----------------------------------------------------------------
+	/**
+	 * Get menu by menuCost.
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param float $menuCost menu item to search for
+	 * @return \SplFixedArray SplFixedArray of menus found, that match the search
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getMenuByMenuCost(\PDO $pdo, float $menuCost) {
+		if(empty($menuCost) === TRUE) {
+			throw(new \PDOException("Menu cost is empty"));
+		}
+
+		$query = "SELECT menuId, menuCompanyId, menuCost, menuDescription, menuItem FROM menu WHERE menuCost =:menuCost";
+
+		$statement = $pdo->prepare($query);
+		$parameters = ["menuCost" => $menuCost];
+		$statement->execute($parameters);
+
+		try {
+			$menu = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+
+			if($row !== false) {
+				$menu = new Menu($row["menuId"], $row["menuCompanyId"], $row["menuCost"], $row["menuDescription"], $row["menuItem"]);
+			}
+
+			$menus[$menus->key()] = $menu;
+			$menus->next();
+
+		} catch(\Exception $exception) {
+			//if throw couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return ($menus);
+	}
+
+
+//-----------------------------------------------------------------
+	/**
+	 * Get menu by menuDescription.
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $menuDescription menu item to search for
+	 * @return \SplFixedArray SplFixedArray of menus found, that match the search
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getMenuByMenuDescription(\PDO $pdo, string $menuDescription) {
+		$menuItem = trim($menuDescription);
+		$menuItem = filter_var($menuDescription, FILTER_SANTIZE_STRING);
+
+        if(empty($menuDescription) === TRUE) {
+			  throw(new \PDOException("Menu description is empty"));
+		  }
+
+        // ??? Check the maximum string length ???
+        if(strlen($menuItem) > 128) {
+			  throw(new \PDOException("Menu description is too long"));
+		  }
+
+        $query = "SELECT menuId, menuCompanyId, menuCost, menuDescription, menuItem FROM menu WHERE menuDescription =:menuDescription";
+
+        $statement = $pdo->prepare($query);
+        $parameters = ["menuDescription" => $menuDescription];
+        $statement->execute($parameters);
+
+        try {
+			  $menu = null;
+			  $statement->setFetchMode(\PDO::FETCH_ASSOC);
+			  $row = $statement->fetch();
+
+			  if($row !== false) {
+				  $menu = new Menu($row["menuId"], $row["menuCompanyId"], $row["menuCost"], $row["menuDescription"], $row["menuItem"]);
+			  }
+
+			  $menus[$menus->key()] = $menu;
+			  $menus->next();
+
+		  } catch(\Exception $exception) {
+			  //if throw couldn't be converted, rethrow it
+			  throw(new \PDOException($exception->getMessage(), 0, $exception));
+		  }
+        return ($menus);
+    }
+
+
+	/**
+	 * Get all menus.
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @return \SplFixedArray SplFixedArray of menus found, that match the search
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getAllMenus(\PDO $pdo) {
+        $menuItem = trim($menuItem);
+        $menuItem = filter_var($menuItem, FILTER_SANTIZE_STRING);
+
+        $query = "SELECT menuId, menuCompanyId, menuCost, menuDescription, menuItem FROM menu";
+
+        $statement = $pdo->prepare($query);
+        $statement->execute($parameters);
+
+		$menus = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$menu = new Menu($row["menuId"], $row["menuCompanyId"], $row["menuCost"], $row["menuDescription"], $row["menuItem"]);
+
+				$menus[$menus->key()] = $menu;
+				$menus->next();
+			}
+
+catch
+(\Exception $exception) {
+	// If the row couldn't be converted, rethrow it.
+	throw(new \PDOException($exception->getMessage(), 0, $exception));
+}
+		}
+        return ($menus);
+    }
+
+	/**
 	 * Formats the state variables for JSON serialization
 	 *
 	 * @return array resulting state variables to serialize
 	 **/
 	public function jsonSerialize() {
-		$fields = get_object_vars($this);
-		return($fields);
-	}
+	$fields = get_object_vars($this);
+	return ($fields);
+}
 }
 
