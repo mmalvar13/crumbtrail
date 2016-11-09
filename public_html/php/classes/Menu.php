@@ -527,18 +527,18 @@ class Menu implements \JsonSerializable {
 		$menus = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 
-		while(($row = $statement->fetch()) !== false){
-			try{
+		while(($row = $statement->fetch()) !== false) {
+			try {
 				$menu = new Menu($row["menuId"], $row["menuCompanyId"], $row["menuCost"], $row["menuDescription"], $row["menuItem"]);
 
 				$menus[$menus->key()] = $menu;
 				$menus->next();
-			}catch(\Exception $exception){
+			} catch(\Exception $exception) {
 				//if the row couldn't be converted, rethrow it
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
 		}
-		return($menus);
+		return ($menus);
 	}
 
 
@@ -551,13 +551,12 @@ class Menu implements \JsonSerializable {
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
 	public static function getAllMenus(\PDO $pdo) {
-		$menuItem = trim($menuItem);
-		$menuItem = filter_var($menuItem, FILTER_SANTIZE_STRING);
-
+		//create query template
 		$query = "SELECT menuId, menuCompanyId, menuCost, menuDescription, menuItem FROM menu";
 
+
 		$statement = $pdo->prepare($query);
-		$statement->execute($parameters);
+		$statement->execute();
 
 		$menus = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
