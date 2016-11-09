@@ -24,7 +24,7 @@ class Menu implements \JsonSerializable {
 
 	/**
 	 * The cost of this menu item, menuCost.
-	 * @var string $menuCost ;
+	 * @var float $menuCost ;
 	 **/
 	private $menuCost;
 
@@ -46,7 +46,7 @@ class Menu implements \JsonSerializable {
 	 *
 	 * @param int|null $newMenuId
 	 * @param int $newMenuCompanyId
-	 * @param string $newMenuCost
+	 * @param float $newMenuCost
 	 * @param string $newMenuDescription
 	 * @param string $newMenuItem
 	 * @throws \RangeException when the integer is negative
@@ -54,7 +54,7 @@ class Menu implements \JsonSerializable {
 	 * @throws \exception when errors need to be called in the code
 	 **/
 
-	public function __construct(int $newMenuId = null, int $newMenuCompanyId, string $newMenuCost, string $newMenuDescription, string $newMenuItem) {
+	public function __construct(int $newMenuId = null, int $newMenuCompanyId, float $newMenuCost, string $newMenuDescription, string $newMenuItem) {
 
 		try {
 			$this->setMenuId($newMenuId);
@@ -132,7 +132,7 @@ class Menu implements \JsonSerializable {
 	/**
 	 * Accessor for the menu cost
 	 *
-	 *@return float value of menu cost e.g. $5.99
+	 * @return float value of menu cost e.g. $5.99
 	 **/
 	public function getMenuCost() {
 		return ($this->menuCost);
@@ -156,7 +156,7 @@ class Menu implements \JsonSerializable {
 	 * ??? Need something for dollar amount formatting ???
 	 **/
 	public function setMenuCost(float $newMenuCost) {
-		if($newMenuCost <=0) {
+		if($newMenuCost <= 0) {
 			throw (new \RangeException ("Menu cost is not positive"));
 		}
 		$this->menuCost = $newMenuCost;
@@ -189,9 +189,6 @@ class Menu implements \JsonSerializable {
 //
 //		$this->menuCost = $newMenuCost;
 //	}
-
-
-
 
 
 //-----------------------------------------------------------------
@@ -415,40 +412,40 @@ class Menu implements \JsonSerializable {
 		$menuItem = trim($menuItem);
 		$menuItem = filter_var($menuItem, FILTER_SANTIZE_STRING);
 
-        if(empty($menuItem) === TRUE) {
-			  throw(new \PDOException("Menu item is empty"));
-		  }
+		if(empty($menuItem) === TRUE) {
+			throw(new \PDOException("Menu item is empty"));
+		}
 
-        // ??? Check the maximum string length ???
-        if(strlen($menuItem) > 128) {
-			  throw(new \PDOException("Menu item is too long"));
-		  }
+		// ??? Check the maximum string length ???
+		if(strlen($menuItem) > 128) {
+			throw(new \PDOException("Menu item is too long"));
+		}
 
-        $query = "SELECT menuId, menuCompanyId, menuCost, menuDescription, menuItem FROM menu WHERE menuItem =:menuItem";
+		$query = "SELECT menuId, menuCompanyId, menuCost, menuDescription, menuItem FROM menu WHERE menuItem =:menuItem";
 
-        $statement = $pdo->prepare($query);
-        $parameters = ["menuItem" => $menuItem];
-        $statement->execute($parameters);
+		$statement = $pdo->prepare($query);
+		$parameters = ["menuItem" => $menuItem];
+		$statement->execute($parameters);
 
-        try {
-			  $menu = null;
-			  $statement->setFetchMode(\PDO::FETCH_ASSOC);
-			  $row = $statement->fetch();
+		try {
+			$menu = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
 
-			  if($row !== false) {
-				  $menu = new Menu($row["menuId"], $row["menuCompanyId"], $row["menuCost"], $row["menuDescription"], $row["menuItem"]);
-			  }
+			if($row !== false) {
+				$menu = new Menu($row["menuId"], $row["menuCompanyId"], $row["menuCost"], $row["menuDescription"], $row["menuItem"]);
+			}
 
-			  // ??? Build an array of all the menus that contain the searched-for menuItem ???
-			  $menus[$menus->key()] = $menu;
-			  $menus->next();
+			// ??? Build an array of all the menus that contain the searched-for menuItem ???
+			$menus[$menus->key()] = $menu;
+			$menus->next();
 
-		  } catch(\Exception $exception) {
-			  //if throw couldn't be converted, rethrow it
-			  throw(new \PDOException($exception->getMessage(), 0, $exception));
-		  }
-        return ($menus);
-    }
+		} catch(\Exception $exception) {
+			//if throw couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return ($menus);
+	}
 
 
 //-----------------------------------------------------------------
@@ -503,42 +500,46 @@ class Menu implements \JsonSerializable {
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
 	public static function getMenuByMenuDescription(\PDO $pdo, string $menuDescription) {
-		$menuItem = trim($menuDescription);
-		$menuItem = filter_var($menuDescription, FILTER_SANTIZE_STRING);
+		$menuDescription = trim($menuDescription);
+		$menuDescription = filter_var($menuDescription, FILTER_SANITIZE_STRING);
 
-        if(empty($menuDescription) === TRUE) {
-			  throw(new \PDOException("Menu description is empty"));
-		  }
+		if(empty($menuDescription) === true) {
+			throw(new \PDOException("Menu description is empty"));
+		}
 
-        // ??? Check the maximum string length ???
-        if(strlen($menuItem) > 128) {
-			  throw(new \PDOException("Menu description is too long"));
-		  }
+		// ??? Check the maximum string length ???
+		if(strlen($menuDescription) > 512) {
+			throw(new \PDOException("Menu description is too long"));
+		}
 
-        $query = "SELECT menuId, menuCompanyId, menuCost, menuDescription, menuItem FROM menu WHERE menuDescription =:menuDescription";
+		$query = "SELECT menuId, menuCompanyId, menuCost, menuDescription, menuItem FROM menu WHERE menuDescription LIKE :menuDescription";
 
-        $statement = $pdo->prepare($query);
-        $parameters = ["menuDescription" => $menuDescription];
-        $statement->execute($parameters);
+		//prepare template
+		$statement = $pdo->prepare($query);
 
-        try {
-			  $menu = null;
-			  $statement->setFetchMode(\PDO::FETCH_ASSOC);
-			  $row = $statement->fetch();
+		//bind to the placeholder in the template
+		$menuDescription = "%$menuDescription%";
+		$parameters = ["menuDescription" => $menuDescription];
+		//execute the SQL statement
+		$statement->execute($parameters);
 
-			  if($row !== false) {
-				  $menu = new Menu($row["menuId"], $row["menuCompanyId"], $row["menuCost"], $row["menuDescription"], $row["menuItem"]);
-			  }
+		//build an array of menus
+		$menus = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 
-			  $menus[$menus->key()] = $menu;
-			  $menus->next();
+		while(($row = $statement->fetch()) !== false){
+			try{
+				$menu = new Menu($row["menuId"], $row["menuCompanyId"], $row["menuCost"], $row["menuDescription"], $row["menuItem"]);
 
-		  } catch(\Exception $exception) {
-			  //if throw couldn't be converted, rethrow it
-			  throw(new \PDOException($exception->getMessage(), 0, $exception));
-		  }
-        return ($menus);
-    }
+				$menus[$menus->key()] = $menu;
+				$menus->next();
+			}catch(\Exception $exception){
+				//if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($menus);
+	}
 
 
 	/**
@@ -550,13 +551,13 @@ class Menu implements \JsonSerializable {
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
 	public static function getAllMenus(\PDO $pdo) {
-        $menuItem = trim($menuItem);
-        $menuItem = filter_var($menuItem, FILTER_SANTIZE_STRING);
+		$menuItem = trim($menuItem);
+		$menuItem = filter_var($menuItem, FILTER_SANTIZE_STRING);
 
-        $query = "SELECT menuId, menuCompanyId, menuCost, menuDescription, menuItem FROM menu";
+		$query = "SELECT menuId, menuCompanyId, menuCost, menuDescription, menuItem FROM menu";
 
-        $statement = $pdo->prepare($query);
-        $statement->execute($parameters);
+		$statement = $pdo->prepare($query);
+		$statement->execute($parameters);
 
 		$menus = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
@@ -567,16 +568,14 @@ class Menu implements \JsonSerializable {
 
 				$menus[$menus->key()] = $menu;
 				$menus->next();
+			} catch
+			(\Exception $exception) {
+				// If the row couldn't be converted, rethrow it.
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
-
-catch
-(\Exception $exception) {
-	// If the row couldn't be converted, rethrow it.
-	throw(new \PDOException($exception->getMessage(), 0, $exception));
-}
 		}
-        return ($menus);
-    }
+		return ($menus);
+	}
 
 	/**
 	 * Formats the state variables for JSON serialization
@@ -584,8 +583,8 @@ catch
 	 * @return array resulting state variables to serialize
 	 **/
 	public function jsonSerialize() {
-	$fields = get_object_vars($this);
-	return ($fields);
-}
+		$fields = get_object_vars($this);
+		return ($fields);
+	}
 }
 
