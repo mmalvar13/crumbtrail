@@ -410,14 +410,14 @@ class Menu implements \JsonSerializable {
 	 **/
 	public static function getMenuByMenuItem(\PDO $pdo, string $menuItem) {
 		$menuItem = trim($menuItem);
-		$menuItem = filter_var($menuItem, FILTER_SANTIZE_STRING);
+		$menuItem = filter_var($menuItem, FILTER_SANITIZE_STRING);
 
-		if(empty($menuItem) === TRUE) {
+		if(empty($menuItem) === true) {
 			throw(new \PDOException("Menu item is empty"));
 		}
 
 		// ??? Check the maximum string length ???
-		if(strlen($menuItem) > 128) {
+		if(strlen($menuItem) > 512) {
 			throw(new \PDOException("Menu item is too long"));
 		}
 
@@ -459,7 +459,7 @@ class Menu implements \JsonSerializable {
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
 	public static function getMenuByMenuCost(\PDO $pdo, float $menuCost) {
-		if(empty($menuCost) === TRUE) {
+		if(empty($menuCost) === true) {
 			throw(new \PDOException("Menu cost is empty"));
 		}
 
