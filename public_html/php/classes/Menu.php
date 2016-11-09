@@ -132,38 +132,67 @@ class Menu implements \JsonSerializable {
 	/**
 	 * Accessor for the menu cost
 	 *
-	 * @return string value of menu cost e.g. $5.99
+	 *@return float value of menu cost e.g. $5.99
 	 **/
 	public function getMenuCost() {
 		return ($this->menuCost);
 	}
 
+//	/**
+//	 * Accessor for the menu cost
+//	 *
+//	 * @return string value of menu cost e.g. $5.99
+//	 **/
+//	public function getMenuCost() {
+//		return ($this->menuCost);
+//	}
+
 	/**
 	 * Mutator method for menu cost
 	 *
-	 * @param string $newMenuCost new value of menu cost
+	 * @param float $newMenuCost new value of menu cost
 	 * @throws \RangeException if $newMenuCost is negative
-	 * @throws \InvalidArgumentException if $newMenuCost is not a string
-	 * @throws \TypeError if $newMenuItem is not a string
+	 * @throws \TypeError
 	 * ??? Need something for dollar amount formatting ???
 	 **/
-	public function setMenuCost(string $newMenuCost) {
-		//strip out white space on either end of $newMenuCost
-		$newMenuCost = trim($newMenuCost);
-		//sanitize $newMenuCost
-		$newMenuCost = filter_var($newMenuCost, FILTER_SANITIZE_STRING);
-		//check if $newMenuCost is empty or too long
-		if(strlen($newMenuCost) === 0) {
-			throw(new \RangeException("Menu cost is too short"));
+	public function setMenuCost(float $newMenuCost) {
+		if($newMenuCost <=0) {
+			throw (new \RangeException ("Menu cost is not positive"));
 		}
-		//todo check to see what max characters are in database
-		if(strlen($newMenuCost) > 128) {
-			throw(new \RangeException("Menu cost is too long"));
-		}
-		//assign $newMenuCost to menuCost and store in SQL
-
 		$this->menuCost = $newMenuCost;
 	}
+
+
+//	/**
+//	 * Mutator method for menu cost
+//	 *
+//	 * @param string $newMenuCost new value of menu cost
+//	 * @throws \RangeException if $newMenuCost is negative
+//	 * @throws \InvalidArgumentException if $newMenuCost is not a string
+//	 * @throws \TypeError if $newMenuItem is not a string
+//	 * ??? Need something for dollar amount formatting ???
+//	 **/
+//	public function setMenuCost(string $newMenuCost) {
+//		//strip out white space on either end of $newMenuCost
+//		$newMenuCost = trim($newMenuCost);
+//		//sanitize $newMenuCost
+//		$newMenuCost = filter_var($newMenuCost, FILTER_SANITIZE_STRING);
+//		//check if $newMenuCost is empty or too long
+//		if(strlen($newMenuCost) === 0) {
+//			throw(new \RangeException("Menu cost is too short"));
+//		}
+//		//todo check to see what max characters are in database
+//		if(strlen($newMenuCost) > 128) {
+//			throw(new \RangeException("Menu cost is too long"));
+//		}
+//		//assign $newMenuCost to menuCost and store in SQL
+//
+//		$this->menuCost = $newMenuCost;
+//	}
+
+
+
+
 
 //-----------------------------------------------------------------
 	/**
