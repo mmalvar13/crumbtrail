@@ -34,7 +34,7 @@
 
 
 		<!--Google Maps API-->
-		<script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
+<!--		<script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>-->
 
 
 		<!-- Angular -->
