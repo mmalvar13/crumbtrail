@@ -1,4 +1,5 @@
-app.controller('MapController', ["$scope", "CompanyService", "EventService", "ProfileService", "TruckService", "GeoLocationService", "uiGmapGoogleMapApi",
+app.controller('MapController', ["$scope", "CompanyService", "EventService", "ProfileService", "TruckService", "GeoLocationService",
+	// "uiGmapGoogleMapApi",
 	function($scope, CompanyService, EventService, ProfileService, TruckService, GeoLocationService, uiGmapGoogleMapApi) {
 		//what do we add here on top?
 		$scope.serving = null;
