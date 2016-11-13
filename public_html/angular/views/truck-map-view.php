@@ -28,22 +28,22 @@
 				</div>
 				<button type="submit" class="btn btn-default truck-map-submit">Submit</button>
 				<h4>Current Location:</h4>
-				<ui-gmap-google-map center="{'latitude': currentEvent.eventLocation.lat, 'longitude': currentEvent.eventLocation.long}" zoom="map.zoom">
-					<ui-gmap-marker coords="{'latitude': currentEvent.eventLocation.lat, 'longitude': currentEvent.eventLocation.long}" idkey="currentEvent.eventId">
-						 <!--to show the current truck's event, or none if there is no event-->
-					</ui-gmap-marker>
-				</ui-gmap-google-map>
+<!--				<ui-gmap-google-map center="{'latitude': currentEvent.eventLocation.lat, 'longitude': currentEvent.eventLocation.long}" zoom="map.zoom">-->
+<!--					<ui-gmap-marker coords="{'latitude': currentEvent.eventLocation.lat, 'longitude': currentEvent.eventLocation.long}" idkey="currentEvent.eventId">-->
+<!--						 <!--to show the current truck's event, or none if there is no event-->-->
+<!--					</ui-gmap-marker>-->
+<!--				</ui-gmap-google-map>-->
 				<br>
 
 			</form>
 		</div>
 	</div>
 
-	<ui-gmap-google-map ng-hide="editing" center='map.center' zoom='map.zoom'>
-		<ui-gmap-marker ng-repeat="event in activeEvents" coords="{'latitude': event.eventLocation.lat, 'longitude': event.eventLocation.long}" idkey="event.eventId">
-		</ui-gmap-marker>
-	</ui-gmap-google-map>
+<!--	<ui-gmap-google-map ng-hide="editing" center='map.center' zoom='map.zoom'>-->
+<!--		<ui-gmap-marker ng-repeat="event in activeEvents" coords="{'latitude': event.eventLocation.lat, 'longitude': event.eventLocation.long}" idkey="event.eventId">-->
+<!--		</ui-gmap-marker>-->
+<!--	</ui-gmap-google-map>-->
 
 </div>
-</div>
+
 <!---------------COMMENT OUT-------------->
