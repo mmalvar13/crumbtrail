@@ -128,7 +128,7 @@ CREATE TABLE extraServing (
 
 CREATE TABLE schedule (
 	scheduleId INT UNSIGNED AUTO_INCREMENT NOT NULL,
-	scheduleComapanyId INT UNSIGNED NOT NULL,
+	scheduleCompanyId INT UNSIGNED NOT NULL,
 	scheduleDayOfWeek VARCHAR(9) NOT NULL,
 	scheduleEndTime DATETIME NOT NULL,
 	scheduleLocationAddress VARCHAR(255) NULL,
