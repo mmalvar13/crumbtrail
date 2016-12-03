@@ -28,6 +28,8 @@
 		<link href="css/style.css" rel="stylesheet" type="text/css"/>
 
 
+
+
 		<!--------------FONT AWESOME----------------->
 <!--		<link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">-->
 		<script src="https://use.fontawesome.com/812baeea59.js"></script>
@@ -80,10 +82,23 @@
 		<script src="angular/controllers/signout-controller.js"></script>
 
 
+
+		<!--leaflet javascript links 11.29--->
+<!--		<script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js"></script>-->
+<!--		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js"></script>-->
+<!--		<script src="/js/angular-leaflet-directive.min.js"></script>-->
+		<!--CSS-->
+<!--		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css">-->
+
+
 		<!-------------------------Load Mapbox-------------------->
 
 		<script src='https://api.mapbox.com/mapbox-gl-js/v0.27.0/mapbox-gl.js'></script>
 		<link href='https://api.mapbox.com/mapbox-gl-js/v0.27.0/mapbox-gl.css' rel='stylesheet' />
+
+
+
+
 
 
 

@@ -28,6 +28,16 @@
 				</div>
 				<button type="submit" class="btn btn-default truck-map-submit">Submit</button>
 				<h4>Current Location:</h4>
+
+				<!-------Mapbox stuff-------------->
+				<div id='map' style='width: 400px; height: 300px;'></div>
+				<script>
+					mapboxgl.accessToken = 'pk.eyJ1IjoibW1hbHZhcjEzIiwiYSI6ImNpdmcyMHZmZDAwenQydG82NzBxYzBodzgifQ.KGW_RTkVCfjPpzsHppDkQA';
+					var map = new mapboxgl.Map({
+						container: 'map',
+						style: 'mapbox://styles/mapbox/streets-v9'
+					});
+				</script>
 <!--				<ui-gmap-google-map center="{'latitude': currentEvent.eventLocation.lat, 'longitude': currentEvent.eventLocation.long}" zoom="map.zoom">-->
 <!--					<ui-gmap-marker coords="{'latitude': currentEvent.eventLocation.lat, 'longitude': currentEvent.eventLocation.long}" idkey="currentEvent.eventId">-->
 <!--						 <!--to show the current truck's event, or none if there is no event-->-->

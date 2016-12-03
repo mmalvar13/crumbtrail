@@ -1,4 +1,4 @@
-var app = angular.module("Crumbtrail", ["ngRoute", "ui.bootstrap", "ngMessages", "ngAnimate"]);
+var app = angular.module("Crumbtrail", ["ngRoute", "ui.bootstrap", "ngMessages", "ngAnimate", "leaflet-directive"]);
 
 // , 'uiGmapgoogle-maps'
 

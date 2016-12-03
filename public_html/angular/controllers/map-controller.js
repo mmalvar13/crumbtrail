@@ -11,6 +11,8 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 		$scope.currentEvent = {};
 
 
+
+
 		$scope.map = {
 			center: {
 				latitude: 0,
@@ -32,6 +34,18 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 		$scope.eaterMarkerId = {
 			id: 0 // this is a required filed for the eater marker
 		};
+
+
+		// //*************added this for mapbox testing 11.12 MA************************//
+		// angular.module('Crumbtrail').controller('rootController', [
+		// 	'$scope',
+		// 	function ($scope) {
+		// 		$scope.callback = function (map) {
+		// 			map.setView([51.433333, 5.483333], 12);
+		// 		};
+		// 	}
+		// ]);
+		//************************end mapbox testing*************************************************//
 
 		$scope.getGeoLocation = function() {
 			GeoLocationService.getCurrentPosition()

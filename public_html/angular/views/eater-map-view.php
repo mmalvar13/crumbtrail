@@ -10,7 +10,9 @@
 <!--</ui-gmap-google-map>-->
 
 <!--initialize map on page-->
+
 <div id='map' style='width: 400px; height: 300px;'></div>
+<!--<leaflet></leaflet>-->
 <script>
 	mapboxgl.accessToken = 'pk.eyJ1IjoibW1hbHZhcjEzIiwiYSI6ImNpdmcyMHZmZDAwenQydG82NzBxYzBodzgifQ.KGW_RTkVCfjPpzsHppDkQA';
 	var map = new mapboxgl.Map({
