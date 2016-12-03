@@ -57,7 +57,7 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 				.then(function(result) {
 					$scope.geoLocation = result;
 					// var latLong = {"lat": result.coords.latitude, "lng": result.coords.longitude};
-					$scope.center = {"lat": result.coords.latitude, "lng": result.coords.longitude};
+					$scope.center = {"lat": result.coords.latitude, "lng": result.coords.longitude, "zoom":8};
 					// $scope.marker.coords = latLong;
 					if(angular.equals({}, $scope.currentEvent)) {
 						$scope.updateMap($scope.selectedTruckId);
