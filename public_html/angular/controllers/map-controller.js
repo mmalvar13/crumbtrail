@@ -13,13 +13,13 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 
 
 
-		$scope.map = {
-			center: {
-				latitude: 0,
-				longitude: 0
-			},
-			zoom: 14
-		};
+		// $scope.map = {
+		// 	center: {
+		// 		latitude: 0,
+		// 		longitude: 0
+		// 	},
+		// 	zoom: 14
+		// };
 
 		$scope.marker = {
 			id: 0, // This should be set to the event id
@@ -56,9 +56,9 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 			GeoLocationService.getCurrentPosition()
 				.then(function(result) {
 					$scope.geoLocation = result;
-					var latLong = {"latitude": result.coords.latitude, "longitude": result.coords.longitude};
-					$scope.map.center = latLong;
-					$scope.marker.coords = latLong;
+					// var latLong = {"lat": result.coords.latitude, "lng": result.coords.longitude};
+					$scope.center = {"lat": result.coords.latitude, "lng": result.coords.longitude};
+					// $scope.marker.coords = latLong;
 					if(angular.equals({}, $scope.currentEvent)) {
 						$scope.updateMap($scope.selectedTruckId);
 					}
@@ -67,8 +67,8 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 
 		$scope.setLocationToCurrent = function(selectedTruckId) {
 			$scope.currentEvent.eventLocation = {
-				"lat": $scope.map.center.latitude,
-				"long": $scope.map.center.longitude
+				"lat": $scope.center.lat,
+				"lng": $scope.center.lng
 			};
 			$scope.currentEvent.eventStart = new Date();
 			$scope.currentEvent.eventEnd = new Date();
