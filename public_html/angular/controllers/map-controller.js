@@ -1,6 +1,6 @@
 app.controller('MapController', ["$scope", "CompanyService", "EventService", "ProfileService", "TruckService", "GeoLocationService",
 	// "uiGmapGoogleMapApi",
-	function($scope, CompanyService, EventService, ProfileService, TruckService, GeoLocationService, uiGmapGoogleMapApi) {
+	function($scope, CompanyService, EventService, ProfileService, TruckService, GeoLocationService) {
 		//what do we add here on top?
 		$scope.serving = null;
 		$scope.editing = false;
@@ -9,7 +9,7 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 		$scope.activeEvents = [];
 		$scope.events = [];
 		$scope.currentEvent = {};
-
+		$scope.markers = {};
 
 
 
@@ -21,13 +21,13 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 		// 	zoom: 14
 		// };
 
-		$scope.marker = {
-			id: 0, // This should be set to the event id
-			coords: {
-				latitude: 0,
-				longitude: 0
-			}
-		};
+		// $scope.marker = {
+		// 	id: 0, // This should be set to the event id
+		// 	coords: {
+		// 		latitude: 0,
+		// 		longitude: 0
+		// 	}
+		// };
 
 		$scope.geoLocation = null;
 		$scope.alerts = [];
@@ -57,10 +57,12 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 				.then(function(result) {
 					$scope.geoLocation = result;
 					// var latLong = {"lat": result.coords.latitude, "lng": result.coords.longitude};
-					$scope.center = {"lat": result.coords.latitude, "lng": result.coords.longitude, "zoom":8};
+					$scope.center = {"lat": result.coords.latitude, "lng": result.coords.longitude, "zoom":14};
 					// $scope.marker.coords = latLong;
 					if(angular.equals({}, $scope.currentEvent)) {
-						$scope.updateMap($scope.selectedTruckId);
+						// $scope.updateMap($scope.selectedTruckId);
+						//Senator Arlo ordered this mockup
+						$scope.loadMarkers();
 					}
 				});
 		};
@@ -274,6 +276,15 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 					}
 				})
 		};
+
+
+		/*---------------------A new method we are adding at Senator Arlos behest!! 12/2--------------------*/
+		//might have to take in an argument here
+		$scope.loadMarkers = function(){
+			$scope.markers = {"unm":{"lat":35.0875849, "lng":-106.637924}, "sally":{"lat":35.1076816,"lng":-106.6446577}};
+		};
+
+
 
 
 //how do we do puts/posts/deletes for multiple services. what variable do we use for function(map, validated). is map ok??

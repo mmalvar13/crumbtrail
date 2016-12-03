@@ -11,6 +11,6 @@
 
 <!--initialize map on page-->
 
-<leaflet lf-center="center" height="480px" width="640px"></leaflet>
+<leaflet lf-center="center" markers="markers" height="480px" width="640px"></leaflet>
 
 
