@@ -35,6 +35,11 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 			id: 0 // this is a required filed for the eater marker
 		};
 
+		$scope.center = {
+			lat: 51.505,
+			lng: -0.09,
+			zoom: 8
+		};
 
 		// //*************added this for mapbox testing 11.12 MA************************//
 		// angular.module('Crumbtrail').controller('rootController', [
@@ -45,7 +50,7 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 		// 		};
 		// 	}
 		// ]);
-		//************************end mapbox testing*************************************************//
+		// // ************************end mapbox testing*************************************************//
 
 		$scope.getGeoLocation = function() {
 			GeoLocationService.getCurrentPosition()
