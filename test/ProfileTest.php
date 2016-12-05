@@ -18,9 +18,10 @@ require_once(dirname(__DIR__) . "/public_html/php/classes/autoload.php"); //wtf 
  * Full PHPUnit test for the Profile class
  *
  * This is a complete PHPUnit test of the Profile class. It is complete because *ALL* mySQL/PDO enabled methods
- * are tested for both invalid and valid inputs.
+ * are tested for both invalid and valid inpu
+ * ts.
  *
- * @see Profile\
+ * @see Profile
  * @author Lo-B <baca.loren@gmail.com>
  **/
 class ProfileTest extends CrumbTrailTest {

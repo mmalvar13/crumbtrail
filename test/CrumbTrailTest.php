@@ -3,7 +3,7 @@
 namespace Edu\Cnm\CrumbTrail\Test;
 
 // grab the encrypted properties file
-require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
+require_once("/etc/apache2/capstone-mysql/encrypted-config.php"); //This checks out, path on server
 
 
 

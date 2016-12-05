@@ -50,6 +50,17 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 		// 		};
 		// 	}
 		// ]);
+
+		$scope.MarkersSimpleController = function(){
+			var mainMarker = {
+				lat: 51,
+				lng: 0,
+				focus: true,
+				draggable: true
+			};
+
+
+		}
 		// // ************************end mapbox testing*************************************************//
 
 		$scope.getGeoLocation = function() {
