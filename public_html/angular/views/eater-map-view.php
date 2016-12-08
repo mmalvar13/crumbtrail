@@ -12,11 +12,13 @@
 <!--initialize map on page-->
 
 
+<!--<leaflet></leaflet>-->
+<leaflet lf-center="center" markers="markers" height="480px" width="640px"></leaflet>
 
-<!--<leaflet lf-center="center" markers="markers" height="480px" width="640px"></leaflet>-->
 
-<div ng-controller="MapController">
-	<leaflet lf-center="london" width="100%" height="480px"></leaflet>
-</div>
+<!---->
+<!--<div ng-controller="MapController">-->
+<!--	<leaflet lf-center="london" width="100%" height="480px"></leaflet>-->
+<!--</div>-->
 
 

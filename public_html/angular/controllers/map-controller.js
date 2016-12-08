@@ -35,19 +35,29 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 			id: 0 // this is a required filed for the eater marker
 		};
 
-		// $scope.center = {
-		// 	lat: 51.505,
-		// 	lng: -0.09,
-		// 	zoom: 8
-		// };
+		$scope.center = {
+			lat: 51.505,
+			lng: -0.09,
+			zoom: 8
+		};
 
-		angular.extend($scope, {
-			london: {
-				lat: 51.505,
-				lng: -0.09,
-				zoom: 4
-			}
-		});
+
+
+
+		// angular.extend($scope, {
+		// 	defaults: {
+		// 		scrollWheelZoom: false
+		// 	}
+		// });
+
+
+		// angular.extend($scope, {
+		// 	london: {
+		// 		lat: 51.505,
+		// 		lng: -0.09,
+		// 		zoom: 4
+		// 	}
+		// });
 
 		// //*************added this for mapbox testing 11.12 MA************************//
 		// angular.module('Crumbtrail').controller('rootController', [

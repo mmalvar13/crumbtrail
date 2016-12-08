@@ -95,6 +95,13 @@
 
 <!--		<script src='https://api.mapbox.com/mapbox-gl-js/v0.27.0/mapbox-gl.js'></script>-->
 		<link href='https://api.mapbox.com/mapbox-gl-js/v0.27.0/mapbox-gl.css' rel='stylesheet' />
+		<!--Added this 12.7 leaflet cSS-->
+<!--		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css">-->
+
+<!--		<script src="https://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js"></script>-->
+<!--		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js"></script>-->
+<!--		<script src="/js/angular-leaflet-directive.min.js"></script>-->
+
 
 
 
