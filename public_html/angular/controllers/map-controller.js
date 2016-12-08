@@ -13,13 +13,7 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 
 
 
-		// $scope.map = {
-		// 	center: {
-		// 		latitude: 0,
-		// 		longitude: 0
-		// 	},
-		// 	zoom: 14
-		// };
+
 
 		// $scope.marker = {
 		// 	id: 0, // This should be set to the event id

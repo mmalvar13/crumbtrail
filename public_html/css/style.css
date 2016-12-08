@@ -495,3 +495,9 @@ body { width: 100%;}
 	margin: 0 auto;
 }
 
+
+/****Mapbox***/
+.map-things{
+	position:relative;
+	z-index:-1;
+}
