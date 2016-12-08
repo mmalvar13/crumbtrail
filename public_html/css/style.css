@@ -497,7 +497,7 @@ body { width: 100%;}
 
 
 /****Mapbox***/
-.map-things{
-	position:relative;
-	z-index:-1;
-}
+/*.map-things{*/
+	/*position:relative;*/
+	/*z-index:-1;*/
+/*}*/
