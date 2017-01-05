@@ -1,6 +1,5 @@
-app.controller('MapController', ["$scope", "CompanyService", "EventService", "ProfileService", "TruckService", "GeoLocationService",
-	// "uiGmapGoogleMapApi",
-	function($scope, CompanyService, EventService, ProfileService, TruckService, GeoLocationService) {
+app.controller('MapController', ["$scope", "CompanyService", "EventService", "ProfileService", "TruckService", "GeoLocationService", "uiGmapGoogleMapApi",
+	function($scope, CompanyService, EventService, ProfileService, TruckService, GeoLocationService, uiGmapGoogleMapApi) {
 		//what do we add here on top?
 		$scope.serving = null;
 		$scope.editing = false;
@@ -9,19 +8,23 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 		$scope.activeEvents = [];
 		$scope.events = [];
 		$scope.currentEvent = {};
-		$scope.markers = {};
 
 
+		$scope.map = {
+			center: {
+				latitude: 0,
+				longitude: 0
+			},
+			zoom: 14
+		};
 
-
-
-		// $scope.marker = {
-		// 	id: 0, // This should be set to the event id
-		// 	coords: {
-		// 		latitude: 0,
-		// 		longitude: 0
-		// 	}
-		// };
+		$scope.marker = {
+			id: 0, // This should be set to the event id
+			coords: {
+				latitude: 0,
+				longitude: 0
+			}
+		};
 
 		$scope.geoLocation = null;
 		$scope.alerts = [];
@@ -29,93 +32,25 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 			id: 0 // this is a required filed for the eater marker
 		};
 
-		$scope.center = {
-			lat: 51.505,
-			lng: -0.09,
-			zoom: 8
-		};
-
-
-
-
-		// angular.extend($scope, {
-		// 	defaults: {
-		// 		scrollWheelZoom: false
-		// 	}
-		// });
-
-
-		// angular.extend($scope, {
-		// 	london: {
-		// 		lat: 51.505,
-		// 		lng: -0.09,
-		// 		zoom: 4
-		// 	}
-		// });
-
-		// //*************added this for mapbox testing 11.12 MA************************//
-		// angular.module('Crumbtrail').controller('rootController', [
-		// 	'$scope',
-		// 	function ($scope) {
-		// 		$scope.callback = function (map) {
-		// 			map.setView([51.433333, 5.483333], 12);
-		// 		};
-		// 	}
-		// ]);
-
-		// $scope.MarkersSimpleController = function() {
-		// 	var mainMarker = {
-		// 		lat: 51.505,
-		// 		lng: -0.09,
-		// 		focus: true,
-		// 		draggable: true
-		// 	};
-		//
-		// 	angular.extend($scope, {
-		// 		london: {
-		// 			lat: 51.505,
-		// 			lng: -0.09,
-		// 			zoom: 8
-		// 		},
-		// 		markers: {
-		// 			mainMarker: angular.copy(mainMarker)
-		// 		},
-		// 		position: {
-		// 			lat: 51.505,
-		// 			lng: -0.09
-		// 		},
-		// 		events: { // or just {} //all events
-		// 			markers: {
-		// 				enable: ['dragend']
-		// 				//logic: 'emit'
-		// 			}
-		// 		}
-		// 	});
-		// };
-		// // ************************end mapbox testing*************************************************//
-
 		$scope.getGeoLocation = function() {
 			GeoLocationService.getCurrentPosition()
 				.then(function(result) {
 					$scope.geoLocation = result;
-					// var latLong = {"lat": result.coords.latitude, "lng": result.coords.longitude};
-					$scope.center = {"lat": result.coords.latitude, "lng": result.coords.longitude, "zoom":14};
-					// $scope.marker.coords = latLong;
+					var latLong = {"latitude": result.coords.latitude, "longitude": result.coords.longitude};
+					$scope.map.center = latLong;
+					$scope.marker.coords = latLong;
 					if(angular.equals({}, $scope.currentEvent)) {
-						// $scope.updateMap($scope.selectedTruckId);
-						//Senator Arlo ordered this mockup
-						$scope.loadMarkers();
+						$scope.updateMap($scope.selectedTruckId);
 					}
 				});
 		};
 
 		$scope.setLocationToCurrent = function(selectedTruckId) {
 			$scope.currentEvent.eventLocation = {
-				"lat": $scope.center.lat,
-				"lng": $scope.center.lng
+				"lat": $scope.map.center.latitude,
+				"long": $scope.map.center.longitude
 			};
-			$scope.currentEvent.eventStart = new Date();
-			$scope.currentEvent.eventEnd = new Date();
+			$scope.currentEvent.eventStart = Date.now();
 			$scope.currentEvent.eventTruckId = selectedTruckId;
 			$scope.currentEvent.eventId = 0;
 		};
@@ -123,8 +58,6 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 		//will be called when we hit submit on the form
 		$scope.editEvent = function() {
 			$scope.editing = false;
-			$scope.currentEvent.eventEnd = $scope.currentEvent.eventEnd.getTime();
-			console.log($scope.currentEvent);
 			if($scope.currentEvent.eventId === 0) {
 				EventService.createEvent($scope.currentEvent);
 			} else {
@@ -138,9 +71,7 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 				var found = false;
 				for(var activeEvent in $scope.activeEvents) {
 					if($scope.activeEvents[activeEvent].eventTruckId === Number(selectedTruckId)) {
-						var event = $scope.activeEvents[activeEvent];
-						event.eventEnd = new Date(event.eventEnd);
-						$scope.currentEvent = event;
+						$scope.currentEvent = $scope.activeEvents[activeEvent];
 						found = true;
 					}
 				}
@@ -256,14 +187,12 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 			EventService.all()
 				.then(function(result) {
 					if(result.status === 200) {
-						var event = result.data.data;
-						event.eventEnd = new Date(event.eventEnd);
-						$scope.activeEvents = event;
+						$scope.activeEvents = result.data.data;
 					} else {
 						$scope.alerts[0] = {type: "danger", msg: result.data.message};
 
 					}
-			});
+				});
 		};
 
 
@@ -318,15 +247,6 @@ app.controller('MapController', ["$scope", "CompanyService", "EventService", "Pr
 					}
 				})
 		};
-
-
-		/*---------------------A new method we are adding at Senator Arlos behest!! 12/2--------------------*/
-		//might have to take in an argument here
-		$scope.loadMarkers = function(){
-			$scope.markers = {"unm":{"lat":35.0875849, "lng":-106.637924}, "sally":{"lat":35.1076816,"lng":-106.6446577}};
-		};
-
-
 
 
 //how do we do puts/posts/deletes for multiple services. what variable do we use for function(map, validated). is map ok??

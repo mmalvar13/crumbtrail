@@ -62,9 +62,8 @@
 /* -------------------------------MAPS CSS -------------------------------------------------- */
 
 
-.angular-google-map-container {
-	height: 88vh;
-	width: auto;
+.map-container {
+	display: block;
 }
 
 

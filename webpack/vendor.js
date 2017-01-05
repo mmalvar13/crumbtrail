@@ -5,6 +5,4 @@ require("angular-animate");
 require("angular-messages");
 require("angular-route");
 require("angular-ui-bootstrap");
-// require("angular-google-maps");
-require("leaflet");
-require("angular-leaflet-directive");
+require("angular-google-maps");
